@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_splash"
+        android:src="@drawable/btv1"
+        android:scaleType="centerCrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:background="@drawable/delay_time_bg"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="40dp"
+        android:layout_gravity="right"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp">
+
+        <TextView
+            android:layout_marginRight="10dp"
+            android:gravity="center_vertical"
+            android:textSize="20sp"
+            android:textColor="@color/colorWhite"
+            android:text="@string/ad"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:src="@color/colorWhite"
+            android:layout_width="1dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/tv_delay_time"
+            android:textSize="20sp"
+            android:textColor="@color/colorWhite"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="bottom|right"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp"
+            android:text="@string/detail"
+            android:id="@+id/ibt_know"
+            android:background="@drawable/item_qingse_bg"
+            android:layout_width="100dp"
+            android:layout_height="40dp" />
+
+        <Button
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp"
+            android:text="@string/pass"
+            android:id="@+id/ibt_pass"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/item_gray_bg"
+            android:layout_width="100dp"
+            android:layout_height="40dp" />
+
+    </LinearLayout>
+
+</FrameLayout>

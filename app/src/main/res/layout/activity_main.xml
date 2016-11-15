@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:paddingTop="20dp"
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:text="13:00"
+        android:gravity="center_vertical"
+        android:textSize="25sp"
+        android:textColor="@color/colorWhite"
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/iv_net"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/wifi0"
+        android:layout_toRightOf="@id/tv_time"
+        android:layout_width="32dp"
+        android:layout_height="32dp" />
+    <TextView
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:text="11-08-2016"
+        android:layout_alignParentRight="true"
+        android:textSize="25sp"
+        android:textColor="@color/colorWhite"
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ImageButton
+        android:padding="3dp"
+        android:scaleType="centerInside"
+        android:background="@drawable/white_side"
+        android:layout_marginLeft="5dp"
+        android:src="@drawable/weather"
+        android:layout_toLeftOf="@id/tv_date"
+        android:id="@+id/ibt_weather"
+        android:layout_width="32dp"
+        android:layout_height="32dp" />
+
+    <ImageButton
+        android:padding="3dp"
+        android:visibility="gone"
+        android:scaleType="centerInside"
+        android:background="@drawable/white_side"
+        android:src="@drawable/message"
+        android:layout_toLeftOf="@id/ibt_weather"
+        android:id="@+id/ibt_message"
+        android:layout_width="32dp"
+        android:layout_height="32dp" />
+
+    <RelativeLayout
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/rl_message"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <TextView
+            android:id="@+id/tv_message"
+            android:drawableLeft="@drawable/speaker"
+            android:text="  www.legacy.direct"
+            android:textSize="24sp"
+            android:visibility="gone"
+            android:gravity="center_vertical"
+            android:textColor="@color/colorWhite"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:gravity="bottom"
+            android:textSize="14sp"
+            android:textColor="@color/colorGray1"
+            android:text="BTV UI 2.0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_above="@id/rl_message"
+        android:layout_below="@id/tv_time"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </android.support.v4.view.ViewPager>
+
+</RelativeLayout>

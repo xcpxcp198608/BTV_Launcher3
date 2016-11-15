@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:src="@drawable/point_gray_1"
+            android:layout_width="10dp"
+            android:layout_height="10dp" />
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/point_white_1"
+            android:layout_width="10dp"
+            android:layout_height="10dp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:padding="5dp"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/ibt_bvision"
+                android:src="@mipmap/ic_launcher"
+                android:background="@drawable/white_side"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+
+            <Button
+                android:id="@+id/bt_b1"
+                android:background="@drawable/white_side"
+                android:text="B-Vision Live1"
+                android:textColor="@color/colorWhite"
+                android:textSize="24sp"
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="0dp" />
+            <Button
+                android:id="@+id/bt_b2"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/white_side"
+                android:text="B-Vision Live2"
+                android:textColor="@color/colorWhite"
+                android:textSize="24sp"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="0dp" />
+            <Button
+                android:id="@+id/bt_b3"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/white_side"
+                android:text="BTV Live"
+                android:textColor="@color/colorWhite"
+                android:textSize="24sp"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="0dp" />
+            <ImageButton
+                android:id="@+id/ibt_qishi"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/white_side"
+                android:src="@mipmap/ic_launcher"
+                android:layout_weight="3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_margin="5dp"
+            android:background="@color/colorBlack"
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <SurfaceView
+                android:layout_gravity="center"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:id="@+id/surface_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:id="@+id/iv_bvision"
+                android:background="@drawable/btv1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:padding="5dp"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/ibt_ad_r1"
+                android:src="@drawable/anti_virus_icon"
+                android:cropToPadding="true"
+                android:padding="5dp"
+                android:scaleType="centerInside"
+                android:background="@drawable/white_side"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="0dp" />
+            <ImageButton
+                android:id="@+id/ibt_ad_r2"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/anti_virus_icon"
+                android:cropToPadding="true"
+                android:padding="5dp"
+                android:scaleType="centerInside"
+                android:background="@drawable/white_side"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="0dp" />
+            <ImageButton
+                android:id="@+id/ibt_ad_r3"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/anti_virus_icon"
+                android:cropToPadding="true"
+                android:padding="5dp"
+                android:scaleType="centerInside"
+                android:background="@drawable/white_side"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="0dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:paddingTop="50dp"
+    android:paddingBottom="50dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_weight="2.5"
+        android:layout_width="0dp"
+        android:layout_height="match_parent" />
+
+    <RelativeLayout
+        android:layout_weight="5"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tv_delete"
+            android:layout_centerHorizontal="true"
+            android:textSize="28sp"
+            android:textColor="@color/colorWhite"
+            android:gravity="center"
+            android:text="@string/delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageButton
+            android:padding="3dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/tv_delete"
+            android:background="@drawable/white_side"
+            android:src="@drawable/delete_72"
+            android:id="@+id/ibt_clean"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ListView
+            android:layout_marginTop="10dp"
+            android:dividerHeight="10dp"
+            android:divider="@color/colorTranslucent"
+            android:layout_below="@id/ibt_clean"
+            android:id="@+id/lv_message"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_weight="2.5"
+        android:layout_width="0dp"
+        android:layout_height="match_parent" />
+
+
+
+
+
+</LinearLayout>

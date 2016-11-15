@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">BTV_FW</string>
+
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="notice">Notice</string>
+    <string name="update_error">Download failure , please reboot again</string>
+    <string name="update_info">BTVi3 FW have a new version ,update now.</string>
+
+    <string name="wifi_setting">Wifi Setup</string>
+    <string name="resolution">Resolution</string>
+    <string name="time_zone">Time Zone</string>
+    <string name="btv_setup">BTV Setup</string>
+    <string name="app_market">AppMarket</string>
+    <string name="faq">FAQ</string>
+
+    <string name="pass">Pass</string>
+    <string name="detail">Detail</string>
+    <string name="ad">Advertisement</string>
+
+    <string name="delete">Delete All</string>
+    <string name="network_disconnect">Network Disconnect</string>
+</resources>

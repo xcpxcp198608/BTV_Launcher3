@@ -1,0 +1,293 @@
+package com.wiatec.btv_launcher.fragment;
+
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.media.MediaPlayer;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.Toast;
+import android.widget.VideoView;
+
+import com.bumptech.glide.Glide;
+import com.jude.rollviewpager.RollPagerView;
+import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.OnNetworkStatusListener;
+import com.wiatec.btv_launcher.Utils.ApkCheck;
+import com.wiatec.btv_launcher.Utils.ApkLaunch;
+import com.wiatec.btv_launcher.Utils.FileCheck;
+import com.wiatec.btv_launcher.Utils.Logger;
+import com.wiatec.btv_launcher.activity.MenuActivity;
+import com.wiatec.btv_launcher.R;
+import com.wiatec.btv_launcher.activity.UserGuideActivity;
+import com.wiatec.btv_launcher.adapter.RollImageAdapter;
+import com.wiatec.btv_launcher.animator.Zoom;
+import com.wiatec.btv_launcher.bean.ImageInfo;
+import com.wiatec.btv_launcher.bean.RollImageInfo;
+import com.wiatec.btv_launcher.presenter.Fragment1Presenter;
+import com.wiatec.btv_launcher.receiver.NetworkStatusReceiver;
+
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
+
+/**
+ * Created by PX on 2016-11-12.
+ */
+
+public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> implements IFragment1 ,OnNetworkStatusListener,View.OnFocusChangeListener {
+    @BindView(R.id.ibt_btv)
+    ImageButton ibt_Btv;
+    @BindView(R.id.ibt_user_guide)
+    ImageButton ibt_UserGuide;
+    @BindView(R.id.ibt_setting)
+    ImageButton ibt_Setting;
+    @BindView(R.id.ibt_apps)
+    ImageButton ibt_Apps;
+    @BindView(R.id.ibt_market)
+    ImageButton ibt_Market;
+    @BindView(R.id.ibt_anti_virus)
+    ImageButton ibt_AntiVirus;
+    @BindView(R.id.ibt_privacy)
+    ImageButton ibt_Privacy;
+    @BindView(R.id.rpv_main)
+    RollPagerView rpv_Main;
+    @BindView(R.id.ibt_ld_store)
+    ImageButton ibt_LdStore;
+    @BindView(R.id.ibt_ad_1)
+    ImageButton ibt_Ad1;
+    @BindView(R.id.vv_main)
+    VideoView vv_Main;
+    @BindView(R.id.ibt_ld_cloud)
+    ImageButton ibt_LdCloud;
+
+    private boolean isF1Visible = true;
+    private int playPosition=0;
+    private NetworkStatusReceiver networkStatusReceiver;
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Logger.d("f1 -onCreateView ");
+        View view = inflater.inflate(R.layout.fragment1, container, false);
+        ButterKnife.bind(this, view);
+        networkStatusReceiver = new NetworkStatusReceiver(null);
+        networkStatusReceiver.setOnNetworkStatusListener(this);
+        getContext().registerReceiver(networkStatusReceiver, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
+        return view;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            Logger.d("f1 -isVisibleToUser " + isVisibleToUser);
+            isF1Visible = true;
+            if(vv_Main!=null && !vv_Main.isPlaying()){
+                playVideo();
+            }
+        }else {
+            Logger.d("f1 -isVisibleToUser " + isVisibleToUser);
+            isF1Visible =false;
+            if(vv_Main!=null && vv_Main.isPlaying()){
+                playPosition = vv_Main.getCurrentPosition();
+                vv_Main.stopPlayback();
+            }
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Logger.d("f1 -onStart ");
+        presenter.loadData();
+        setZoom();
+    }
+
+    @Override
+    protected Fragment1Presenter createPresenter() {
+        return new Fragment1Presenter(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Logger.d("f1 -onResume " +isF1Visible);
+        if(vv_Main!=null && !vv_Main.isPlaying() && isF1Visible){
+            playVideo();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Logger.d("f1 -onPause ");
+        if(vv_Main!=null && vv_Main.isPlaying()){
+            playPosition = vv_Main.getCurrentPosition();
+            vv_Main.stopPlayback();
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        getContext().unregisterReceiver(networkStatusReceiver);
+    }
+
+    @OnClick({R.id.ibt_btv, R.id.ibt_user_guide, R.id.ibt_setting, R.id.ibt_apps, R.id.ibt_market, R.id.ibt_anti_virus, R.id.ibt_privacy,  R.id.ibt_ld_cloud})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.ibt_btv:
+                if (ApkCheck.isApkInstalled(getContext(), F.package_name.btv)) {
+                    ApkLaunch.launchApkByPackageName(getContext(), F.package_name.btv);
+                }
+                break;
+            case R.id.ibt_user_guide:
+                startActivity(new Intent(getContext(), UserGuideActivity.class));
+                break;
+            case R.id.ibt_setting:
+                if (ApkCheck.isApkInstalled(getContext(), F.package_name.setting)) {
+                    ApkLaunch.launchApkByPackageName(getContext(), F.package_name.setting);
+                }
+                break;
+            case R.id.ibt_apps:
+                startActivity(new Intent(getContext(), MenuActivity.class));
+                break;
+            case R.id.ibt_market:
+                if (ApkCheck.isApkInstalled(getContext(), F.package_name.market)) {
+                    ApkLaunch.launchApkByPackageName(getContext(), F.package_name.market);
+                }
+                break;
+            case R.id.ibt_anti_virus:
+                if (ApkCheck.isApkInstalled(getContext(), F.package_name.legacy_antivirus)) {
+                    ApkLaunch.launchApkByPackageName(getContext(), F.package_name.legacy_antivirus);
+                }
+                break;
+            case R.id.ibt_privacy:
+                if (ApkCheck.isApkInstalled(getContext(), F.package_name.legacy_privacy)) {
+                    ApkLaunch.launchApkByPackageName(getContext(), F.package_name.legacy_privacy);
+                }
+                break;
+            case R.id.ibt_ld_cloud:
+                if (ApkCheck.isApkInstalled(getContext(), F.package_name.cloud)) {
+                    ApkLaunch.launchApkByPackageName(getContext(), F.package_name.cloud);
+                }
+                break;
+        }
+    }
+
+    private void playVideo (){
+        vv_Main.setVideoPath(F.path.video);
+        vv_Main.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                vv_Main.seekTo(playPosition);
+                vv_Main.start();
+            }
+        });
+        vv_Main.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+            @Override
+            public boolean onError(MediaPlayer mp, int what, int extra) {
+                vv_Main.setVideoURI(Uri.parse("android.resource://" + getContext().getPackageName() + "/" + R.raw.btvi3));
+                vv_Main.start();
+                return true;
+            }
+        });
+        vv_Main.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                vv_Main.setVideoPath(F.path.video);
+                vv_Main.start();
+            }
+        });
+    }
+
+
+    @Override
+    public void loadImage(final List<ImageInfo> list) {
+//        Logger.d(list.toString());
+        Glide.with(getContext()).load(list.get(0).getUrl()).placeholder(R.drawable.btv_icon1).into(ibt_Btv);
+        Glide.with(getContext()).load(list.get(1).getUrl()).placeholder(R.drawable.user_guide).into(ibt_UserGuide);
+        Glide.with(getContext()).load(list.get(2).getUrl()).placeholder(R.drawable.setting_icon).into(ibt_Setting);
+        Glide.with(getContext()).load(list.get(3).getUrl()).placeholder(R.drawable.apps_icon2).into(ibt_Apps);
+        Glide.with(getContext()).load(list.get(4).getUrl()).placeholder(R.drawable.market_icon).into(ibt_Market);
+        Glide.with(getContext()).load(list.get(5).getUrl()).placeholder(R.drawable.anti_virus_icon).into(ibt_AntiVirus);
+        Glide.with(getContext()).load(list.get(6).getUrl()).placeholder(R.drawable.privacy_icon).into(ibt_Privacy);
+        Glide.with(getContext()).load(list.get(7).getUrl()).placeholder(R.drawable.ldstore_icon).into(ibt_LdStore);
+        Glide.with(getContext()).load(list.get(8).getUrl()).placeholder(R.drawable.bksound).into(ibt_Ad1);
+        Glide.with(getContext()).load(list.get(9).getUrl()).placeholder(R.drawable.ldcloud_icon).into(ibt_LdCloud);
+        ibt_LdStore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLinkByBrowser(list.get(7).getLink());
+            }
+        });
+        ibt_Ad1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLinkByBrowser(list.get(8).getLink());
+            }
+        });
+    }
+
+    @Override
+    public void loadRollImage(List<RollImageInfo> list) {
+        //Logger.d(list.toString());
+        RollImageAdapter rollImageAdapter = new RollImageAdapter(list);
+        rpv_Main.setAdapter(rollImageAdapter);
+        rpv_Main.setHintView(null);
+    }
+
+    public void showLinkByBrowser(String url){
+        startActivity(new Intent(Intent.ACTION_VIEW , Uri.parse(url)));
+    }
+
+    @Override
+    public void onConnected(boolean isConnected) {
+        if(isConnected){
+            presenter.loadData();
+        }
+    }
+
+    @Override
+    public void onDisconnect(boolean disConnected) {
+        if(disConnected){
+            Toast.makeText(getContext() ,getString(R.string.network_disconnect) ,Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void setZoom (){
+        ibt_Btv.setOnFocusChangeListener(this);
+        ibt_UserGuide.setOnFocusChangeListener(this);
+        ibt_Setting.setOnFocusChangeListener(this);
+        ibt_Apps.setOnFocusChangeListener(this);
+        ibt_Market.setOnFocusChangeListener(this);
+        ibt_AntiVirus.setOnFocusChangeListener(this);
+        ibt_Privacy.setOnFocusChangeListener(this);
+        ibt_LdStore.setOnFocusChangeListener(this);
+        ibt_Ad1.setOnFocusChangeListener(this);
+        ibt_LdCloud.setOnFocusChangeListener(this);
+    }
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        if(hasFocus){
+            Zoom.zoomIn09_10(v);
+        }
+    }
+}
