@@ -1,10 +1,6 @@
 package com.wiatec.btv_launcher.presenter;
 
-import com.wiatec.btv_launcher.Utils.Logger;
-import com.wiatec.btv_launcher.activity.IMessageActivity;
-import com.wiatec.btv_launcher.bean.MessageInfo;
-
-import java.util.List;
+import com.wiatec.btv_launcher.Activity.IMessageActivity;
 
 /**
  * Created by PX on 2016-11-14.

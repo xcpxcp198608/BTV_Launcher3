@@ -7,12 +7,11 @@ import android.content.Intent;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.bean.InstalledApp;
 import com.wiatec.btv_launcher.F;
-import com.wiatec.btv_launcher.SQL.SQLiteDao;
+import com.wiatec.btv_launcher.SQL.InstalledAppDao;
 import com.wiatec.btv_launcher.Utils.ApkCheck;
 import com.wiatec.btv_launcher.Utils.Logger;
 
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
@@ -23,12 +22,12 @@ import rx.schedulers.Schedulers;
 
 public class AppInstallReceiver extends BroadcastReceiver {
 
-    private SQLiteDao sqLiteDao;
+    private InstalledAppDao installedAppDao;
     private Context mContext;
 
     public AppInstallReceiver() {
         mContext = Application.getContext();
-        sqLiteDao = SQLiteDao.getInstance(mContext);
+        installedAppDao = InstalledAppDao.getInstance(mContext);
     }
 
     @Override
@@ -53,7 +52,7 @@ public class AppInstallReceiver extends BroadcastReceiver {
                             }else{
                                 installedApp.setSequence(30);
                             }
-                            sqLiteDao.insertOrUpdateData(installedApp,null);
+                            installedAppDao.insertOrUpdateData(installedApp,null);
                             return null;
                         }
                     })
@@ -71,7 +70,7 @@ public class AppInstallReceiver extends BroadcastReceiver {
                     .map(new Func1<String, Object>() {
                         @Override
                         public Object call(String s) {
-                            sqLiteDao.deleteByPackageName(s);
+                            installedAppDao.deleteByPackageName(s);
                             return null;
                         }
                     })

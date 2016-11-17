@@ -1,4 +1,4 @@
-package com.wiatec.btv_launcher.activity;
+package com.wiatec.btv_launcher.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,8 +9,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.wiatec.btv_launcher.R;
-import com.wiatec.btv_launcher.SQL.SQLiteDao;
-import com.wiatec.btv_launcher.Utils.ApkLaunch;
+import com.wiatec.btv_launcher.SQL.InstalledAppDao;
 import com.wiatec.btv_launcher.adapter.MenuItemAdapter;
 import com.wiatec.btv_launcher.animator.Zoom;
 import com.wiatec.btv_launcher.bean.InstalledApp;
@@ -30,14 +29,14 @@ import rx.schedulers.Schedulers;
 public class MenuActivity extends AppCompatActivity {
 
     private MenuItemAdapter menuItemAdapter;
-    private SQLiteDao sqliteDao;
+    private InstalledAppDao sqliteDao;
     private GridView gv_Menu;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        sqliteDao = SQLiteDao.getInstance(MenuActivity.this);
+        sqliteDao = InstalledAppDao.getInstance(MenuActivity.this);
         gv_Menu = (GridView) findViewById(R.id.gv_Menu);
     }
 

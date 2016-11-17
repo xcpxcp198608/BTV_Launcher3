@@ -39,5 +39,6 @@ public final class F {
         public static final String cloud = "com.legacydirect.tvphoto";
         public static final String legacy_antivirus =  "com.legacydirect.security.suite";
         public static final String legacy_privacy =  "com.legacydirect.privacyadvisor";
+        public static final String file = "";
     }
 }

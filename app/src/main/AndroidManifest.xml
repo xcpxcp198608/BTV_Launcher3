@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -14,7 +15,7 @@
         android:supportsRtl="true"
         android:name=".Application"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity"
+        <activity android:name=".Activity.MainActivity"
             android:clearTaskOnLaunch="true"
             android:launchMode="singleTask">
             <intent-filter>
@@ -26,13 +27,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.MenuActivity"/>
-        <activity android:name=".activity.UpdateActivity"/>
-        <activity android:name=".activity.PlayActivity"/>
-        <activity android:name=".activity.UserGuideActivity"/>
-        <activity android:name=".activity.SplashActivity"/>
-        <activity android:name=".activity.MessageActivity"/>
-        <activity android:name=".activity.WeatherActivity"/>
+        <activity android:name=".Activity.MenuActivity"/>
+        <activity android:name=".Activity.UpdateActivity"/>
+        <activity android:name=".Activity.PlayActivity"/>
+        <activity android:name=".Activity.UserGuideActivity"/>
+        <activity android:name=".Activity.SplashActivity"/>
+        <activity android:name=".Activity.MessageActivity"/>
+        <activity android:name=".Activity.WeatherActivity"/>
 
         <receiver android:name=".receiver.AppInstallReceiver">
             <intent-filter>

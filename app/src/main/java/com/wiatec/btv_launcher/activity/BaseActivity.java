@@ -1,4 +1,4 @@
-package com.wiatec.btv_launcher.activity;
+package com.wiatec.btv_launcher.Activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

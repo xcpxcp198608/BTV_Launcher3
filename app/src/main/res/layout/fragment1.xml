@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:padding="10dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -40,14 +41,14 @@
                 android:id="@+id/ibt_btv"
                 android:cropToPadding="true"
                 android:background="@drawable/item_transparent_bg"
-                android:scaleType="centerInside"
-                android:src="@drawable/btv_icon1"
+                android:scaleType="centerCrop"
+                android:src="@drawable/btv_icon_1"
                 android:layout_weight="2.4"
                 android:layout_width="match_parent"
                 android:layout_height="0dp" />
 
             <ImageView
-                android:background="@color/colorTranslucent4"
+                android:background="@color/colorGray1"
                 android:layout_width="match_parent"
                 android:layout_height="1dp" />
 
@@ -58,38 +59,38 @@
                 android:layout_height="0dp">
                 <ImageButton
                     android:id="@+id/ibt_user_guide"
-                    android:padding="10dp"
+                    android:padding="25dp"
                     android:background="@drawable/item_transparent_bg"
                     android:scaleType="centerInside"
-                    android:src="@drawable/user_guide"
+                    android:src="@drawable/user_guide_icon"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />
 
                 <ImageView
-                    android:background="@color/colorTranslucent4"
+                    android:background="@color/colorGray1"
                     android:layout_width="1dp"
                     android:layout_height="match_parent" />
 
                 <ImageButton
                     android:id="@+id/ibt_setting"
-                    android:padding="10dp"
-                    android:background="@drawable/item_transparent_bg"
+                    android:padding="25dp"
+                    android:background="@drawable/item_setting_bg"
                     android:scaleType="centerInside"
                     android:src="@drawable/setting_icon"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />
                 <ImageView
-                    android:background="@color/colorTranslucent4"
+                    android:background="@color/colorGray1"
                     android:layout_width="1dp"
                     android:layout_height="match_parent" />
                 <ImageButton
-                    android:padding="10dp"
+                    android:padding="25dp"
                     android:id="@+id/ibt_apps"
                     android:background="@drawable/item_transparent_bg"
                     android:scaleType="centerInside"
-                    android:src="@drawable/apps_icon2"
+                    android:src="@drawable/apps_icon"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />
@@ -97,7 +98,7 @@
             </LinearLayout>
 
             <ImageView
-                android:background="@color/colorTranslucent4"
+                android:background="@color/colorGray1"
                 android:layout_width="match_parent"
                 android:layout_height="1dp" />
 
@@ -108,8 +109,8 @@
                 android:layout_height="0dp">
                 <ImageButton
                     android:id="@+id/ibt_market"
-                    android:padding="10dp"
-                    android:background="@drawable/item_transparent_bg"
+                    android:padding="25dp"
+                    android:background="@drawable/item_market_bg"
                     android:scaleType="centerInside"
                     android:src="@drawable/market_icon"
                     android:layout_weight="1"
@@ -117,29 +118,29 @@
                     android:layout_height="match_parent" />
 
                 <ImageView
-                    android:background="@color/colorTranslucent4"
+                    android:background="@color/colorGray1"
                     android:layout_width="1dp"
                     android:layout_height="match_parent" />
 
                 <ImageButton
                     android:id="@+id/ibt_anti_virus"
-                    android:padding="10dp"
+                    android:padding="25dp"
                     android:background="@drawable/item_transparent_bg"
                     android:scaleType="centerInside"
-                    android:src="@drawable/anti_virus_icon"
+                    android:src="@drawable/privacy_icon"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />
                 <ImageView
-                    android:background="@color/colorTranslucent4"
+                    android:background="@color/colorGray1"
                     android:layout_width="1dp"
                     android:layout_height="match_parent" />
                 <ImageButton
                     android:id="@+id/ibt_privacy"
-                    android:padding="10dp"
-                    android:background="@drawable/item_transparent_bg"
+                    android:padding="25dp"
+                    android:background="@drawable/item_message_bg"
                     android:scaleType="centerInside"
-                    android:src="@drawable/privacy_icon"
+                    android:src="@drawable/message_icon"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />
@@ -171,7 +172,7 @@
                 android:padding="3dp"
                 android:id="@+id/ibt_ld_store"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/item_gray_bg"
+                android:background="@drawable/item_ldstore_bg"
                 android:src="@drawable/ldstore_icon"
                 android:scaleType="centerInside"
                 android:layout_weight="1"
@@ -182,9 +183,10 @@
                 android:layout_marginTop="5dp"
                 android:id="@+id/ibt_ad_1"
                 android:padding="3dp"
-                android:background="@drawable/item_qingse_bg"
-                android:src="@drawable/bksound"
-                android:scaleType="centerInside"
+                android:background="@drawable/item_ad1_bg"
+                android:src="@drawable/bksound_icon"
+                android:scaleType="centerCrop"
+                android:cropToPadding="true"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp" />
@@ -219,9 +221,9 @@
                 android:layout_marginTop="5dp"
                 android:id="@+id/ibt_ld_cloud"
                 android:padding="3dp"
-                android:background="@drawable/item_gray_bg"
-                android:src="@drawable/ldcloud_icon"
-                android:scaleType="centerInside"
+                android:background="@drawable/item_message_bg"
+                android:src="@drawable/ld_cloud_icon"
+                android:scaleType="centerCrop"
                 android:cropToPadding="true"
                 android:layout_weight="1"
                 android:layout_width="match_parent"

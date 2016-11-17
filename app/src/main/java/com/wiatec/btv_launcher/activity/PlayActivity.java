@@ -1,4 +1,4 @@
-package com.wiatec.btv_launcher.activity;
+package com.wiatec.btv_launcher.Activity;
 
 import android.media.MediaPlayer;
 import android.net.Uri;

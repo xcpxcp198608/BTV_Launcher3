@@ -1,4 +1,4 @@
-package com.wiatec.btv_launcher.activity;
+package com.wiatec.btv_launcher.Activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,8 +17,6 @@ import com.wiatec.btv_launcher.bean.UpdateInfo;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.wiatec.btv_launcher.F.url.updater;
 
 /**
  * Created by PX on 2016-11-14.

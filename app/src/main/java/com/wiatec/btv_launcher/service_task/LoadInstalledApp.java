@@ -1,4 +1,4 @@
-package com.wiatec.btv_launcher.service;
+package com.wiatec.btv_launcher.service_task;
 
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -7,7 +7,7 @@ import android.content.pm.ResolveInfo;
 
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
-import com.wiatec.btv_launcher.SQL.SQLiteDao;
+import com.wiatec.btv_launcher.SQL.InstalledAppDao;
 import com.wiatec.btv_launcher.bean.InstalledApp;
 
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class LoadInstalledApp implements Runnable {
     }
 
     private List<InstalledApp> getInstalledApp(){
-        SQLiteDao sqLiteDao = SQLiteDao.getInstance(Application.getContext());
+        InstalledAppDao installedAppDao = InstalledAppDao.getInstance(Application.getContext());
         List<InstalledApp> list = null;
         PackageManager packageManager = Application.getContext().getPackageManager();
         Intent intent = new Intent("android.intent.action.MAIN");
@@ -36,7 +36,7 @@ public class LoadInstalledApp implements Runnable {
             iterator = localList.iterator();
             list = new ArrayList<>();
         }
-        sqLiteDao.deleteAll();
+        installedAppDao.deleteAll();
         while (true) {
             if(!iterator.hasNext()){
                 break;
@@ -65,7 +65,7 @@ public class LoadInstalledApp implements Runnable {
                     !"com.koushikdutta.superuser".equals(noShowPackageName)&&
                     !"com.droidlogic.appinstall".equals(noShowPackageName)){
                 // Logger.d(installedAppInfo.toString());
-                if(!sqLiteDao.isExists(installedApp)){
+                if(!installedAppDao.isExists(installedApp)){
                     if(F.package_name.legacy_antivirus.equals(noShowPackageName)){
                         installedApp.setSequence(1);
                     }else if (F.package_name.legacy_privacy.equals(noShowPackageName)){
@@ -75,7 +75,7 @@ public class LoadInstalledApp implements Runnable {
                     }else{
                         installedApp.setSequence(30);
                     }
-                    sqLiteDao.insertData(installedApp,null);
+                    installedAppDao.insertData(installedApp,null);
                 }
                 list.add(installedApp);
             }

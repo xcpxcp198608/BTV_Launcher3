@@ -1,9 +1,8 @@
-package com.wiatec.btv_launcher.activity;
+package com.wiatec.btv_launcher.Activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -13,6 +12,7 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -31,7 +31,6 @@ import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.SystemConfig;
 import com.wiatec.btv_launcher.adapter.FragmentAdapter;
 import com.wiatec.btv_launcher.bean.Message1Info;
-import com.wiatec.btv_launcher.bean.MessageInfo;
 import com.wiatec.btv_launcher.bean.UpdateInfo;
 import com.wiatec.btv_launcher.bean.VideoInfo;
 import com.wiatec.btv_launcher.fragment.Fragment1;
@@ -70,8 +69,8 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
     ViewPager viewPager;
     @BindView(R.id.ibt_weather)
     ImageButton ibt_Weather;
-    @BindView(R.id.ibt_message)
-    ImageButton ibt_Message;
+    @BindView(R.id.iv_message)
+    ImageView iv_Message;
 
     private Fragment1 fragment1;
     private Fragment2 fragment2;
@@ -136,9 +135,9 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
                     @Override
                     public void call(Boolean aBoolean) {
                         if(aBoolean){
-                            ibt_Message.setVisibility(View.VISIBLE);
+                            iv_Message.setVisibility(View.VISIBLE);
                         }else {
-                            ibt_Message.setVisibility(View.GONE);
+                            iv_Message.setVisibility(View.GONE);
                         }
                     }
                 });
@@ -149,6 +148,17 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
         super.onDestroy();
         unregisterReceiver(networkStatusReceiver);
         unregisterReceiver(wifiStatusReceiver);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            return true;
+        }
+        if (keyCode == KeyEvent.KEYCODE_HOME) {
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     private Handler handler = new Handler(Looper.getMainLooper()) {
@@ -340,14 +350,11 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
         });
     }
 
-    @OnClick({R.id.ibt_weather, R.id.ibt_message})
+    @OnClick({R.id.ibt_weather})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ibt_weather:
                 startActivity(new Intent(MainActivity.this , WeatherActivity.class));
-                break;
-            case R.id.ibt_message:
-                startActivity(new Intent(MainActivity.this , MessageActivity.class));
                 break;
         }
     }

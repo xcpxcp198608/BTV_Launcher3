@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:background="@drawable/mbg9"
     android:padding="40dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -30,7 +29,7 @@
 
             <TextView
                 android:textSize="20sp"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorBlack"
                 android:text="@string/wifi_setting"
                 android:gravity="center"
                 android:layout_width="match_parent"
@@ -57,7 +56,7 @@
 
             <TextView
                 android:textSize="20sp"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorBlack"
                 android:text="@string/resolution"
                 android:gravity="center"
                 android:layout_width="match_parent"
@@ -84,7 +83,7 @@
 
             <TextView
                 android:textSize="20sp"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorBlack"
                 android:text="@string/time_zone"
                 android:gravity="center"
                 android:layout_width="match_parent"
@@ -119,7 +118,7 @@
 
             <TextView
                 android:textSize="20sp"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorBlack"
                 android:text="@string/btv_setup"
                 android:gravity="center"
                 android:layout_width="match_parent"
@@ -146,7 +145,7 @@
 
             <TextView
                 android:textSize="20sp"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorBlack"
                 android:text="@string/app_market"
                 android:gravity="center"
                 android:layout_width="match_parent"
@@ -173,7 +172,7 @@
 
             <TextView
                 android:textSize="20sp"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorBlack"
                 android:text="@string/faq"
                 android:gravity="center"
                 android:layout_width="match_parent"

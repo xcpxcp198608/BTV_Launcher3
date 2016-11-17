@@ -14,19 +14,19 @@ import java.util.List;
  * Created by PX on 2016-10-14.
  */
 
-public class SQLiteDao {
+public class InstalledAppDao {
 
     private Context context;
     private SQLiteDatabase sqLiteDatabase;
-    private SQLiteDao (Context context){
+    private InstalledAppDao(Context context){
         sqLiteDatabase = new SQLiteHelper(context).getWritableDatabase();
     }
-    private static SQLiteDao instance;
-    public static synchronized SQLiteDao getInstance(Context context){
+    private static InstalledAppDao instance;
+    public static synchronized InstalledAppDao getInstance(Context context){
         if(instance ==null){
-            synchronized (SQLiteDao.class){
+            synchronized (InstalledAppDao.class){
                 if(instance ==null){
-                    instance = new SQLiteDao(context);
+                    instance = new InstalledAppDao(context);
                 }
             }
         }

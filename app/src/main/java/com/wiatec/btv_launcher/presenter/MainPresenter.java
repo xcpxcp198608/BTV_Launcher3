@@ -1,7 +1,7 @@
 package com.wiatec.btv_launcher.presenter;
 
 import com.wiatec.btv_launcher.Utils.Logger;
-import com.wiatec.btv_launcher.activity.IMainActivity;
+import com.wiatec.btv_launcher.Activity.IMainActivity;
 import com.wiatec.btv_launcher.bean.Message1Info;
 import com.wiatec.btv_launcher.bean.UpdateInfo;
 import com.wiatec.btv_launcher.bean.VideoInfo;

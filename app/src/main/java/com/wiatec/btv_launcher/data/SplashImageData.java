@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
-import com.wiatec.btv_launcher.activity.ISplashActivity;
 import com.wiatec.btv_launcher.bean.ImageInfo;
 
 import org.json.JSONObject;

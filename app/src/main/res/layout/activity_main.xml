@@ -11,7 +11,7 @@
         android:text="13:00"
         android:gravity="center_vertical"
         android:textSize="25sp"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorBlack"
         android:id="@+id/tv_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -29,7 +29,7 @@
         android:text="11-08-2016"
         android:layout_alignParentRight="true"
         android:textSize="25sp"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorBlack"
         android:id="@+id/tv_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -37,22 +37,22 @@
     <ImageButton
         android:padding="3dp"
         android:scaleType="centerInside"
-        android:background="@drawable/white_side"
+        android:background="@drawable/icon_bg"
         android:layout_marginLeft="5dp"
-        android:src="@drawable/weather"
+        android:src="@drawable/weather_icon"
         android:layout_toLeftOf="@id/tv_date"
         android:id="@+id/ibt_weather"
         android:layout_width="32dp"
         android:layout_height="32dp" />
 
-    <ImageButton
+    <ImageView
         android:padding="3dp"
         android:visibility="gone"
         android:scaleType="centerInside"
-        android:background="@drawable/white_side"
-        android:src="@drawable/message"
+        android:background="@drawable/icon_bg"
+        android:src="@drawable/message_small_icon"
         android:layout_toLeftOf="@id/ibt_weather"
-        android:id="@+id/ibt_message"
+        android:id="@+id/iv_message"
         android:layout_width="32dp"
         android:layout_height="32dp" />
 
@@ -65,7 +65,7 @@
         android:layout_height="40dp">
         <TextView
             android:id="@+id/tv_message"
-            android:drawableLeft="@drawable/speaker"
+            android:drawableLeft="@drawable/message1_sp_icon"
             android:text="  www.legacy.direct"
             android:textSize="24sp"
             android:visibility="gone"

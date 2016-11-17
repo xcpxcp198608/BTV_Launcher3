@@ -3,7 +3,8 @@ package com.wiatec.btv_launcher.service;
 import android.app.IntentService;
 import android.content.Intent;
 
-import com.wiatec.btv_launcher.Utils.Logger;
+import com.wiatec.btv_launcher.service_task.LoadInstalledApp;
+import com.wiatec.btv_launcher.service_task.LoadMessage;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

@@ -1,4 +1,4 @@
-package com.wiatec.btv_launcher.service;
+package com.wiatec.btv_launcher.service_task;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;

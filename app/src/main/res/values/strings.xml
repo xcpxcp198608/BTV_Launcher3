@@ -17,6 +17,8 @@
     <string name="pass">Pass</string>
     <string name="detail">Detail</string>
     <string name="ad">Advertisement</string>
+    <string name="apocalypse">apocalypse</string>
+
 
     <string name="delete">Delete All</string>
     <string name="network_disconnect">Network Disconnect</string>

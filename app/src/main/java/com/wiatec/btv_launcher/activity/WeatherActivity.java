@@ -1,8 +1,9 @@
-package com.wiatec.btv_launcher.activity;
+package com.wiatec.btv_launcher.Activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.wiatec.btv_launcher.bean.WeatherInfo;
 import com.wiatec.btv_launcher.presenter.WeatherPresenter;
 
 /**
@@ -25,10 +26,11 @@ public class WeatherActivity extends BaseActivity<IWeatherActivity ,WeatherPrese
     protected void onStart() {
         super.onStart();
         presenter.loadWeather();
+
     }
 
     @Override
-    public void loadWeather() {
+    public void loadWeather(WeatherInfo weatherInfo) {
 
     }
 }

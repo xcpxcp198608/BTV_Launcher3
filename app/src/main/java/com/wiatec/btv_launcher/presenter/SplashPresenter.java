@@ -1,7 +1,7 @@
 package com.wiatec.btv_launcher.presenter;
 
 import com.wiatec.btv_launcher.Utils.Logger;
-import com.wiatec.btv_launcher.activity.ISplashActivity;
+import com.wiatec.btv_launcher.Activity.ISplashActivity;
 import com.wiatec.btv_launcher.bean.ImageInfo;
 import com.wiatec.btv_launcher.data.ISplashImageData;
 import com.wiatec.btv_launcher.data.SplashImageData;

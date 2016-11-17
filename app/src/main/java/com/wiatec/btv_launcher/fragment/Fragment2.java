@@ -15,7 +15,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.R;
+import com.wiatec.btv_launcher.Utils.ApkCheck;
+import com.wiatec.btv_launcher.Utils.ApkLaunch;
 import com.wiatec.btv_launcher.animator.Zoom;
 import com.wiatec.btv_launcher.bean.ChannelInfo;
 import com.wiatec.btv_launcher.bean.ImageInfo;
@@ -43,16 +46,17 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
     SurfaceView surfaceView;
     @BindView(R.id.iv_bvision)
     ImageView iv_Bvision;
-    @BindView(R.id.ibt_ad_r1)
-    ImageButton ibt_AdR1;
-    @BindView(R.id.ibt_ad_r2)
-    ImageButton ibt_AdR2;
-    @BindView(R.id.ibt_ad_r3)
-    ImageButton ibt_AdR3;
-    @BindView(R.id.ibt_bvision)
-    ImageButton ibt_Bvision;
-    @BindView(R.id.ibt_qishi)
-    ImageButton ibt_Qishi;
+    @BindView(R.id.ibt_tv)
+    ImageButton ibt_Tv;
+    @BindView(R.id.ibt_apocalypse)
+    ImageButton ibt_Apocalypse;
+    @BindView(R.id.ibt_browser)
+    ImageButton ibt_Browser;
+    @BindView(R.id.ibt_security)
+    ImageButton ibt_Security;
+    @BindView(R.id.ibt_file)
+    ImageButton ibt_File;
+
 
     private SurfaceHolder surfaceHolder;
     private MediaPlayer mediaPlayer;
@@ -150,25 +154,21 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
     @Override
     public void loadImage2(final List<ImageInfo> list) {
 //        Logger.d(list.toString());
-        Glide.with(getContext()).load(list.get(0).getUrl()).placeholder(R.drawable.anti_virus_icon).into(ibt_AdR1);
-        Glide.with(getContext()).load(list.get(1).getUrl()).placeholder(R.drawable.anti_virus_icon).into(ibt_AdR2);
-        Glide.with(getContext()).load(list.get(2).getUrl()).placeholder(R.drawable.anti_virus_icon).into(ibt_AdR3);
-        ibt_AdR1.setOnClickListener(new View.OnClickListener() {
+        Glide.with(getContext()).load(list.get(0).getUrl()).placeholder(R.drawable.tv_icon).into(ibt_Tv);
+        Glide.with(getContext()).load(list.get(1).getUrl()).placeholder(R.drawable.apocalypse_icon).into(ibt_Apocalypse);
+        Glide.with(getContext()).load(list.get(2).getUrl()).placeholder(R.drawable.browser_icon).into(ibt_Browser);
+        Glide.with(getContext()).load(list.get(3).getUrl()).placeholder(R.drawable.security_icon).into(ibt_Security);
+        Glide.with(getContext()).load(list.get(4).getUrl()).placeholder(R.drawable.file_icon).into(ibt_File);
+        ibt_Tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(list.get(0).getLink())));
             }
         });
-        ibt_AdR2.setOnClickListener(new View.OnClickListener() {
+        ibt_Apocalypse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(list.get(1).getLink())));
-            }
-        });
-        ibt_AdR3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(list.get(2).getLink())));
             }
         });
     }
@@ -202,20 +202,41 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
     }
 
     private void setZoom() {
-        ibt_Bvision.setOnFocusChangeListener(this);
+        ibt_Tv.setOnFocusChangeListener(this);
         bt_B1.setOnFocusChangeListener(this);
         bt_B2.setOnFocusChangeListener(this);
         bt_B3.setOnFocusChangeListener(this);
-        ibt_Qishi.setOnFocusChangeListener(this);
-        ibt_AdR1.setOnFocusChangeListener(this);
-        ibt_AdR2.setOnFocusChangeListener(this);
-        ibt_AdR3.setOnFocusChangeListener(this);
+        ibt_Apocalypse.setOnFocusChangeListener(this);
+        ibt_Browser.setOnFocusChangeListener(this);
+        ibt_Security.setOnFocusChangeListener(this);
+        ibt_File.setOnFocusChangeListener(this);
     }
 
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
-        if(hasFocus){
+        if (hasFocus) {
             Zoom.zoomIn10_11(v);
+        }
+    }
+
+    @OnClick({R.id.ibt_browser, R.id.ibt_security, R.id.ibt_file})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.ibt_browser:
+                if(ApkCheck.isApkInstalled(getContext(), F.package_name.browser)){
+                    ApkLaunch.launchApkByPackageName(getContext(),F.package_name.browser);
+                }
+                break;
+            case R.id.ibt_security:
+                if(ApkCheck.isApkInstalled(getContext(), F.package_name.legacy_antivirus)){
+                    ApkLaunch.launchApkByPackageName(getContext(),F.package_name.legacy_antivirus);
+                }
+                break;
+            case R.id.ibt_file:
+                if(ApkCheck.isApkInstalled(getContext(), F.package_name.file)){
+                    ApkLaunch.launchApkByPackageName(getContext(),F.package_name.file);
+                }
+                break;
         }
     }
 }
