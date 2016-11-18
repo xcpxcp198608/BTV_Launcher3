@@ -5,12 +5,15 @@ import com.wiatec.btv_launcher.Activity.IMainActivity;
 import com.wiatec.btv_launcher.bean.Message1Info;
 import com.wiatec.btv_launcher.bean.UpdateInfo;
 import com.wiatec.btv_launcher.bean.VideoInfo;
+import com.wiatec.btv_launcher.bean.WeatherInfo;
 import com.wiatec.btv_launcher.data.IMessage1Data;
 import com.wiatec.btv_launcher.data.IUpdateData;
 import com.wiatec.btv_launcher.data.IVideoData;
+import com.wiatec.btv_launcher.data.IWeatherData;
 import com.wiatec.btv_launcher.data.Message1Data;
 import com.wiatec.btv_launcher.data.UpdateData;
 import com.wiatec.btv_launcher.data.VideoData;
+import com.wiatec.btv_launcher.data.WeatherData;
 
 import java.util.List;
 
@@ -24,15 +27,33 @@ public class MainPresenter extends BasePresenter<IMainActivity> {
     private IMessage1Data iMessage1Data;
     private IUpdateData iUpdateData;
     private IVideoData iVideoData;
+    private IWeatherData iWeatherData;
 
     public MainPresenter(IMainActivity iMainActivity) {
         this.iMainActivity = iMainActivity;
         iMessage1Data = new Message1Data();
         iUpdateData = new UpdateData();
         iVideoData = new VideoData();
+        iWeatherData = new WeatherData();
     }
 
-    public void loadMessage (){
+    public void loadWeatherIcon (){
+        if(iWeatherData !=null){
+            iWeatherData.loadData(new IWeatherData.OnLoadListener() {
+                @Override
+                public void onSuccess(WeatherInfo weatherInfo) {
+                    iMainActivity.loadWeather(weatherInfo);
+                }
+
+                @Override
+                public void onFailure(String e) {
+                    Logger.d(e);
+                }
+            });
+        }
+    }
+
+    public void bind (){
         if(iUpdateData != null){
             iUpdateData.loadData(new IUpdateData.OnLoadListener() {
                 @Override

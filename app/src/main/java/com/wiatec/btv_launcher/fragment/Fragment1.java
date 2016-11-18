@@ -74,7 +74,7 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Logger.d("f1 -onCreateView ");
+        //Logger.d("f1 -onCreateView ");
         View view = inflater.inflate(R.layout.fragment1, container, false);
         ButterKnife.bind(this, view);
         networkStatusReceiver = new NetworkStatusReceiver(null);
@@ -87,13 +87,13 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if(isVisibleToUser){
-            Logger.d("f1 -isVisibleToUser " + isVisibleToUser);
+            //Logger.d("f1 -isVisibleToUser " + isVisibleToUser);
             isF1Visible = true;
             if(vv_Main!=null && !vv_Main.isPlaying()){
                 playVideo();
             }
         }else {
-            Logger.d("f1 -isVisibleToUser " + isVisibleToUser);
+            //Logger.d("f1 -isVisibleToUser " + isVisibleToUser);
             isF1Visible =false;
             if(vv_Main!=null && vv_Main.isPlaying()){
                 playPosition = vv_Main.getCurrentPosition();
@@ -105,7 +105,7 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
     @Override
     public void onStart() {
         super.onStart();
-        Logger.d("f1 -onStart ");
+        //Logger.d("f1 -onStart ");
         presenter.loadData();
         setZoom();
     }
@@ -118,7 +118,7 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
     @Override
     public void onResume() {
         super.onResume();
-        Logger.d("f1 -onResume " +isF1Visible);
+       // Logger.d("f1 -onResume " +isF1Visible);
         if(vv_Main!=null && !vv_Main.isPlaying() && isF1Visible){
             playVideo();
         }
@@ -127,7 +127,7 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
     @Override
     public void onPause() {
         super.onPause();
-        Logger.d("f1 -onPause ");
+        //Logger.d("f1 -onPause ");
         if(vv_Main!=null && vv_Main.isPlaying()){
             playPosition = vv_Main.getCurrentPosition();
             vv_Main.stopPlayback();
@@ -209,7 +209,7 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
 
     @Override
     public void loadImage(final List<ImageInfo> list) {
-//        Logger.d(list.toString());
+        //Logger.d(list.toString());
         Glide.with(getContext()).load(list.get(0).getUrl()).placeholder(R.drawable.btv_icon_1).into(ibt_Btv);
         Glide.with(getContext()).load(list.get(1).getUrl()).placeholder(R.drawable.user_guide_icon).into(ibt_UserGuide);
         Glide.with(getContext()).load(list.get(2).getUrl()).placeholder(R.drawable.setting_icon).into(ibt_Setting);

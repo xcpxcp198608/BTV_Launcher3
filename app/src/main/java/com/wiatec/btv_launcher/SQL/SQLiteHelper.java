@@ -25,10 +25,10 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public static final String WEATHER_TABLE = "WEATHER";
     private static final String CREATE_TABLE_WEATHER = "create table if not exists "+WEATHER_TABLE+"(_id integer primary key autoincrement," +
             "country text ,city text,icon text,weather text,weatherDescription text,temperature text,humidity text," +
-            "pressure text,maxTemperature text,minTemperature text,deg text,spd text,sunrise text,sunset text)";
+            "pressure text,maxTemperature text,minTemperature text,deg text,spd text,sunrise text,sunset text,date text)";
     private static final String DROP_TABLE_WEATHER= "drop table if exists "+WEATHER_TABLE;
 
-    private static final int VERSION =3;
+    private static final int VERSION =4;
 
     public SQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, VERSION);

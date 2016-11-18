@@ -18,8 +18,15 @@
     <string name="detail">Detail</string>
     <string name="ad">Advertisement</string>
     <string name="apocalypse">apocalypse</string>
-
-
     <string name="delete">Delete All</string>
     <string name="network_disconnect">Network Disconnect</string>
+
+    <string name="weather">Weather</string>
+    <string name="temperature">Temperature</string>
+    <string name="humidity">Humidity</string>
+    <string name="pressure">Pressure</string>
+    <string name="wind">Wind</string>
+    <string name="sunset">Sunset</string>
+    <string name="wind_unit">m/s</string>
+
 </resources>

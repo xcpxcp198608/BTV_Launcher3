@@ -3,6 +3,7 @@ package com.wiatec.btv_launcher.Activity;
 import com.wiatec.btv_launcher.bean.Message1Info;
 import com.wiatec.btv_launcher.bean.UpdateInfo;
 import com.wiatec.btv_launcher.bean.VideoInfo;
+import com.wiatec.btv_launcher.bean.WeatherInfo;
 
 import java.util.List;
 
@@ -14,4 +15,5 @@ public interface IMainActivity {
     void loadUpdate (UpdateInfo updateInfo);
     void loadVideo (VideoInfo videoInfo);
     void loadMessage1 (List<Message1Info> list);
+    void loadWeather (WeatherInfo weatherInfo);
 }

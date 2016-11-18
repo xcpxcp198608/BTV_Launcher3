@@ -1,5 +1,8 @@
 package com.wiatec.btv_launcher.Activity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -9,6 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -29,14 +33,17 @@ import com.wiatec.btv_launcher.Utils.FileDownload.DownloadManager;
 import com.wiatec.btv_launcher.Utils.FileDownload.OnDownloadListener;
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.SystemConfig;
+import com.wiatec.btv_launcher.WeatherIconSetting;
 import com.wiatec.btv_launcher.adapter.FragmentAdapter;
 import com.wiatec.btv_launcher.bean.Message1Info;
 import com.wiatec.btv_launcher.bean.UpdateInfo;
 import com.wiatec.btv_launcher.bean.VideoInfo;
+import com.wiatec.btv_launcher.bean.WeatherInfo;
 import com.wiatec.btv_launcher.fragment.Fragment1;
 import com.wiatec.btv_launcher.fragment.Fragment2;
 import com.wiatec.btv_launcher.presenter.MainPresenter;
 import com.wiatec.btv_launcher.receiver.NetworkStatusReceiver;
+import com.wiatec.btv_launcher.receiver.WeatherStatusReceiver;
 import com.wiatec.btv_launcher.receiver.WifiStatusReceiver;
 import com.wiatec.btv_launcher.service.LoadService;
 
@@ -55,7 +62,7 @@ import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
-public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> implements IMainActivity, OnNetworkStatusListener, OnWifiStatusListener {
+public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> implements IMainActivity,OnNetworkStatusListener, OnWifiStatusListener {
 
     @BindView(R.id.tv_time)
     TextView tv_Time;
@@ -78,6 +85,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
 
     private NetworkStatusReceiver networkStatusReceiver;
     private WifiStatusReceiver wifiStatusReceiver;
+    private WeatherStatusReceiver weatherStatusReceiver;
     private boolean isVideoDownloading = false;
     private MessageDao messageDao;
 
@@ -106,9 +114,11 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
         wifiStatusReceiver = new WifiStatusReceiver();
         wifiStatusReceiver.setOnWifiStatusListener(this);
         registerReceiver(wifiStatusReceiver, new IntentFilter(WifiManager.RSSI_CHANGED_ACTION));
+        weatherStatusReceiver = new WeatherStatusReceiver(ibt_Weather);
+        registerReceiver(weatherStatusReceiver, new IntentFilter("action.Weather.Change"));
 
         Intent intent = new Intent(MainActivity.this, LoadService.class);
-        intent.setAction("loadApp");
+        intent.setAction("loadInstalledApp");
         startService(intent);
 
         messageDao = MessageDao.getInstance(MainActivity.this);
@@ -117,6 +127,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
     @Override
     protected void onStart() {
         super.onStart();
+        presenter.loadWeatherIcon();
         if(SystemConfig.isNetworkConnected(MainActivity.this)) {
             Intent intent = new Intent(MainActivity.this, LoadService.class);
             intent.setAction("loadMessage");
@@ -127,7 +138,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
                 .map(new Func1<String, Boolean>() {
                     @Override
                     public Boolean call(String s) {
-                        return messageDao.hasUnreadMessage();
+                        return messageDao.hasUnReadMessage();
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
@@ -148,6 +159,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
         super.onDestroy();
         unregisterReceiver(networkStatusReceiver);
         unregisterReceiver(wifiStatusReceiver);
+        unregisterReceiver(weatherStatusReceiver);
     }
 
     @Override
@@ -200,11 +212,15 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
     public void onConnected(boolean isConnected) {
         if (isConnected) {
             showNetworkStatus();
-            presenter.loadMessage();
+            presenter.bind();
 
-            Intent intent = new Intent(MainActivity.this, LoadService.class);
-            intent.setAction("loadMessage");
-            startService(intent);
+            Intent alarmIntent = new Intent(MainActivity.this , LoadService.class);
+            alarmIntent.setAction("loadWeather");
+            PendingIntent alarmPendingIntent = PendingIntent.getService(MainActivity.this , 0,alarmIntent ,0);
+            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            long startTime = SystemClock.elapsedRealtime();
+            long repeatTime = 120*60*1000;
+            alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP ,startTime ,repeatTime ,alarmPendingIntent);
         }
     }
 
@@ -276,7 +292,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
             Logger.d("video is not intact");
             downloadVideo(videoInfo);
         } else {
-            Logger.d("video no need update");
+           // Logger.d("video no need update");
         }
     }
 
@@ -305,6 +321,11 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
                 });
 
 
+    }
+
+    @Override
+    public void loadWeather(WeatherInfo weatherInfo) {
+        WeatherIconSetting.setIcon(ibt_Weather ,weatherInfo.getIcon());
     }
 
     private void showUpdateDialog(final UpdateInfo updateInfo) {

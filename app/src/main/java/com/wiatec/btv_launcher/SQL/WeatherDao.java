@@ -59,6 +59,7 @@ public class WeatherDao {
             contentValues.put("spd", weatherInfo.getSpd());
             contentValues.put("sunrise", weatherInfo.getSunrise());
             contentValues.put("sunset", weatherInfo.getSunset());
+            contentValues.put("date", weatherInfo.getDate());
             sqLiteDatabase.insert(SQLiteHelper.WEATHER_TABLE, null, contentValues);
         }catch (Exception e){
             e.printStackTrace();
@@ -86,6 +87,7 @@ public class WeatherDao {
             weatherInfo.setSpd(cursor.getString(cursor.getColumnIndex("spd")));
             weatherInfo.setSunrise(cursor.getString(cursor.getColumnIndex("sunrise")));
             weatherInfo.setSunset(cursor.getString(cursor.getColumnIndex("sunset")));
+            weatherInfo.setDate(cursor.getString(cursor.getColumnIndex("date")));
         }
         if(cursor!=null){
             cursor.close();

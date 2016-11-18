@@ -1,12 +1,16 @@
 package com.wiatec.btv_launcher.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by PX on 2016-11-15.
  */
 
-public class WeatherInfo {
+public class WeatherInfo implements Parcelable {
     private String country;
     private String city;
+    private String date;
     private String icon;
     private String weather;
     private String weatherDescription;
@@ -19,6 +23,14 @@ public class WeatherInfo {
     private String spd;
     private String sunrise;
     private String sunset;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public String getCountry() {
         return country;
@@ -137,6 +149,7 @@ public class WeatherInfo {
         return "WeatherInfo{" +
                 "country='" + country + '\'' +
                 ", city='" + city + '\'' +
+                ", date='" + date + '\'' +
                 ", icon='" + icon + '\'' +
                 ", weather='" + weather + '\'' +
                 ", weatherDescription='" + weatherDescription + '\'' +
@@ -151,4 +164,61 @@ public class WeatherInfo {
                 ", sunset='" + sunset + '\'' +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.country);
+        dest.writeString(this.city);
+        dest.writeString(this.date);
+        dest.writeString(this.icon);
+        dest.writeString(this.weather);
+        dest.writeString(this.weatherDescription);
+        dest.writeString(this.temperature);
+        dest.writeString(this.humidity);
+        dest.writeString(this.pressure);
+        dest.writeString(this.maxTemperature);
+        dest.writeString(this.minTemperature);
+        dest.writeString(this.deg);
+        dest.writeString(this.spd);
+        dest.writeString(this.sunrise);
+        dest.writeString(this.sunset);
+    }
+
+    public WeatherInfo() {
+    }
+
+    protected WeatherInfo(Parcel in) {
+        this.country = in.readString();
+        this.city = in.readString();
+        this.date = in.readString();
+        this.icon = in.readString();
+        this.weather = in.readString();
+        this.weatherDescription = in.readString();
+        this.temperature = in.readString();
+        this.humidity = in.readString();
+        this.pressure = in.readString();
+        this.maxTemperature = in.readString();
+        this.minTemperature = in.readString();
+        this.deg = in.readString();
+        this.spd = in.readString();
+        this.sunrise = in.readString();
+        this.sunset = in.readString();
+    }
+
+    public static final Parcelable.Creator<WeatherInfo> CREATOR = new Parcelable.Creator<WeatherInfo>() {
+        @Override
+        public WeatherInfo createFromParcel(Parcel source) {
+            return new WeatherInfo(source);
+        }
+
+        @Override
+        public WeatherInfo[] newArray(int size) {
+            return new WeatherInfo[size];
+        }
+    };
 }

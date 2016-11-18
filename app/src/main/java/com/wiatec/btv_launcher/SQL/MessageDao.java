@@ -143,7 +143,7 @@ public class MessageDao {
         return flag;
     }
 
-    public boolean hasUnreadMessage (){
+    public boolean hasUnReadMessage (){
         Cursor cursor = sqLiteDatabase.query(SQLiteHelper.MESSAGE_TABLE ,null , "isRead=?" , new String []{"false"} ,null,null,null);
         boolean isExists = cursor.moveToNext();
         if(cursor != null){

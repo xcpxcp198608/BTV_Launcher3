@@ -2,39 +2,58 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:padding="20dp"
-    android:background="@drawable/mbg9"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:orientation="horizontal"
         android:gravity="center"
         android:layout_weight="3"
         android:layout_width="match_parent"
         android:layout_height="0dp">
 
         <ImageView
-            android:src="@drawable/weather"
+            android:id="@+id/iv_icon"
+
+            android:scaleType="centerCrop"
             android:layout_width="128dp"
             android:layout_height="128dp" />
+
         <ImageView
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:background="@color/colorWhite"
+            android:background="@color/colorBlack"
             android:layout_width="3dp"
             android:layout_height="100dp" />
-        <TextView
-            android:textSize="40sp"
-            android:text="ShenZhen"
-            android:gravity="center"
-            android:textColor="@color/colorWhite"
+
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="128dp" />
+            android:layout_height="128dp">
+            <TextView
+                android:id="@+id/tv_city"
+                android:textSize="40sp"
+                android:gravity="center"
+                android:textColor="@color/colorBlack"
+                android:layout_width="wrap_content"
+                android:layout_weight="2"
+                android:layout_height="0dp" />
+            <TextView
+                android:id="@+id/tv_description"
+                android:textSize="24sp"
+                android:textColor="@color/colorBlack"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="0dp" />
+        </LinearLayout>
 
     </LinearLayout>
 
+
     <LinearLayout
+        android:gravity="center"
         android:orientation="horizontal"
         android:layout_weight="1"
         android:layout_width="match_parent"
@@ -48,18 +67,18 @@
 
             <TextView
                 android:gravity="center"
-                android:textColor="@color/colorWhite"
-                android:textSize="20sp"
-                android:text="Weather"
+                android:textColor="@color/colorBlack"
+                android:textSize="24sp"
+                android:text="@string/weather"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp" />
 
             <TextView
+                android:id="@+id/tv_weather"
                 android:gravity="center"
-                android:textColor="@color/colorWhite"
-                android:textSize="18sp"
-                android:text="Sun"
+                android:textColor="@color/colorBlack"
+                android:textSize="20sp"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp" />
@@ -73,18 +92,18 @@
 
             <TextView
                 android:gravity="center"
-                android:textColor="@color/colorWhite"
-                android:textSize="20sp"
-                android:text="Tem"
+                android:textColor="@color/colorBlack"
+                android:textSize="24sp"
+                android:text="@string/temperature"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp" />
 
             <TextView
+                android:id="@+id/tv_temperature"
                 android:gravity="center"
-                android:textColor="@color/colorWhite"
-                android:textSize="18sp"
-                android:text="27℃/70F"
+                android:textColor="@color/colorBlack"
+                android:textSize="20sp"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp" />
@@ -98,18 +117,18 @@
 
             <TextView
                 android:gravity="center"
-                android:textColor="@color/colorWhite"
-                android:textSize="20sp"
-                android:text="MaxTem"
+                android:textColor="@color/colorBlack"
+                android:textSize="24sp"
+                android:text="@string/wind"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp" />
 
             <TextView
+                android:id="@+id/tv_wind"
                 android:gravity="center"
-                android:textColor="@color/colorWhite"
-                android:textSize="18sp"
-                android:text="27℃/70F"
+                android:textColor="@color/colorBlack"
+                android:textSize="20sp"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp" />
@@ -123,18 +142,18 @@
 
             <TextView
                 android:gravity="center"
-                android:textColor="@color/colorWhite"
-                android:textSize="20sp"
-                android:text="MinTem"
+                android:textColor="@color/colorBlack"
+                android:textSize="24sp"
+                android:text="@string/humidity"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp" />
 
             <TextView
+                android:id="@+id/tv_humidity"
                 android:gravity="center"
-                android:textColor="@color/colorWhite"
-                android:textSize="18sp"
-                android:text="27℃/70F"
+                android:textColor="@color/colorBlack"
+                android:textSize="20sp"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp" />
@@ -148,23 +167,22 @@
 
             <TextView
                 android:gravity="center"
-                android:textColor="@color/colorWhite"
-                android:textSize="20sp"
-                android:text="Hum"
+                android:textColor="@color/colorBlack"
+                android:textSize="24sp"
+                android:text="@string/pressure"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp" />
 
             <TextView
+                android:id="@+id/tv_pressure"
                 android:gravity="center"
-                android:textColor="@color/colorWhite"
-                android:textSize="18sp"
-                android:text="70"
+                android:textColor="@color/colorBlack"
+                android:textSize="20sp"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp" />
         </LinearLayout>
-
 
     </LinearLayout>
 

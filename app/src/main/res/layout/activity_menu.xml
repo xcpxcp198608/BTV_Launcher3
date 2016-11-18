@@ -8,7 +8,7 @@
     <GridView
         android:layout_marginTop="10dp"
         android:id="@+id/gv_Menu"
-        android:numColumns="6"
+        android:numColumns="7"
         android:horizontalSpacing="5dp"
         android:verticalSpacing="5dp"
         android:listSelector="@drawable/menu_item_bg"

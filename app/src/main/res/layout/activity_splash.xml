@@ -11,6 +11,8 @@
         android:layout_height="match_parent" />
 
     <LinearLayout
+        android:id="@+id/ll_delay"
+        android:visibility="gone"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="3dp"
