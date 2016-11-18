@@ -7,19 +7,19 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:layout_weight="2.5"
+        android:layout_weight="1.25"
         android:layout_width="0dp"
         android:layout_height="match_parent" />
 
     <RelativeLayout
-        android:layout_weight="5"
+        android:layout_weight="7.5"
         android:layout_width="0dp"
         android:layout_height="match_parent">
         <TextView
             android:id="@+id/tv_delete"
             android:layout_centerHorizontal="true"
             android:textSize="28sp"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorBlack"
             android:gravity="center"
             android:text="@string/delete"
             android:layout_width="wrap_content"
@@ -46,7 +46,7 @@
     </RelativeLayout>
 
     <TextView
-        android:layout_weight="2.5"
+        android:layout_weight="1.25"
         android:layout_width="0dp"
         android:layout_height="match_parent" />
 

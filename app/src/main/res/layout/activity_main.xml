@@ -68,6 +68,8 @@
             android:drawableLeft="@drawable/message1_sp_icon"
             android:text="  www.legacy.direct"
             android:textSize="24sp"
+            android:singleLine="true"
+            android:ellipsize="marquee"
             android:visibility="gone"
             android:gravity="center_vertical"
             android:textColor="@color/colorWhite"

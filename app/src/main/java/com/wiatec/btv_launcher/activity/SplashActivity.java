@@ -108,6 +108,7 @@ public class SplashActivity extends BaseActivity<ISplashActivity, SplashPresente
     @OnClick(R.id.ibt_pass)
     public void onClick() {
         launchApp(packageName);
+        subscription.unsubscribe();
         finish();
     }
 }
