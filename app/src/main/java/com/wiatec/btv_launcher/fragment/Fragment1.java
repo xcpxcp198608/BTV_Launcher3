@@ -239,7 +239,6 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
         //Logger.d(list.toString());
         RollImageAdapter rollImageAdapter = new RollImageAdapter(list);
         rpv_Main.setAdapter(rollImageAdapter);
-        rpv_Main.setHintView(null);
     }
 
     public void showLinkByBrowser(String url){

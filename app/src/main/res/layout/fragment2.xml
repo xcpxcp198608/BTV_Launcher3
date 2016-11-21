@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="10dp"
     android:layout_width="match_parent"
@@ -37,7 +38,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent">
 
-            <ImageButton
+            <ImageView
                 android:padding="15dp"
                 android:id="@+id/ibt_tv"
                 android:src="@drawable/tv_icon"
@@ -109,15 +110,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp" />
 
-            <ImageButton
-                android:id="@+id/ibt_apocalypse"
-                android:padding="3dp"
-                android:cropToPadding="true"
-                android:scaleType="centerCrop"
-                android:background="@drawable/item_btv_bg"
-                android:src="@drawable/apocalypse_icon"
-                android:layout_weight="3"
+            <com.jude.rollviewpager.RollPagerView
+                android:id="@+id/rpv_apocalypse"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:background="@drawable/apocalypse_icon"
+                app:rollviewpager_play_delay="60000"
                 android:layout_width="match_parent"
+                android:layout_weight="3"
                 android:layout_height="0dp" />
 
             <TextView

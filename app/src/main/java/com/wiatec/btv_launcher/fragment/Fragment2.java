@@ -15,13 +15,18 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.jude.rollviewpager.RollPagerView;
 import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.Utils.ApkCheck;
 import com.wiatec.btv_launcher.Utils.ApkLaunch;
+import com.wiatec.btv_launcher.Utils.Logger;
+import com.wiatec.btv_launcher.adapter.RollImage2Adapter;
+import com.wiatec.btv_launcher.adapter.RollImageAdapter;
 import com.wiatec.btv_launcher.animator.Zoom;
 import com.wiatec.btv_launcher.bean.ChannelInfo;
 import com.wiatec.btv_launcher.bean.ImageInfo;
+import com.wiatec.btv_launcher.bean.RollImageInfo;
 import com.wiatec.btv_launcher.presenter.Fragment2Presenter;
 
 import java.io.IOException;
@@ -47,9 +52,9 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
     @BindView(R.id.iv_bvision)
     ImageView iv_Bvision;
     @BindView(R.id.ibt_tv)
-    ImageButton ibt_Tv;
-    @BindView(R.id.ibt_apocalypse)
-    ImageButton ibt_Apocalypse;
+    ImageView ibt_Tv;
+    @BindView(R.id.rpv_apocalypse)
+    RollPagerView rpv_Apocalypse;
     @BindView(R.id.ibt_browser)
     ImageButton ibt_Browser;
     @BindView(R.id.ibt_security)
@@ -60,6 +65,7 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
 
     private SurfaceHolder surfaceHolder;
     private MediaPlayer mediaPlayer;
+    private RollImage2Adapter rollImage2Adapter;
 
     @Nullable
     @Override
@@ -155,22 +161,17 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
     public void loadImage2(final List<ImageInfo> list) {
 //        Logger.d(list.toString());
         Glide.with(getContext()).load(list.get(0).getUrl()).placeholder(R.drawable.tv_icon).into(ibt_Tv);
-        Glide.with(getContext()).load(list.get(1).getUrl()).placeholder(R.drawable.apocalypse_icon).into(ibt_Apocalypse);
         Glide.with(getContext()).load(list.get(2).getUrl()).placeholder(R.drawable.browser_icon).into(ibt_Browser);
         Glide.with(getContext()).load(list.get(3).getUrl()).placeholder(R.drawable.security_icon).into(ibt_Security);
         Glide.with(getContext()).load(list.get(4).getUrl()).placeholder(R.drawable.file_icon).into(ibt_File);
-        ibt_Tv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(list.get(0).getLink())));
-            }
-        });
-        ibt_Apocalypse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(list.get(1).getLink())));
-            }
-        });
+    }
+
+    @Override
+    public void loadRollImage2(List<RollImageInfo> list) {
+//        Logger.d(list.toString());
+        rollImage2Adapter = new RollImage2Adapter(list);
+        rpv_Apocalypse.setAdapter(rollImage2Adapter);
+        rpv_Apocalypse.setHintView(null);
     }
 
     private void playVideo(List<ChannelInfo> list, int position) {
@@ -202,11 +203,9 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
     }
 
     private void setZoom() {
-        ibt_Tv.setOnFocusChangeListener(this);
         bt_B1.setOnFocusChangeListener(this);
         bt_B2.setOnFocusChangeListener(this);
         bt_B3.setOnFocusChangeListener(this);
-        ibt_Apocalypse.setOnFocusChangeListener(this);
         ibt_Browser.setOnFocusChangeListener(this);
         ibt_Security.setOnFocusChangeListener(this);
         ibt_File.setOnFocusChangeListener(this);

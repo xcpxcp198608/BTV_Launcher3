@@ -34,6 +34,7 @@
         <activity android:name=".Activity.SplashActivity"/>
         <activity android:name=".Activity.MessageActivity"/>
         <activity android:name=".Activity.WeatherActivity"/>
+        <activity android:name=".Activity.AppSelectActivity"/>
 
         <receiver android:name=".receiver.AppInstallReceiver">
             <intent-filter>

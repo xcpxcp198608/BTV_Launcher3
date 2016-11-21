@@ -1,26 +1,26 @@
 package com.wiatec.btv_launcher.Activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.GridView;
 
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.SQL.InstalledAppDao;
+import com.wiatec.btv_launcher.adapter.FragmentAdapter;
 import com.wiatec.btv_launcher.adapter.MenuItemAdapter;
-import com.wiatec.btv_launcher.animator.Zoom;
-import com.wiatec.btv_launcher.bean.InstalledApp;
+import com.wiatec.btv_launcher.custom_view.ViewPagerIndicator;
+import com.wiatec.btv_launcher.fragment.FragmentAll;
+import com.wiatec.btv_launcher.fragment.FragmentFavorite;
+import com.wiatec.btv_launcher.fragment.FragmentGame;
+import com.wiatec.btv_launcher.fragment.FragmentMusic;
+import com.wiatec.btv_launcher.fragment.FragmentVideo;
 
-import java.util.List;
+import java.util.ArrayList;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by PX on 2016-11-12.
@@ -28,65 +28,61 @@ import rx.schedulers.Schedulers;
 
 public class MenuActivity extends AppCompatActivity {
 
+    @BindView(R.id.viewpager_indicator)
+    ViewPagerIndicator viewpagerIndicator;
+    @BindView(R.id.viewPager)
+    ViewPager viewPager;
+
+    private FragmentFavorite fragmentFavorite;
+    private FragmentAll fragmentAll;
+    private FragmentVideo fragmentVideo;
+    private FragmentGame fragmentGame;
+    private FragmentMusic fragmentMusic;
+    private ArrayList<Fragment> fragmentList;
+    private FragmentAdapter fragmentAdapter;
+
     private MenuItemAdapter menuItemAdapter;
-    private InstalledAppDao sqliteDao;
-    private GridView gv_Menu;
+    public InstalledAppDao installedAppDao;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        sqliteDao = InstalledAppDao.getInstance(MenuActivity.this);
-        gv_Menu = (GridView) findViewById(R.id.gv_Menu);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Observable.just("")
-                .subscribeOn(Schedulers.io())
-                .map(new Func1<String, List<InstalledApp>>() {
-                    @Override
-                    public List<InstalledApp> call(String s) {
-                        return sqliteDao.queryData();
-                    }
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<InstalledApp>>() {
-                    @Override
-                    public void call(final List<InstalledApp> installedApps) {
-                        menuItemAdapter = new MenuItemAdapter(MenuActivity.this , installedApps);
-                        gv_Menu.setAdapter(menuItemAdapter);
-                        gv_Menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                String packageName = installedApps.get(position).getAppPackageName();
-                                Intent intent = new Intent(MenuActivity.this , SplashActivity.class);
-                                intent.putExtra("packageName" ,packageName);
-                                startActivity(intent);
-                            }
-                        });
-                        gv_Menu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                            @Override
-                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                Zoom.zoomIn10_11(view);
-                            }
-
-                            @Override
-                            public void onNothingSelected(AdapterView<?> parent) {
-
-                            }
-                        });
-                    }
-                });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if(menuItemAdapter!=null){
-            menuItemAdapter.notifyDataSetChanged();
+        ButterKnife.bind(this);
+        installedAppDao = InstalledAppDao.getInstance(MenuActivity.this);
+        if(fragmentFavorite == null){
+            fragmentFavorite = new FragmentFavorite();
         }
+        if(fragmentAll == null){
+            fragmentAll = new FragmentAll();
+        }
+        if(fragmentVideo == null){
+            fragmentVideo = new FragmentVideo();
+        }
+        if(fragmentGame == null){
+            fragmentGame = new FragmentGame();
+        }
+        if(fragmentMusic == null){
+            fragmentMusic = new FragmentMusic();
+        }
+        if(fragmentList ==null){
+            fragmentList = new ArrayList<>();
+        }
+        fragmentList.add(fragmentFavorite);
+        fragmentList.add(fragmentAll);
+        fragmentList.add(fragmentVideo);
+        fragmentList.add(fragmentGame);
+        fragmentList.add(fragmentMusic);
+        fragmentAdapter = new FragmentAdapter(getSupportFragmentManager() ,fragmentList);
+        viewPager.setAdapter(fragmentAdapter);
+
+        String [] titles = {getString(R.string.favorite) ,getString(R.string.all) ,getString(R.string.video)
+                ,getString(R.string.game) ,getString(R.string.music)};
+        viewpagerIndicator.setItem(8,1/8f ,1/12f);
+        viewpagerIndicator.setTextTitle(titles ,22 ,0xffa3a2a2 ,0xff0000ff);
+        viewpagerIndicator.setPaint("#a3a2a2" ,2);
+        viewpagerIndicator.setShape(ViewPagerIndicator.SHAPE_TRIANGLE);
+        viewpagerIndicator.attachViewPager(viewPager ,0);
     }
 
 }

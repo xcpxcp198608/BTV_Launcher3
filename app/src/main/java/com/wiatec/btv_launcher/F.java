@@ -11,6 +11,7 @@ public final class F {
     public static final class url {
         public static final String updater="http://158.69.229.104:8091/json/ApkUpdateInfo.json";
         public static final String roll_image="http://158.69.229.104:8091/json/RollViewInfo.json";
+        public static final String roll_image2="http://158.69.229.104:8091/json/RollViewInfo2.json";
         public static final String video="http://158.69.229.104:8091/json/VideoInfo.json";
         public static final String image="http://158.69.229.104:8091/json/ImageInfo.json";
         public static final String image2="http://158.69.229.104:8091/json/Image2Info.json";
