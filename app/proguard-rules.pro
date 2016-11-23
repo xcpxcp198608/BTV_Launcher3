@@ -45,6 +45,12 @@
 -keepattributes Signature
 # Retain declared checked exceptions for use by a Proxy instance.
 -keepattributes Exceptions
+-dontwarn okio.**
+-dontwarn retrofit.**
+-keep class retrofit.** { *; }
+-keepclassmembers,allowobfuscation interface * {
+    @retrofit.http.** <methods>;
+}
 
 #Glide
 -keep public class * implements com.bumptech.glide.module.GlideModule
@@ -52,7 +58,6 @@
   **[] $VALUES;
   public *;
 }
--keepresourcexmlelements manifest/application/meta-data@value=GlideModule
 
 #Picasso
 -dontwarn com.squareup.okhttp.**
@@ -63,7 +68,7 @@
 
 
 #---------------------------------------------------------------------------------------------------
-#-------------------------------------------4.反射相关的类和方法,没有则不--------------------------
+#-------------------------------------------4.反射相关的类和方法,没有则不填--------------------------
 
 
 
