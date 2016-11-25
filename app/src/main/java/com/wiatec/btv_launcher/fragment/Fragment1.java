@@ -219,8 +219,8 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
         Glide.with(getContext()).load(list.get(5).getUrl()).placeholder(R.drawable.privacy_icon).into(ibt_AntiVirus);
         Glide.with(getContext()).load(list.get(6).getUrl()).placeholder(R.drawable.message_icon).into(ibt_Privacy);
         Glide.with(getContext()).load(list.get(7).getUrl()).placeholder(R.drawable.ld_store_icon).into(ibt_LdStore);
-        Glide.with(getContext()).load(list.get(8).getUrl()).placeholder(R.drawable.bksound_icon).into(ibt_Ad1);
-        Glide.with(getContext()).load(list.get(9).getUrl()).placeholder(R.drawable.ld_cloud_icon).into(ibt_LdCloud);
+        Glide.with(getContext()).load(list.get(8).getUrl()).placeholder(R.drawable.bksound_icon_3).into(ibt_Ad1);
+        Glide.with(getContext()).load(list.get(9).getUrl()).placeholder(R.drawable.ld_cloud_icon_3).into(ibt_LdCloud);
         ibt_LdStore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

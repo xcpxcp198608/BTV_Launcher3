@@ -48,7 +48,7 @@
         android:scaleType="centerInside"
         android:background="@drawable/icon_bg"
         android:layout_toLeftOf="@id/ibt_weather"
-        android:src="@drawable/message_small_icon"
+        android:src="@drawable/message_small_icon_3"
         android:id="@+id/iv_message"
         android:layout_width="32dp"
         android:layout_height="32dp" />

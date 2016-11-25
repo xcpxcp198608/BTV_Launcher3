@@ -14,7 +14,6 @@
 
         <ImageView
             android:id="@+id/iv_icon"
-
             android:scaleType="centerCrop"
             android:layout_width="128dp"
             android:layout_height="128dp" />
@@ -24,7 +23,7 @@
             android:layout_marginBottom="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:background="@color/colorBlack"
+            android:background="@color/colorWhite"
             android:layout_width="3dp"
             android:layout_height="100dp" />
 
@@ -36,14 +35,14 @@
                 android:id="@+id/tv_city"
                 android:textSize="40sp"
                 android:gravity="center"
-                android:textColor="@color/colorBlack"
+                android:textColor="@color/colorWhite"
                 android:layout_width="wrap_content"
                 android:layout_weight="2"
                 android:layout_height="0dp" />
             <TextView
                 android:id="@+id/tv_description"
                 android:textSize="24sp"
-                android:textColor="@color/colorBlack"
+                android:textColor="@color/colorWhite"
                 android:layout_width="wrap_content"
                 android:layout_weight="1"
                 android:layout_height="0dp" />
@@ -67,7 +66,7 @@
 
             <TextView
                 android:gravity="center"
-                android:textColor="@color/colorBlack"
+                android:textColor="@color/colorWhite"
                 android:textSize="24sp"
                 android:text="@string/weather"
                 android:layout_weight="1"
@@ -77,7 +76,7 @@
             <TextView
                 android:id="@+id/tv_weather"
                 android:gravity="center"
-                android:textColor="@color/colorBlack"
+                android:textColor="@color/colorWhite"
                 android:textSize="20sp"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
@@ -92,7 +91,7 @@
 
             <TextView
                 android:gravity="center"
-                android:textColor="@color/colorBlack"
+                android:textColor="@color/colorWhite"
                 android:textSize="24sp"
                 android:text="@string/temperature"
                 android:layout_weight="1"
@@ -102,7 +101,7 @@
             <TextView
                 android:id="@+id/tv_temperature"
                 android:gravity="center"
-                android:textColor="@color/colorBlack"
+                android:textColor="@color/colorWhite"
                 android:textSize="20sp"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
@@ -117,7 +116,7 @@
 
             <TextView
                 android:gravity="center"
-                android:textColor="@color/colorBlack"
+                android:textColor="@color/colorWhite"
                 android:textSize="24sp"
                 android:text="@string/wind"
                 android:layout_weight="1"
@@ -127,7 +126,7 @@
             <TextView
                 android:id="@+id/tv_wind"
                 android:gravity="center"
-                android:textColor="@color/colorBlack"
+                android:textColor="@color/colorWhite"
                 android:textSize="20sp"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
@@ -142,7 +141,7 @@
 
             <TextView
                 android:gravity="center"
-                android:textColor="@color/colorBlack"
+                android:textColor="@color/colorWhite"
                 android:textSize="24sp"
                 android:text="@string/humidity"
                 android:layout_weight="1"
@@ -152,7 +151,7 @@
             <TextView
                 android:id="@+id/tv_humidity"
                 android:gravity="center"
-                android:textColor="@color/colorBlack"
+                android:textColor="@color/colorWhite"
                 android:textSize="20sp"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
@@ -167,7 +166,7 @@
 
             <TextView
                 android:gravity="center"
-                android:textColor="@color/colorBlack"
+                android:textColor="@color/colorWhite"
                 android:textSize="24sp"
                 android:text="@string/pressure"
                 android:layout_weight="1"
@@ -177,7 +176,7 @@
             <TextView
                 android:id="@+id/tv_pressure"
                 android:gravity="center"
-                android:textColor="@color/colorBlack"
+                android:textColor="@color/colorWhite"
                 android:textSize="20sp"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
