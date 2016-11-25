@@ -16,16 +16,20 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.jude.rollviewpager.RollPagerView;
+import com.wiatec.btv_launcher.Activity.AppSelectActivity;
 import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.R;
+import com.wiatec.btv_launcher.SQL.InstalledAppDao;
 import com.wiatec.btv_launcher.Utils.ApkCheck;
 import com.wiatec.btv_launcher.Utils.ApkLaunch;
 import com.wiatec.btv_launcher.Utils.Logger;
+import com.wiatec.btv_launcher.adapter.AppSelectAdapter;
 import com.wiatec.btv_launcher.adapter.RollImage2Adapter;
 import com.wiatec.btv_launcher.adapter.RollImageAdapter;
 import com.wiatec.btv_launcher.animator.Zoom;
 import com.wiatec.btv_launcher.bean.ChannelInfo;
 import com.wiatec.btv_launcher.bean.ImageInfo;
+import com.wiatec.btv_launcher.bean.InstalledApp;
 import com.wiatec.btv_launcher.bean.RollImageInfo;
 import com.wiatec.btv_launcher.presenter.Fragment2Presenter;
 
@@ -35,6 +39,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by PX on 2016-11-12.
@@ -51,10 +60,14 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
     SurfaceView surfaceView;
     @BindView(R.id.iv_bvision)
     ImageView iv_Bvision;
-    @BindView(R.id.ibt_tv)
-    ImageView ibt_Tv;
-    @BindView(R.id.rpv_apocalypse)
-    RollPagerView rpv_Apocalypse;
+    @BindView(R.id.ibt_rabbit)
+    ImageButton ibt_Rabbit;
+    @BindView(R.id.ibt_add1)
+    ImageButton ibt_Add1;
+    @BindView(R.id.ibt_add2)
+    ImageButton ibt_Add2;
+    @BindView(R.id.ibt_add3)
+    ImageButton ibt_Add3;
     @BindView(R.id.ibt_browser)
     ImageButton ibt_Browser;
     @BindView(R.id.ibt_security)
@@ -66,12 +79,14 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
     private SurfaceHolder surfaceHolder;
     private MediaPlayer mediaPlayer;
     private RollImage2Adapter rollImage2Adapter;
+    private InstalledAppDao installedAppDao;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment2, container, false);
+        View view = inflater.inflate(R.layout.fragment2_2, container, false);
         ButterKnife.bind(this, view);
+        installedAppDao = InstalledAppDao.getInstance(getContext());
         return view;
     }
 
@@ -113,6 +128,10 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
             }
         });
         setZoom();
+
+        showCustomShortCut(ibt_Add1 ,"add1");
+        showCustomShortCut(ibt_Add2 ,"add2");
+        showCustomShortCut(ibt_Add3 ,"add3");
     }
 
     @Override
@@ -160,7 +179,6 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
     @Override
     public void loadImage2(final List<ImageInfo> list) {
 //        Logger.d(list.toString());
-        Glide.with(getContext()).load(list.get(0).getUrl()).placeholder(R.drawable.tv_icon).into(ibt_Tv);
         Glide.with(getContext()).load(list.get(2).getUrl()).placeholder(R.drawable.browser_icon).into(ibt_Browser);
         Glide.with(getContext()).load(list.get(3).getUrl()).placeholder(R.drawable.security_icon).into(ibt_Security);
         Glide.with(getContext()).load(list.get(4).getUrl()).placeholder(R.drawable.file_icon).into(ibt_File);
@@ -169,9 +187,9 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
     @Override
     public void loadRollImage2(List<RollImageInfo> list) {
 //        Logger.d(list.toString());
-        rollImage2Adapter = new RollImage2Adapter(list);
-        rpv_Apocalypse.setAdapter(rollImage2Adapter);
-        rpv_Apocalypse.setHintView(null);
+//        rollImage2Adapter = new RollImage2Adapter(list);
+//        rpv_Apocalypse.setAdapter(rollImage2Adapter);
+//        rpv_Apocalypse.setHintView(null);
     }
 
     private void playVideo(List<ChannelInfo> list, int position) {
@@ -209,6 +227,9 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
         ibt_Browser.setOnFocusChangeListener(this);
         ibt_Security.setOnFocusChangeListener(this);
         ibt_File.setOnFocusChangeListener(this);
+        ibt_Add1.setOnFocusChangeListener(this);
+        ibt_Add2.setOnFocusChangeListener(this);
+        ibt_Add3.setOnFocusChangeListener(this);
     }
 
     @Override
@@ -218,7 +239,7 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
         }
     }
 
-    @OnClick({R.id.ibt_browser, R.id.ibt_security, R.id.ibt_file})
+    @OnClick({R.id.ibt_browser, R.id.ibt_security, R.id.ibt_file ,R.id.ibt_rabbit})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ibt_browser:
@@ -236,6 +257,59 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
                     ApkLaunch.launchApkByPackageName(getContext(),F.package_name.file);
                 }
                 break;
+            case R.id.ibt_rabbit:
+                startActivity(new Intent(Intent.ACTION_VIEW ,Uri.parse("http://www.rabb.it")));
+                break;
         }
+    }
+
+    private void showCustomShortCut (final ImageButton imageButton , final String type){
+        Observable.just(type)
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<String, InstalledApp>() {
+                    @Override
+                    public InstalledApp call(String s) {
+                        List<InstalledApp> list = installedAppDao.queryDataByType(s);
+                        if(list.size() ==1){
+                            return installedAppDao.queryDataByType(s).get(0);
+                        }else {
+                            return null;
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<InstalledApp>() {
+                    @Override
+                    public void call(final InstalledApp installedApp) {
+                        if (installedApp != null) {
+                            imageButton.setImageDrawable(ApkCheck.getInstalledApkIcon(getContext() , installedApp.getAppPackageName()));
+                            imageButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    ApkLaunch.launchApkByPackageName(getContext() ,installedApp.getAppPackageName());
+                                }
+                            });
+                            imageButton.setOnLongClickListener(new View.OnLongClickListener() {
+                                @Override
+                                public boolean onLongClick(View v) {
+                                    Intent intent = new Intent(getContext() , AppSelectActivity.class);
+                                    intent.putExtra("type" ,type);
+                                    startActivity(intent);
+                                    return true;
+                                }
+                            });
+                        }else {
+                            imageButton.setImageResource(R.drawable.add1);
+                            imageButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(getContext() , AppSelectActivity.class);
+                                    intent.putExtra("type" ,type);
+                                    startActivity(intent);
+                                }
+                            });
+                        }
+                    }
+                });
     }
 }

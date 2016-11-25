@@ -6,6 +6,8 @@ import com.wiatec.btv_launcher.bean.Message1Info;
 import com.wiatec.btv_launcher.bean.UpdateInfo;
 import com.wiatec.btv_launcher.bean.VideoInfo;
 import com.wiatec.btv_launcher.bean.WeatherInfo;
+import com.wiatec.btv_launcher.data.AdVideoData;
+import com.wiatec.btv_launcher.data.IAdVideoData;
 import com.wiatec.btv_launcher.data.IMessage1Data;
 import com.wiatec.btv_launcher.data.IUpdateData;
 import com.wiatec.btv_launcher.data.IVideoData;
@@ -27,6 +29,7 @@ public class MainPresenter extends BasePresenter<IMainActivity> {
     private IMessage1Data iMessage1Data;
     private IUpdateData iUpdateData;
     private IVideoData iVideoData;
+    private IAdVideoData iAdVideoData;
     private IWeatherData iWeatherData;
 
     public MainPresenter(IMainActivity iMainActivity) {
@@ -35,6 +38,7 @@ public class MainPresenter extends BasePresenter<IMainActivity> {
         iUpdateData = new UpdateData();
         iVideoData = new VideoData();
         iWeatherData = new WeatherData();
+        iAdVideoData = new AdVideoData();
     }
 
     public void loadWeatherIcon (){
@@ -73,6 +77,20 @@ public class MainPresenter extends BasePresenter<IMainActivity> {
                 @Override
                 public void onSuccess(VideoInfo videoInfo) {
                     iMainActivity.loadVideo(videoInfo);
+                }
+
+                @Override
+                public void onFailure(String e) {
+                    Logger.d(e);
+                }
+            });
+        }
+
+        if(iAdVideoData != null){
+            iAdVideoData.loadData(new IAdVideoData.OnLoadListener() {
+                @Override
+                public void onSuccess(VideoInfo videoInfo) {
+                    iMainActivity.loadAdVideo(videoInfo);
                 }
 
                 @Override

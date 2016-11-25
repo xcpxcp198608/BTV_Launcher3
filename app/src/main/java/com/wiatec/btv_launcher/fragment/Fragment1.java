@@ -15,6 +15,7 @@ import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.jude.rollviewpager.RollPagerView;
+import com.wiatec.btv_launcher.Activity.PlayAdActivity;
 import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.OnNetworkStatusListener;
 import com.wiatec.btv_launcher.Utils.ApkCheck;
@@ -144,9 +145,9 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ibt_btv:
-                if (ApkCheck.isApkInstalled(getContext(), F.package_name.btv)) {
-                    ApkLaunch.launchApkByPackageName(getContext(), F.package_name.btv);
-                }
+                Intent intent = new Intent(getContext() , PlayAdActivity.class);
+                intent.putExtra("packageName" , F.package_name.btv);
+                startActivity(intent);
                 break;
             case R.id.ibt_user_guide:
                 startActivity(new Intent(getContext(), UserGuideActivity.class));

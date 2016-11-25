@@ -13,6 +13,7 @@ public final class F {
         public static final String roll_image="http://158.69.229.104:8091/json/RollViewInfo.json";
         public static final String roll_image2="http://158.69.229.104:8091/json/RollViewInfo2.json";
         public static final String video="http://158.69.229.104:8091/json/VideoInfo.json";
+        public static final String ad_video="http://158.69.229.104:8091/json/AdVideoInfo.json";
         public static final String image="http://158.69.229.104:8091/json/ImageInfo.json";
         public static final String image2="http://158.69.229.104:8091/json/Image2Info.json";
         public static final String splash_image="http://158.69.229.104:8091/json/SplashImageInfo.json";
@@ -25,6 +26,7 @@ public final class F {
     public static final class path {
         public static final String download= Environment.getExternalStorageDirectory().getAbsolutePath()+"/BLauncher/";
         public static final String video= Environment.getExternalStorageDirectory().getAbsolutePath()+"/BLauncher/btvi3.mp4";
+        public static final String ad_video= Environment.getExternalStorageDirectory().getAbsolutePath()+"/BLauncher/btvad.mp4";
     }
 
     public static final class sp {

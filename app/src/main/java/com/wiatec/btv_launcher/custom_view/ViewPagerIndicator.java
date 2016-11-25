@@ -63,7 +63,7 @@ public class ViewPagerIndicator extends LinearLayout {
 
     private  int mTextSize = 18;//文本大小
     private  int mTextColor = 0xffa3a2a2;//文本未选择时的颜色，要用带透明元素的颜色
-    private  int mTextSelectColor = 0xff0000ff;//文本被选择时的颜色，要用带透明元素的颜色
+    private  int mTextSelectColor = 0xffffffff;//文本被选择时的颜色，要用带透明元素的颜色
 
     private int mBackgroundId ;
     private int mSelectBackgroundId ;

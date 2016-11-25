@@ -35,6 +35,7 @@
         <activity android:name=".Activity.MessageActivity"/>
         <activity android:name=".Activity.WeatherActivity"/>
         <activity android:name=".Activity.AppSelectActivity"/>
+        <activity android:name=".Activity.PlayAdActivity"/>
 
         <receiver android:name=".receiver.AppInstallReceiver">
             <intent-filter>
@@ -46,7 +47,7 @@
         </receiver>
 
         <service android:name=".service.LoadService"/>
-
+        <service android:name=".service.DownloadService"/>
     </application>
 
 </manifest>

@@ -91,14 +91,30 @@
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:layout_height="0dp" />
+
             <ImageView
                 android:background="@color/colorGray1"
                 android:layout_width="match_parent"
                 android:layout_height="1dp" />
 
+            <ImageButton
+                android:padding="5dp"
+                android:id="@+id/ibt_rabbit"
+                android:src="@drawable/rabbit2"
+                android:scaleType="centerInside"
+                android:background="@drawable/item_btv_bg"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+
             <ImageView
+                android:background="@color/colorGray1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <ImageButton
                 android:padding="15dp"
-                android:id="@+id/ibt_tv"
+                android:id="@+id/ibt_add1"
                 android:src="@drawable/add1"
                 android:scaleType="centerInside"
                 android:background="@drawable/item_btv_bg"
@@ -111,24 +127,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp" />
 
-            <com.jude.rollviewpager.RollPagerView
-                android:id="@+id/rpv_apocalypse"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:background="@drawable/apocalypse_icon"
-                app:rollviewpager_play_delay="60000"
+            <ImageButton
+                android:padding="15dp"
+                android:id="@+id/ibt_add2"
+                android:src="@drawable/add1"
+                android:scaleType="centerInside"
+                android:background="@drawable/item_btv_bg"
+                android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_weight="3"
                 android:layout_height="0dp" />
-
-            <TextView
-                android:gravity="center"
-                android:textSize="20sp"
-                android:textColor="@color/colorBTV"
+            <ImageView
                 android:background="@color/colorGray1"
-                android:text="@string/apocalypse"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="1dp" />
+
+            <ImageButton
+                android:padding="15dp"
+                android:id="@+id/ibt_add3"
+                android:src="@drawable/add1"
+                android:scaleType="centerInside"
+                android:background="@drawable/item_btv_bg"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
 
         </LinearLayout>
 

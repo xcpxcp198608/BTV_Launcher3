@@ -33,6 +33,7 @@ import com.wiatec.btv_launcher.Utils.FileDownload.DownloadManager;
 import com.wiatec.btv_launcher.Utils.FileDownload.OnDownloadListener;
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.SystemConfig;
+import com.wiatec.btv_launcher.service.DownloadService;
 import com.wiatec.btv_launcher.service_task.WeatherIconSetting;
 import com.wiatec.btv_launcher.adapter.FragmentAdapter;
 import com.wiatec.btv_launcher.bean.Message1Info;
@@ -293,6 +294,23 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
             downloadVideo(videoInfo);
         } else {
            // Logger.d("video no need update");
+        }
+    }
+
+    @Override
+    public void loadAdVideo(VideoInfo videoInfo) {
+        Logger.d(videoInfo.toString());
+        if(!FileCheck.isFileExists(F.path.download , "btvad.mp4")){
+            Logger.d("video is not exists");
+            Intent intent = new Intent(MainActivity.this , DownloadService.class);
+            intent.putExtra("url" ,videoInfo.getUrl());
+            startService(intent);
+        }else if (!FileCheck.isFileIntact(F.path.download ,"btvad.mp4" ,videoInfo.getMd5())){
+            Intent intent = new Intent(MainActivity.this , DownloadService.class);
+            intent.putExtra("url" ,videoInfo.getUrl());
+            startService(intent);
+        }else {
+             Logger.d("video no need update");
         }
     }
 

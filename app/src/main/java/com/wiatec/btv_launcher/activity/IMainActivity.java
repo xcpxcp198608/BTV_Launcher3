@@ -14,6 +14,7 @@ import java.util.List;
 public interface IMainActivity {
     void loadUpdate (UpdateInfo updateInfo);
     void loadVideo (VideoInfo videoInfo);
+    void loadAdVideo (VideoInfo videoInfo);
     void loadMessage1 (List<Message1Info> list);
     void loadWeather (WeatherInfo weatherInfo);
 }

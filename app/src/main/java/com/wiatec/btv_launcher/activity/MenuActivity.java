@@ -79,10 +79,10 @@ public class MenuActivity extends AppCompatActivity {
         String [] titles = {getString(R.string.favorite) ,getString(R.string.all) ,getString(R.string.video)
                 ,getString(R.string.game) ,getString(R.string.music)};
         viewpagerIndicator.setItem(8,1/8f ,1/12f);
-        viewpagerIndicator.setTextTitle(titles ,22 ,0xffa3a2a2 ,0xff0000ff);
+        viewpagerIndicator.setTextTitle(titles ,22 ,0xffa3a2a2 ,0xffffffff);
         viewpagerIndicator.setPaint("#a3a2a2" ,2);
         viewpagerIndicator.setShape(ViewPagerIndicator.SHAPE_TRIANGLE);
-        viewpagerIndicator.attachViewPager(viewPager ,0);
+        viewpagerIndicator.attachViewPager(viewPager ,1);
     }
 
 }

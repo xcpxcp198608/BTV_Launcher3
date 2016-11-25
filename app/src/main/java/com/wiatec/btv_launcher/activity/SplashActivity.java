@@ -116,4 +116,10 @@ public class SplashActivity extends BaseActivity<ISplashActivity, SplashPresente
         subscription.unsubscribe();
         finish();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        subscription.unsubscribe();
+    }
 }
