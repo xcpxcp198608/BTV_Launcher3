@@ -169,7 +169,8 @@
                 android:layout_height="match_parent" />
             <ImageView
                 android:id="@+id/iv_bvision"
-                android:background="@drawable/btv1"
+                android:background="@drawable/btv12"
+                android:scaleType="centerCrop"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </FrameLayout>

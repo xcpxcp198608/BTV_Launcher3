@@ -61,7 +61,7 @@
                     android:padding="25dp"
                     android:background="@drawable/item_btv_bg"
                     android:scaleType="centerInside"
-                    android:src="@drawable/user_guide_icon"
+                    android:src="@drawable/user_guide_icon_4"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />

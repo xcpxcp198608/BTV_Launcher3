@@ -36,7 +36,7 @@ public class LoadInstalledApp implements Runnable {
             iterator = localList.iterator();
             list = new ArrayList<>();
         }
-        installedAppDao.deleteAll();
+//        installedAppDao.deleteAll();
         while (true) {
             if(!iterator.hasNext()){
                 break;
@@ -75,7 +75,7 @@ public class LoadInstalledApp implements Runnable {
                     }else{
                         installedApp.setSequence(30);
                     }
-                    installedAppDao.insertData(installedApp,null);
+                    installedAppDao.insertOrUpdateData(installedApp,null);
                 }
                 list.add(installedApp);
             }

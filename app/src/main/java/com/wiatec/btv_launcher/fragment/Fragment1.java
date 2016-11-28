@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,14 +69,14 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
     @BindView(R.id.ibt_ld_cloud)
     ImageButton ibt_LdCloud;
 
-    private boolean isF1Visible = true;
+    private boolean isF1Visible = false;
     private int playPosition=0;
     private NetworkStatusReceiver networkStatusReceiver;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //Logger.d("f1 -onCreateView ");
+        Logger.d("f1 -onCreateView ");
         View view = inflater.inflate(R.layout.fragment1, container, false);
         ButterKnife.bind(this, view);
         networkStatusReceiver = new NetworkStatusReceiver(null);
@@ -88,13 +89,14 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if(isVisibleToUser){
-            //Logger.d("f1 -isVisibleToUser " + isVisibleToUser);
             isF1Visible = true;
-            if(vv_Main!=null && !vv_Main.isPlaying()){
+            Logger.d("f1 -isVisibleToUser " + isVisibleToUser);
+            if(vv_Main!=null && !vv_Main.isPlaying() && isF1Visible){
+                Logger.d("f1 -isVisibleToUser " +"play");
                 playVideo();
             }
         }else {
-            //Logger.d("f1 -isVisibleToUser " + isVisibleToUser);
+            Logger.d("f1 -isVisibleToUser " + isVisibleToUser);
             isF1Visible =false;
             if(vv_Main!=null && vv_Main.isPlaying()){
                 playPosition = vv_Main.getCurrentPosition();
@@ -106,7 +108,7 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
     @Override
     public void onStart() {
         super.onStart();
-        //Logger.d("f1 -onStart ");
+        Logger.d("f1 -onStart ");
         presenter.loadData();
         setZoom();
     }
@@ -119,9 +121,12 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
     @Override
     public void onResume() {
         super.onResume();
-       // Logger.d("f1 -onResume " +isF1Visible);
-        if(vv_Main!=null && !vv_Main.isPlaying() && isF1Visible){
-            playVideo();
+        Logger.d("f1 -onResume " +isF1Visible);
+        if(vv_Main!=null && !vv_Main.isPlaying()){
+            if(isF1Visible) {
+                Logger.d("f1 -onResume " +"play");
+               playVideo();
+            }
         }
     }
 
@@ -187,7 +192,9 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
             @Override
             public void onPrepared(MediaPlayer mp) {
                 vv_Main.seekTo(playPosition);
-                vv_Main.start();
+                if(isF1Visible) {
+                    vv_Main.start();
+                }
             }
         });
         vv_Main.setOnErrorListener(new MediaPlayer.OnErrorListener() {
@@ -212,7 +219,7 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
     public void loadImage(final List<ImageInfo> list) {
         //Logger.d(list.toString());
         Glide.with(getContext()).load(list.get(0).getUrl()).placeholder(R.drawable.btv_icon_1).into(ibt_Btv);
-        Glide.with(getContext()).load(list.get(1).getUrl()).placeholder(R.drawable.user_guide_icon).into(ibt_UserGuide);
+        Glide.with(getContext()).load(list.get(1).getUrl()).placeholder(R.drawable.user_guide_icon_4).into(ibt_UserGuide);
         Glide.with(getContext()).load(list.get(2).getUrl()).placeholder(R.drawable.setting_icon).into(ibt_Setting);
         Glide.with(getContext()).load(list.get(3).getUrl()).placeholder(R.drawable.apps_icon).into(ibt_Apps);
         Glide.with(getContext()).load(list.get(4).getUrl()).placeholder(R.drawable.market_icon).into(ibt_Market);
