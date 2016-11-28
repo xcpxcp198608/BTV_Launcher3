@@ -99,7 +99,9 @@ public class MainPresenter extends BasePresenter<IMainActivity> {
                 }
             });
         }
+    }
 
+    public void loadMessage1 (){
         if(iMessage1Data != null){
             iMessage1Data.loadData(new IMessage1Data.OnLoadListener() {
                 @Override

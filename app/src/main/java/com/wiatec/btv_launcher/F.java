@@ -17,9 +17,13 @@ public final class F {
         public static final String image="http://158.69.229.104:8091/json/ImageInfo.json";
         public static final String image2="http://158.69.229.104:8091/json/Image2Info.json";
         public static final String splash_image="http://158.69.229.104:8091/json/SplashImageInfo.json";
-        public static final String marquee="http://158.69.229.104:8091/json/WordInfo.json";
         public static final String channel="http://158.69.229.104:8091/json/ChannelInfo.json";
         public static final String message1="http://158.69.229.104:8091/json/Message1.json";
+        public static final String message1_zh_CN="http://158.69.229.104:8091/json/Message1_zh_CN.json";
+        public static final String message1_zh_TW="http://158.69.229.104:8091/json/Message1_zh_TW.json";
+        public static final String message1_es_ES="http://158.69.229.104:8091/json/Message1_es_ES.json";
+        public static final String message1_es_US="http://158.69.229.104:8091/json/Message1_es_US.json";
+        public static final String message1_it_IT="http://158.69.229.104:8091/json/Message1_it_IT.json";
         public static final String message="http://158.69.229.104:8091/json/Message.json";
     }
 

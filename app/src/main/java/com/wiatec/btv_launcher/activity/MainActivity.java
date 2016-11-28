@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.OnLanguageChangeListener;
 import com.wiatec.btv_launcher.OnNetworkStatusListener;
 import com.wiatec.btv_launcher.OnWifiStatusListener;
 import com.wiatec.btv_launcher.R;
@@ -33,6 +35,7 @@ import com.wiatec.btv_launcher.Utils.FileDownload.DownloadManager;
 import com.wiatec.btv_launcher.Utils.FileDownload.OnDownloadListener;
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.SystemConfig;
+import com.wiatec.btv_launcher.receiver.LanguageChangeReceiver;
 import com.wiatec.btv_launcher.service.DownloadService;
 import com.wiatec.btv_launcher.service_task.WeatherIconSetting;
 import com.wiatec.btv_launcher.adapter.FragmentAdapter;
@@ -63,7 +66,7 @@ import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
-public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> implements IMainActivity,OnNetworkStatusListener, OnWifiStatusListener {
+public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> implements IMainActivity,OnNetworkStatusListener, OnWifiStatusListener ,OnLanguageChangeListener {
 
     @BindView(R.id.tv_time)
     TextView tv_Time;
@@ -87,6 +90,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
     private NetworkStatusReceiver networkStatusReceiver;
     private WifiStatusReceiver wifiStatusReceiver;
     private WeatherStatusReceiver weatherStatusReceiver;
+    private LanguageChangeReceiver languageChangeReceiver;
     private boolean isVideoDownloading = false;
     private MessageDao messageDao;
 
@@ -117,6 +121,9 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
         registerReceiver(wifiStatusReceiver, new IntentFilter(WifiManager.RSSI_CHANGED_ACTION));
         weatherStatusReceiver = new WeatherStatusReceiver(ibt_Weather);
         registerReceiver(weatherStatusReceiver, new IntentFilter("action.Weather.Change"));
+        languageChangeReceiver = new LanguageChangeReceiver();
+        registerReceiver(languageChangeReceiver , new IntentFilter(Intent.ACTION_CONFIGURATION_CHANGED));
+        languageChangeReceiver.setOnLanguageChangeListener(this);
 
         Intent intent = new Intent(MainActivity.this, LoadService.class);
         intent.setAction("loadInstalledApp");
@@ -128,6 +135,11 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
     @Override
     protected void onStart() {
         super.onStart();
+        SharedPreferences sharedPreferences = getSharedPreferences("language" ,MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String language = SystemConfig.getLanguage(this);
+        editor.putString("language" , language);
+        editor.commit();
         presenter.loadWeatherIcon();
         if(SystemConfig.isNetworkConnected(MainActivity.this)) {
             Intent intent = new Intent(MainActivity.this, LoadService.class);
@@ -161,6 +173,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
         unregisterReceiver(networkStatusReceiver);
         unregisterReceiver(wifiStatusReceiver);
         unregisterReceiver(weatherStatusReceiver);
+        unregisterReceiver(languageChangeReceiver);
     }
 
     @Override
@@ -214,6 +227,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
         if (isConnected) {
             showNetworkStatus();
             presenter.bind();
+            presenter.loadMessage1();
 
             Intent alarmIntent = new Intent(MainActivity.this , LoadService.class);
             alarmIntent.setAction("loadWeather");
@@ -248,6 +262,13 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
             case 0:
                 iv_Net.setImageResource(R.drawable.wifi0);
                 break;
+        }
+    }
+
+    @Override
+    public void onChange(String language) {
+        if(SystemConfig.isNetworkConnected(MainActivity.this)){
+            presenter.loadMessage1();
         }
     }
 
@@ -299,7 +320,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
 
     @Override
     public void loadAdVideo(VideoInfo videoInfo) {
-        Logger.d(videoInfo.toString());
+       // Logger.d(videoInfo.toString());
         if(!FileCheck.isFileExists(F.path.download , "btvad.mp4")){
             Logger.d("video is not exists");
             Intent intent = new Intent(MainActivity.this , DownloadService.class);

@@ -71,14 +71,14 @@ public class SplashActivity extends BaseActivity<ISplashActivity, SplashPresente
                 .subscribe(new Observer<Long>() {
                     @Override
                     public void onCompleted() {
-                        Logger.d("delay onCompleted");
+                       // Logger.d("delay onCompleted");
                         launchApp(packageName);
                         finish();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Logger.d("delay onError");
+                       // Logger.d("delay onError");
                         launchApp(packageName);
                         finish();
                     }
@@ -86,7 +86,7 @@ public class SplashActivity extends BaseActivity<ISplashActivity, SplashPresente
                     @Override
                     public void onNext(Long aLong) {
                         int i = (int) (delayTime - 1 - aLong);
-                        Logger.d(i + "");
+                        //Logger.d(i + "");
                         ll_Delay.setVisibility(View.VISIBLE);
                         tv_DelayTime.setText(String.valueOf(i) +" s");
                     }

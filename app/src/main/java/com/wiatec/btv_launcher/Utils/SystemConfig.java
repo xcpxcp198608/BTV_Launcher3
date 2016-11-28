@@ -19,6 +19,7 @@ import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by Administrator on 2016/8/19.
@@ -135,7 +136,7 @@ public class SystemConfig {
     public static int getScreenWidth(Activity activity){
         Display display = activity.getWindowManager().getDefaultDisplay();
         Point point = new Point();
-        display.getRealSize(point);
+        //display.getRealSize(point);
         int width = point.x;
         return width;
     }
@@ -143,7 +144,7 @@ public class SystemConfig {
     public static int getScreenHeight(Activity activity){
         Display display = activity.getWindowManager().getDefaultDisplay();
         Point point = new Point();
-        display.getRealSize(point);
+        //display.getRealSize(point);
         int width = point.y;
         return width;
     }
@@ -172,5 +173,13 @@ public class SystemConfig {
             e.printStackTrace();
         }
         return macSerial;
+    }
+    //获得当前系统语言
+    public static String getLanguage (Context context) {
+        Locale locale = context.getResources().getConfiguration().locale;
+        String language = locale.getLanguage();
+        String country = locale.getCountry();
+        Log.d("----px----" ,language+"_"+country);
+        return language+"_"+country;
     }
 }

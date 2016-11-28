@@ -33,7 +33,7 @@ public class AppInstallReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if(Intent.ACTION_PACKAGE_ADDED.equals(intent.getAction())){
-            Logger.d("added");
+            //Logger.d("added");
             String packageName = intent.getData().getSchemeSpecificPart();
             Observable.just(packageName)
                     .subscribeOn(Schedulers.io())
@@ -63,7 +63,7 @@ public class AppInstallReceiver extends BroadcastReceiver {
                         }
                     });
         }else if(Intent.ACTION_PACKAGE_REMOVED.equals(intent.getAction())){
-            Logger.d("remove");
+           // Logger.d("remove");
             String packageName = intent.getData().getSchemeSpecificPart();
             Observable.just(packageName)
                     .subscribeOn(Schedulers.io())

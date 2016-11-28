@@ -76,7 +76,7 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Logger.d("f1 -onCreateView ");
+        //Logger.d("f1 -onCreateView ");
         View view = inflater.inflate(R.layout.fragment1, container, false);
         ButterKnife.bind(this, view);
         networkStatusReceiver = new NetworkStatusReceiver(null);
@@ -90,13 +90,13 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
         super.setUserVisibleHint(isVisibleToUser);
         if(isVisibleToUser){
             isF1Visible = true;
-            Logger.d("f1 -isVisibleToUser " + isVisibleToUser);
+            //Logger.d("f1 -isVisibleToUser " + isVisibleToUser);
             if(vv_Main!=null && !vv_Main.isPlaying() && isF1Visible){
-                Logger.d("f1 -isVisibleToUser " +"play");
+               // Logger.d("f1 -isVisibleToUser " +"play");
                 playVideo();
             }
         }else {
-            Logger.d("f1 -isVisibleToUser " + isVisibleToUser);
+            //Logger.d("f1 -isVisibleToUser " + isVisibleToUser);
             isF1Visible =false;
             if(vv_Main!=null && vv_Main.isPlaying()){
                 playPosition = vv_Main.getCurrentPosition();
@@ -108,7 +108,7 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
     @Override
     public void onStart() {
         super.onStart();
-        Logger.d("f1 -onStart ");
+        //Logger.d("f1 -onStart ");
         presenter.loadData();
         setZoom();
     }
@@ -121,10 +121,10 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
     @Override
     public void onResume() {
         super.onResume();
-        Logger.d("f1 -onResume " +isF1Visible);
+        //Logger.d("f1 -onResume " +isF1Visible);
         if(vv_Main!=null && !vv_Main.isPlaying()){
             if(isF1Visible) {
-                Logger.d("f1 -onResume " +"play");
+                //Logger.d("f1 -onResume " +"play");
                playVideo();
             }
         }
