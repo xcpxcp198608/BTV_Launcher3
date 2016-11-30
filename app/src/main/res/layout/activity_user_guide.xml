@@ -29,7 +29,7 @@
 
             <TextView
                 android:textSize="20sp"
-                android:textColor="@color/colorBlack"
+                android:textColor="@color/colorWhite"
                 android:text="@string/wifi_setting"
                 android:gravity="center"
                 android:layout_width="match_parent"
@@ -56,7 +56,7 @@
 
             <TextView
                 android:textSize="20sp"
-                android:textColor="@color/colorBlack"
+                android:textColor="@color/colorWhite"
                 android:text="@string/resolution"
                 android:gravity="center"
                 android:layout_width="match_parent"
@@ -83,7 +83,7 @@
 
             <TextView
                 android:textSize="20sp"
-                android:textColor="@color/colorBlack"
+                android:textColor="@color/colorWhite"
                 android:text="@string/time_zone"
                 android:gravity="center"
                 android:layout_width="match_parent"
@@ -118,7 +118,7 @@
 
             <TextView
                 android:textSize="20sp"
-                android:textColor="@color/colorBlack"
+                android:textColor="@color/colorWhite"
                 android:text="@string/btv_setup"
                 android:gravity="center"
                 android:layout_width="match_parent"
@@ -145,7 +145,7 @@
 
             <TextView
                 android:textSize="20sp"
-                android:textColor="@color/colorBlack"
+                android:textColor="@color/colorWhite"
                 android:text="@string/app_market"
                 android:gravity="center"
                 android:layout_width="match_parent"
@@ -172,7 +172,7 @@
 
             <TextView
                 android:textSize="20sp"
-                android:textColor="@color/colorBlack"
+                android:textColor="@color/colorWhite"
                 android:text="@string/faq"
                 android:gravity="center"
                 android:layout_width="match_parent"

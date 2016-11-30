@@ -89,7 +89,7 @@
                     android:id="@+id/ibt_apps"
                     android:background="@drawable/item_btv_bg"
                     android:scaleType="centerInside"
-                    android:src="@drawable/apps_icon"
+                    android:src="@drawable/apps_icon_3"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />
@@ -126,7 +126,7 @@
                     android:padding="25dp"
                     android:background="@drawable/item_btv_bg"
                     android:scaleType="centerInside"
-                    android:src="@drawable/privacy_icon"
+                    android:src="@drawable/ld_opportunity"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />
@@ -171,9 +171,11 @@
                 android:padding="3dp"
                 android:id="@+id/ibt_ld_store"
                 android:layout_marginTop="5dp"
+                android:cropToPadding="true"
+                android:adjustViewBounds="true"
                 android:background="@drawable/item_ldstore_bg"
                 android:src="@drawable/ld_store_icon"
-                android:scaleType="centerInside"
+                android:scaleType="fitCenter"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp" />

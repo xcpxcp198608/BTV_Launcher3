@@ -36,6 +36,7 @@
         <activity android:name=".Activity.WeatherActivity"/>
         <activity android:name=".Activity.AppSelectActivity"/>
         <activity android:name=".Activity.PlayAdActivity"/>
+        <activity android:name=".Activity.OpportunityActivity"/>
 
         <receiver android:name=".receiver.AppInstallReceiver">
             <intent-filter>

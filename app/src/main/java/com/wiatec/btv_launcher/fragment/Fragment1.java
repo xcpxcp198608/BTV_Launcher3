@@ -16,7 +16,9 @@ import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.jude.rollviewpager.RollPagerView;
+import com.wiatec.btv_launcher.Activity.OpportunityActivity;
 import com.wiatec.btv_launcher.Activity.PlayAdActivity;
+import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.OnNetworkStatusListener;
 import com.wiatec.btv_launcher.Utils.ApkCheck;
@@ -171,9 +173,7 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
                 }
                 break;
             case R.id.ibt_anti_virus:
-                if (ApkCheck.isApkInstalled(getContext(), F.package_name.legacy_privacy)) {
-                    ApkLaunch.launchApkByPackageName(getContext(), F.package_name.legacy_privacy);
-                }
+                startActivity(new Intent(getContext() , OpportunityActivity.class));
                 break;
             case R.id.ibt_privacy:
                 startActivity(new Intent(getContext() , MessageActivity.class));
@@ -218,16 +218,16 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
     @Override
     public void loadImage(final List<ImageInfo> list) {
         //Logger.d(list.toString());
-        Glide.with(getContext()).load(list.get(0).getUrl()).placeholder(R.drawable.btv_icon_1).into(ibt_Btv);
-        Glide.with(getContext()).load(list.get(1).getUrl()).placeholder(R.drawable.user_guide_icon_4).into(ibt_UserGuide);
-        Glide.with(getContext()).load(list.get(2).getUrl()).placeholder(R.drawable.setting_icon).into(ibt_Setting);
-        Glide.with(getContext()).load(list.get(3).getUrl()).placeholder(R.drawable.apps_icon).into(ibt_Apps);
-        Glide.with(getContext()).load(list.get(4).getUrl()).placeholder(R.drawable.market_icon).into(ibt_Market);
-        Glide.with(getContext()).load(list.get(5).getUrl()).placeholder(R.drawable.privacy_icon).into(ibt_AntiVirus);
-        Glide.with(getContext()).load(list.get(6).getUrl()).placeholder(R.drawable.message_icon).into(ibt_Privacy);
-        Glide.with(getContext()).load(list.get(7).getUrl()).placeholder(R.drawable.ld_store_icon).into(ibt_LdStore);
-        Glide.with(getContext()).load(list.get(8).getUrl()).placeholder(R.drawable.bksound_icon_3).into(ibt_Ad1);
-        Glide.with(getContext()).load(list.get(9).getUrl()).placeholder(R.drawable.ld_cloud_icon_3).into(ibt_LdCloud);
+        Glide.with(Application.getContext()).load(list.get(0).getUrl()).placeholder(R.drawable.btv_icon_1).into(ibt_Btv);
+        Glide.with(Application.getContext()).load(list.get(1).getUrl()).placeholder(R.drawable.user_guide_icon_4).into(ibt_UserGuide);
+        Glide.with(Application.getContext()).load(list.get(2).getUrl()).placeholder(R.drawable.setting_icon).into(ibt_Setting);
+        Glide.with(Application.getContext()).load(list.get(3).getUrl()).placeholder(R.drawable.apps_icon_3).into(ibt_Apps);
+        Glide.with(Application.getContext()).load(list.get(4).getUrl()).placeholder(R.drawable.market_icon).into(ibt_Market);
+        Glide.with(Application.getContext()).load(list.get(5).getUrl()).placeholder(R.drawable.ld_opportunity).into(ibt_AntiVirus);
+        Glide.with(Application.getContext()).load(list.get(6).getUrl()).placeholder(R.drawable.message_icon).into(ibt_Privacy);
+        Glide.with(Application.getContext()).load(list.get(7).getUrl()).placeholder(R.drawable.ld_store_icon).into(ibt_LdStore);
+        Glide.with(Application.getContext()).load(list.get(8).getUrl()).placeholder(R.drawable.bksound_icon_3).into(ibt_Ad1);
+        Glide.with(Application.getContext()).load(list.get(9).getUrl()).placeholder(R.drawable.ld_cloud_icon_3).into(ibt_LdCloud);
         ibt_LdStore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
