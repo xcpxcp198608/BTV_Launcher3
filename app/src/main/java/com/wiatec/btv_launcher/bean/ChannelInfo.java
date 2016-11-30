@@ -6,8 +6,8 @@ package com.wiatec.btv_launcher.bean;
 
 public class ChannelInfo {
     private int id;
-    private String channelName;
-    private String channelUrl;
+    private String name;
+    private String url;
 
     public int getId() {
         return id;
@@ -17,28 +17,28 @@ public class ChannelInfo {
         this.id = id;
     }
 
-    public String getChannelName() {
-        return channelName;
+    public String getName() {
+        return name;
     }
 
-    public void setChannelName(String channelName) {
-        this.channelName = channelName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getChannelUrl() {
-        return channelUrl;
+    public String getUrl() {
+        return url;
     }
 
-    public void setChannelUrl(String channelUrl) {
-        this.channelUrl = channelUrl;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     @Override
     public String toString() {
-        return "Channel{" +
+        return "ChannelInfo{" +
                 "id=" + id +
-                ", channelName='" + channelName + '\'' +
-                ", channelUrl='" + channelUrl + '\'' +
+                ", name='" + name + '\'' +
+                ", url='" + url + '\'' +
                 '}';
     }
 }

@@ -10,21 +10,24 @@ import android.renderscript.Sampler;
 public final class F {
     public static final class url {
         public static final String updater="http://158.69.229.104:8091/json/ApkUpdateInfo.json";
-        public static final String roll_image="http://158.69.229.104:8091/json/RollViewInfo.json";
-        public static final String roll_image2="http://158.69.229.104:8091/json/RollViewInfo2.json";
         public static final String video="http://158.69.229.104:8091/json/VideoInfo.json";
         public static final String ad_video="http://158.69.229.104:8091/json/AdVideoInfo.json";
-        public static final String image="http://158.69.229.104:8091/json/ImageInfo.json";
-        public static final String image2="http://158.69.229.104:8091/json/Image2Info.json";
-        public static final String splash_image="http://158.69.229.104:8091/json/SplashImageInfo.json";
-        public static final String channel="http://158.69.229.104:8091/json/ChannelInfo.json";
-        public static final String message1="http://158.69.229.104:8091/json/Message1.json";
+
+        public static final String image="http://158.69.229.104:8080/Launcher_EN/GetImage";
+        public static final String image2="http://158.69.229.104:8080/Launcher_EN/GetImage2";
+        public static final String splash_image="http://158.69.229.104:8080/Launcher_EN/GetAdImage";
+        public static final String roll_image="http://158.69.229.104:8080/Launcher_EN/GetRollImage";
+        public static final String channel="http://158.69.229.104:8080/Launcher_EN/GetChannel";
+        public static final String message1="http://158.69.229.104:8080/Launcher_EN/GetMessage1";
+        public static final String message="http://158.69.229.104:8080/Launcher_EN/GetMessage";
+
+
         public static final String message1_zh_CN="http://158.69.229.104:8091/json/Message1_zh_CN.json";
         public static final String message1_zh_TW="http://158.69.229.104:8091/json/Message1_zh_TW.json";
         public static final String message1_es_ES="http://158.69.229.104:8091/json/Message1_es_ES.json";
         public static final String message1_es_US="http://158.69.229.104:8091/json/Message1_es_US.json";
         public static final String message1_it_IT="http://158.69.229.104:8091/json/Message1_it_IT.json";
-        public static final String message="http://158.69.229.104:8091/json/Message.json";
+
     }
 
     public static final class path {

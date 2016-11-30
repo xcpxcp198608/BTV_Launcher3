@@ -243,7 +243,7 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
     }
 
     @Override
-    public void loadRollImage(List<RollImageInfo> list) {
+    public void loadRollImage(List<ImageInfo> list) {
         //Logger.d(list.toString());
         RollImageAdapter rollImageAdapter = new RollImageAdapter(list);
         rpv_Main.setAdapter(rollImageAdapter);

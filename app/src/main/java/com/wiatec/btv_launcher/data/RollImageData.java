@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.bean.ImageInfo;
 import com.wiatec.btv_launcher.bean.RollImageInfo;
 
 import org.json.JSONArray;
@@ -24,7 +25,7 @@ public class RollImageData implements IRollImageData {
             @Override
             public void onResponse(JSONArray response) {
                 if(response != null){
-                    List<RollImageInfo> list = new Gson().fromJson(String.valueOf(response) , new TypeToken<List<RollImageInfo>>() {} .getType());
+                    List<ImageInfo> list = new Gson().fromJson(String.valueOf(response) , new TypeToken<List<ImageInfo>>() {} .getType());
                     onLoadListener.onSuccess(list);
                 }
             }

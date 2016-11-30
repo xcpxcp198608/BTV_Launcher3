@@ -44,7 +44,7 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
         if(iRollImageData != null){
             iRollImageData.loadData(new IRollImageData.OnLoadListener() {
                 @Override
-                public void onSuccess(List<RollImageInfo> list) {
+                public void onSuccess(List<ImageInfo> list) {
                     iFragment1.loadRollImage(list);
                 }
 

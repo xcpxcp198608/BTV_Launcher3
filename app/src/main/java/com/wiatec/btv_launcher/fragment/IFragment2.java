@@ -14,5 +14,5 @@ import java.util.List;
 public interface IFragment2 {
     void loadChannel (List<ChannelInfo> list);
     void loadImage2 (List<ImageInfo> list);
-    void loadRollImage2 (List<RollImageInfo> list);
+
 }

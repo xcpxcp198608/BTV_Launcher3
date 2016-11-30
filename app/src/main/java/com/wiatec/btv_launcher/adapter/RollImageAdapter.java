@@ -11,6 +11,7 @@ import com.jude.rollviewpager.adapter.StaticPagerAdapter;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.animator.Zoom;
+import com.wiatec.btv_launcher.bean.ImageInfo;
 import com.wiatec.btv_launcher.bean.RollImageInfo;
 
 import java.util.List;
@@ -20,9 +21,9 @@ import java.util.List;
  */
 
 public class RollImageAdapter extends StaticPagerAdapter {
-    private List<RollImageInfo> list ;
+    private List<ImageInfo> list ;
 
-    public RollImageAdapter(List<RollImageInfo> list) {
+    public RollImageAdapter(List<ImageInfo> list) {
         this.list = list;
     }
 
@@ -33,8 +34,8 @@ public class RollImageAdapter extends StaticPagerAdapter {
         imageView.setFocusable(true);
         imageView.setClickable(true);
         imageView.setPadding(3,3,3,3);
-        final RollImageInfo rollImageInfo = list.get(position);
-        Glide.with(container.getContext()).load(list.get(position).getImageUrl())
+        final ImageInfo imageInfo = list.get(position);
+        Glide.with(container.getContext()).load(list.get(position).getUrl())
                 .placeholder(R.drawable.text)
                 .into(imageView);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -51,8 +52,8 @@ public class RollImageAdapter extends StaticPagerAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(rollImageInfo.getLinkUrl()!= null) {
-                    container.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(rollImageInfo.getLinkUrl())));
+                if(imageInfo.getLink()!= null) {
+                    container.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(imageInfo.getLink())));
                 }
             }
         });

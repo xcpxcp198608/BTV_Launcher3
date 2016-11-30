@@ -6,9 +6,9 @@ package com.wiatec.btv_launcher.bean;
 
 public class RollImageInfo {
     private int id;
-    private String imageName;
-    private String imageUrl;
-    private String linkUrl;
+    private String name;
+    private String url;
+    private String link;
 
     public int getId() {
         return id;
@@ -18,37 +18,37 @@ public class RollImageInfo {
         this.id = id;
     }
 
-    public String getImageName() {
-        return imageName;
+    public String getName() {
+        return name;
     }
 
-    public void setImageName(String imageName) {
-        this.imageName = imageName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getUrl() {
+        return url;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public String getLinkUrl() {
-        return linkUrl;
+    public String getLink() {
+        return link;
     }
 
-    public void setLinkUrl(String linkUrl) {
-        this.linkUrl = linkUrl;
+    public void setLink(String link) {
+        this.link = link;
     }
 
     @Override
     public String toString() {
-        return "RollImage{" +
+        return "RollImageInfo{" +
                 "id=" + id +
-                ", imageName='" + imageName + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
-                ", linkUrl='" + linkUrl + '\'' +
+                ", name='" + name + '\'' +
+                ", url='" + url + '\'' +
+                ", link='" + link + '\'' +
                 '}';
     }
 }

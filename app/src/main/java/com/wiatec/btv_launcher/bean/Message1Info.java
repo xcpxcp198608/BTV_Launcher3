@@ -6,7 +6,7 @@ package com.wiatec.btv_launcher.bean;
 
 public class Message1Info {
     private int id;
-    private String text;
+    private String content;
     private int colorR;
     private int colorG;
     private int colorB;
@@ -19,12 +19,12 @@ public class Message1Info {
         this.id = id;
     }
 
-    public String getText() {
-        return text;
+    public String getContent() {
+        return content;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public int getColorR() {
@@ -53,9 +53,9 @@ public class Message1Info {
 
     @Override
     public String toString() {
-        return "Message{" +
+        return "Message1Info{" +
                 "id=" + id +
-                ", text='" + text + '\'' +
+                ", content='" + content + '\'' +
                 ", colorR=" + colorR +
                 ", colorG=" + colorG +
                 ", colorB=" + colorB +

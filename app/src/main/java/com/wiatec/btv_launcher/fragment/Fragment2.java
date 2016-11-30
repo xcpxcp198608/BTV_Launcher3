@@ -23,9 +23,6 @@ import com.wiatec.btv_launcher.SQL.InstalledAppDao;
 import com.wiatec.btv_launcher.Utils.ApkCheck;
 import com.wiatec.btv_launcher.Utils.ApkLaunch;
 import com.wiatec.btv_launcher.Utils.Logger;
-import com.wiatec.btv_launcher.adapter.AppSelectAdapter;
-import com.wiatec.btv_launcher.adapter.RollImage2Adapter;
-import com.wiatec.btv_launcher.adapter.RollImageAdapter;
 import com.wiatec.btv_launcher.animator.Zoom;
 import com.wiatec.btv_launcher.bean.ChannelInfo;
 import com.wiatec.btv_launcher.bean.ImageInfo;
@@ -78,7 +75,6 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
 
     private SurfaceHolder surfaceHolder;
     private MediaPlayer mediaPlayer;
-    private RollImage2Adapter rollImage2Adapter;
     private InstalledAppDao installedAppDao;
 
     @Nullable
@@ -153,21 +149,21 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
     @Override
     public void loadChannel(final List<ChannelInfo> list) {
         //Logger.d(list.toString());
-        bt_B1.setText(list.get(0).getChannelName());
+        bt_B1.setText(list.get(0).getName());
         bt_B1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 playVideo(list, 0);
             }
         });
-        bt_B2.setText(list.get(1).getChannelName());
+        bt_B2.setText(list.get(1).getName());
         bt_B2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 playVideo(list, 1);
             }
         });
-        bt_B3.setText(list.get(2).getChannelName());
+        bt_B3.setText(list.get(2).getName());
         bt_B3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,18 +175,11 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
     @Override
     public void loadImage2(final List<ImageInfo> list) {
 //        Logger.d(list.toString());
-        Glide.with(getContext()).load(list.get(2).getUrl()).placeholder(R.drawable.browser_icon).into(ibt_Browser);
-        Glide.with(getContext()).load(list.get(3).getUrl()).placeholder(R.drawable.security_icon).into(ibt_Security);
-        Glide.with(getContext()).load(list.get(4).getUrl()).placeholder(R.drawable.file_icon).into(ibt_File);
+        Glide.with(getContext()).load(list.get(0).getUrl()).placeholder(R.drawable.browser_icon).into(ibt_Browser);
+        Glide.with(getContext()).load(list.get(1).getUrl()).placeholder(R.drawable.security_icon).into(ibt_Security);
+        Glide.with(getContext()).load(list.get(2).getUrl()).placeholder(R.drawable.file_icon).into(ibt_File);
     }
 
-    @Override
-    public void loadRollImage2(List<RollImageInfo> list) {
-//        Logger.d(list.toString());
-//        rollImage2Adapter = new RollImage2Adapter(list);
-//        rpv_Apocalypse.setAdapter(rollImage2Adapter);
-//        rpv_Apocalypse.setHintView(null);
-    }
 
     private void playVideo(List<ChannelInfo> list, int position) {
         if (mediaPlayer == null) {
@@ -198,7 +187,7 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
         }
         mediaPlayer.reset();
         try {
-            mediaPlayer.setDataSource(list.get(position).getChannelUrl());
+            mediaPlayer.setDataSource(list.get(position).getUrl());
             mediaPlayer.setDisplay(surfaceHolder);
             mediaPlayer.prepareAsync();
             mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {

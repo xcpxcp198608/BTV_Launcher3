@@ -355,7 +355,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
 //                        Logger.d(message1Info.toString());
                         tv_Message.setVisibility(View.VISIBLE);
                         tv_Message.setTextColor(Color.rgb(message1Info.getColorR(), message1Info.getColorG(), message1Info.getColorB()));
-                        tv_Message.setText("  " + message1Info.getText());
+                        tv_Message.setText("  " + message1Info.getContent());
                     }
                 });
 
