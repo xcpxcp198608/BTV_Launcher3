@@ -15,6 +15,7 @@
     <color name="colorGray">#eeeeee</color>
     <color name="colorGray1">#a3a2a2</color>
     <color name="colorBlue">#FF0000ff</color>
+    <color name="colorRed">#FFff0000</color>
 
     <color name="colorBTV">#706e6e</color>
     <color name="colorSettings">#d40465</color>
@@ -23,7 +24,7 @@
     <color name="colorLDStore">#753ff2</color>
     <color name="colorAD1">#f44e12</color>
     <color name="colorLDCloud">#FEFEFE</color>
-    <color name="colorFocus">#cfae08</color>
+    <color name="colorFocus">#3308cf</color>
 
     <color name="colorItemQingSe">#15b9b1</color>
     <color name="colorItemGrayBlue">#445066</color>

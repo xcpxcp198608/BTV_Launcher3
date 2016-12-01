@@ -42,16 +42,32 @@
         android:layout_width="32dp"
         android:layout_height="32dp" />
 
-    <ImageView
+    <FrameLayout
         android:visibility="gone"
+        android:id="@+id/fl_message"
         android:layout_marginRight="6dp"
-        android:scaleType="centerInside"
-        android:background="@drawable/icon_bg"
         android:layout_toLeftOf="@id/ibt_weather"
-        android:src="@drawable/message_small_icon_3"
-        android:id="@+id/iv_message"
         android:layout_width="32dp"
-        android:layout_height="32dp" />
+        android:layout_height="32dp">
+        <ImageView
+            android:padding="3dp"
+            android:scaleType="centerInside"
+            android:background="@drawable/icon_bg"
+            android:src="@drawable/message_small_icon_4"
+            android:id="@+id/iv_message"
+            android:layout_width="32dp"
+            android:layout_height="32dp" />
+        <TextView
+            android:id="@+id/tv_message_count"
+            android:layout_gravity="right"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:textColor="@color/colorRed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </FrameLayout>
+
 
     <RelativeLayout
         android:layout_marginBottom="5dp"

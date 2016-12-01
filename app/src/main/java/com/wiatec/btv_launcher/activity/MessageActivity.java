@@ -76,7 +76,13 @@ public class MessageActivity extends BaseActivity<IMessageActivity, MessagePrese
                                 MessageInfo messageInfo = messageInfos.get(position);
                                 messageInfo.setIsRead("true");
                                 messageDao.updateMessage(messageInfo);
-                                showMessageByBrowser(messageInfo.getLink());
+                                try {
+                                    showMessageByBrowser(messageInfo.getLink());
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }finally {
+
+                                }
                             }
                         });
                     }

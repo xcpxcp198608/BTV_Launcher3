@@ -19,6 +19,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,21 +36,22 @@ import com.wiatec.btv_launcher.Utils.FileDownload.DownloadManager;
 import com.wiatec.btv_launcher.Utils.FileDownload.OnDownloadListener;
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.SystemConfig;
-import com.wiatec.btv_launcher.receiver.LanguageChangeReceiver;
-import com.wiatec.btv_launcher.service.DownloadService;
-import com.wiatec.btv_launcher.service_task.WeatherIconSetting;
 import com.wiatec.btv_launcher.adapter.FragmentAdapter;
 import com.wiatec.btv_launcher.bean.Message1Info;
+import com.wiatec.btv_launcher.bean.MessageInfo;
 import com.wiatec.btv_launcher.bean.UpdateInfo;
 import com.wiatec.btv_launcher.bean.VideoInfo;
 import com.wiatec.btv_launcher.bean.WeatherInfo;
 import com.wiatec.btv_launcher.fragment.Fragment1;
 import com.wiatec.btv_launcher.fragment.Fragment2;
 import com.wiatec.btv_launcher.presenter.MainPresenter;
+import com.wiatec.btv_launcher.receiver.LanguageChangeReceiver;
 import com.wiatec.btv_launcher.receiver.NetworkStatusReceiver;
 import com.wiatec.btv_launcher.receiver.WeatherStatusReceiver;
 import com.wiatec.btv_launcher.receiver.WifiStatusReceiver;
+import com.wiatec.btv_launcher.service.DownloadService;
 import com.wiatec.btv_launcher.service.LoadService;
+import com.wiatec.btv_launcher.service_task.WeatherIconSetting;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -66,7 +68,7 @@ import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
-public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> implements IMainActivity,OnNetworkStatusListener, OnWifiStatusListener ,OnLanguageChangeListener {
+public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> implements IMainActivity, OnNetworkStatusListener, OnWifiStatusListener, OnLanguageChangeListener {
 
     @BindView(R.id.tv_time)
     TextView tv_Time;
@@ -82,6 +84,11 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
     ImageButton ibt_Weather;
     @BindView(R.id.iv_message)
     ImageView iv_Message;
+    @BindView(R.id.fl_message)
+    FrameLayout fl_Message;
+    @BindView(R.id.tv_message_count)
+    TextView tv_MessageCount;
+
 
     private Fragment1 fragment1;
     private Fragment2 fragment2;
@@ -122,7 +129,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
         weatherStatusReceiver = new WeatherStatusReceiver(ibt_Weather);
         registerReceiver(weatherStatusReceiver, new IntentFilter("action.Weather.Change"));
         languageChangeReceiver = new LanguageChangeReceiver();
-        registerReceiver(languageChangeReceiver , new IntentFilter(Intent.ACTION_CONFIGURATION_CHANGED));
+        registerReceiver(languageChangeReceiver, new IntentFilter(Intent.ACTION_CONFIGURATION_CHANGED));
         languageChangeReceiver.setOnLanguageChangeListener(this);
 
         Intent intent = new Intent(MainActivity.this, LoadService.class);
@@ -135,33 +142,35 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
     @Override
     protected void onStart() {
         super.onStart();
-        SharedPreferences sharedPreferences = getSharedPreferences("language" ,MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("language", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         String language = SystemConfig.getLanguage(this);
-        editor.putString("language" , language);
+        editor.putString("language", language);
         editor.commit();
         presenter.loadWeatherIcon();
-        if(SystemConfig.isNetworkConnected(MainActivity.this)) {
+        if (SystemConfig.isNetworkConnected(MainActivity.this)) {
             Intent intent = new Intent(MainActivity.this, LoadService.class);
             intent.setAction("loadMessage");
             startService(intent);
         }
         Observable.just("")
                 .subscribeOn(Schedulers.io())
-                .map(new Func1<String, Boolean>() {
+                .map(new Func1<String, List<MessageInfo>>() {
                     @Override
-                    public Boolean call(String s) {
-                        return messageDao.hasUnReadMessage();
+                    public List<MessageInfo> call(String s) {
+                        return messageDao.queryUnreadMessage();
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Boolean>() {
+                .subscribe(new Action1<List<MessageInfo>>() {
                     @Override
-                    public void call(Boolean aBoolean) {
-                        if(aBoolean){
-                            iv_Message.setVisibility(View.VISIBLE);
-                        }else {
-                            iv_Message.setVisibility(View.GONE);
+                    public void call(List<MessageInfo> list) {
+                        if (list.size() > 0) {
+                            int count = list.size();
+                            tv_MessageCount.setText(count+"");
+                            fl_Message.setVisibility(View.VISIBLE);
+                        } else {
+                            fl_Message.setVisibility(View.GONE);
                         }
                     }
                 });
@@ -229,13 +238,13 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
             presenter.bind();
             presenter.loadMessage1();
 
-            Intent alarmIntent = new Intent(MainActivity.this , LoadService.class);
+            Intent alarmIntent = new Intent(MainActivity.this, LoadService.class);
             alarmIntent.setAction("loadWeather");
-            PendingIntent alarmPendingIntent = PendingIntent.getService(MainActivity.this , 0,alarmIntent ,0);
+            PendingIntent alarmPendingIntent = PendingIntent.getService(MainActivity.this, 0, alarmIntent, 0);
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             long startTime = SystemClock.elapsedRealtime();
-            long repeatTime = 120*60*1000;
-            alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP ,startTime ,repeatTime ,alarmPendingIntent);
+            long repeatTime = 120 * 60 * 1000;
+            alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, startTime, repeatTime, alarmPendingIntent);
         }
     }
 
@@ -267,7 +276,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
 
     @Override
     public void onChange(String language) {
-        if(SystemConfig.isNetworkConnected(MainActivity.this)){
+        if (SystemConfig.isNetworkConnected(MainActivity.this)) {
             presenter.loadMessage1();
         }
     }
@@ -314,24 +323,24 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
             Logger.d("video is not intact");
             downloadVideo(videoInfo);
         } else {
-           // Logger.d("video no need update");
+            // Logger.d("video no need update");
         }
     }
 
     @Override
     public void loadAdVideo(VideoInfo videoInfo) {
-       // Logger.d(videoInfo.toString());
-        if(!FileCheck.isFileExists(F.path.download , "btvad.mp4")){
+        // Logger.d(videoInfo.toString());
+        if (!FileCheck.isFileExists(F.path.download, "btvad.mp4")) {
             Logger.d("video is not exists");
-            Intent intent = new Intent(MainActivity.this , DownloadService.class);
-            intent.putExtra("url" ,videoInfo.getUrl());
+            Intent intent = new Intent(MainActivity.this, DownloadService.class);
+            intent.putExtra("url", videoInfo.getUrl());
             startService(intent);
-        }else if (!FileCheck.isFileIntact(F.path.download ,"btvad.mp4" ,videoInfo.getMd5())){
-            Intent intent = new Intent(MainActivity.this , DownloadService.class);
-            intent.putExtra("url" ,videoInfo.getUrl());
+        } else if (!FileCheck.isFileIntact(F.path.download, "btvad.mp4", videoInfo.getMd5())) {
+            Intent intent = new Intent(MainActivity.this, DownloadService.class);
+            intent.putExtra("url", videoInfo.getUrl());
             startService(intent);
-        }else {
-             Logger.d("video no need update");
+        } else {
+            Logger.d("video no need update");
         }
     }
 
@@ -364,7 +373,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
 
     @Override
     public void loadWeather(WeatherInfo weatherInfo) {
-        WeatherIconSetting.setIcon(ibt_Weather ,weatherInfo.getIcon());
+        WeatherIconSetting.setIcon(ibt_Weather, weatherInfo.getIcon());
     }
 
     private void showUpdateDialog(final UpdateInfo updateInfo) {
@@ -414,7 +423,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ibt_weather:
-                startActivity(new Intent(MainActivity.this , WeatherActivity.class));
+                startActivity(new Intent(MainActivity.this, WeatherActivity.class));
                 break;
         }
     }
