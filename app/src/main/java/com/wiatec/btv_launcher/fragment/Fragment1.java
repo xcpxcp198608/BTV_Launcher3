@@ -48,6 +48,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -86,6 +87,7 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
     private boolean isF1Visible = false;
     private int playPosition=0;
     private NetworkStatusReceiver networkStatusReceiver;
+    private Subscription subscription;
 
     @Nullable
     @Override
@@ -134,7 +136,7 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
     @Override
     public void onResume() {
         super.onResume();
-        //Logger.d("f1 -onResume " +isF1Visible);
+        Logger.d("f1 -onResume ");
         if(vv_Main!=null && !vv_Main.isPlaying()){
             if(isF1Visible) {
                 //Logger.d("f1 -onResume " +"play");
@@ -149,7 +151,7 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
     @Override
     public void onPause() {
         super.onPause();
-        //Logger.d("f1 -onPause ");
+        Logger.d("f1 -onPause ");
         if(vv_Main!=null && vv_Main.isPlaying()){
             playPosition = vv_Main.getCurrentPosition();
             vv_Main.stopPlayback();
@@ -159,6 +161,7 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        Logger.d("f1 -onDestroyView ");
         getContext().unregisterReceiver(networkStatusReceiver);
     }
 
@@ -266,7 +269,7 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
     public void loadCloudImage(final List<CloudImageInfo> list) {
         if(list != null && list.size()>0){
             Logger.d(list.toString());
-            Observable.interval(6, TimeUnit.SECONDS).take(list.size())
+            subscription = Observable.interval(6, TimeUnit.SECONDS).take(list.size())
                     .repeat()
                     .map(new Func1<Long, CloudImageInfo>() {
                         @Override
