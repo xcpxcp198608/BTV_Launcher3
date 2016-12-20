@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">BTV_FW</string>
+    <string name="confirm">Confirmar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="notice">Aviso</string>
+    <string name="update_error">Error de descarga, reinicia de nuevo </string>
+    <string name="update_info">BTVi3 FW tiene una nueva versión, actualice ahora. </string>
+    <string name="wifi_setting">Wifi Setup</string>
+    <string name="resolution">Resolution</string>
+    <string name="time_zone">Time Zone</string>
+    <string name="btv_setup">BTV Setup</string>
+    <string name="app_market">AppMarket</string>
+    <string name="faq">FAQ</string>
+    <string name="pass">Pasar</string>
+    <string name="detail">Detalle</string>
+    <string name="ad">Anuncio</string>
+    <string name="delete">Eliminar todo</string>
+    <string name="network_disconnect">Desconexión de red</string>
+    <string name="weather">Tiempo</string>
+    <string name="apocalypse">apocalypse</string>
+    <string name="temperature">Temperatura</string>
+    <string name="humidity">Humedad</string>
+    <string name="pressure">Presión</string>
+    <string name="wind">Viento</string>
+    <string name="sunset">Puesta de sol</string>
+    <string name="wind_unit">m/s</string>
+    <string name="favorite">Favorito</string>
+    <string name="all">Todos</string>
+    <string name="video">Video</string>
+    <string name="game">Juego</string>
+    <string name="music">Música</string>
+
+</resources>

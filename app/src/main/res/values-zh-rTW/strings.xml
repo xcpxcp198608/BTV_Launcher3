@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BTV_FW</string>
+    <string name="confirm">確認</string>
+    <string name="cancel">取消</string>
+    <string name="notice">通知</string>
+    <string name="update_error">下載失敗，請重新嘗試或重啟機器</string>
+    <string name="update_info">BTVi3 FW 有更新可用，是否現在更新？</string>
+    <string name="wifi_setting">Wifi Setup</string>
+    <string name="resolution">Resolution</string>
+    <string name="time_zone">Time Zone</string>
+    <string name="btv_setup">BTV Setup</string>
+    <string name="app_market">AppMarket</string>
+    <string name="faq">FAQ</string>
+    <string name="pass">跳過</string>
+    <string name="detail">詳情</string>
+    <string name="ad">廣告</string>
+    <string name="apocalypse">apocalypse</string>
+    <string name="delete">Delete All</string>
+    <string name="network_disconnect">網路連接斷開</string>
+    <string name="weather">天氣</string>
+    <string name="temperature">溫度</string>
+    <string name="humidity">濕度</string>
+    <string name="pressure">氣壓</string>
+    <string name="wind">風</string>
+    <string name="sunset">日落</string>
+    <string name="wind_unit">m/s</string>
+    <string name="favorite">個人</string>
+    <string name="all">全部</string>
+    <string name="video">影視</string>
+    <string name="game">遊戲</string>
+    <string name="music">音樂</string>
+
+
+</resources>

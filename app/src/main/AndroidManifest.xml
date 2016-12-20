@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.wiatec.btv_launcher">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="com.legacydirect.tvphoto.permission.READAUTH"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:name=".Application"
+        android:theme="@style/AppTheme">
+        <activity android:name=".Activity.MainActivity"
+            android:clearTaskOnLaunch="true"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.HOME"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.MONKEY"/>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".Activity.MenuActivity"/>
+        <activity android:name=".Activity.UpdateActivity"/>
+        <activity android:name=".Activity.PlayActivity"/>
+        <activity android:name=".Activity.UserGuideActivity"/>
+        <activity android:name=".Activity.SplashActivity"/>
+        <activity android:name=".Activity.MessageActivity"/>
+        <activity android:name=".Activity.WeatherActivity"/>
+        <activity android:name=".Activity.AppSelectActivity"/>
+        <activity android:name=".Activity.PlayAdActivity"/>
+        <activity android:name=".Activity.OpportunityActivity"/>
+        <activity android:name=".Activity.UserManualActivity"/>
+
+        <receiver android:name=".receiver.AppInstallReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED"/>
+                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+                <action android:name="android.intent.action.PACKAGE_REPLACED"/>
+                <data android:scheme="package"/>
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".service.LoadService"/>
+        <service android:name=".service.DownloadService"/>
+        <service android:name=".service.LoadCloudService"/>
+    </application>
+
+</manifest>
