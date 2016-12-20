@@ -145,6 +145,7 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
         }
         if(SystemConfig.isNetworkConnected(getContext())){
             presenter.loadData();
+            presenter.loadCloudData();
         }
     }
 
@@ -156,6 +157,7 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
             playPosition = vv_Main.getCurrentPosition();
             vv_Main.stopPlayback();
         }
+        subscription.unsubscribe();
     }
 
     @Override
@@ -266,23 +268,23 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
     }
 
     @Override
-    public void loadCloudImage(final List<CloudImageInfo> list) {
+    public void loadCloudImage(final List<String> list) {
         if(list != null && list.size()>0){
             Logger.d(list.toString());
             subscription = Observable.interval(6, TimeUnit.SECONDS).take(list.size())
                     .repeat()
-                    .map(new Func1<Long, CloudImageInfo>() {
+                    .map(new Func1<Long, String>() {
                         @Override
-                        public CloudImageInfo call(Long aLong) {
+                        public String call(Long aLong) {
                             return list.get(Integer.parseInt(aLong+""));
                         }
                     })
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<CloudImageInfo>() {
+                    .subscribe(new Action1<String>() {
                         @Override
-                        public void call(CloudImageInfo cloudImageInfo) {
-                            Logger.d("f1--->" +cloudImageInfo);
-                            Glide.with(getContext()).load(cloudImageInfo.getUrl())
+                        public void call(String s) {
+                            Logger.d("f1--->" +s);
+                            Glide.with(getContext()).load(s)
                                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                                     .placeholder(R.drawable.ld_cloud_icon_3)
                                     .error(R.drawable.ld_cloud_icon_3)

@@ -3,6 +3,7 @@ package com.wiatec.btv_launcher.data;
 import com.wiatec.btv_launcher.bean.CloudImageInfo;
 import com.wiatec.btv_launcher.bean.ImageInfo;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ public interface ICloudImageData {
 
     void loadData(OnLoadListener onLoadListener);
     interface OnLoadListener{
-        void onSuccess (List<CloudImageInfo> list);
+        void onSuccess (File[] files);
         void onFailure (String e);
     }
 }
