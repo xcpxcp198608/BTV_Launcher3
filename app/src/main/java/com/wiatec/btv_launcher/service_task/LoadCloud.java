@@ -18,6 +18,7 @@ import com.wiatec.btv_launcher.Utils.ImageDownload.DownloadManager;
 import com.wiatec.btv_launcher.Utils.ImageDownload.OnDownloadListener;
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.bean.CloudImageInfo;
+import com.wiatec.btv_launcher.bean.CloudInfo;
 import com.wiatec.btv_launcher.bean.TokenInfo;
 
 import org.json.JSONArray;
@@ -41,17 +42,17 @@ public class LoadCloud implements Runnable {
 
     @Override
     public void run() {
-        loadCloudToken();
+        loadCloudImage(loadCloudToken());
     }
 
-    private void loadCloudToken (){
-        //Logger.d("start");
+    private CloudInfo loadCloudToken (){
         if(!ApkCheck.isApkInstalled(Application.getContext() , F.package_name.cloud)){
-            return;
+            return null;
         }
         ContentResolver contentResolver = Application.getContext().getContentResolver();
         Uri uri = Uri.parse("content://com.legacydirect.tvphoto.provider.AuthProvider/token");
         Cursor cursor = null;
+        CloudInfo cloudInfo = new CloudInfo();
         try {
             cursor = contentResolver.query(uri ,null,null,null,null);
             TokenInfo tokenInfo = new TokenInfo();
@@ -64,95 +65,11 @@ public class LoadCloud implements Runnable {
             String token = tokenInfo.getToken();
             Logger.d(token);
             if(TextUtils.isEmpty(token)){
-                return;
+                return null;
             }
             String url = "https://apps.legacydirect.cloud/api/file/get_folder_file_list?path=MemoSync/Uploads&authcode="+ token+"&order_by=date";
-            final String url1 = "https://apps.legacydirect.cloud/api/file/get?authcode="+ token+"&path=";
-            JsonObjectRequest j = new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    Logger.d(response.toString());
-                    try {
-                        JSONObject jsonObject = response.getJSONObject("result");
-                        JSONArray jsonArray = jsonObject.getJSONArray("file");
-                        if(jsonArray!=null && jsonArray.length() >0){
-                            CloudImageDao cloudImageDao = CloudImageDao.getInstance();
-                            int length = 0 ;
-                            if(jsonArray.length()>10){
-                                length = 10;
-                            }else {
-                                length = jsonArray.length();
-                            }
-                            for (int i = 0 ; i <length ; i++){
-                                final CloudImageInfo imageInfo = new CloudImageInfo();
-                                String name = jsonArray.getString(i);
-                                String []names = name.split("/");
-                                String realName = names[2];
-                                String url = url1 +name;
-                                imageInfo.setUrl(url);
-                                imageInfo.setName(realName);
-                                String path = Application.getContext().getExternalFilesDir("images").getAbsolutePath();
-                                imageInfo.setPath(path);
-                                if(FileCheck.isFileExists(path , imageInfo.getName())){
-
-                                }else {
-
-                                    downloadManager.startDownload(imageInfo.getName() , imageInfo.getUrl() , imageInfo.getPath());
-                                    downloadManager.setDownloadListener(imageInfo.getName(), new OnDownloadListener() {
-                                        @Override
-                                        public void onPending(DownloadInfo downloadInfo) {
-
-                                        }
-
-                                        @Override
-                                        public void onStart(DownloadInfo downloadInfo, boolean isStart) {
-                                            Logger.d(downloadInfo.getName()+"start");
-                                        }
-
-                                        @Override
-                                        public void onProgressChange(DownloadInfo downloadInfo, int progress) {
-                                            Logger.d(downloadInfo.getName()+progress);
-                                        }
-
-                                        @Override
-                                        public void onPause(DownloadInfo downloadInfo) {
-
-                                        }
-
-                                        @Override
-                                        public void onFinished(DownloadInfo downloadInfo, int progress) {
-                                            Logger.d(downloadInfo.getName()+"onFinished");
-                                        }
-
-                                        @Override
-                                        public void onError(DownloadInfo downloadInfo, String e) {
-
-                                        }
-
-                                        @Override
-                                        public void onRemove(DownloadInfo downloadInfo) {
-
-                                        }
-                                    });
-                                }
-                               // Logger.d(imageInfo.toString());
-                                if(!cloudImageDao.isExists(imageInfo)){
-                                    cloudImageDao.insert(imageInfo);
-                                }
-                            }
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Logger.d(error.getMessage());
-                }
-            });
-            j.setTag("token");
-            Application.getRequestQueue().add(j);
+            cloudInfo.setToken(token);
+            cloudInfo.setUrl(url);
         }catch (Exception e){
             e.printStackTrace();
             Logger.d(e.getMessage());
@@ -161,5 +78,51 @@ public class LoadCloud implements Runnable {
                 cursor.close();
             }
         }
+        Logger.d(cloudInfo.toString());
+        return cloudInfo;
+    }
+
+    public void loadCloudImage(CloudInfo cloudInfo){
+        final String path = Application.getContext().getExternalFilesDir("images").getAbsolutePath();
+        final String baseUrl = "https://apps.legacydirect.cloud/api/file/get?authcode="+ cloudInfo.getToken()+"&path=";
+        JsonObjectRequest j = new JsonObjectRequest(cloudInfo.getUrl(), null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Logger.d(response.toString());
+                try {
+                    JSONObject jsonObject = response.getJSONObject("result");
+                    JSONArray jsonArray = jsonObject.getJSONArray("file");
+                    if(jsonArray!=null && jsonArray.length() >0){
+                        CloudImageDao cloudImageDao = CloudImageDao.getInstance();
+                        int length = 0 ;
+                        if(jsonArray.length()>10){
+                            length = 10;
+                        }else {
+                            length = jsonArray.length();
+                        }
+                        for (int i = 0 ; i <length ; i++){
+                            final CloudImageInfo imageInfo = new CloudImageInfo();
+                            String url1 = jsonArray.getString(i);
+                            String name = url1.split("/")[2];
+                            String url = baseUrl +url1;
+                            imageInfo.setUrl(url);
+                            imageInfo.setName(name);
+                            imageInfo.setPath(path);
+                            Logger.d(imageInfo.toString());
+
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Logger.d(error.getMessage());
+            }
+        });
+        j.setTag("token");
+        Application.getRequestQueue().add(j);
     }
 }

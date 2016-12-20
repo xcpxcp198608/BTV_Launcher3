@@ -20,6 +20,7 @@ import java.util.concurrent.Executors;
 public class LoadCloudService extends IntentService {
 
     private ExecutorService executorService;
+
     public LoadCloudService() {
         super("LoadCloudService");
         executorService = Executors.newCachedThreadPool();
@@ -29,7 +30,4 @@ public class LoadCloudService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         executorService.execute(new LoadCloud());
     }
-
-
-
 }

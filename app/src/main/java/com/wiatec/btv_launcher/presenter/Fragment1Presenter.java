@@ -12,6 +12,7 @@ import com.wiatec.btv_launcher.data.ImageData;
 import com.wiatec.btv_launcher.data.RollImageData;
 import com.wiatec.btv_launcher.fragment.IFragment1;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -65,8 +66,8 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
         if(iCloudImageData != null){
             iCloudImageData.loadData(new ICloudImageData.OnLoadListener() {
                 @Override
-                public void onSuccess(List<String> list) {
-                    iFragment1.loadCloudImage(list);
+                public void onSuccess(File[] files) {
+                    iFragment1.loadCloudImage(files);
                 }
 
                 @Override

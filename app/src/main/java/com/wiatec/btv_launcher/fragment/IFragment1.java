@@ -4,6 +4,7 @@ import com.wiatec.btv_launcher.bean.CloudImageInfo;
 import com.wiatec.btv_launcher.bean.ImageInfo;
 import com.wiatec.btv_launcher.bean.RollImageInfo;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -13,5 +14,5 @@ import java.util.List;
 public interface IFragment1 {
     void loadImage(List<ImageInfo> list);
     void loadRollImage(List<ImageInfo> list);
-    void loadCloudImage(List<String> list);
+    void loadCloudImage(File[] files);
 }

@@ -248,12 +248,12 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
             long repeatTime = 120 * 60 * 1000;
             alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, startTime, repeatTime, alarmPendingIntent);
 
-//            //启动服务加载cloud照片信息列表,定时每2分钟读取一次
-//            Intent cloudIntent = new Intent(MainActivity.this , LoadCloudService.class);
-//            PendingIntent cloudPendingIntent = PendingIntent.getService(MainActivity.this, 0 ,cloudIntent , 0);
-//            AlarmManager alarmManager1 = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-//            long repeatTime1 = 3*60*1000;
-//            alarmManager1.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP ,startTime , repeatTime1 ,cloudPendingIntent);
+            //启动服务加载cloud照片信息列表,定时每2分钟读取一次
+            Intent cloudIntent = new Intent(MainActivity.this , LoadCloudService.class);
+            PendingIntent cloudPendingIntent = PendingIntent.getService(MainActivity.this, 0 ,cloudIntent , 0);
+            AlarmManager alarmManager1 = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            long repeatTime1 = 3*60*1000;
+            alarmManager1.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP ,startTime , repeatTime1 ,cloudPendingIntent);
         }
     }
 

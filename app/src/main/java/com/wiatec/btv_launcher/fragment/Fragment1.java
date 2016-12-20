@@ -41,6 +41,7 @@ import com.wiatec.btv_launcher.presenter.Fragment1Presenter;
 import com.wiatec.btv_launcher.receiver.NetworkStatusReceiver;
 import com.wiatec.btv_launcher.service.LoadCloudService;
 
+import java.io.File;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -136,7 +137,7 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
     @Override
     public void onResume() {
         super.onResume();
-        Logger.d("f1 -onResume ");
+       // Logger.d("f1 -onResume ");
         if(vv_Main!=null && !vv_Main.isPlaying()){
             if(isF1Visible) {
                 //Logger.d("f1 -onResume " +"play");
@@ -152,18 +153,20 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
     @Override
     public void onPause() {
         super.onPause();
-        Logger.d("f1 -onPause ");
+       // Logger.d("f1 -onPause ");
         if(vv_Main!=null && vv_Main.isPlaying()){
             playPosition = vv_Main.getCurrentPosition();
             vv_Main.stopPlayback();
         }
-        subscription.unsubscribe();
+        if(subscription!= null) {
+            subscription.unsubscribe();
+        }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Logger.d("f1 -onDestroyView ");
+        //Logger.d("f1 -onDestroyView ");
         getContext().unregisterReceiver(networkStatusReceiver);
     }
 
@@ -268,15 +271,14 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
     }
 
     @Override
-    public void loadCloudImage(final List<String> list) {
-        if(list != null && list.size()>0){
-            Logger.d(list.toString());
-            subscription = Observable.interval(6, TimeUnit.SECONDS).take(list.size())
+    public void loadCloudImage(final File[] files) {
+        if(files != null && files.length>0){
+            subscription = Observable.interval(6, TimeUnit.SECONDS).take(files.length)
                     .repeat()
                     .map(new Func1<Long, String>() {
                         @Override
                         public String call(Long aLong) {
-                            return list.get(Integer.parseInt(aLong+""));
+                            return files[Integer.parseInt(aLong+"")].getAbsolutePath();
                         }
                     })
                     .observeOn(AndroidSchedulers.mainThread())
