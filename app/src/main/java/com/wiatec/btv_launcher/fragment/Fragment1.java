@@ -287,7 +287,6 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
                         public void call(String s) {
                             Logger.d("f1--->" +s);
                             Glide.with(getContext()).load(s)
-                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                                     .placeholder(R.drawable.ld_cloud_icon_3)
                                     .error(R.drawable.ld_cloud_icon_3)
                                     .into(ibt_LdCloud);
