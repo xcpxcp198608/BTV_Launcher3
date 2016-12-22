@@ -10,14 +10,17 @@ import java.io.File;
 public class CloudImageData implements ICloudImageData {
     @Override
     public void loadData(final OnLoadListener onLoadListener) {
-
-        String path = Application.getContext().getExternalFilesDir("images").getAbsolutePath();
-        File file = new File(path);
-        if(!file.exists()){
-            onLoadListener.onFailure("file not exists");
-            return;
+        try{
+            File file = Application.getContext().getExternalFilesDir("images");
+            if(!file.exists()){
+                onLoadListener.onFailure("file not exists");
+                return;
+            }
+            File [] files = file.listFiles();
+            onLoadListener.onSuccess(files);
+        }catch (Exception e){
+            e.printStackTrace();
+            onLoadListener.onFailure(e.getMessage());
         }
-        File [] files = file.listFiles();
-        onLoadListener.onSuccess(files);
     }
 }

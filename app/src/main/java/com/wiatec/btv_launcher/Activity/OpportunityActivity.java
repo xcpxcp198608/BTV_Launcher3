@@ -10,7 +10,6 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.wiatec.btv_launcher.R;
-import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.adapter.OpportunityPagerAdapter;
 import com.wiatec.btv_launcher.animator.OpportunityPagerTransformer;
 
@@ -34,7 +33,7 @@ public class OpportunityActivity extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         list = new ArrayList<>();
         int [] resIds = new int [] {R.drawable.o1 ,R.drawable.o2  ,R.drawable.o3,R.drawable.o4  ,R.drawable.o5  ,
-                R.drawable.o6  ,R.drawable.o7,R.drawable.o8  ,R.drawable.o9 , R.drawable.o10};
+                R.drawable.o61,R.drawable.o7,R.drawable.o8  ,R.drawable.o9 , R.drawable.o10};
         for (int i =0 ; i< resIds.length ;i++){
             ImageView imageView = new ImageView(this);
             Glide.with(this).load(resIds [i]).into(imageView);

@@ -146,8 +146,8 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
         }
         if(SystemConfig.isNetworkConnected(getContext())){
             presenter.loadData();
-            presenter.loadCloudData();
         }
+        presenter.loadCloudData();
     }
 
     @Override
