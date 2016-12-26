@@ -29,5 +29,6 @@
     <string name="video">Video</string>
     <string name="game">Juego</string>
     <string name="music">Música</string>
+    <string name="error_stream">Stream load error</string>
 
 </resources>

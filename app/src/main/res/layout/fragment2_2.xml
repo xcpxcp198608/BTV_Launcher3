@@ -173,6 +173,16 @@
                 android:scaleType="centerCrop"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tv_error"
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp"
+                android:gravity="center_horizontal|bottom"
+                android:text="@string/error_stream"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </FrameLayout>
 
         <LinearLayout

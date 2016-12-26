@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
@@ -118,6 +119,9 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
             if(vv_Main!=null && vv_Main.isPlaying()){
                 playPosition = vv_Main.getCurrentPosition();
                 vv_Main.stopPlayback();
+            }
+            if(subscription!= null){
+                subscription.unsubscribe();
             }
         }
     }
@@ -230,8 +234,12 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
         vv_Main.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                vv_Main.setVideoPath(F.path.video);
-                vv_Main.start();
+                try {
+                    vv_Main.setVideoPath(F.path.video);
+                    vv_Main.start();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         });
     }

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.jude.rollviewpager.RollPagerView;
@@ -71,6 +72,8 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
     ImageButton ibt_Security;
     @BindView(R.id.ibt_file)
     ImageButton ibt_File;
+    @BindView(R.id.tv_error)
+    TextView tv_Error;
 
 
     private SurfaceHolder surfaceHolder;
@@ -99,6 +102,7 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
                 mediaPlayer.release();
                 mediaPlayer = null;
                 iv_Bvision.setVisibility(View.VISIBLE);
+                tv_Error.setVisibility(View.GONE);
             }
         }
     }
@@ -138,6 +142,7 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
             mediaPlayer.release();
             mediaPlayer = null;
             iv_Bvision.setVisibility(View.VISIBLE);
+            tv_Error.setVisibility(View.GONE);
         }
     }
 
@@ -182,25 +187,31 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
 
 
     private void playVideo(List<ChannelInfo> list, int position) {
+        tv_Error.setVisibility(View.GONE);
         if (mediaPlayer == null) {
             mediaPlayer = new MediaPlayer();
         }
         mediaPlayer.reset();
         try {
-            mediaPlayer.setDataSource(list.get(position).getUrl());
+            String url = list.get(position).getUrl();
+            Logger.d(url);
+            mediaPlayer.setDataSource(url);
             mediaPlayer.setDisplay(surfaceHolder);
-            mediaPlayer.prepareAsync();
+            mediaPlayer.prepare();
             mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
                     iv_Bvision.setVisibility(View.GONE);
-                    mp.start();
+                    mediaPlayer.start();
                 }
             });
             mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
                 @Override
                 public boolean onError(MediaPlayer mp, int what, int extra) {
-                    mp.reset();
+                    //mediaPlayer.reset();
+                    iv_Bvision.setVisibility(View.VISIBLE);
+                    tv_Error.setVisibility(View.VISIBLE);
+                    Logger.d(what+"");
                     return false;
                 }
             });

@@ -119,7 +119,11 @@ public class DownloadManager {
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.d("----px----" ,e.getMessage());
+                try {
+                    Log.d("----px----", e.getMessage());
+                }catch (Exception e1){
+                    e1.printStackTrace();
+                }
             }
 
             @Override
@@ -149,7 +153,7 @@ public class DownloadManager {
                             }
                         }
                         randomAccessFile = new RandomAccessFile(file, "rwd");
-                        randomAccessFile.setLength(downloadInfo.getFileLength());
+                        //randomAccessFile.setLength(downloadInfo.getFileLength());
                         randomAccessFile.seek(startLength);
                         handler.obtainMessage(MSG_START).sendToTarget();
                         inputStream = response.body().byteStream();

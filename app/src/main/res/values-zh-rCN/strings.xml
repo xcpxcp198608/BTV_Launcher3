@@ -30,6 +30,7 @@
     <string name="video">影视</string>
     <string name="game">游戏</string>
     <string name="music">音乐</string>
+    <string name="error_stream">节目源错误</string>
 
 
 </resources>
