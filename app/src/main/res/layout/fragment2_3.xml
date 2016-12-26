@@ -156,23 +156,22 @@
         <FrameLayout
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:background="@color/colorBlack"
             android:layout_weight="5"
+            android:background="@color/colorBlack"
             android:layout_width="0dp"
             android:layout_height="match_parent">
-            <VideoView
+            <SurfaceView
                 android:layout_gravity="center"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
                 android:id="@+id/surface_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
             <ImageView
                 android:id="@+id/iv_bvision"
-                android:background="@drawable/btv12"
+                android:background="@drawable/btv"
+                android:layout_gravity="center"
                 android:scaleType="centerCrop"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:visibility="gone"

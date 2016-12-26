@@ -235,6 +235,7 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
             @Override
             public void onCompletion(MediaPlayer mp) {
                 try {
+                    playPosition = 0;
                     vv_Main.setVideoPath(F.path.video);
                     vv_Main.start();
                 }catch (Exception e){

@@ -17,7 +17,6 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
-import com.jude.rollviewpager.RollPagerView;
 import com.wiatec.btv_launcher.Activity.AppSelectActivity;
 import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.R;
@@ -29,7 +28,6 @@ import com.wiatec.btv_launcher.animator.Zoom;
 import com.wiatec.btv_launcher.bean.ChannelInfo;
 import com.wiatec.btv_launcher.bean.ImageInfo;
 import com.wiatec.btv_launcher.bean.InstalledApp;
-import com.wiatec.btv_launcher.bean.RollImageInfo;
 import com.wiatec.btv_launcher.presenter.Fragment2Presenter;
 
 import java.io.IOException;
@@ -45,20 +43,16 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by PX on 2016-11-12.
+ * Created by patrick on 2016/12/26.
  */
 
-public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> implements IFragment2, View.OnFocusChangeListener {
+public class Fragment3 extends BaseFragment<IFragment2, Fragment2Presenter> implements IFragment2 ,View.OnFocusChangeListener{
     @BindView(R.id.bt_b1)
     Button bt_B1;
     @BindView(R.id.bt_b2)
     Button bt_B2;
     @BindView(R.id.bt_b3)
     Button bt_B3;
-    @BindView(R.id.surface_view)
-    SurfaceView surfaceView;
-    @BindView(R.id.iv_bvision)
-    ImageView iv_Bvision;
     @BindView(R.id.ibt_rabbit)
     ImageButton ibt_Rabbit;
     @BindView(R.id.ibt_add1)
@@ -67,26 +61,52 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
     ImageButton ibt_Add2;
     @BindView(R.id.ibt_add3)
     ImageButton ibt_Add3;
+    @BindView(R.id.iv_bvision)
+    ImageView iv_Bvision;
+    @BindView(R.id.tv_error)
+    TextView tv_Error;
     @BindView(R.id.ibt_browser)
     ImageButton ibt_Browser;
     @BindView(R.id.ibt_security)
     ImageButton ibt_Security;
     @BindView(R.id.ibt_file)
     ImageButton ibt_File;
-    @BindView(R.id.tv_error)
-    TextView tv_Error;
 
-
+    private InstalledAppDao installedAppDao;
+    private SurfaceView surfaceView;
     private SurfaceHolder surfaceHolder;
     private MediaPlayer mediaPlayer;
-    private InstalledAppDao installedAppDao;
+
+    @Override
+    protected Fragment2Presenter createPresenter() {
+        return new Fragment2Presenter(this);
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment2_2, container, false);
+        View view = inflater.inflate(R.layout.fragment2_3, container, false);
         ButterKnife.bind(this, view);
         installedAppDao = InstalledAppDao.getInstance(getContext());
+        surfaceView = (SurfaceView) view.findViewById(R.id.surface_view);
+        surfaceHolder = surfaceView.getHolder();
+        surfaceHolder.addCallback(new SurfaceHolder.Callback() {
+            @Override
+            public void surfaceCreated(SurfaceHolder holder) {
+
+            }
+
+            @Override
+            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+                holder.setFixedSize(width,height);
+            }
+
+            @Override
+            public void surfaceDestroyed(SurfaceHolder holder) {
+
+            }
+        });
+        surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         return view;
     }
 
@@ -98,11 +118,15 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
                 presenter.loadData();
             }
         } else {
-            if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            if (mediaPlayer != null) {
                 mediaPlayer.stop();
                 mediaPlayer.release();
                 mediaPlayer = null;
+            }
+            if(iv_Bvision != null) {
                 iv_Bvision.setVisibility(View.VISIBLE);
+            }
+            if(tv_Error != null) {
                 tv_Error.setVisibility(View.GONE);
             }
         }
@@ -111,46 +135,25 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
     @Override
     public void onStart() {
         super.onStart();
-        surfaceHolder = surfaceView.getHolder();
-        surfaceHolder.addCallback(new SurfaceHolder.Callback() {
-            @Override
-            public void surfaceCreated(SurfaceHolder holder) {
-
-            }
-
-            @Override
-            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
-            }
-
-            @Override
-            public void surfaceDestroyed(SurfaceHolder holder) {
-
-            }
-        });
         setZoom();
-
         showCustomShortCut(ibt_Add1 ,"add1");
         showCustomShortCut(ibt_Add2 ,"add2");
         showCustomShortCut(ibt_Add3 ,"add3");
+
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+        if (mediaPlayer != null&& mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
             mediaPlayer.release();
             mediaPlayer = null;
-            iv_Bvision.setVisibility(View.VISIBLE);
-            tv_Error.setVisibility(View.GONE);
         }
+        iv_Bvision.setVisibility(View.VISIBLE);
+        tv_Error.setVisibility(View.GONE);
     }
 
-    @Override
-    protected Fragment2Presenter createPresenter() {
-        return new Fragment2Presenter(this);
-    }
 
     @Override
     public void loadChannel(final List<ChannelInfo> list) {
@@ -189,36 +192,36 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
 
     private void playVideo(List<ChannelInfo> list, int position) {
         tv_Error.setVisibility(View.GONE);
-        if (mediaPlayer == null) {
+        final String url = list.get(position).getUrl();
+        Logger.d(url);
+        if(mediaPlayer == null){
             mediaPlayer = new MediaPlayer();
         }
         mediaPlayer.reset();
         try {
-            String url = list.get(position).getUrl();
-            Logger.d(url);
             mediaPlayer.setDataSource(url);
             mediaPlayer.setDisplay(surfaceHolder);
-            mediaPlayer.prepare();
-            mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                @Override
-                public void onPrepared(MediaPlayer mp) {
-                    iv_Bvision.setVisibility(View.GONE);
-                    mediaPlayer.start();
-                }
-            });
-            mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
-                @Override
-                public boolean onError(MediaPlayer mp, int what, int extra) {
-                    //mediaPlayer.reset();
-                    iv_Bvision.setVisibility(View.VISIBLE);
-                    tv_Error.setVisibility(View.VISIBLE);
-                    Logger.d(what+"");
-                    return false;
-                }
-            });
-        } catch (IOException e) {
+            mediaPlayer.prepareAsync();
+        } catch (Exception e) {
             e.printStackTrace();
         }
+        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                iv_Bvision.setVisibility(View.GONE);
+                mediaPlayer.start();
+            }
+        });
+        mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+            @Override
+            public boolean onError(MediaPlayer mp, int what, int extra) {
+                mediaPlayer.reset();
+                iv_Bvision.setVisibility(View.VISIBLE);
+                tv_Error.setVisibility(View.VISIBLE);
+                Logger.d(what+"");
+                return false;
+            }
+        });
     }
 
     private void setZoom() {
@@ -259,7 +262,7 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
                 }
                 break;
             case R.id.ibt_rabbit:
-                startActivity(new Intent(Intent.ACTION_VIEW ,Uri.parse("http://www.rabb.it")));
+                startActivity(new Intent(Intent.ACTION_VIEW , Uri.parse("http://www.rabb.it")));
                 break;
         }
     }
@@ -313,4 +316,5 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
                     }
                 });
     }
+
 }
