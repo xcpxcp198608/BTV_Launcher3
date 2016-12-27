@@ -18,8 +18,8 @@ public class WeatherDao {
     private WeatherDao (Context context) {
         sqLiteDatabase = new SQLiteHelper(context).getWritableDatabase();
     }
-    private static volatile WeatherDao instance;
-    public static synchronized WeatherDao getInstance (Context context) {
+    private volatile static WeatherDao instance;
+    public static WeatherDao getInstance (Context context) {
         if(instance ==null){
             synchronized (WeatherDao.class){
                 if(instance ==null){

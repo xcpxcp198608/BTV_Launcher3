@@ -160,14 +160,14 @@
             android:background="@color/colorBlack"
             android:layout_width="0dp"
             android:layout_height="match_parent">
-            <SurfaceView
+            <io.vov.vitamio.widget.VideoView
                 android:layout_gravity="center"
-                android:id="@+id/surface_view"
+                android:id="@+id/video_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
             <ImageView
                 android:id="@+id/iv_bvision"
-                android:background="@drawable/btv"
+                android:background="@drawable/btv12"
                 android:layout_gravity="center"
                 android:scaleType="centerCrop"
                 android:layout_width="wrap_content"

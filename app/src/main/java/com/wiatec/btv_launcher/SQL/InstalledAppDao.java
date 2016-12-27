@@ -21,8 +21,8 @@ public class InstalledAppDao {
     private InstalledAppDao(Context context){
         sqLiteDatabase = new SQLiteHelper(context).getWritableDatabase();
     }
-    private static InstalledAppDao instance;
-    public static synchronized InstalledAppDao getInstance(Context context){
+    private volatile static InstalledAppDao instance;
+    public static InstalledAppDao getInstance(Context context){
         if(instance ==null){
             synchronized (InstalledAppDao.class){
                 if(instance ==null){

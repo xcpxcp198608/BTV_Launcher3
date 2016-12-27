@@ -162,8 +162,7 @@
             android:layout_height="match_parent">
             <SurfaceView
                 android:layout_gravity="center"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
+                android:focusable="true"
                 android:id="@+id/surface_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />

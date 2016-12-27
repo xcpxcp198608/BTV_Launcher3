@@ -23,8 +23,8 @@ public class MessageDao {
         sqLiteDatabase = new SQLiteHelper(context).getWritableDatabase();
     }
 
-    private static MessageDao instance;
-    public static synchronized MessageDao getInstance(Context context){
+    private volatile static MessageDao instance;
+    public static MessageDao getInstance(Context context){
         if(instance ==null){
             synchronized (MessageDao.class){
                 if(instance ==null){

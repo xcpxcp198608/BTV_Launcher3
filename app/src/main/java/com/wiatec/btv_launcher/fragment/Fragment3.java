@@ -1,5 +1,6 @@
 package com.wiatec.btv_launcher.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -14,7 +15,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.wiatec.btv_launcher.Activity.AppSelectActivity;
@@ -36,6 +36,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.vov.vitamio.LibsChecker;
+import io.vov.vitamio.widget.VideoView;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -73,9 +75,10 @@ public class Fragment3 extends BaseFragment<IFragment2, Fragment2Presenter> impl
     ImageButton ibt_File;
 
     private InstalledAppDao installedAppDao;
-    private SurfaceView surfaceView;
+    private VideoView videoView;
     private SurfaceHolder surfaceHolder;
     private MediaPlayer mediaPlayer;
+    private boolean isShow =false;
 
     @Override
     protected Fragment2Presenter createPresenter() {
@@ -87,26 +90,12 @@ public class Fragment3 extends BaseFragment<IFragment2, Fragment2Presenter> impl
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment2_3, container, false);
         ButterKnife.bind(this, view);
+        LibsChecker.checkVitamioLibs((Activity) getContext());
         installedAppDao = InstalledAppDao.getInstance(getContext());
-        surfaceView = (SurfaceView) view.findViewById(R.id.surface_view);
-        surfaceHolder = surfaceView.getHolder();
-        surfaceHolder.addCallback(new SurfaceHolder.Callback() {
-            @Override
-            public void surfaceCreated(SurfaceHolder holder) {
-
-            }
-
-            @Override
-            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-                holder.setFixedSize(width,height);
-            }
-
-            @Override
-            public void surfaceDestroyed(SurfaceHolder holder) {
-
-            }
-        });
-        surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+        videoView = (VideoView) view.findViewById(R.id.video_view);
+        if(videoView!= null && videoView.isPlaying()){
+            videoView.stopPlayback();
+        }
         return view;
     }
 
@@ -117,11 +106,11 @@ public class Fragment3 extends BaseFragment<IFragment2, Fragment2Presenter> impl
             if (presenter != null) {
                 presenter.loadData();
             }
+            isShow = true;
         } else {
-            if (mediaPlayer != null) {
-                mediaPlayer.stop();
-                mediaPlayer.release();
-                mediaPlayer = null;
+            if (videoView != null) {
+                videoView.pause();
+                videoView.stopPlayback();
             }
             if(iv_Bvision != null) {
                 iv_Bvision.setVisibility(View.VISIBLE);
@@ -129,12 +118,14 @@ public class Fragment3 extends BaseFragment<IFragment2, Fragment2Presenter> impl
             if(tv_Error != null) {
                 tv_Error.setVisibility(View.GONE);
             }
+            isShow = false;
         }
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        Logger.d("start");
         setZoom();
         showCustomShortCut(ibt_Add1 ,"add1");
         showCustomShortCut(ibt_Add2 ,"add2");
@@ -145,10 +136,10 @@ public class Fragment3 extends BaseFragment<IFragment2, Fragment2Presenter> impl
     @Override
     public void onPause() {
         super.onPause();
-        if (mediaPlayer != null&& mediaPlayer.isPlaying()) {
-            mediaPlayer.stop();
-            mediaPlayer.release();
-            mediaPlayer = null;
+        Logger.d("pause");
+        if (videoView != null) {
+            Logger.d("stop play");
+            videoView.stopPlayback();
         }
         iv_Bvision.setVisibility(View.VISIBLE);
         tv_Error.setVisibility(View.GONE);
@@ -194,31 +185,33 @@ public class Fragment3 extends BaseFragment<IFragment2, Fragment2Presenter> impl
         tv_Error.setVisibility(View.GONE);
         final String url = list.get(position).getUrl();
         Logger.d(url);
-        if(mediaPlayer == null){
-            mediaPlayer = new MediaPlayer();
+        if(videoView.isPlaying()) {
+            videoView.pause();
         }
-        mediaPlayer.reset();
         try {
-            mediaPlayer.setDataSource(url);
-            mediaPlayer.setDisplay(surfaceHolder);
-            mediaPlayer.prepareAsync();
+            videoView.setVideoChroma(io.vov.vitamio.MediaPlayer.VIDEOCHROMA_RGB565);
+            videoView.setVideoQuality(io.vov.vitamio.MediaPlayer.VIDEOQUALITY_HIGH);
+            videoView.setScrollContainer(false);
+            videoView.setVideoPath(url);
+            iv_Bvision.setVisibility(View.GONE);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+        videoView.setOnPreparedListener(new io.vov.vitamio.MediaPlayer.OnPreparedListener() {
             @Override
-            public void onPrepared(MediaPlayer mp) {
-                iv_Bvision.setVisibility(View.GONE);
-                mediaPlayer.start();
+            public void onPrepared(io.vov.vitamio.MediaPlayer mp) {
+                if(isShow) {
+                    Logger.d("prepare");
+                    iv_Bvision.setVisibility(View.GONE);
+                    videoView.start();
+                }
             }
         });
-        mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+        videoView.setOnErrorListener(new io.vov.vitamio.MediaPlayer.OnErrorListener() {
             @Override
-            public boolean onError(MediaPlayer mp, int what, int extra) {
-                mediaPlayer.reset();
+            public boolean onError(io.vov.vitamio.MediaPlayer mp, int what, int extra) {
                 iv_Bvision.setVisibility(View.VISIBLE);
                 tv_Error.setVisibility(View.VISIBLE);
-                Logger.d(what+"");
                 return false;
             }
         });

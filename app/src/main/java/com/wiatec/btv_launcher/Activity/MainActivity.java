@@ -93,7 +93,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
 
 
     private Fragment1 fragment1;
-    private Fragment3 fragment3;
+    private Fragment2 fragment2;
     private List<Fragment> list;
 
     private NetworkStatusReceiver networkStatusReceiver;
@@ -112,13 +112,13 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
         if (fragment1 == null) {
             fragment1 = new Fragment1();
         }
-        if (fragment3 == null) {
-            fragment3 = new Fragment3();
+        if (fragment2 == null) {
+            fragment2 = new Fragment2();
         }
         if (list == null) {
             list = new ArrayList<>();
             list.add(fragment1);
-            list.add(fragment3);
+            list.add(fragment2);
         }
         viewPager.setAdapter(new FragmentAdapter(getSupportFragmentManager(), list));
         showTimeAndData();

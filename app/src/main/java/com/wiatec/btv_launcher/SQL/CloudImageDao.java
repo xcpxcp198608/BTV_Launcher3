@@ -23,8 +23,8 @@ public class CloudImageDao {
     private CloudImageDao() {
         sqLiteDatabase = new SQLiteHelper(Application.getContext()).getWritableDatabase();
     }
-    private static volatile CloudImageDao instance;
-    public static synchronized CloudImageDao getInstance (){
+    private volatile  static CloudImageDao instance;
+    public static CloudImageDao getInstance (){
         if(instance == null){
             synchronized (CloudImageDao.class){
                 instance = new CloudImageDao();

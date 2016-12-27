@@ -1,6 +1,8 @@
 package com.wiatec.btv_launcher.fragment;
 
 import android.content.Intent;
+import android.graphics.PixelFormat;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -111,11 +113,22 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
     @Override
     public void onStart() {
         super.onStart();
+        setZoom();
+        showCustomShortCut(ibt_Add1 ,"add1");
+        showCustomShortCut(ibt_Add2 ,"add2");
+        showCustomShortCut(ibt_Add3 ,"add3");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         surfaceHolder = surfaceView.getHolder();
+        surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+        surfaceHolder.setFormat(PixelFormat.RGB_565);
         surfaceHolder.addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
-
+                Logger.d("surfaceCreated");
             }
 
             @Override
@@ -128,11 +141,6 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
 
             }
         });
-        setZoom();
-
-        showCustomShortCut(ibt_Add1 ,"add1");
-        showCustomShortCut(ibt_Add2 ,"add2");
-        showCustomShortCut(ibt_Add3 ,"add3");
     }
 
     @Override
@@ -196,20 +204,22 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
         try {
             String url = list.get(position).getUrl();
             Logger.d(url);
-            mediaPlayer.setDataSource(url);
+            mediaPlayer.setScreenOnWhilePlaying(true);
             mediaPlayer.setDisplay(surfaceHolder);
-            mediaPlayer.prepare();
+            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            mediaPlayer.setDataSource(url);
+            mediaPlayer.prepareAsync();
             mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
                     iv_Bvision.setVisibility(View.GONE);
-                    mediaPlayer.start();
+                    mp.start();
                 }
             });
             mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
                 @Override
                 public boolean onError(MediaPlayer mp, int what, int extra) {
-                    //mediaPlayer.reset();
+                    mp.reset();
                     iv_Bvision.setVisibility(View.VISIBLE);
                     tv_Error.setVisibility(View.VISIBLE);
                     Logger.d(what+"");
