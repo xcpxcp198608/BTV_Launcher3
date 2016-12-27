@@ -43,7 +43,6 @@ import com.wiatec.btv_launcher.bean.UpdateInfo;
 import com.wiatec.btv_launcher.bean.VideoInfo;
 import com.wiatec.btv_launcher.bean.WeatherInfo;
 import com.wiatec.btv_launcher.fragment.Fragment1;
-import com.wiatec.btv_launcher.fragment.Fragment2;
 import com.wiatec.btv_launcher.fragment.Fragment3;
 import com.wiatec.btv_launcher.presenter.MainPresenter;
 import com.wiatec.btv_launcher.receiver.LanguageChangeReceiver;
@@ -93,7 +92,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
 
 
     private Fragment1 fragment1;
-    private Fragment2 fragment2;
+    private Fragment3 fragment3;
     private List<Fragment> list;
 
     private NetworkStatusReceiver networkStatusReceiver;
@@ -112,14 +111,14 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
         if (fragment1 == null) {
             fragment1 = new Fragment1();
         }
-        if (fragment2 == null) {
-            fragment2 = new Fragment2();
+        if (fragment3 == null) {
+            fragment3 = new Fragment3();
         }
         if (list == null) {
             list = new ArrayList<>();
-            list.add(fragment1);
-            list.add(fragment2);
         }
+        list.add(fragment1);
+        list.add(fragment3);
         viewPager.setAdapter(new FragmentAdapter(getSupportFragmentManager(), list));
         showTimeAndData();
         networkStatusReceiver = new NetworkStatusReceiver(iv_Net);

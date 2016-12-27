@@ -27,6 +27,7 @@
 
 
     <LinearLayout
+        android:layout_marginRight="5dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -154,15 +155,12 @@
         </LinearLayout>
 
         <FrameLayout
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:background="@color/colorBlack"
             android:layout_weight="5"
             android:layout_width="0dp"
             android:layout_height="match_parent">
             <SurfaceView
                 android:layout_gravity="center"
-                android:focusable="true"
                 android:id="@+id/surface_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
@@ -185,6 +183,7 @@
         </FrameLayout>
 
         <LinearLayout
+            android:layout_marginLeft="5dp"
             android:orientation="vertical"
             android:layout_weight="1"
             android:layout_width="0dp"
