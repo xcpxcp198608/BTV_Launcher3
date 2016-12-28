@@ -162,6 +162,8 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
         lvCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ImageInfo imageInfo = list.get(position);
+                presenter.showChannelByCountry(imageInfo.getName());
                 Zoom.zoomIn10_11(view);
             }
 
@@ -170,10 +172,7 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
 
             }
         });
-
     }
-
-
 
     @Override
     public void loadRollImage(List<ImageInfo> list) {
