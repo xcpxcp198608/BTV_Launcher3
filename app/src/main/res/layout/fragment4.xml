@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:src="@drawable/point_gray_1"
+            android:layout_width="10dp"
+            android:layout_height="10dp" />
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/point_white_1"
+            android:layout_width="10dp"
+            android:layout_height="10dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginRight="5dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="8.6"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp">
+
+                <ListView
+                    android:layout_marginRight="5dp"
+                    android:divider="@color/colorTranslucent"
+                    android:dividerHeight="1dp"
+                    android:id="@+id/lv_country"
+                    android:background="@color/colorGray"
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"/>
+
+                <GridView
+                    android:background="@color/colorTranslucent4"
+                    android:id="@+id/gv_channel"
+                    android:horizontalSpacing="5dp"
+                    android:verticalSpacing="5dp"
+                    android:numColumns="3"
+                    android:layout_weight="6.6"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:padding="3dp"
+                android:background="@color/colorGray1"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="70dp">
+
+                <ImageButton
+                    android:id="@+id/ibt_c1"
+                    android:layout_marginRight="3dp"
+                    android:padding="3dp"
+                    android:scaleType="centerInside"
+                    android:layout_weight="1"
+                    android:background="@drawable/item_ad1_bg"
+                    android:src="@drawable/add1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent" />
+
+                <ImageButton
+                    android:id="@+id/ibt_c2"
+                    android:layout_marginRight="3dp"
+                    android:padding="3dp"
+                    android:scaleType="centerInside"
+                    android:layout_weight="1"
+                    android:background="@drawable/item_ad1_bg"
+                    android:src="@drawable/add1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent" />
+                <ImageButton
+                    android:id="@+id/ibt_c3"
+                    android:layout_marginRight="5dp"
+                    android:padding="3dp"
+                    android:scaleType="centerInside"
+                    android:layout_weight="1"
+                    android:background="@drawable/item_ad1_bg"
+                    android:src="@drawable/add1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent" />
+                <ImageButton
+                    android:id="@+id/ibt_c4"
+                    android:layout_marginRight="3dp"
+                    android:padding="3dp"
+                    android:scaleType="centerInside"
+                    android:layout_weight="1"
+                    android:background="@drawable/item_ad1_bg"
+                    android:src="@drawable/add1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent" />
+                <ImageButton
+                    android:id="@+id/ibt_c5"
+                    android:layout_marginRight="3dp"
+                    android:padding="3dp"
+                    android:scaleType="centerInside"
+                    android:layout_weight="1"
+                    android:background="@drawable/item_ad1_bg"
+                    android:src="@drawable/add1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent" />
+                <ImageButton
+                    android:id="@+id/ibt_c6"
+                    android:layout_marginRight="3dp"
+                    android:padding="3dp"
+                    android:scaleType="centerInside"
+                    android:layout_weight="1"
+                    android:background="@drawable/item_ad1_bg"
+                    android:src="@drawable/add1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent" />
+                <ImageButton
+                    android:id="@+id/ibt_c7"
+                    android:padding="3dp"
+                    android:scaleType="centerInside"
+                    android:layout_weight="1"
+                    android:background="@drawable/item_ad1_bg"
+                    android:src="@drawable/add1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="5dp"
+            android:orientation="vertical"
+            android:layout_weight="2.8"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <com.jude.rollviewpager.RollPagerView
+                android:layout_gravity="center"
+                app:rollviewpager_play_delay="6000"
+                android:id="@+id/rpv_main"
+                android:clickable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:background="@drawable/text"
+                android:layout_weight="2"
+                android:layout_height="0dp"
+                android:layout_width="match_parent"/>
+
+            <ImageButton
+                android:padding="3dp"
+                android:id="@+id/ibt_ld_store"
+                android:layout_marginTop="5dp"
+                android:cropToPadding="true"
+                android:adjustViewBounds="true"
+                android:background="@drawable/item_ldstore_bg"
+                android:src="@drawable/ld_store_icon"
+                android:scaleType="fitCenter"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+
+            <ImageButton
+                android:layout_marginTop="5dp"
+                android:id="@+id/ibt_ad_1"
+                android:padding="3dp"
+                android:adjustViewBounds="true"
+                android:background="@drawable/item_ad1_bg"
+                android:src="@drawable/bksound_icon_3"
+                android:scaleType="centerCrop"
+                android:cropToPadding="true"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

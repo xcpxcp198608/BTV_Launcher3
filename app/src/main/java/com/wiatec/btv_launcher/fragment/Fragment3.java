@@ -36,6 +36,9 @@ import java.util.List;
 public class Fragment3 extends BaseFragment<IFragment3 ,Fragment3Presenter> implements IFragment3{
     private GridView gridView;
     private ListView listView;
+    private LinkListAdapter linkListAdapter;
+    private ChannelGrideAdapter adapter;
+    private boolean isShow = false;
 
     @Override
     protected Fragment3Presenter createPresenter() {
@@ -52,14 +55,27 @@ public class Fragment3 extends BaseFragment<IFragment3 ,Fragment3Presenter> impl
         return view;
     }
 
+
     @Override
-    public void onStart() {
-        super.onStart();
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            if(!isShow){
+                presenter.bind();
+            }
+            if(linkListAdapter != null){
+                linkListAdapter.notifyDataSetChanged();
+            }
+            if (adapter != null) {
+                adapter.notifyDataSetChanged();
+            }
+        }
     }
 
     @Override
     public void loadImage2(final List<ImageInfo> list) {
-        LinkListAdapter linkListAdapter = new LinkListAdapter(Application.getContext() , list);
+        isShow = true;
+        linkListAdapter = new LinkListAdapter(Application.getContext() , list);
         listView.setAdapter(linkListAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -82,7 +98,7 @@ public class Fragment3 extends BaseFragment<IFragment3 ,Fragment3Presenter> impl
 
     @Override
     public void loadChannel(final List<ChannelInfo> list) {
-        ChannelGrideAdapter adapter = new ChannelGrideAdapter(Application.getContext() , list);
+        adapter = new ChannelGrideAdapter(Application.getContext() , list);
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface IChannelData {
     void loadData(OnLoadListener onLoadListener);
+    void showData(String country ,OnLoadListener onLoadListener);
     interface OnLoadListener {
         void onSuccess (List<ChannelInfo> list);
         void onFailure (String e);

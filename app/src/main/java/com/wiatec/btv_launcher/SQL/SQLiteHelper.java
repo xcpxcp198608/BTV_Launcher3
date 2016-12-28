@@ -33,7 +33,12 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             "name text ,url text,path text,finished text)";
     private static final String DROP_TABLE_CLOUD_IMAGE= "drop table if exists "+CLOUD_IMAGE_TABLE;
 
-    private static final int VERSION =7;
+    public static final String CHANNEL_TABLE = "CHANNEL";
+    private static final String CREATE_TABLE_CHANNEL = "create table if not exists "+CHANNEL_TABLE+"(_id integer primary key autoincrement," +
+            "name text ,url text,icon text,type text ,country text)";
+    private static final String DROP_TABLE_CHANNEL= "drop table if exists "+CHANNEL_TABLE;
+
+    private static final int VERSION =8;
 
     public SQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, VERSION);
@@ -45,6 +50,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_MESSAGE);
         db.execSQL(CREATE_TABLE_WEATHER);
         db.execSQL(CREATE_TABLE_CLOUD_IMAGE);
+        db.execSQL(CREATE_TABLE_CHANNEL);
     }
 
     @Override
@@ -53,6 +59,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         db.execSQL(DROP_TABLE_MESSAGE);
         db.execSQL(DROP_TABLE_WEATHER);
         db.execSQL(DROP_TABLE_CLOUD_IMAGE);
+        db.execSQL(DROP_TABLE_CHANNEL);
         this.onCreate(db);
     }
 }
