@@ -28,7 +28,7 @@ public class LoadWeather implements Runnable {
 
     @Override
     public void run() {
-        Logger.d("start load weather");
+       // Logger.d("start load weather");
         loadLocation();
     }
 

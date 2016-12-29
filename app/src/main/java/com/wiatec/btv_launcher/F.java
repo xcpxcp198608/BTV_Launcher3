@@ -28,6 +28,8 @@ public final class F {
         public static final String message1_es_US="http://158.69.229.104:8091/json/Message1_es_US.json";
         public static final String message1_it_IT="http://158.69.229.104:8091/json/Message1_it_IT.json";
 
+        public static final String login="http://158.69.229.104:8080/Launcher_EN/Login";
+
     }
 
     public static final class path {

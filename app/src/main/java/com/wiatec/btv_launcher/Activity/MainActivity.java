@@ -328,10 +328,10 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
             return;
         }
         if (!FileCheck.isFileExists(F.path.download, "btvi3.mp4") && !isVideoDownloading) {
-            Logger.d("video is not exists");
+            //Logger.d("video is not exists");
             downloadVideo(videoInfo);
         } else if (!FileCheck.isFileIntact(F.path.download, "btvi3.mp4", videoInfo.getMd5()) && !isVideoDownloading) {
-            Logger.d("video is not intact");
+            //Logger.d("video is not intact");
             downloadVideo(videoInfo);
         } else {
             // Logger.d("video no need update");

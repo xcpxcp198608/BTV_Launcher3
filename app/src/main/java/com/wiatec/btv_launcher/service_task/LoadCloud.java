@@ -81,7 +81,7 @@ public class LoadCloud implements Runnable {
                 cursor.close();
             }
         }
-        Logger.d(cloudInfo.toString());
+       // Logger.d(cloudInfo.toString());
         return cloudInfo;
     }
 

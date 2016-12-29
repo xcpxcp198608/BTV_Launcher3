@@ -15,6 +15,7 @@ import android.widget.ListView;
 import com.bumptech.glide.Glide;
 import com.jude.rollviewpager.RollPagerView;
 import com.wiatec.btv_launcher.Activity.AppSelectActivity;
+import com.wiatec.btv_launcher.Activity.LoginActivity;
 import com.wiatec.btv_launcher.Activity.PlayActivity;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
@@ -47,7 +48,7 @@ import rx.schedulers.Schedulers;
  * Created by patrick on 2016/12/28.
  */
 
-public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> implements IFragment4 ,View.OnFocusChangeListener{
+public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> implements IFragment4 ,View.OnFocusChangeListener ,View.OnClickListener{
     @BindView(R.id.lv_country)
     ListView lvCountry;
     @BindView(R.id.gv_channel)
@@ -120,7 +121,7 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
         showCustomShortCut(ibtC5 ,"c5");
         showCustomShortCut(ibtC6 ,"c6");
         showCustomShortCut(ibtC7 ,"c7");
-        showCustomShortCut(ibtC8 ,"c8");
+        ibtC8.setOnClickListener(this);
     }
 
     @Override
@@ -270,6 +271,17 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
     public void onFocusChange(View v, boolean hasFocus) {
         if (hasFocus) {
             Zoom.zoomIn10_11(v);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.ibt_c8:
+                getContext().startActivity(new Intent(getContext() , LoginActivity.class));
+                break;
+            default:
+                break;
         }
     }
 

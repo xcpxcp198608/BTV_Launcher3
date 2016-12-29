@@ -31,6 +31,10 @@
     <string name="game">游戏</string>
     <string name="music">音乐</string>
     <string name="error_stream">节目源错误</string>
+    <string name="error_input">输入错误</string>
+    <string name="error_key">密钥错误</string>
+    <string name="input_key">输入密钥</string>
+    <string name="input_password">输入密码</string>
 
 
 </resources>

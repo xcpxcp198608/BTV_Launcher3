@@ -27,7 +27,7 @@ public class FileCheck {
     public static boolean isFileIntact (String filePath,String fileName,String md5){
         String localMD5 = MD5.getFileMD5(filePath ,fileName);
        //Logger.d(localMD5);
-        if(localMD5.equals(md5)){
+        if(localMD5.equalsIgnoreCase(md5)){
            // Logger.d("----file is intact");
             return true;
         }else{
