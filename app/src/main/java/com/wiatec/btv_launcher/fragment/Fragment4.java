@@ -51,7 +51,7 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
     @BindView(R.id.lv_country)
     ListView lvCountry;
     @BindView(R.id.gv_channel)
-    GridView gvChannel;
+    GridView gridView;
     @BindView(R.id.ibt_c1)
     ImageButton ibtC1;
     @BindView(R.id.ibt_c2)
@@ -66,6 +66,8 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
     ImageButton ibtC6;
     @BindView(R.id.ibt_c7)
     ImageButton ibtC7;
+    @BindView(R.id.ibt_c8)
+    ImageButton ibtC8;
     @BindView(R.id.rpv_main)
     RollPagerView rpvMain;
     @BindView(R.id.ibt_ld_store)
@@ -101,7 +103,7 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
                 presenter.bind();
             }
             if(isLoaded){
-                presenter.showChannelByCountry("Bvision");
+                presenter.showChannelByCountry("China");
             }
             presenter.loadRollImage();
         }
@@ -118,6 +120,7 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
         showCustomShortCut(ibtC5 ,"c5");
         showCustomShortCut(ibtC6 ,"c6");
         showCustomShortCut(ibtC7 ,"c7");
+        showCustomShortCut(ibtC8 ,"c8");
     }
 
     @Override
@@ -183,9 +186,9 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
     @Override
     public void showChannel(final List<ChannelInfo> list) {
         grideAdapter = new ChannelGrideAdapter(Application.getContext() ,list);
-        gvChannel.setAdapter(grideAdapter);
+        gridView.setAdapter(grideAdapter);
 
-        gvChannel.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ChannelInfo channelInfo = list.get(position);
@@ -200,7 +203,7 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
                 }
             }
         });
-        gvChannel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        gridView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Zoom.zoomIn10_11(view);
@@ -280,6 +283,7 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
         ibtC5.setOnFocusChangeListener(this);
         ibtC6.setOnFocusChangeListener(this);
         ibtC7.setOnFocusChangeListener(this);
+        ibtC8.setOnFocusChangeListener(this);
     }
 
 }

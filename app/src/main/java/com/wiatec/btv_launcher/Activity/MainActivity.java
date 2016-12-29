@@ -19,6 +19,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -43,7 +44,6 @@ import com.wiatec.btv_launcher.bean.UpdateInfo;
 import com.wiatec.btv_launcher.bean.VideoInfo;
 import com.wiatec.btv_launcher.bean.WeatherInfo;
 import com.wiatec.btv_launcher.fragment.Fragment1;
-import com.wiatec.btv_launcher.fragment.Fragment3;
 import com.wiatec.btv_launcher.fragment.Fragment4;
 import com.wiatec.btv_launcher.presenter.MainPresenter;
 import com.wiatec.btv_launcher.receiver.LanguageChangeReceiver;
@@ -107,6 +107,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         ButterKnife.bind(this);
 
         if (fragment1 == null) {
