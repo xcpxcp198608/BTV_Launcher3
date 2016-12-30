@@ -34,5 +34,7 @@
     <string name="error_key">Key or Password Error</string>
     <string name="input_key">Input key</string>
     <string name="input_password">Input password</string>
+    <string name="warning">Warning</string>
+    <string name="warning_message">Welcome to BTVi3,By using this service you agree to the Terms of Service (TOS) on Legacy Direct websites . Legacy Direct reserves the right to change the TOS at any time. If you do not agree to any of these terms ,please refrain from using the BTVi3 services and products.</string>
 
 </resources>

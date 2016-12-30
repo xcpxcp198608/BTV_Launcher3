@@ -11,6 +11,7 @@ public class ChannelInfo {
     private String icon;
     private String type;
     private String country;
+    private int sequence;
 
     public int getId() {
         return id;
@@ -60,6 +61,14 @@ public class ChannelInfo {
         this.country = country;
     }
 
+    public int getSequence() {
+        return sequence;
+    }
+
+    public void setSequence(int sequence) {
+        this.sequence = sequence;
+    }
+
     @Override
     public String toString() {
         return "ChannelInfo{" +
@@ -69,6 +78,7 @@ public class ChannelInfo {
                 ", icon='" + icon + '\'' +
                 ", type='" + type + '\'' +
                 ", country='" + country + '\'' +
+                ", sequence=" + sequence +
                 '}';
     }
 }

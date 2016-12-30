@@ -35,10 +35,10 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     public static final String CHANNEL_TABLE = "CHANNEL";
     private static final String CREATE_TABLE_CHANNEL = "create table if not exists "+CHANNEL_TABLE+"(_id integer primary key autoincrement," +
-            "name text ,url text,icon text,type text ,country text)";
+            "name text ,url text,icon text,type text ,country text,sequence integer)";
     private static final String DROP_TABLE_CHANNEL= "drop table if exists "+CHANNEL_TABLE;
 
-    private static final int VERSION =8;
+    private static final int VERSION =9;
 
     public SQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, VERSION);

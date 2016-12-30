@@ -1,9 +1,13 @@
 package com.wiatec.btv_launcher.fragment;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,6 +84,9 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
     private ChannelGrideAdapter grideAdapter;
     private boolean isLoaded = false;
     private InstalledAppDao installedAppDao;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+    private boolean isShow = true;
 
     @Override
     protected Fragment4Presenter createPresenter() {
@@ -93,6 +100,8 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
         ButterKnife.bind(this, view);
         presenter.bind();
         installedAppDao = InstalledAppDao.getInstance(Application.getContext());
+        sharedPreferences = Application.getContext().getSharedPreferences(F.sp.name , Context.MODE_PRIVATE);
+        isShow = sharedPreferences.getBoolean("isShow" , true);
         return view;
     }
 
@@ -100,6 +109,10 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if(isVisibleToUser){
+            if(isShow){
+                showWarning();
+            }
+
             if(!isLoaded){
                 presenter.bind();
             }
@@ -108,6 +121,30 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
             }
             presenter.loadRollImage();
         }
+    }
+
+    private void showWarning() {
+        AlertDialog.Builder builder =  new AlertDialog.Builder(getContext());
+        builder.setTitle(getString(R.string.warning));
+        builder.setMessage(getString(R.string.warning_message));
+        builder.setCancelable(false);
+        builder.setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                editor = sharedPreferences.edit();
+                editor.putBoolean("isShow" ,false);
+                editor.commit();
+            }
+        });
+        builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                editor = sharedPreferences.edit();
+                editor.putBoolean("isShow" ,true);
+                editor.commit();
+            }
+        });
+        builder.show();
     }
 
     @Override
@@ -193,6 +230,10 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ChannelInfo channelInfo = list.get(position);
+                isShow = sharedPreferences.getBoolean("isShow" , true);
+                if(isShow){
+                    return;
+                }
                 if("link".equals(channelInfo.getType())){
                     showLinkByBrowser(channelInfo.getUrl());
                 }else if("live".equals(channelInfo.getType())){

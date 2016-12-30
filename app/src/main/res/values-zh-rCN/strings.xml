@@ -35,6 +35,8 @@
     <string name="error_key">密钥错误</string>
     <string name="input_key">输入密钥</string>
     <string name="input_password">输入密码</string>
+    <string name="warning">警告</string>
+    <string name="warning_message">Welcome to BTVi3,By using this service you agree to the Terms of Service (TOS) on Legacy Direct websites . Legacy Direct reserves the right to change the TOS at any time. If you do not agree to any of these terms ,please refrain from using the BTVi3 services and products.</string>
 
 
 </resources>

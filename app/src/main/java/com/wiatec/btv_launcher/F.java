@@ -36,12 +36,12 @@ public final class F {
         public static final String download= Environment.getExternalStorageDirectory().getAbsolutePath()+"/BLauncher/";
         public static final String video= Environment.getExternalStorageDirectory().getAbsolutePath()+"/BLauncher/btvi3.mp4";
         public static final String ad_video= Environment.getExternalStorageDirectory().getAbsolutePath()+"/BLauncher/btvad.mp4";
-        public static final String image_download = "";
     }
 
     public static final class sp {
         public static final String name = "launcher";
         public static final String key_video = "video";
+
     }
 
     public static final class package_name {
