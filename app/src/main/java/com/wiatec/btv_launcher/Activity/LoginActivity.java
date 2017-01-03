@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.wiatec.btv_launcher.R;
+import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.presenter.LoginPresenter;
 
 import butterknife.BindView;
@@ -57,11 +58,18 @@ public class LoginActivity extends BaseActivity<ILoginActivity, LoginPresenter> 
     }
 
     @Override
-    public void login(boolean isLogin) {
-        if (isLogin) {
+    public void login(String result) {
+        Logger.d(result);
+        if ("ok".equals(result)) {
             progressBar.setVisibility(View.GONE);
             startActivity(new Intent(LoginActivity.this, PinentryActivity.class));
             finish();
+        } else  if ("repeat".equals(result)){
+            progressBar.setVisibility(View.GONE);
+            Toast.makeText(LoginActivity.this , getString(R.string.error_repeat) , Toast.LENGTH_LONG).show();
+        }else  if ("error1".equals(result)){
+            progressBar.setVisibility(View.GONE);
+            Toast.makeText(LoginActivity.this , getString(R.string.error_connect) , Toast.LENGTH_LONG).show();
         } else {
             progressBar.setVisibility(View.GONE);
             Toast.makeText(LoginActivity.this , getString(R.string.error_key) , Toast.LENGTH_LONG).show();

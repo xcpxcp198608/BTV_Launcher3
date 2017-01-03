@@ -75,8 +75,8 @@ public class MainPresenter extends BasePresenter<IMainActivity> {
         if(iVideoData != null){
             iVideoData.loadData(new IVideoData.OnLoadListener() {
                 @Override
-                public void onSuccess(VideoInfo videoInfo) {
-                    iMainActivity.loadVideo(videoInfo);
+                public void onSuccess(List<VideoInfo> list) {
+                    iMainActivity.loadVideo(list);
                 }
 
                 @Override

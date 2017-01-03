@@ -9,9 +9,10 @@ import android.renderscript.Sampler;
 
 public final class F {
     public static final class url {
-        public static final String updater="http://158.69.229.104:8091/json/ApkUpdateInfo.json";
+        public static final String updater="http://158.69.229.104:8080/Launcher_EN/GetUpdate";
         public static final String video="http://158.69.229.104:8091/json/VideoInfo.json";
         public static final String ad_video="http://158.69.229.104:8091/json/AdVideoInfo.json";
+        public static final String video1="http://158.69.229.104:8080/Launcher_EN/GetVideo";
 
         public static final String image="http://158.69.229.104:8080/Launcher_EN/GetImage";
         public static final String image2="http://158.69.229.104:8080/Launcher_EN/GetImage2";
@@ -28,7 +29,8 @@ public final class F {
         public static final String message1_es_US="http://158.69.229.104:8091/json/Message1_es_US.json";
         public static final String message1_it_IT="http://158.69.229.104:8091/json/Message1_it_IT.json";
 
-        public static final String login="http://158.69.229.104:8080/Launcher_EN/Login";
+        public static final String login="http://158.69.229.104:8080/Launcher_EN/PinentryLogin";
+        public static final String pinentry_login="http://158.69.229.104:8080/Launcher_EN/PinentryLogin";
 
     }
 

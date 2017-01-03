@@ -32,6 +32,8 @@
     <string name="error_stream">Stream load error</string>
     <string name="error_input">Input error</string>
     <string name="error_key">Key or Password Error</string>
+    <string name="error_connect">Connect Error</string>
+    <string name="error_repeat">Login Repeat</string>
     <string name="input_key">Input key</string>
     <string name="input_password">Input password</string>
     <string name="warning">Warning</string>

@@ -43,7 +43,7 @@ public class UpdateActivity extends AppCompatActivity {
         super.onStart();
         if(updateInfo != null){
             DownloadManager downloadManager = DownloadManager.getInstance(getApplicationContext());
-            downloadManager.startDownload(updateInfo.getApkFileName() ,updateInfo.getApkFileDownloadUrl() , F.path.download);
+            downloadManager.startDownload(updateInfo.getFileName() ,updateInfo.getUrl() , F.path.download);
             downloadManager.setOnDownloadListener(new OnDownloadListener() {
                 @Override
                 public void onStart(int progress, boolean isStart) {
@@ -66,8 +66,8 @@ public class UpdateActivity extends AppCompatActivity {
                 public void onCompleted(int progress) {
                     pb_Update.setProgress(progress);
                     tv_Progress.setText(progress+"%");
-                    if(ApkCheck.isApkCanInstalled(UpdateActivity.this ,F.path.download , updateInfo.getApkFileName())) {
-                        ApkInstall.installApk(UpdateActivity.this, F.path.download, updateInfo.getApkFileName());
+                    if(ApkCheck.isApkCanInstalled(UpdateActivity.this ,F.path.download , updateInfo.getFileName())) {
+                        ApkInstall.installApk(UpdateActivity.this, F.path.download, updateInfo.getFileName());
                     }else{
                         Toast.makeText(UpdateActivity.this ,getString(R.string.update_error) , Toast.LENGTH_LONG).show();
                     }

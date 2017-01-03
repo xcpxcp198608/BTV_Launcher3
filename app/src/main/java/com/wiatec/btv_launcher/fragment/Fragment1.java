@@ -38,6 +38,7 @@ import com.wiatec.btv_launcher.animator.Zoom;
 import com.wiatec.btv_launcher.bean.CloudImageInfo;
 import com.wiatec.btv_launcher.bean.ImageInfo;
 import com.wiatec.btv_launcher.bean.RollImageInfo;
+import com.wiatec.btv_launcher.bean.VideoInfo;
 import com.wiatec.btv_launcher.presenter.Fragment1Presenter;
 import com.wiatec.btv_launcher.receiver.NetworkStatusReceiver;
 import com.wiatec.btv_launcher.service.LoadCloudService;
@@ -50,6 +51,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
+import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -90,6 +92,7 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
     private int playPosition=0;
     private NetworkStatusReceiver networkStatusReceiver;
     private Subscription subscription;
+    private Subscription videoSubscription;
 
     @Nullable
     @Override
@@ -111,7 +114,10 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
             //Logger.d("f1 -isVisibleToUser " + isVisibleToUser);
             if(vv_Main!=null && !vv_Main.isPlaying() && isF1Visible){
                // Logger.d("f1 -isVisibleToUser " +"play");
-                playVideo();
+                //playVideo();
+                if(SystemConfig.isNetworkConnected(Application.getContext())){
+                    presenter.loadVideo();
+                }
             }
         }else {
            // Logger.d("f1 -isVisibleToUser " + isVisibleToUser);
@@ -123,6 +129,9 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
             }
             if(subscription!= null){
                 subscription.unsubscribe();
+            }
+            if(videoSubscription!= null) {
+                videoSubscription.unsubscribe();
             }
         }
     }
@@ -145,8 +154,11 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
         //Logger.d("f1 -onResume ");
         if(vv_Main!=null && !vv_Main.isPlaying()){
             if(isF1Visible) {
-                Logger.d("f1 -onResume " +"play");
-               playVideo();
+                //Logger.d("f1 -onResume " +"play");
+                //playVideo();
+                if(SystemConfig.isNetworkConnected(Application.getContext())){
+                    presenter.loadVideo();
+                }
             }
         }
         if(SystemConfig.isNetworkConnected(getContext())){
@@ -165,6 +177,9 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
         }
         if(subscription!= null) {
             subscription.unsubscribe();
+        }
+        if(videoSubscription!= null) {
+            videoSubscription.unsubscribe();
         }
     }
 
@@ -307,6 +322,77 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
         }
     }
 
+    @Override
+    public void loadVideo(final List<VideoInfo> list) {
+        if(list != null){
+            playVideo1(list.get(0).getUrl());
+            videoSubscription = Observable.interval(60,TimeUnit.SECONDS).take(list.size())
+                    .subscribeOn(Schedulers.io())
+                    .repeat()
+                    .map(new Func1<Long, String>() {
+                        @Override
+                        public String call(Long aLong) {
+                            int i = aLong.intValue();
+                            return list.get(i).getUrl();
+                        }
+                    })
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<String>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(String s) {
+                            Logger.d(s);
+                            if(vv_Main != null ){
+                                playVideo1(s);
+                            }
+                        }
+                    });
+        }
+
+    }
+
+    private void playVideo1(final String url){
+        vv_Main.setVideoPath(url);
+        vv_Main.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                //Logger.d("f1-->prepare");
+                if(isF1Visible) {
+                    vv_Main.start();
+                }
+            }
+        });
+        vv_Main.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+            @Override
+            public boolean onError(MediaPlayer mp, int what, int extra) {
+                vv_Main.setVideoURI(Uri.parse("android.resource://" + getContext().getPackageName() + "/" + R.raw.btvi3));
+                vv_Main.start();
+                return true;
+            }
+        });
+        vv_Main.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                try {
+                    vv_Main.setVideoPath(url);
+                    vv_Main.start();
+                }catch (Exception e){
+                    e.printStackTrace();
+                    Logger.d(e.getMessage());
+                }
+            }
+        });
+    }
+
     public void showLinkByBrowser(String url){
         try {
             startActivity(new Intent(Intent.ACTION_VIEW , Uri.parse(url)));
@@ -320,6 +406,7 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
     public void onConnected(boolean isConnected) {
         if(isConnected){
             presenter.loadData();
+            //presenter.loadVideo();
         }
     }
 

@@ -314,35 +314,35 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
 
     @Override
     public void loadUpdate(UpdateInfo updateInfo) {
-//        Logger.d(updateInfo.toString());
+        //Logger.d(updateInfo.toString());
         int localVersion = ApkCheck.getInstalledApkVersionCode(MainActivity.this, getPackageName());
-        if (localVersion < updateInfo.getApkVersionCode()) {
+        if (localVersion < updateInfo.getCode()) {
             showUpdateDialog(updateInfo);
         }
     }
 
     @Override
-    public void loadVideo(VideoInfo videoInfo) {
+    public void loadVideo(List<VideoInfo> list) {
 //        Logger.d(videoInfo.toString());
-        if (videoInfo == null) {
-            return;
-        }
-        if (!FileCheck.isFileExists(F.path.download, "btvi3.mp4") && !isVideoDownloading) {
-            //Logger.d("video is not exists");
-            downloadVideo(videoInfo);
-        } else if (!FileCheck.isFileIntact(F.path.download, "btvi3.mp4", videoInfo.getMd5()) && !isVideoDownloading) {
-            //Logger.d("video is not intact");
-            downloadVideo(videoInfo);
-        } else {
-            // Logger.d("video no need update");
-        }
+//        if (videoInfo == null) {
+//            return;
+//        }
+//        if (!FileCheck.isFileExists(F.path.download, "btvi3.mp4") && !isVideoDownloading) {
+//            //Logger.d("video is not exists");
+//            downloadVideo(videoInfo);
+//        } else if (!FileCheck.isFileIntact(F.path.download, "btvi3.mp4", videoInfo.getMd5()) && !isVideoDownloading) {
+//            //Logger.d("video is not intact");
+//            downloadVideo(videoInfo);
+//        } else {
+//            // Logger.d("video no need update");
+//        }
     }
 
     @Override
     public void loadAdVideo(VideoInfo videoInfo) {
         // Logger.d(videoInfo.toString());
         if (!FileCheck.isFileExists(F.path.download, "btvad.mp4")) {
-            Logger.d("video is not exists");
+           // Logger.d("video is not exists");
             Intent intent = new Intent(MainActivity.this, DownloadService.class);
             intent.putExtra("url", videoInfo.getUrl());
             startService(intent);
@@ -351,7 +351,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
             intent.putExtra("url", videoInfo.getUrl());
             startService(intent);
         } else {
-            Logger.d("video no need update");
+            //Logger.d("video no need update");
         }
     }
 
@@ -389,7 +389,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle(getString(R.string.notice));
         builder.setMessage(getString(R.string.update_info));
-        builder.setMessage(updateInfo.getApkUpdateInfo());
+        builder.setMessage(updateInfo.getInfo());
         builder.setCancelable(false);
         builder.setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
             @Override

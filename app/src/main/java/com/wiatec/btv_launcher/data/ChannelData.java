@@ -10,6 +10,7 @@ import com.google.gson.reflect.TypeToken;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.SQL.ChannelDao;
+import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.bean.ChannelInfo;
 
 import org.json.JSONArray;
@@ -39,6 +40,7 @@ public class ChannelData implements IChannelData {
             @Override
             public void onResponse(JSONArray response) {
                 if(response != null) {
+                    Logger.d("channel");
                     channelDao.delete();
                     List<ChannelInfo> list = new Gson().fromJson(String.valueOf(response), new TypeToken<List<ChannelInfo>>(){}.getType());
                     Observable.from(list)

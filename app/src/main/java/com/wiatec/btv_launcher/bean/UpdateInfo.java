@@ -9,13 +9,13 @@ import android.os.Parcelable;
 
 public class UpdateInfo implements Parcelable {
     private int id;
-    private String apkName;
-    private String apkFileName;
-    private String apkFileDownloadUrl;
-    private String apkPackageName;
-    private String apkVersionName;
-    private String apkUpdateInfo;
-    private int apkVersionCode;
+    private String name;
+    private String fileName;
+    private String url;
+    private String packageName;
+    private String version;
+    private String info;
+    private int code;
 
     public int getId() {
         return id;
@@ -25,73 +25,73 @@ public class UpdateInfo implements Parcelable {
         this.id = id;
     }
 
-    public String getApkName() {
-        return apkName;
+    public String getName() {
+        return name;
     }
 
-    public void setApkName(String apkName) {
-        this.apkName = apkName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getApkFileName() {
-        return apkFileName;
+    public String getFileName() {
+        return fileName;
     }
 
-    public void setApkFileName(String apkFileName) {
-        this.apkFileName = apkFileName;
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
-    public String getApkFileDownloadUrl() {
-        return apkFileDownloadUrl;
+    public String getUrl() {
+        return url;
     }
 
-    public void setApkFileDownloadUrl(String apkFileDownloadUrl) {
-        this.apkFileDownloadUrl = apkFileDownloadUrl;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public String getApkPackageName() {
-        return apkPackageName;
+    public String getPackageName() {
+        return packageName;
     }
 
-    public void setApkPackageName(String apkPackageName) {
-        this.apkPackageName = apkPackageName;
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
     }
 
-    public String getApkVersionName() {
-        return apkVersionName;
+    public String getVersion() {
+        return version;
     }
 
-    public void setApkVersionName(String apkVersionName) {
-        this.apkVersionName = apkVersionName;
+    public void setVersion(String version) {
+        this.version = version;
     }
 
-    public String getApkUpdateInfo() {
-        return apkUpdateInfo;
+    public String getInfo() {
+        return info;
     }
 
-    public void setApkUpdateInfo(String apkUpdateInfo) {
-        this.apkUpdateInfo = apkUpdateInfo;
+    public void setInfo(String info) {
+        info = info;
     }
 
-    public int getApkVersionCode() {
-        return apkVersionCode;
+    public int getCode() {
+        return code;
     }
 
-    public void setApkVersionCode(int apkVersionCode) {
-        this.apkVersionCode = apkVersionCode;
+    public void setCode(int code) {
+        this.code = code;
     }
 
     @Override
     public String toString() {
-        return "Updater{" +
+        return "UpdateInfo{" +
                 "id=" + id +
-                ", apkName='" + apkName + '\'' +
-                ", apkFileName='" + apkFileName + '\'' +
-                ", apkFileDownloadUrl='" + apkFileDownloadUrl + '\'' +
-                ", apkPackageName='" + apkPackageName + '\'' +
-                ", apkVersionName='" + apkVersionName + '\'' +
-                ", apkUpdateInfo='" + apkUpdateInfo + '\'' +
-                ", apkVersionCode=" + apkVersionCode +
+                ", name='" + name + '\'' +
+                ", fileName='" + fileName + '\'' +
+                ", url='" + url + '\'' +
+                ", packageName='" + packageName + '\'' +
+                ", version='" + version + '\'' +
+                ", info='" + info + '\'' +
+                ", code=" + code +
                 '}';
     }
 
@@ -103,13 +103,13 @@ public class UpdateInfo implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.id);
-        dest.writeString(this.apkName);
-        dest.writeString(this.apkFileName);
-        dest.writeString(this.apkFileDownloadUrl);
-        dest.writeString(this.apkPackageName);
-        dest.writeString(this.apkVersionName);
-        dest.writeString(this.apkUpdateInfo);
-        dest.writeInt(this.apkVersionCode);
+        dest.writeString(this.name);
+        dest.writeString(this.fileName);
+        dest.writeString(this.url);
+        dest.writeString(this.packageName);
+        dest.writeString(this.version);
+        dest.writeString(this.info);
+        dest.writeInt(this.code);
     }
 
     public UpdateInfo() {
@@ -117,13 +117,13 @@ public class UpdateInfo implements Parcelable {
 
     protected UpdateInfo(Parcel in) {
         this.id = in.readInt();
-        this.apkName = in.readString();
-        this.apkFileName = in.readString();
-        this.apkFileDownloadUrl = in.readString();
-        this.apkPackageName = in.readString();
-        this.apkVersionName = in.readString();
-        this.apkUpdateInfo = in.readString();
-        this.apkVersionCode = in.readInt();
+        this.name = in.readString();
+        this.fileName = in.readString();
+        this.url = in.readString();
+        this.packageName = in.readString();
+        this.version = in.readString();
+        this.info = in.readString();
+        this.code = in.readInt();
     }
 
     public static final Parcelable.Creator<UpdateInfo> CREATOR = new Parcelable.Creator<UpdateInfo>() {

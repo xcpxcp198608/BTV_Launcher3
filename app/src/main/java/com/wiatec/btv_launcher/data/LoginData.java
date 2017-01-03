@@ -27,20 +27,17 @@ public class LoginData implements ILoginData {
             @Override
             public void onResponse(String response) {
                 if(response != null){
-                    if("ok".equals(response.trim())){
-                        onLoginListener.onSuccess(true);
-                    }else{
-                        onLoginListener.onSuccess(false);
-                    }
+                    String result = response.split("/")[0];
+                    onLoginListener.onSuccess(result);
                 }else{
-                    onLoginListener.onSuccess(false);
+                    onLoginListener.onSuccess("error1");
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 onLoginListener.onFailure(error.getMessage());
-                onLoginListener.onSuccess(false);
+                onLoginListener.onSuccess("error1");
             }
         });
         stringRequest.setTag("login");

@@ -24,8 +24,8 @@ public class LoginPresenter extends BasePresenter<ILoginActivity> {
         if(iLoginData != null){
             iLoginData.login(key, password, new ILoginData.OnLoginListener() {
                 @Override
-                public void onSuccess(boolean isLogin) {
-                    iLoginActivity.login(isLogin);
+                public void onSuccess(String result) {
+                    iLoginActivity.login(result);
                 }
 
                 @Override

@@ -5,5 +5,5 @@ package com.wiatec.btv_launcher.Activity;
  */
 
 public interface ILoginActivity {
-    void login (boolean isLogin);
+    void login (String result);
 }
