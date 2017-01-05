@@ -9,6 +9,7 @@ public class VideoInfo {
     private String name;
     private String url;
     private String md5;
+    private int playInterval;
 
     public int getId() {
         return id;
@@ -42,6 +43,14 @@ public class VideoInfo {
         this.md5 = md5;
     }
 
+    public int getPlayInterval() {
+        return playInterval;
+    }
+
+    public void setPlayInterval(int playInterval) {
+        this.playInterval = playInterval;
+    }
+
     @Override
     public String toString() {
         return "VideoInfo{" +
@@ -49,6 +58,7 @@ public class VideoInfo {
                 ", name='" + name + '\'' +
                 ", url='" + url + '\'' +
                 ", md5='" + md5 + '\'' +
+                ", playInterval=" + playInterval +
                 '}';
     }
 }

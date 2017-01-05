@@ -45,18 +45,25 @@ import com.wiatec.btv_launcher.service.LoadCloudService;
 
 import java.io.File;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
+import rx.Scheduler;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.functions.Func0;
 import rx.functions.Func1;
+import rx.functions.Func2;
 import rx.schedulers.Schedulers;
+
+import static rx.Observable.just;
 
 /**
  * Created by PX on 2016-11-12.
@@ -93,6 +100,8 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
     private NetworkStatusReceiver networkStatusReceiver;
     private Subscription subscription;
     private Subscription videoSubscription;
+    private boolean videoStart = false;
+    private ExecutorService executorService;
 
     @Nullable
     @Override
@@ -103,6 +112,7 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
         networkStatusReceiver = new NetworkStatusReceiver(null);
         networkStatusReceiver.setOnNetworkStatusListener(this);
         getContext().registerReceiver(networkStatusReceiver, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
+        executorService = Executors.newCachedThreadPool();
         return view;
     }
 
@@ -132,6 +142,10 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
             }
             if(videoSubscription!= null) {
                 videoSubscription.unsubscribe();
+            }
+            videoStart = false;
+            if(executorService!= null){
+                executorService.shutdownNow();
             }
         }
     }
@@ -181,11 +195,16 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
         if(videoSubscription!= null) {
             videoSubscription.unsubscribe();
         }
+        videoStart = false;
+        if(executorService!= null){
+            executorService.shutdownNow();
+        }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        videoStart = false;
         //Logger.d("f1 -onDestroyView ");
         getContext().unregisterReceiver(networkStatusReceiver);
     }
@@ -325,37 +344,66 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
     @Override
     public void loadVideo(final List<VideoInfo> list) {
         if(list != null){
-            playVideo1(list.get(0).getUrl());
-            videoSubscription = Observable.interval(60,TimeUnit.SECONDS).take(list.size())
-                    .subscribeOn(Schedulers.io())
-                    .repeat()
-                    .map(new Func1<Long, String>() {
-                        @Override
-                        public String call(Long aLong) {
-                            int i = aLong.intValue();
-                            return list.get(i).getUrl();
-                        }
-                    })
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Subscriber<String>() {
-                        @Override
-                        public void onCompleted() {
-
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-
-                        }
-
-                        @Override
-                        public void onNext(String s) {
-                            Logger.d(s);
-                            if(vv_Main != null ){
-                                playVideo1(s);
+            videoStart = true;
+            if(executorService == null || executorService.isShutdown()){
+                executorService = Executors.newCachedThreadPool();
+            }
+            executorService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    while(videoStart) {
+                        for (int i = 0; i < list.size(); i++) {
+                            final VideoInfo videoInfo = list.get(i);
+                            try {
+                                Thread.sleep(videoInfo.getPlayInterval());
+                                Logger.d(videoInfo.toString());
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if(vv_Main != null){
+                                            playVideo1(videoInfo.getUrl());
+                                        }
+                                    }
+                                });
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
                             }
                         }
-                    });
+                    }
+                }
+            });
+
+
+
+//            videoSubscription = Observable.interval(0,60,TimeUnit.SECONDS).take(list.size())
+//                    .subscribeOn(Schedulers.io())
+//                    .repeat()
+//                    .map(new Func1<Long, String>() {
+//                        @Override
+//                        public String call(Long aLong) {
+//                            int i = aLong.intValue();
+//                            return list.get(i).getUrl();
+//                        }
+//                    })
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe(new Subscriber<String>() {
+//                        @Override
+//                        public void onCompleted() {
+//
+//                        }
+//
+//                        @Override
+//                        public void onError(Throwable e) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onNext(String s) {
+//                            if(vv_Main != null ){
+//                                playVideo1(s);
+//                            }
+//                        }
+//                    });
         }
 
     }
@@ -374,8 +422,6 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
         vv_Main.setOnErrorListener(new MediaPlayer.OnErrorListener() {
             @Override
             public boolean onError(MediaPlayer mp, int what, int extra) {
-                vv_Main.setVideoURI(Uri.parse("android.resource://" + getContext().getPackageName() + "/" + R.raw.btvi3));
-                vv_Main.start();
                 return true;
             }
         });
@@ -406,7 +452,7 @@ public class Fragment1 extends BaseFragment<IFragment1 ,Fragment1Presenter> impl
     public void onConnected(boolean isConnected) {
         if(isConnected){
             presenter.loadData();
-            //presenter.loadVideo();
+           // presenter.loadVideo();
         }
     }
 
