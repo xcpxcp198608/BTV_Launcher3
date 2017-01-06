@@ -202,8 +202,10 @@
             android:layout_width="0dp"
             android:layout_height="match_parent">
             <FrameLayout
+                android:id="@+id/fl_video"
                 android:padding="3dp"
                 android:focusable="true"
+                android:clickable="true"
                 android:focusableInTouchMode="true"
                 android:background="@drawable/item_black_bg"
                 android:layout_width="match_parent"
