@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.jude.rollviewpager.RollPagerView;
@@ -79,6 +80,8 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
     ImageButton ibtLdStore;
     @BindView(R.id.ibt_ad_1)
     ImageButton ibtAd1;
+    @BindView(R.id.tv_notice)
+    TextView tvNotice;
 
     private LinkListAdapter listAdapter;
     private ChannelGrideAdapter grideAdapter;
@@ -112,7 +115,6 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
             if(isShow){
                 showWarning();
             }
-
             if(!isLoaded){
                 presenter.bind();
             }
@@ -194,6 +196,7 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
             return;
         }
         lvCountry.setBackground(null);
+        tvNotice.setVisibility(View.VISIBLE);
         listAdapter = new LinkListAdapter(Application.getContext() , list);
         lvCountry.setAdapter(listAdapter);
         lvCountry.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -326,9 +329,6 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
                 intent.putExtra("url" , "http://142.4.216.91:8280/");
                 getContext().startActivity(intent);
                 break;
-//            case R.id.ibt_c8:
-//                getContext().startActivity(new Intent(getContext() , LoginActivity.class));
-//                break;
             default:
                 break;
         }

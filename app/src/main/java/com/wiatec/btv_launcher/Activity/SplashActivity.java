@@ -66,7 +66,7 @@ public class SplashActivity extends BaseActivity<ISplashActivity, SplashPresente
     protected void onStart() {
         super.onStart();
         presenter.loadImage();
-        subscription = Observable.interval(1, TimeUnit.SECONDS).take(delayTime)
+        subscription = Observable.interval(0,1, TimeUnit.SECONDS).take(delayTime)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Long>() {
                     @Override

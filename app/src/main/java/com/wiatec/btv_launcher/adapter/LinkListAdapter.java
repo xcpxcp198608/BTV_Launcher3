@@ -46,7 +46,7 @@ public class LinkListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder = new ViewHolder();
         if(convertView == null){
-            convertView = layoutInflater.inflate(R.layout.item_link ,parent , false);
+            convertView = layoutInflater.inflate(R.layout.item_channel_type,parent , false);
             viewHolder.tv_Link = (TextView) convertView.findViewById(R.id.tv_link);
             convertView.setTag(viewHolder);
         }else {
