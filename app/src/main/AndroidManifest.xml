@@ -42,6 +42,7 @@
         <activity android:name=".Activity.UserManualActivity"/>
         <activity android:name=".Activity.LoginActivity"/>
         <activity android:name=".Activity.PinentryActivity"/>
+        <activity android:name=".Activity.FMPlayActivity"/>
 
         <receiver android:name=".receiver.AppInstallReceiver">
             <intent-filter>

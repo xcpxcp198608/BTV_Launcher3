@@ -72,19 +72,19 @@ public class MainPresenter extends BasePresenter<IMainActivity> {
             });
         }
 
-        if(iVideoData != null){
-            iVideoData.loadData(new IVideoData.OnLoadListener() {
-                @Override
-                public void onSuccess(List<VideoInfo> list) {
-                    iMainActivity.loadVideo(list);
-                }
-
-                @Override
-                public void onFailure(String e) {
-                    Logger.d(e);
-                }
-            });
-        }
+//        if(iVideoData != null){
+//            iVideoData.loadData(new IVideoData.OnLoadListener() {
+//                @Override
+//                public void onSuccess(List<VideoInfo> list) {
+//                    iMainActivity.loadVideo(list);
+//                }
+//
+//                @Override
+//                public void onFailure(String e) {
+//                    Logger.d(e);
+//                }
+//            });
+//        }
 
         if(iAdVideoData != null){
             iAdVideoData.loadData(new IAdVideoData.OnLoadListener() {

@@ -40,7 +40,6 @@ public class ChannelData implements IChannelData {
             @Override
             public void onResponse(JSONArray response) {
                 if(response != null) {
-                    Logger.d("channel");
                     channelDao.delete();
                     List<ChannelInfo> list = new Gson().fromJson(String.valueOf(response), new TypeToken<List<ChannelInfo>>(){}.getType());
                     Observable.from(list)

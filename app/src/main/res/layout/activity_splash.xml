@@ -65,7 +65,7 @@
             android:textSize="20sp"
             android:text="@string/detail"
             android:id="@+id/ibt_know"
-            android:background="@drawable/item_qingse_bg"
+            android:background="@drawable/item_btv_bg"
             android:layout_width="100dp"
             android:layout_height="40dp" />
 

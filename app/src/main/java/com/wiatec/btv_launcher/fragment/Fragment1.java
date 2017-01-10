@@ -307,7 +307,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     @Override
     public void loadCloudImage(final File[] files) {
         if (files != null && files.length > 0) {
-            subscription = Observable.interval(6, TimeUnit.SECONDS).take(files.length)
+            subscription = Observable.interval(0,6, TimeUnit.SECONDS).take(files.length)
                     .repeat()
                     .map(new Func1<Long, String>() {
                         @Override

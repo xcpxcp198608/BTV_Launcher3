@@ -36,7 +36,7 @@ public class RollImageAdapter extends StaticPagerAdapter {
         imageView.setPadding(3,3,3,3);
         final ImageInfo imageInfo = list.get(position);
         Glide.with(container.getContext()).load(list.get(position).getUrl())
-                .placeholder(R.drawable.text)
+                .placeholder(R.drawable.follow)
                 .into(imageView);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageView.setCropToPadding(true);

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.VideoView;
 
@@ -33,6 +34,7 @@ public class PlayActivity extends AppCompatActivity implements SurfaceHolder.Cal
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON , WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_play);
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
         surfaceView = (SurfaceView) findViewById(R.id.vv_play);
@@ -105,6 +107,16 @@ public class PlayActivity extends AppCompatActivity implements SurfaceHolder.Cal
     @Override
     protected void onStop() {
         super.onStop();
+        if(mediaPlayer != null ){
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
         if(mediaPlayer != null ){
             mediaPlayer.stop();
             mediaPlayer.release();

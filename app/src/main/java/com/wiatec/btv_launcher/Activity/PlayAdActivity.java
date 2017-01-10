@@ -4,6 +4,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.WindowManager;
 import android.widget.VideoView;
 
 import com.wiatec.btv_launcher.F;
@@ -21,11 +22,11 @@ public class PlayAdActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_play_ad);
         vv_PlayAd = (VideoView) findViewById(R.id.vv_play_ad);
 
         final String packageName = getIntent().getStringExtra("packageName");
-
         vv_PlayAd.setVideoPath(F.path.ad_video);
         vv_PlayAd.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
@@ -43,7 +44,6 @@ public class PlayAdActivity extends AppCompatActivity {
                 return true;
             }
         });
-
         vv_PlayAd.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {

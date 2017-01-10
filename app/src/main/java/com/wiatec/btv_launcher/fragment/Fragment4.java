@@ -19,8 +19,10 @@ import android.widget.ListView;
 import com.bumptech.glide.Glide;
 import com.jude.rollviewpager.RollPagerView;
 import com.wiatec.btv_launcher.Activity.AppSelectActivity;
+import com.wiatec.btv_launcher.Activity.FMPlayActivity;
 import com.wiatec.btv_launcher.Activity.LoginActivity;
 import com.wiatec.btv_launcher.Activity.PlayActivity;
+import com.wiatec.btv_launcher.Activity.SplashActivity;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.R;
@@ -71,8 +73,6 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
     ImageButton ibtC6;
     @BindView(R.id.ibt_c7)
     ImageButton ibtC7;
-    @BindView(R.id.ibt_c8)
-    ImageButton ibtC8;
     @BindView(R.id.rpv_main)
     RollPagerView rpvMain;
     @BindView(R.id.ibt_ld_store)
@@ -151,14 +151,13 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
     public void onStart() {
         super.onStart();
         setZoom();
-        showCustomShortCut(ibtC1 ,"c1");
+        ibtC1.setOnClickListener(this);
         showCustomShortCut(ibtC2 ,"c2");
         showCustomShortCut(ibtC3 ,"c3");
         showCustomShortCut(ibtC4 ,"c4");
         showCustomShortCut(ibtC5 ,"c5");
         showCustomShortCut(ibtC6 ,"c6");
         showCustomShortCut(ibtC7 ,"c7");
-        ibtC8.setOnClickListener(this);
     }
 
     @Override
@@ -191,6 +190,10 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
 
     @Override
     public void loadImage2(final List<ImageInfo> list) {
+        if(list == null){
+            return;
+        }
+        lvCountry.setBackground(null);
         listAdapter = new LinkListAdapter(Application.getContext() , list);
         lvCountry.setAdapter(listAdapter);
         lvCountry.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -240,8 +243,6 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
                     Intent intent = new Intent(getContext() , PlayActivity.class);
                     intent.putExtra("url",channelInfo.getUrl());
                     startActivity(intent);
-                }else{
-
                 }
             }
         });
@@ -281,7 +282,9 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
                             imageButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    ApkLaunch.launchApkByPackageName(getContext() ,installedApp.getAppPackageName());
+                                    Intent intent = new Intent(getActivity(), SplashActivity.class);
+                                    intent.putExtra("packageName", installedApp.getAppPackageName());
+                                    startActivity(intent);
                                 }
                             });
                             imageButton.setOnLongClickListener(new View.OnLongClickListener() {
@@ -318,9 +321,14 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.ibt_c8:
-                getContext().startActivity(new Intent(getContext() , LoginActivity.class));
+            case R.id.ibt_c1:
+                Intent intent = new Intent(getActivity() , FMPlayActivity.class);
+                intent.putExtra("url" , "http://142.4.216.91:8280/");
+                getContext().startActivity(intent);
                 break;
+//            case R.id.ibt_c8:
+//                getContext().startActivity(new Intent(getContext() , LoginActivity.class));
+//                break;
             default:
                 break;
         }
@@ -336,7 +344,6 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
         ibtC5.setOnFocusChangeListener(this);
         ibtC6.setOnFocusChangeListener(this);
         ibtC7.setOnFocusChangeListener(this);
-        ibtC8.setOnFocusChangeListener(this);
     }
 
 }
