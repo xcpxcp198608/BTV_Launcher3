@@ -70,12 +70,22 @@ public class ChannelData implements IChannelData {
     }
 
     @Override
-    public void showData(String country ,OnLoadListener onLoadListener) {
+    public void showDataByCountry(String country ,OnLoadListener onLoadListener) {
         if(!TextUtils.isEmpty(country)){
             List<ChannelInfo> list = channelDao.queryByCountry(country);
             onLoadListener.onSuccess(list);
         }else{
             onLoadListener.onFailure("country error");
+        }
+    }
+
+    @Override
+    public void showDataByStyle(String style ,OnLoadListener onLoadListener) {
+        if(!TextUtils.isEmpty(style)){
+            List<ChannelInfo> list = channelDao.queryByStyle(style);
+            onLoadListener.onSuccess(list);
+        }else{
+            onLoadListener.onFailure("style error");
         }
     }
 }

@@ -9,6 +9,7 @@ public class ImageInfo {
     private String name;
     private String url;
     private String link;
+    private int query_flag;
 
     public int getId() {
         return id;
@@ -42,6 +43,13 @@ public class ImageInfo {
         this.link = link;
     }
 
+    public int getQuery_flag() {
+        return query_flag;
+    }
+
+    public void setQuery_flag(int query_flag) {
+        this.query_flag = query_flag;
+    }
 
     @Override
     public String toString() {
@@ -50,6 +58,7 @@ public class ImageInfo {
                 ", name='" + name + '\'' +
                 ", url='" + url + '\'' +
                 ", link='" + link + '\'' +
+                ", query_flag=" + query_flag +
                 '}';
     }
 }

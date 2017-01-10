@@ -96,7 +96,23 @@ public class Fragment4Presenter extends BasePresenter<IFragment4> {
 
     public void showChannelByCountry(String country){
         if(iChannelData != null){
-            iChannelData.showData(country, new IChannelData.OnLoadListener() {
+            iChannelData.showDataByCountry(country, new IChannelData.OnLoadListener() {
+                @Override
+                public void onSuccess(List<ChannelInfo> list) {
+                    iFragment4.showChannel(list);
+                }
+
+                @Override
+                public void onFailure(String e) {
+                    Logger.d(e);
+                }
+            });
+        }
+    }
+
+    public void showChannelByStyle(String style){
+        if(iChannelData != null){
+            iChannelData.showDataByStyle(style, new IChannelData.OnLoadListener() {
                 @Override
                 public void onSuccess(List<ChannelInfo> list) {
                     iFragment4.showChannel(list);

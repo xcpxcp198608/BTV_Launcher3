@@ -203,14 +203,22 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ImageInfo imageInfo = list.get(position);
-                presenter.showChannelByCountry(imageInfo.getName());
+                if(imageInfo.getQuery_flag() == 0){
+                    presenter.showChannelByCountry(imageInfo.getName());
+                }else if(imageInfo.getQuery_flag() == 1){
+                    presenter.showChannelByStyle(imageInfo.getName());
+                }
             }
         });
         lvCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 ImageInfo imageInfo = list.get(position);
-                presenter.showChannelByCountry(imageInfo.getName());
+                if(imageInfo.getQuery_flag() == 0){
+                    presenter.showChannelByCountry(imageInfo.getName());
+                }else if(imageInfo.getQuery_flag() == 1){
+                    presenter.showChannelByStyle(imageInfo.getName());
+                }
                 Zoom.zoomIn10_11(view);
             }
 

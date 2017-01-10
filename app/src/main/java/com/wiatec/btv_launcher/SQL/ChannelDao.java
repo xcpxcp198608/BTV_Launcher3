@@ -50,6 +50,7 @@ public class ChannelDao {
         contentValues.put("type",channelInfo.getType());
         contentValues.put("country",channelInfo.getCountry());
         contentValues.put("sequence",channelInfo.getSequence());
+        contentValues.put("style",channelInfo.getStyle());
         sqLiteDatabase.insert(SQLiteHelper.CHANNEL_TABLE ,null ,contentValues);
     }
 
@@ -61,6 +62,7 @@ public class ChannelDao {
         contentValues.put("type",channelInfo.getType());
         contentValues.put("country",channelInfo.getCountry());
         contentValues.put("sequence",channelInfo.getSequence());
+        contentValues.put("style",channelInfo.getStyle());
         sqLiteDatabase.update(SQLiteHelper.CHANNEL_TABLE ,contentValues , "name=?" , new String []{channelInfo.getName()});
     }
 
@@ -88,6 +90,27 @@ public class ChannelDao {
             channelInfo.setType(cursor.getString(cursor.getColumnIndex("type")));
             channelInfo.setCountry(cursor.getString(cursor.getColumnIndex("country")));
             channelInfo.setSequence(cursor.getInt(cursor.getColumnIndex("sequence")));
+            channelInfo.setStyle(cursor.getString(cursor.getColumnIndex("style")));
+            list.add(channelInfo);
+        }
+        if(cursor!= null){
+            cursor.close();
+        }
+        return list;
+    }
+
+    public List<ChannelInfo> queryByStyle(String style){
+        Cursor cursor = sqLiteDatabase.query(SQLiteHelper.CHANNEL_TABLE ,null,"style=?" , new String []{style} ,null,null,"sequence");
+        List<ChannelInfo> list = new ArrayList<>();
+        while(cursor.moveToNext()){
+            ChannelInfo channelInfo = new ChannelInfo();
+            channelInfo.setName(cursor.getString(cursor.getColumnIndex("name")));
+            channelInfo.setUrl(cursor.getString(cursor.getColumnIndex("url")));
+            channelInfo.setIcon(cursor.getString(cursor.getColumnIndex("icon")));
+            channelInfo.setType(cursor.getString(cursor.getColumnIndex("type")));
+            channelInfo.setCountry(cursor.getString(cursor.getColumnIndex("country")));
+            channelInfo.setSequence(cursor.getInt(cursor.getColumnIndex("sequence")));
+            channelInfo.setStyle(cursor.getString(cursor.getColumnIndex("style")));
             list.add(channelInfo);
         }
         if(cursor!= null){
