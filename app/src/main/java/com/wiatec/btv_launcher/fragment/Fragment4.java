@@ -254,6 +254,10 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
                     Intent intent = new Intent(getContext() , PlayActivity.class);
                     intent.putExtra("url",channelInfo.getUrl());
                     startActivity(intent);
+                }else if("radio".equals(channelInfo.getType())){
+                    Intent intent = new Intent(getContext() , FMPlayActivity.class);
+                    intent.putExtra("url",channelInfo.getUrl());
+                    startActivity(intent);
                 }
             }
         });
