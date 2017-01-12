@@ -43,11 +43,12 @@
                 android:layout_height="0dp">
 
                 <ListView
+                    android:id="@+id/lv_country"
+                    android:nextFocusUp="@id/lv_country"
                     android:background="@drawable/channel_type_bg"
                     android:layout_marginRight="5dp"
                     android:divider="@color/colorTranslucent"
                     android:dividerHeight="1dp"
-                    android:id="@+id/lv_country"
                     android:nextFocusRight="@id/gv_channel"
                     android:layout_weight="2"
                     android:layout_width="0dp"

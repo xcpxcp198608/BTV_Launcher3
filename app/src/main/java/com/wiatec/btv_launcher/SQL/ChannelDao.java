@@ -51,6 +51,7 @@ public class ChannelDao {
         contentValues.put("country",channelInfo.getCountry());
         contentValues.put("sequence",channelInfo.getSequence());
         contentValues.put("style",channelInfo.getStyle());
+        contentValues.put("sequence1",channelInfo.getSequence1());
         sqLiteDatabase.insert(SQLiteHelper.CHANNEL_TABLE ,null ,contentValues);
     }
 
@@ -63,6 +64,7 @@ public class ChannelDao {
         contentValues.put("country",channelInfo.getCountry());
         contentValues.put("sequence",channelInfo.getSequence());
         contentValues.put("style",channelInfo.getStyle());
+        contentValues.put("sequence1",channelInfo.getSequence1());
         sqLiteDatabase.update(SQLiteHelper.CHANNEL_TABLE ,contentValues , "name=?" , new String []{channelInfo.getName()});
     }
 
@@ -91,6 +93,7 @@ public class ChannelDao {
             channelInfo.setCountry(cursor.getString(cursor.getColumnIndex("country")));
             channelInfo.setSequence(cursor.getInt(cursor.getColumnIndex("sequence")));
             channelInfo.setStyle(cursor.getString(cursor.getColumnIndex("style")));
+            channelInfo.setSequence1(cursor.getInt(cursor.getColumnIndex("sequence1")));
             list.add(channelInfo);
         }
         if(cursor!= null){
@@ -100,7 +103,7 @@ public class ChannelDao {
     }
 
     public List<ChannelInfo> queryByStyle(String style){
-        Cursor cursor = sqLiteDatabase.query(SQLiteHelper.CHANNEL_TABLE ,null,"style=?" , new String []{style} ,null,null,"sequence");
+        Cursor cursor = sqLiteDatabase.query(SQLiteHelper.CHANNEL_TABLE ,null,"style=?" , new String []{style} ,null,null,"name");
         List<ChannelInfo> list = new ArrayList<>();
         while(cursor.moveToNext()){
             ChannelInfo channelInfo = new ChannelInfo();
@@ -111,6 +114,7 @@ public class ChannelDao {
             channelInfo.setCountry(cursor.getString(cursor.getColumnIndex("country")));
             channelInfo.setSequence(cursor.getInt(cursor.getColumnIndex("sequence")));
             channelInfo.setStyle(cursor.getString(cursor.getColumnIndex("style")));
+            channelInfo.setSequence1(cursor.getInt(cursor.getColumnIndex("sequence1")));
             list.add(channelInfo);
         }
         if(cursor!= null){
