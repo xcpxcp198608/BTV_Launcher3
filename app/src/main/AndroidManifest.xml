@@ -32,7 +32,6 @@
         <activity android:name=".Activity.MenuActivity"/>
         <activity android:name=".Activity.UpdateActivity"/>
         <activity android:name=".Activity.PlayActivity"/>
-        <activity android:name=".Activity.UserGuideActivity"/>
         <activity android:name=".Activity.SplashActivity"/>
         <activity android:name=".Activity.MessageActivity"/>
         <activity android:name=".Activity.WeatherActivity"/>

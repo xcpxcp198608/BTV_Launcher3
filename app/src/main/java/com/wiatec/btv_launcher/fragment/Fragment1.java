@@ -110,6 +110,9 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             isF1Visible = true;
+            if(presenter != null){
+                presenter.loadCloudData();
+            }
             //Logger.d("f1 -isVisibleToUser " + isVisibleToUser);
             if (vv_Main != null && !vv_Main.isPlaying() && isF1Visible) {
                 // Logger.d("f1 -isVisibleToUser " +"play");
@@ -153,8 +156,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         //Logger.d("f1 -onResume ");
         if (vv_Main != null && !vv_Main.isPlaying()) {
             if (isF1Visible) {
-                //Logger.d("f1 -onResume " +"play");
-                //playVideo();
                 if (SystemConfig.isNetworkConnected(Application.getContext())) {
                     presenter.loadVideo();
                 }

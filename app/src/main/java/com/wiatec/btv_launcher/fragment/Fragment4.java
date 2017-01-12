@@ -119,7 +119,7 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
                 presenter.bind();
             }
             if(isLoaded){
-                presenter.showChannelByCountry("China");
+                presenter.showChannelByStyle("BVISION");
             }
             presenter.loadRollImage();
         }

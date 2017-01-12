@@ -5,16 +5,9 @@
     <string name="notice">Notice</string>
     <string name="update_error">Download failure , please reboot again</string>
     <string name="update_info">BTVi3 FW have a new version ,update now.</string>
-    <string name="wifi_setting">Wifi Setup</string>
-    <string name="resolution">Resolution</string>
-    <string name="time_zone">Time Zone</string>
-    <string name="btv_setup">BTV Setup</string>
-    <string name="app_market">AppMarket</string>
-    <string name="faq">FAQ</string>
     <string name="pass">Pass</string>
     <string name="detail">Detail</string>
     <string name="ad">Advertisement</string>
-    <string name="apocalypse">apocalypse</string>
     <string name="delete">Delete All</string>
     <string name="network_disconnect">Network Disconnect</string>
     <string name="weather">Weather</string>
@@ -39,6 +32,5 @@
     <string name="warning">Warning</string>
     <string name="warning_message">Welcome to BTVi3,By using this service you agree to the Terms of Service (TOS) on Legacy Direct websites . Legacy Direct reserves the right to change the TOS at any time. If you do not agree to any of these terms ,please refrain from using the BTVi3 services and products.</string>
     <string name="noticce1">The programs shown are from internet and for learning purpose.  Please check with Legacy Direct Term Of Service.</string>
-
 
 </resources>
