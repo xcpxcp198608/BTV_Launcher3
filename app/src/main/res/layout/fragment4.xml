@@ -92,92 +92,126 @@
                 android:layout_width="match_parent"
                 android:layout_height="96dp">
 
-                <ImageButton
-                    android:nextFocusUp="@id/lv_country"
-                    android:id="@+id/ibt_c1"
+                <FrameLayout
                     android:layout_marginRight="2dp"
-                    android:padding="3dp"
-                    android:cropToPadding="true"
-                    android:scaleType="fitCenter"
                     android:layout_weight="1.8"
-                    android:background="@drawable/item_channel_type"
-                    android:src="@drawable/eu_logo"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent">
 
-                <ImageButton
-                    android:nextFocusUp="@id/lv_country"
-                    android:id="@+id/ibt_c2"
-                    android:layout_marginRight="2dp"
-                    android:padding="3dp"
-                    android:cropToPadding="true"
-                    android:scaleType="fitCenter"
-                    android:layout_weight="1"
-                    android:background="@drawable/item_channel_type"
-                    android:src="@drawable/add1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent" />
-                <ImageButton
-                    android:nextFocusUp="@id/gv_channel"
-                    android:id="@+id/ibt_c3"
-                    android:layout_marginRight="2dp"
-                    android:padding="3dp"
-                    android:cropToPadding="true"
-                    android:scaleType="fitCenter"
-                    android:layout_weight="1"
-                    android:background="@drawable/item_channel_type"
-                    android:src="@drawable/add1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent" />
-                <ImageButton
-                    android:nextFocusUp="@id/gv_channel"
-                    android:id="@+id/ibt_c4"
-                    android:layout_marginRight="2dp"
-                    android:padding="3dp"
-                    android:cropToPadding="true"
-                    android:scaleType="fitCenter"
-                    android:layout_weight="1"
-                    android:background="@drawable/item_channel_type"
-                    android:src="@drawable/add1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent" />
-                <ImageButton
-                    android:nextFocusUp="@id/gv_channel"
-                    android:id="@+id/ibt_c5"
-                    android:layout_marginRight="2dp"
-                    android:padding="3dp"
-                    android:cropToPadding="true"
-                    android:scaleType="fitCenter"
-                    android:layout_weight="1"
-                    android:background="@drawable/item_channel_type"
-                    android:src="@drawable/add1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent" />
-                <ImageButton
-                    android:nextFocusUp="@id/gv_channel"
-                    android:id="@+id/ibt_c6"
-                    android:layout_marginRight="2dp"
-                    android:padding="3dp"
-                    android:cropToPadding="true"
-                    android:scaleType="fitCenter"
-                    android:layout_weight="1"
-                    android:background="@drawable/item_channel_type"
-                    android:src="@drawable/add1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent" />
-                <ImageButton
-                    android:nextFocusUp="@id/gv_channel"
-                    android:id="@+id/ibt_c7"
-                    android:padding="3dp"
-                    android:cropToPadding="true"
-                    android:scaleType="fitCenter"
-                    android:layout_weight="1"
-                    android:background="@drawable/item_channel_type"
-                    android:src="@drawable/add1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent" />
+                    <ImageButton
+                        android:nextFocusUp="@id/lv_country"
+                        android:id="@+id/ibt_c1"
+                        android:padding="3dp"
+                        android:cropToPadding="true"
+                        android:scaleType="fitCenter"
+                        android:background="@drawable/item_channel_type"
+                        android:src="@drawable/eu_logo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </FrameLayout>
 
+                <FrameLayout
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+                    <ImageButton
+                        android:nextFocusUp="@id/lv_country"
+                        android:id="@+id/ibt_c2"
+                        android:padding="20dp"
+                        android:cropToPadding="true"
+                        android:scaleType="fitCenter"
+                        android:background="@drawable/item_channel_type"
+                        android:src="@drawable/add1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </FrameLayout>
 
+                <FrameLayout
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+                    <ImageButton
+                        android:nextFocusUp="@id/gv_channel"
+                        android:id="@+id/ibt_c3"
+                        android:padding="20dp"
+                        android:cropToPadding="true"
+                        android:scaleType="fitCenter"
+                        android:background="@drawable/item_channel_type"
+                        android:src="@drawable/add1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+                    <ImageButton
+                        android:nextFocusUp="@id/gv_channel"
+                        android:id="@+id/ibt_c4"
+                        android:padding="20dp"
+                        android:cropToPadding="true"
+                        android:scaleType="fitCenter"
+                        android:background="@drawable/item_channel_type"
+                        android:src="@drawable/add1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <ImageButton
+                        android:nextFocusUp="@id/gv_channel"
+                        android:id="@+id/ibt_c5"
+                        android:padding="20dp"
+                        android:cropToPadding="true"
+                        android:scaleType="fitCenter"
+                        android:background="@drawable/item_channel_type"
+                        android:src="@drawable/add1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+                    <ImageButton
+                        android:nextFocusUp="@id/gv_channel"
+                        android:id="@+id/ibt_c6"
+                        android:padding="20dp"
+                        android:cropToPadding="true"
+                        android:scaleType="fitCenter"
+                        android:background="@drawable/item_channel_type"
+                        android:src="@drawable/add1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <ImageButton
+                        android:nextFocusUp="@id/gv_channel"
+                        android:id="@+id/ibt_c7"
+                        android:padding="20dp"
+                        android:cropToPadding="true"
+                        android:scaleType="fitCenter"
+                        android:background="@drawable/item_channel_type"
+                        android:src="@drawable/add1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </FrameLayout>
 
             </LinearLayout>
 
@@ -202,32 +236,43 @@
                 android:layout_height="0dp"
                 android:layout_width="match_parent"/>
 
-            <ImageButton
-                android:nextFocusLeft="@id/gv_channel"
-                android:padding="3dp"
-                android:id="@+id/ibt_ld_store"
+            <FrameLayout
                 android:layout_marginTop="5dp"
-                android:cropToPadding="true"
-                android:adjustViewBounds="true"
-                android:background="@drawable/item_ldstore_bg"
-                android:src="@drawable/ld_store_icon"
-                android:scaleType="fitCenter"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="0dp" />
+                android:layout_height="0dp">
+                <ImageButton
+                    android:nextFocusLeft="@id/gv_channel"
+                    android:padding="3dp"
+                    android:id="@+id/ibt_ld_store"
+                    android:cropToPadding="true"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/item_ldstore_bg"
+                    android:src="@drawable/ld_store_icon"
+                    android:scaleType="fitCenter"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </FrameLayout>
 
-            <ImageButton
+            <FrameLayout
                 android:layout_marginTop="5dp"
-                android:id="@+id/ibt_ad_1"
-                android:padding="3dp"
-                android:adjustViewBounds="true"
-                android:background="@drawable/item_ad1_bg"
-                android:src="@drawable/bksound_icon_3"
-                android:scaleType="centerCrop"
-                android:cropToPadding="true"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="0dp" />
+                android:layout_height="0dp">
+
+                <ImageButton
+                    android:id="@+id/ibt_ad_1"
+                    android:padding="3dp"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/item_ad1_bg"
+                    android:src="@drawable/bksound_icon_3"
+                    android:scaleType="centerCrop"
+                    android:cropToPadding="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </FrameLayout>
+
+
 
         </LinearLayout>
 

@@ -329,11 +329,7 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         if (hasFocus) {
-            if(v.getId() == R.id.ibt_ad_1){
-                Zoom.zoomIn10_11(v);
-            }else {
-                Zoom.zoomIn09_10(v);
-            }
+            Zoom.zoomIn10_11(v);
         }
     }
 

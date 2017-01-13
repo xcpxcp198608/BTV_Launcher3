@@ -24,7 +24,7 @@ public class Zoom {
         ObjectAnimator animatorY = ObjectAnimator.ofFloat(view , "scaleY" ,1.0f ,1.1f,1.0f);
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.play(animatorY).with(animatorX);
-        animatorSet.setDuration(1200);
+        animatorSet.setDuration(1000);
         animatorSet.start();
     }
 
