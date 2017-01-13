@@ -279,7 +279,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         Glide.with(Application.getContext()).load(list.get(2).getUrl()).placeholder(R.drawable.setting_icon).into(ibt_Setting);
         Glide.with(Application.getContext()).load(list.get(3).getUrl()).placeholder(R.drawable.apps_icon_3).into(ibt_Apps);
         Glide.with(Application.getContext()).load(list.get(4).getUrl()).placeholder(R.drawable.market_icon).into(ibt_Market);
-        Glide.with(Application.getContext()).load(list.get(5).getUrl()).placeholder(R.drawable.ld_opportunity).into(ibt_AntiVirus);
+        Glide.with(Application.getContext()).load(list.get(5).getUrl()).placeholder(R.drawable.ld_opportunity_12).into(ibt_AntiVirus);
         Glide.with(Application.getContext()).load(list.get(6).getUrl()).placeholder(R.drawable.message_icon).into(ibt_Privacy);
         Glide.with(Application.getContext()).load(list.get(7).getUrl()).placeholder(R.drawable.ld_store_icon).into(ibt_LdStore);
         Glide.with(Application.getContext()).load(list.get(8).getUrl()).placeholder(R.drawable.bksound_icon_3).into(ibt_Ad1);
@@ -441,7 +441,11 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         if (hasFocus) {
-            Zoom.zoomIn09_10(v);
+            if(v.getId() == R.id.ibt_ad_1){
+                Zoom.zoomIn10_11(v);
+            }else {
+                Zoom.zoomIn09_10(v);
+            }
         }
     }
 }

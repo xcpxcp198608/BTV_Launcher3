@@ -18,13 +18,19 @@
     <color name="colorRed">#FFff0000</color>
 
     <color name="colorBTV">#706e6e</color>
+    <color name="colorBTV1">#b7b5b5</color>
+    <color name="colorBTV2">#202020</color>
     <color name="colorSettings">#d40465</color>
+    <color name="colorSettings1">#de5192</color>
     <color name="colorMarket">#0387d9</color>
+    <color name="colorMarket1">#65b4e6</color>
     <color name="colorMessage">#0fde50</color>
-    <color name="colorLDStore">#753ff2</color>
-    <color name="colorAD1">#f44e12</color>
+    <color name="colorMessage1">#66e18c</color>
+    <color name="colorLDStore">#22ef23</color>
+    <color name="colorAD1">#ff1111</color>
+    <color name="colorAD2">#dd2415</color>
     <color name="colorLDCloud">#FEFEFE</color>
-    <color name="colorFocus">#3308cf</color>
+    <color name="colorFocus">#523d9e</color>
 
     <color name="colorItemQingSe">#15b9b1</color>
     <color name="colorItemGrayBlue">#445066</color>

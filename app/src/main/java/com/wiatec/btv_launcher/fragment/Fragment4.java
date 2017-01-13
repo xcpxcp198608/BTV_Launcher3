@@ -219,7 +219,7 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
                 }else if(imageInfo.getQuery_flag() == 1){
                     presenter.showChannelByStyle(imageInfo.getName());
                 }
-                Zoom.zoomIn10_11(view);
+                Zoom.zoomIn09_10(view);
             }
 
             @Override
@@ -329,7 +329,11 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         if (hasFocus) {
-            Zoom.zoomIn10_11(v);
+            if(v.getId() == R.id.ibt_ad_1){
+                Zoom.zoomIn10_11(v);
+            }else {
+                Zoom.zoomIn09_10(v);
+            }
         }
     }
 

@@ -17,6 +17,7 @@ import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.SQL.InstalledAppDao;
 import com.wiatec.btv_launcher.Utils.ApkLaunch;
 import com.wiatec.btv_launcher.adapter.MenuCustomAdapter;
+import com.wiatec.btv_launcher.animator.Zoom;
 import com.wiatec.btv_launcher.bean.InstalledApp;
 
 import java.util.List;
@@ -83,6 +84,17 @@ public class FragmentVideo extends Fragment {
                                     intent.putExtra("type" ,TYPE);
                                     startActivity(intent);
                                 }
+                            }
+                        });
+                        gv_Video.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                Zoom.zoomIn09_10(view);
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+
                             }
                         });
                     }

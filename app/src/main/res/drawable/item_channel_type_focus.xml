@@ -3,8 +3,9 @@
 
     <gradient
         android:angle="270"
-        android:startColor="@color/colorSettings1"
-        android:endColor="@color/colorSettings"/>
+        android:startColor="@color/colorItemQingSe"
+        android:endColor="@color/colorMarket"/>
+    <stroke android:color="@color/colorWhite" android:width="3dp"/>
     <corners android:radius="0dp"/>
 
 </shape>

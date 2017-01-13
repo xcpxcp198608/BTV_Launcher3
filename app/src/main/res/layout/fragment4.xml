@@ -100,7 +100,7 @@
                     android:cropToPadding="true"
                     android:scaleType="fitCenter"
                     android:layout_weight="1.8"
-                    android:background="@drawable/item_btv_bg"
+                    android:background="@drawable/item_channel_type"
                     android:src="@drawable/eu_logo"
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />
@@ -113,7 +113,7 @@
                     android:cropToPadding="true"
                     android:scaleType="fitCenter"
                     android:layout_weight="1"
-                    android:background="@drawable/item_btv_bg"
+                    android:background="@drawable/item_channel_type"
                     android:src="@drawable/add1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />
@@ -125,7 +125,7 @@
                     android:cropToPadding="true"
                     android:scaleType="fitCenter"
                     android:layout_weight="1"
-                    android:background="@drawable/item_btv_bg"
+                    android:background="@drawable/item_channel_type"
                     android:src="@drawable/add1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />
@@ -137,7 +137,7 @@
                     android:cropToPadding="true"
                     android:scaleType="fitCenter"
                     android:layout_weight="1"
-                    android:background="@drawable/item_btv_bg"
+                    android:background="@drawable/item_channel_type"
                     android:src="@drawable/add1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />
@@ -149,7 +149,7 @@
                     android:cropToPadding="true"
                     android:scaleType="fitCenter"
                     android:layout_weight="1"
-                    android:background="@drawable/item_btv_bg"
+                    android:background="@drawable/item_channel_type"
                     android:src="@drawable/add1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />
@@ -161,7 +161,7 @@
                     android:cropToPadding="true"
                     android:scaleType="fitCenter"
                     android:layout_weight="1"
-                    android:background="@drawable/item_btv_bg"
+                    android:background="@drawable/item_channel_type"
                     android:src="@drawable/add1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />
@@ -172,7 +172,7 @@
                     android:cropToPadding="true"
                     android:scaleType="fitCenter"
                     android:layout_weight="1"
-                    android:background="@drawable/item_btv_bg"
+                    android:background="@drawable/item_channel_type"
                     android:src="@drawable/add1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />

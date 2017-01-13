@@ -30,6 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
+            android:background="@drawable/item_main_bg"
             android:orientation="vertical"
             android:layout_weight="4.1"
             android:layout_width="0dp"
@@ -126,7 +127,7 @@
                     android:padding="25dp"
                     android:background="@drawable/item_btv_bg"
                     android:scaleType="centerInside"
-                    android:src="@drawable/ld_opportunity_1"
+                    android:src="@drawable/ld_opportunity_12"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />

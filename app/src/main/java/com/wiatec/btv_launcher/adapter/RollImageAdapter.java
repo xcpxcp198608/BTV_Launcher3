@@ -45,7 +45,7 @@ public class RollImageAdapter extends StaticPagerAdapter {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
-                    Zoom.zoomIn10_11(v);
+                    Zoom.zoomIn09_10(v);
                 }
             }
         });

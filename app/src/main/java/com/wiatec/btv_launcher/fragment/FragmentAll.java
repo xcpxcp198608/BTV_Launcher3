@@ -87,7 +87,7 @@ public class FragmentAll extends Fragment {
                         gv_All.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                Zoom.zoomIn10_11(view);
+                                Zoom.zoomIn09_10(view);
                             }
 
                             @Override
