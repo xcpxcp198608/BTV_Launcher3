@@ -104,7 +104,7 @@
                         android:padding="3dp"
                         android:cropToPadding="true"
                         android:scaleType="fitCenter"
-                        android:background="@drawable/item_channel_type"
+                        android:background="@drawable/item_channel_type_1"
                         android:src="@drawable/eu_logo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
