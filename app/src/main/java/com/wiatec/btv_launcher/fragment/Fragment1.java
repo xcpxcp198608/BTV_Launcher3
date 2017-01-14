@@ -92,6 +92,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     private Subscription subscription;
     private Subscription videoSubscription;
     private VideoInfo currentVideoInfo;
+    private boolean isCloudImagePlaying = false;
 
     @Nullable
     @Override
@@ -110,7 +111,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             isF1Visible = true;
-            if(presenter != null){
+            if(presenter != null && ! isCloudImagePlaying){
                 presenter.loadCloudData();
             }
             //Logger.d("f1 -isVisibleToUser " + isVisibleToUser);
@@ -131,6 +132,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
             }
             if (subscription != null) {
                 subscription.unsubscribe();
+                isCloudImagePlaying = false;
             }
             if (videoSubscription != null) {
                 videoSubscription.unsubscribe();
@@ -177,6 +179,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         }
         if (subscription != null) {
             subscription.unsubscribe();
+            isCloudImagePlaying = false;
         }
         if (videoSubscription != null) {
             videoSubscription.unsubscribe();
@@ -308,6 +311,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     @Override
     public void loadCloudImage(final File[] files) {
         if (files != null && files.length > 0) {
+            isCloudImagePlaying = true;
             subscription = Observable.interval(0,6, TimeUnit.SECONDS).take(files.length)
                     .repeat()
                     .map(new Func1<Long, String>() {

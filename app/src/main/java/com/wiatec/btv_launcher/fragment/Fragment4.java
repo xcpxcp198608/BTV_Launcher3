@@ -264,7 +264,7 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
         gridView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Zoom.zoomIn10_11(view);
+                Zoom.zoomIn09_10(view);
             }
 
             @Override
