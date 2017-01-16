@@ -43,7 +43,7 @@ public class PinentryActivity extends BaseActivity<IPinentryActivity ,PinentryPr
     @Override
     protected void onStart() {
         super.onStart();
-        presenter.loadChannel("Pinentry");
+        presenter.loadChannel("country" , "Pinentry" , "name");
     }
 
     @Override

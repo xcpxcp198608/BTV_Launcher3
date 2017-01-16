@@ -22,9 +22,9 @@ public class PinentryPresenter extends BasePresenter<IPinentryActivity> {
         iChannelData = new ChannelData();
     }
 
-    public void loadChannel(String style){
+    public void loadChannel(String selection ,String where ,String order){
         if(iChannelData != null){
-            iChannelData.showDataByStyle(style, new IChannelData.OnLoadListener() {
+            iChannelData.showChannel(selection ,where , order, new IChannelData.OnLoadListener() {
                 @Override
                 public void onSuccess(List<ChannelInfo> list) {
                     iPinentryActivity.loadChannel(list);

@@ -11,6 +11,7 @@ import com.wiatec.btv_launcher.data.IImageData;
 import com.wiatec.btv_launcher.data.IRollImageData;
 import com.wiatec.btv_launcher.data.IVideoData;
 import com.wiatec.btv_launcher.data.ImageData;
+import com.wiatec.btv_launcher.data.RollImage2Data;
 import com.wiatec.btv_launcher.data.RollImageData;
 import com.wiatec.btv_launcher.data.Video1Data;
 import com.wiatec.btv_launcher.data.VideoData;
@@ -27,6 +28,7 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
     private IFragment1 iFragment1;
     private IImageData iImageData;
     private IRollImageData iRollImageData;
+    private IRollImageData iRollImageData2;
     private ICloudImageData iCloudImageData;
     private IVideoData iVideoData;
 
@@ -34,6 +36,7 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
         this.iFragment1 = iFragment1;
         iImageData = new ImageData();
         iRollImageData = new RollImageData();
+        iRollImageData2 = new RollImage2Data();
         iCloudImageData = new CloudImageData();
         iVideoData = new Video1Data();
     }
@@ -58,6 +61,19 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
                 @Override
                 public void onSuccess(List<ImageInfo> list) {
                     iFragment1.loadRollImage(list);
+                }
+
+                @Override
+                public void onFailure(String e) {
+                    Logger.d(e);
+                }
+            });
+        }
+        if(iRollImageData2 != null){
+            iRollImageData2.loadData(new IRollImageData.OnLoadListener() {
+                @Override
+                public void onSuccess(List<ImageInfo> list) {
+                    iFragment1.loadRollImage2(list);
                 }
 
                 @Override

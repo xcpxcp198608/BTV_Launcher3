@@ -55,4 +55,6 @@
     <color name="colorItemTransparentW5">#55ffffff</color>
     <color name="colorItemTransparentWD">#dbffffff</color>
 
+    <color name="colorDialogBG">#0E2038</color>
+
 </resources>

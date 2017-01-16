@@ -18,6 +18,7 @@ public final class F {
         public static final String image2="http://158.69.229.104:8080/Launcher_EN/GetImage2";
         public static final String splash_image="http://158.69.229.104:8080/Launcher_EN/GetAdImage";
         public static final String roll_image="http://158.69.229.104:8080/Launcher_EN/GetRollImage";
+        public static final String roll_image2="  http://158.69.229.104:8080/Launcher_EN/GetRollImage2";
         public static final String channel="http://158.69.229.104:8080/Launcher_EN/GetChannel";
         public static final String message1="http://158.69.229.104:8080/Launcher_EN/GetMessage1";
         public static final String message="http://158.69.229.104:8080/Launcher_EN/GetMessage";

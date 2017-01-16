@@ -11,7 +11,9 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -112,6 +114,7 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if(isVisibleToUser){
+            isShow = sharedPreferences.getBoolean("isShow" , true);
             if(isShow){
                 showWarning();
             }
@@ -119,34 +122,41 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
                 presenter.bind();
             }
             if(isLoaded){
-                presenter.showChannelByStyle("BVISION");
+                presenter.showChannel("country" ,"BVISION",null);
             }
             presenter.loadRollImage();
         }
     }
 
     private void showWarning() {
-        AlertDialog.Builder builder =  new AlertDialog.Builder(getContext());
-        builder.setTitle(getString(R.string.warning));
-        builder.setMessage(getString(R.string.warning_message));
-        builder.setCancelable(false);
-        builder.setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
+        final AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+        alertDialog.show();
+        alertDialog.setCancelable(false);
+        Window window = alertDialog.getWindow();
+        if(window == null){
+            return;
+        }
+        window.setContentView(R.layout.dialog_warning_f4);
+        Button btConfirm = (Button) window.findViewById(R.id.bt_confirm);
+        Button btCancel = (Button) window.findViewById(R.id.bt_cancel);
+        btConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(View v) {
                 editor = sharedPreferences.edit();
                 editor.putBoolean("isShow" ,false);
                 editor.commit();
+                alertDialog.dismiss();
             }
         });
-        builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+        btCancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(View v) {
                 editor = sharedPreferences.edit();
                 editor.putBoolean("isShow" ,true);
                 editor.commit();
+                alertDialog.dismiss();
             }
         });
-        builder.show();
     }
 
     @Override
@@ -204,9 +214,13 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ImageInfo imageInfo = list.get(position);
                 if(imageInfo.getQuery_flag() == 0){
-                    presenter.showChannelByCountry(imageInfo.getName());
+                    if("CHINA".equals(imageInfo.getName()) || "TAIWAN".equals(imageInfo.getName())){
+                        presenter.showChannel("country" ,imageInfo.getName(),"sequence");
+                    }else{
+                        presenter.showChannel("country" ,imageInfo.getName(),"name");
+                    }
                 }else if(imageInfo.getQuery_flag() == 1){
-                    presenter.showChannelByStyle(imageInfo.getName());
+                    presenter.showChannel("style" ,imageInfo.getName(),"name");
                 }
             }
         });
@@ -215,9 +229,13 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 ImageInfo imageInfo = list.get(position);
                 if(imageInfo.getQuery_flag() == 0){
-                    presenter.showChannelByCountry(imageInfo.getName());
+                    if("CHINA".equals(imageInfo.getName()) || "TAIWAN".equals(imageInfo.getName())){
+                        presenter.showChannel("country" ,imageInfo.getName(),"sequence");
+                    }else{
+                        presenter.showChannel("country" ,imageInfo.getName(),"name");
+                    }
                 }else if(imageInfo.getQuery_flag() == 1){
-                    presenter.showChannelByStyle(imageInfo.getName());
+                    presenter.showChannel("style" ,imageInfo.getName(),"name");
                 }
                 Zoom.zoomIn09_10(view);
             }
@@ -233,6 +251,11 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
     public void loadRollImage(List<ImageInfo> list) {
         RollImageAdapter rollImageAdapter = new RollImageAdapter(list);
         rpvMain.setAdapter(rollImageAdapter);
+    }
+
+    @Override
+    public void loadRollImage2(List<ImageInfo> list) {
+        Logger.d(list.toString());
     }
 
     @Override

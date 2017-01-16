@@ -309,6 +309,11 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     }
 
     @Override
+    public void loadRollImage2(List<ImageInfo> list) {
+        Logger.d(list.toString());
+    }
+
+    @Override
     public void loadCloudImage(final File[] files) {
         if (files != null && files.length > 0) {
             isCloudImagePlaying = true;

@@ -19,7 +19,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -152,6 +154,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
         editor.commit();
         presenter.loadWeatherIcon();
         if (SystemConfig.isNetworkConnected(MainActivity.this)) {
+            presenter.loadUpdate();
             Intent intent = new Intent(MainActivity.this, LoadService.class);
             intent.setAction("loadMessage");
             startService(intent);
@@ -238,7 +241,8 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
     public void onConnected(boolean isConnected) {
         if (isConnected) {
             showNetworkStatus();
-            presenter.bind();
+            presenter.loadVideo();
+            presenter.loadUpdate();
             presenter.loadMessage1();
 
             //启动服务加载天气信息，并通过alarm定时每120分钟加载一次
@@ -315,6 +319,9 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
     @Override
     public void loadUpdate(UpdateInfo updateInfo) {
         //Logger.d(updateInfo.toString());
+        String info = updateInfo.getInfo();
+        String info2 = info.replaceAll("\\n" ,"\n");
+        Logger.d(info2);
         int localVersion = ApkCheck.getInstalledApkVersionCode(MainActivity.this, getPackageName());
         if (localVersion < updateInfo.getCode()) {
             showUpdateDialog(updateInfo);
@@ -386,20 +393,26 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
     }
 
     private void showUpdateDialog(final UpdateInfo updateInfo) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle(getString(R.string.notice));
-        builder.setMessage(getString(R.string.update_info));
-        builder.setMessage(updateInfo.getInfo());
-        builder.setCancelable(false);
-        builder.setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
+        final AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+        alertDialog.show();
+        alertDialog.setCancelable(false);
+        Window window = alertDialog.getWindow();
+        if(window == null){
+            return;
+        }
+        window.setContentView(R.layout.dialog_update);
+        TextView tvInfo = (TextView) window.findViewById(R.id.tv_info);
+        Button btConfirm = (Button) window.findViewById(R.id.bt_confirm);
+        tvInfo.setText(updateInfo.getInfo());
+        btConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, UpdateActivity.class);
                 intent.putExtra("updateInfo", updateInfo);
                 startActivity(intent);
+                alertDialog.dismiss();
             }
         });
-        builder.show();
     }
 
     private void downloadVideo(VideoInfo videoInfo) {

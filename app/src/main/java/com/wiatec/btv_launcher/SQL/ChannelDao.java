@@ -81,8 +81,51 @@ public class ChannelDao {
         sqLiteDatabase.delete(SQLiteHelper.CHANNEL_TABLE ,"_id>?" ,new String []{"0"});
     }
 
+    public List<ChannelInfo> query (String selection , String where ,String order){
+        Cursor cursor = sqLiteDatabase.query(SQLiteHelper.CHANNEL_TABLE ,null,selection+"=?" , new String []{where} ,null,null,order);
+        List<ChannelInfo> list = new ArrayList<>();
+        while(cursor.moveToNext()){
+            ChannelInfo channelInfo = new ChannelInfo();
+            channelInfo.setName(cursor.getString(cursor.getColumnIndex("name")));
+            channelInfo.setUrl(cursor.getString(cursor.getColumnIndex("url")));
+            channelInfo.setIcon(cursor.getString(cursor.getColumnIndex("icon")));
+            channelInfo.setType(cursor.getString(cursor.getColumnIndex("type")));
+            channelInfo.setCountry(cursor.getString(cursor.getColumnIndex("country")));
+            channelInfo.setSequence(cursor.getInt(cursor.getColumnIndex("sequence")));
+            channelInfo.setStyle(cursor.getString(cursor.getColumnIndex("style")));
+            channelInfo.setSequence1(cursor.getInt(cursor.getColumnIndex("sequence1")));
+            list.add(channelInfo);
+        }
+        if(cursor!= null){
+            cursor.close();
+        }
+        return list;
+    }
+
+
     public List<ChannelInfo> queryByCountry(String country){
         Cursor cursor = sqLiteDatabase.query(SQLiteHelper.CHANNEL_TABLE ,null,"country=?" , new String []{country} ,null,null,"sequence");
+        List<ChannelInfo> list = new ArrayList<>();
+        while(cursor.moveToNext()){
+            ChannelInfo channelInfo = new ChannelInfo();
+            channelInfo.setName(cursor.getString(cursor.getColumnIndex("name")));
+            channelInfo.setUrl(cursor.getString(cursor.getColumnIndex("url")));
+            channelInfo.setIcon(cursor.getString(cursor.getColumnIndex("icon")));
+            channelInfo.setType(cursor.getString(cursor.getColumnIndex("type")));
+            channelInfo.setCountry(cursor.getString(cursor.getColumnIndex("country")));
+            channelInfo.setSequence(cursor.getInt(cursor.getColumnIndex("sequence")));
+            channelInfo.setStyle(cursor.getString(cursor.getColumnIndex("style")));
+            channelInfo.setSequence1(cursor.getInt(cursor.getColumnIndex("sequence1")));
+            list.add(channelInfo);
+        }
+        if(cursor!= null){
+            cursor.close();
+        }
+        return list;
+    }
+
+    public List<ChannelInfo> queryByCountry1(String country){
+        Cursor cursor = sqLiteDatabase.query(SQLiteHelper.CHANNEL_TABLE ,null,"country=?" , new String []{country} ,null,null,"name");
         List<ChannelInfo> list = new ArrayList<>();
         while(cursor.moveToNext()){
             ChannelInfo channelInfo = new ChannelInfo();

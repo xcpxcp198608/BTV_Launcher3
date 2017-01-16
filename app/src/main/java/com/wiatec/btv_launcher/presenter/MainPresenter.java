@@ -57,20 +57,7 @@ public class MainPresenter extends BasePresenter<IMainActivity> {
         }
     }
 
-    public void bind (){
-        if(iUpdateData != null){
-            iUpdateData.loadData(new IUpdateData.OnLoadListener() {
-                @Override
-                public void onSuccess(UpdateInfo updateInfo) {
-                    iMainActivity.loadUpdate(updateInfo);
-                }
-
-                @Override
-                public void onFailure(String e) {
-                    Logger.d(e);
-                }
-            });
-        }
+    public void loadVideo (){
 
 //        if(iVideoData != null){
 //            iVideoData.loadData(new IVideoData.OnLoadListener() {
@@ -91,6 +78,22 @@ public class MainPresenter extends BasePresenter<IMainActivity> {
                 @Override
                 public void onSuccess(VideoInfo videoInfo) {
                     iMainActivity.loadAdVideo(videoInfo);
+                }
+
+                @Override
+                public void onFailure(String e) {
+                    Logger.d(e);
+                }
+            });
+        }
+    }
+
+    public void loadUpdate(){
+        if(iUpdateData != null){
+            iUpdateData.loadData(new IUpdateData.OnLoadListener() {
+                @Override
+                public void onSuccess(UpdateInfo updateInfo) {
+                    iMainActivity.loadUpdate(updateInfo);
                 }
 
                 @Override
