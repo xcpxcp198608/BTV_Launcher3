@@ -93,6 +93,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     private Subscription videoSubscription;
     private VideoInfo currentVideoInfo;
     private boolean isCloudImagePlaying = false;
+    private boolean isVideoPlaying = false;
 
     @Nullable
     @Override
@@ -119,7 +120,9 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 // Logger.d("f1 -isVisibleToUser " +"play");
                 //playVideo();
                 if (SystemConfig.isNetworkConnected(Application.getContext())) {
-                    presenter.loadVideo();
+                    if(!isVideoPlaying) {
+                        presenter.loadVideo();
+                    }
                 }
             }
         } else {
@@ -135,6 +138,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 isCloudImagePlaying = false;
             }
             if (videoSubscription != null) {
+                isVideoPlaying = false;
                 videoSubscription.unsubscribe();
             }
         }
@@ -159,19 +163,24 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         if (vv_Main != null && !vv_Main.isPlaying()) {
             if (isF1Visible) {
                 if (SystemConfig.isNetworkConnected(Application.getContext())) {
-                    presenter.loadVideo();
+                    if(!isVideoPlaying) {
+                        presenter.loadVideo();
+                    }
                 }
             }
         }
         if (SystemConfig.isNetworkConnected(getContext())) {
             presenter.loadData();
         }
-        presenter.loadCloudData();
+        if(presenter != null && ! isCloudImagePlaying){
+            presenter.loadCloudData();
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        isVideoPlaying = false;
         //Logger.d("f1 -onPause ");
         if (vv_Main != null && vv_Main.isPlaying()) {
             playPosition = vv_Main.getCurrentPosition();
@@ -329,7 +338,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                     .subscribe(new Action1<String>() {
                         @Override
                         public void call(String s) {
-                            //  Logger.d("f1--->" +s);
+                            Logger.d("f1--->" +s);
                             Glide.with(getContext()).load(s)
                                     .placeholder(R.drawable.ld_cloud_icon_3)
                                     .error(R.drawable.ld_cloud_icon_3)
@@ -342,6 +351,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     @Override
     public void loadVideo(final List<VideoInfo> list) {
         if (list != null) {
+            isVideoPlaying = true;
             videoSubscription = Observable.interval(0,list.get(0).getPlayInterval(),TimeUnit.MILLISECONDS).take(list.size())
                     .subscribeOn(Schedulers.io())
                     .repeat()
@@ -372,6 +382,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                                 }
                                 currentVideoInfo.setUrl(s);
                                 playVideo1(s);
+                                Logger.d("f1-->" + s);
                             }
                         }
                     });
@@ -423,7 +434,9 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     public void onConnected(boolean isConnected) {
         if (isConnected) {
             presenter.loadData();
-            presenter.loadVideo();
+            if(!isVideoPlaying) {
+                presenter.loadVideo();
+            }
         }
     }
 
