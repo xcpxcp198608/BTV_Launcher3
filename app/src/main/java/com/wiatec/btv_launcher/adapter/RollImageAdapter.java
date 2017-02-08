@@ -35,7 +35,10 @@ public class RollImageAdapter extends StaticPagerAdapter {
         imageView.setClickable(true);
         imageView.setPadding(3,3,3,3);
         final ImageInfo imageInfo = list.get(position);
-        Glide.with(container.getContext()).load(list.get(position).getUrl())
+        if(imageInfo == null){
+            return imageView;
+        }
+        Glide.with(container.getContext()).load(imageInfo.getUrl())
                 .placeholder(R.drawable.follow)
                 .into(imageView);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -45,7 +48,7 @@ public class RollImageAdapter extends StaticPagerAdapter {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
-                    Zoom.zoomIn10_11(v);
+                    Zoom.zoomIn09_10(v);
                 }
             }
         });

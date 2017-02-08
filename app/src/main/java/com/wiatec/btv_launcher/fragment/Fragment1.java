@@ -286,6 +286,9 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     @Override
     public void loadImage(final List<ImageInfo> list) {
         //Logger.d(list.toString());
+        if(list == null || list.size() <1){
+            return;
+        }
         Glide.with(Application.getContext()).load(list.get(0).getUrl()).placeholder(R.drawable.btv_icon_1).into(ibt_Btv);
         Glide.with(Application.getContext()).load(list.get(1).getUrl()).placeholder(R.drawable.user_guide_icon_4).into(ibt_UserGuide);
         Glide.with(Application.getContext()).load(list.get(2).getUrl()).placeholder(R.drawable.setting_icon).into(ibt_Setting);
@@ -313,6 +316,9 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     @Override
     public void loadRollImage(List<ImageInfo> list) {
         //Logger.d(list.toString());
+        if(list == null || list.size() <1){
+            return;
+        }
         RollImageAdapter rollImageAdapter = new RollImageAdapter(list);
         rpv_Main.setAdapter(rollImageAdapter);
     }
@@ -326,7 +332,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     public void loadCloudImage(final File[] files) {
         if (files != null && files.length > 0) {
             isCloudImagePlaying = true;
-            subscription = Observable.interval(0,6, TimeUnit.SECONDS).take(files.length)
+            subscription = Observable.interval(6000, TimeUnit.MILLISECONDS).take(files.length)
                     .repeat()
                     .map(new Func1<Long, String>() {
                         @Override
@@ -350,7 +356,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
 
     @Override
     public void loadVideo(final List<VideoInfo> list) {
-        if (list != null) {
+        if (list.size() > 0) {
             isVideoPlaying = true;
             videoSubscription = Observable.interval(0,list.get(0).getPlayInterval(),TimeUnit.MILLISECONDS).take(list.size())
                     .subscribeOn(Schedulers.io())
@@ -463,7 +469,11 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         if (hasFocus) {
-            Zoom.zoomIn10_11(v);
+            if(v.getId() == R.id.ibt_btv || v.getId() == R.id.ibt_ld_store || v.getId() == R.id.ibt_ad_1) {
+                Zoom.zoomIn10_11(v);
+            }else {
+                Zoom.zoomIn09_10(v);
+            }
         }
     }
 }

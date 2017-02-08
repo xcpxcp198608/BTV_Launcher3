@@ -380,6 +380,9 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
                     @Override
                     public void call(Message1Info message1Info) {
 //                        Logger.d(message1Info.toString());
+                        if(message1Info == null){
+                            return;
+                        }
                         tv_Message.setVisibility(View.VISIBLE);
                         tv_Message.setTextColor(Color.rgb(message1Info.getColorR(), message1Info.getColorG(), message1Info.getColorB()));
                         tv_Message.setText("  " + message1Info.getContent());
