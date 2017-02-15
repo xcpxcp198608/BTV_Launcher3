@@ -32,8 +32,8 @@ public class OpportunityActivity extends AppCompatActivity {
         setContentView(R.layout.activity_opportunity);
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         list = new ArrayList<>();
-        int [] resIds = new int [] {R.drawable.o1 ,R.drawable.o2  ,R.drawable.o3,R.drawable.o4  ,R.drawable.o5  ,
-                R.drawable.o62,R.drawable.o7,R.drawable.o8  ,R.drawable.o9 , R.drawable.o10};
+        int [] resIds = new int [] {R.drawable.o1 ,R.drawable.o2  ,R.drawable.o3,R.drawable.o4,R.drawable.o5,
+                R.drawable.o6,R.drawable.o7,R.drawable.o8  ,R.drawable.o9 , R.drawable.o10};
         for (int i =0 ; i< resIds.length ;i++){
             ImageView imageView = new ImageView(this);
             Glide.with(this).load(resIds [i]).into(imageView);
