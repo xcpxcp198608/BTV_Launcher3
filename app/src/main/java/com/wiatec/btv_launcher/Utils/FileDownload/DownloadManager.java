@@ -146,14 +146,14 @@ public class DownloadManager {
                         }
                         File file = new File(dir, downloadInfo.getFileName());
                         if(file.exists()){
-                            long fileLenght = file.length();
-                            if(fileLenght == downloadInfo.getFileLength()){
+                            long fileLength1 = file.length();
+                            if(fileLength1 == downloadInfo.getFileLength()){
                                 Log.d("----px----", downloadInfo.getFileName()+" is exists , do not need download");
                                 return;
                             }
                         }
                         randomAccessFile = new RandomAccessFile(file, "rwd");
-                        //randomAccessFile.setLength(downloadInfo.getFileLength());
+                        randomAccessFile.setLength(downloadInfo.getFileLength());
                         randomAccessFile.seek(startLength);
                         handler.obtainMessage(MSG_START).sendToTarget();
                         inputStream = response.body().byteStream();

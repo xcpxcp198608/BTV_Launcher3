@@ -14,6 +14,7 @@ public class Application extends android.app.Application {
 
     private static RequestQueue requestQueue;
     private static Context context;
+    private static boolean isFirstBoot;
 
     @Override
     public void onCreate() {
@@ -21,6 +22,7 @@ public class Application extends android.app.Application {
         Logger.init("----px----");
         context = getApplicationContext();
         requestQueue = Volley.newRequestQueue(getApplicationContext());
+        isFirstBoot = true;
     }
 
     public static Context getContext (){
@@ -29,5 +31,13 @@ public class Application extends android.app.Application {
 
     public static RequestQueue getRequestQueue (){
         return requestQueue;
+    }
+
+    public static boolean getBootStatus(){
+        return isFirstBoot;
+    }
+
+    public static void setBootStatus(boolean firstBoot){
+        isFirstBoot = firstBoot;
     }
 }

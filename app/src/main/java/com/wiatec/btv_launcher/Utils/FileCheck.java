@@ -26,7 +26,7 @@ public class FileCheck {
     //通过file path 和 file full name ，md5判断文件是否完整
     public static boolean isFileIntact (String filePath,String fileName,String md5){
         String localMD5 = MD5.getFileMD5(filePath ,fileName);
-       //Logger.d(localMD5);
+       Logger.d(localMD5);
         if(localMD5.equalsIgnoreCase(md5)){
            // Logger.d("----file is intact");
             return true;
