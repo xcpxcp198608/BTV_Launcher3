@@ -33,7 +33,11 @@ public class AdRollImageAdapter extends StaticPagerAdapter {
         imageView.setCropToPadding(true);
         imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT , ViewGroup.LayoutParams.MATCH_PARENT));
         final ImageInfo imageInfo = list.get(position);
-        Glide.with(container.getContext()).load(imageInfo.getUrl()).placeholder(R.drawable.bksound_icon_3).into(imageView);
+        Glide.with(container.getContext())
+                .load(imageInfo.getUrl())
+                .placeholder(R.drawable.bksound_icon_3)
+                .dontAnimate()
+                .into(imageView);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -289,16 +289,16 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         if(list == null || list.size() <1){
             return;
         }
-        Glide.with(Application.getContext()).load(list.get(0).getUrl()).placeholder(R.drawable.btv_icon_1).into(ibt_Btv);
-        Glide.with(Application.getContext()).load(list.get(1).getUrl()).placeholder(R.drawable.user_guide_icon_4).into(ibt_UserGuide);
-        Glide.with(Application.getContext()).load(list.get(2).getUrl()).placeholder(R.drawable.setting_icon).into(ibt_Setting);
-        Glide.with(Application.getContext()).load(list.get(3).getUrl()).placeholder(R.drawable.apps_icon_3).into(ibt_Apps);
-        Glide.with(Application.getContext()).load(list.get(4).getUrl()).placeholder(R.drawable.market_icon).into(ibt_Market);
-        Glide.with(Application.getContext()).load(list.get(5).getUrl()).placeholder(R.drawable.ld_opportunity_12).into(ibt_AntiVirus);
-        Glide.with(Application.getContext()).load(list.get(6).getUrl()).placeholder(R.drawable.message_icon).into(ibt_Privacy);
-        Glide.with(Application.getContext()).load(list.get(7).getUrl()).placeholder(R.drawable.ld_store_icon).into(ibt_LdStore);
-        Glide.with(Application.getContext()).load(list.get(8).getUrl()).placeholder(R.drawable.bksound_icon_3).into(ibt_Ad1);
-        Glide.with(Application.getContext()).load(list.get(9).getUrl()).placeholder(R.drawable.ld_cloud_icon_3).into(ibt_LdCloud);
+        Glide.with(Application.getContext()).load(list.get(0).getUrl()).placeholder(R.drawable.btv_icon_1).dontAnimate().into(ibt_Btv);
+        Glide.with(Application.getContext()).load(list.get(1).getUrl()).placeholder(R.drawable.user_guide_icon_4).dontAnimate().into(ibt_UserGuide);
+        Glide.with(Application.getContext()).load(list.get(2).getUrl()).placeholder(R.drawable.setting_icon).dontAnimate().into(ibt_Setting);
+        Glide.with(Application.getContext()).load(list.get(3).getUrl()).placeholder(R.drawable.apps_icon_3).dontAnimate().into(ibt_Apps);
+        Glide.with(Application.getContext()).load(list.get(4).getUrl()).placeholder(R.drawable.market_icon).dontAnimate().into(ibt_Market);
+        Glide.with(Application.getContext()).load(list.get(5).getUrl()).placeholder(R.drawable.ld_opportunity_12).dontAnimate().into(ibt_AntiVirus);
+        Glide.with(Application.getContext()).load(list.get(6).getUrl()).placeholder(R.drawable.message_icon).dontAnimate().into(ibt_Privacy);
+        Glide.with(Application.getContext()).load(list.get(7).getUrl()).placeholder(R.drawable.ld_store_icon).dontAnimate().into(ibt_LdStore);
+        Glide.with(Application.getContext()).load(list.get(8).getUrl()).placeholder(R.drawable.bksound_icon_3).dontAnimate().into(ibt_Ad1);
+        Glide.with(Application.getContext()).load(list.get(9).getUrl()).placeholder(R.drawable.ld_cloud_icon_3).dontAnimate().into(ibt_LdCloud);
         ibt_LdStore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -348,6 +348,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                             Glide.with(getContext()).load(s)
                                     .placeholder(R.drawable.ld_cloud_icon_3)
                                     .error(R.drawable.ld_cloud_icon_3)
+                                    .dontAnimate()
                                     .into(ibt_LdCloud);
                         }
                     });
