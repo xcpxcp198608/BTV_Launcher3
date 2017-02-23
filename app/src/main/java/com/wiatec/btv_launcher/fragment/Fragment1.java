@@ -85,6 +85,12 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     ImageButton ibt_Ad1;
     @BindView(R.id.ibt_full_screen)
     ImageButton ibt_FullScreen;
+    @BindView(R.id.ibt_7)
+    ImageButton ibt7;
+    @BindView(R.id.ibt_8)
+    ImageButton ibt8;
+    @BindView(R.id.ibt_9)
+    ImageButton ibt9;
     @BindView(R.id.vv_main)
     VideoView vv_Main;
     @BindView(R.id.ibt_ld_cloud)
@@ -109,7 +115,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Logger.d("f1 -onCreateView ");
-        View view = inflater.inflate(R.layout.fragment1, container, false);
+        View view = inflater.inflate(R.layout.fragment2, container, false);
         ButterKnife.bind(this, view);
         networkStatusReceiver = new NetworkStatusReceiver(null);
         networkStatusReceiver.setOnNetworkStatusListener(this);
@@ -223,7 +229,8 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     }
 
     @OnClick({R.id.ibt_btv, R.id.ibt_user_guide, R.id.ibt_setting, R.id.ibt_apps, R.id.ibt_market,
-            R.id.ibt_anti_virus, R.id.ibt_privacy, R.id.ibt_ld_cloud ,R.id.fl_video ,R.id.ibt_full_screen})
+            R.id.ibt_anti_virus, R.id.ibt_privacy, R.id.ibt_ld_cloud ,R.id.fl_video ,R.id.ibt_full_screen,
+            R.id.ibt_7,R.id.ibt_8,R.id.ibt_9})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ibt_btv:
@@ -270,6 +277,21 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                     Intent intent1 = new Intent(getContext() , CloudImageFullScreenActivity.class);
                     intent1.putExtra("cloudImagePosition",cloudImagePosition);
                     startActivity(intent1);
+                }
+                break;
+            case R.id.ibt_7:
+                if (ApkCheck.isApkInstalled(getContext(), F.package_name.tvplus)) {
+                    ApkLaunch.launchApkByPackageName(getContext(), F.package_name.tvplus);
+                }
+                break;
+            case R.id.ibt_8:
+                if (ApkCheck.isApkInstalled(getContext(), F.package_name.beevideo)) {
+                    ApkLaunch.launchApkByPackageName(getContext(), F.package_name.beevideo);
+                }
+                break;
+            case R.id.ibt_9:
+                if (ApkCheck.isApkInstalled(getContext(), F.package_name.spotify)) {
+                    ApkLaunch.launchApkByPackageName(getContext(), F.package_name.spotify);
                 }
                 break;
             default:

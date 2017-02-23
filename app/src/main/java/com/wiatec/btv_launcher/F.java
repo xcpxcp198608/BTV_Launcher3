@@ -57,5 +57,8 @@ public final class F {
         public static final String legacy_antivirus =  "com.legacydirect.security.suite";
         public static final String legacy_privacy =  "com.legacydirect.privacyadvisor";
         public static final String file = "com.droidlogic.FileBrower";
+        public static final String tvplus = "com.elinkway.tvlive2";
+        public static final String beevideo = "cn.beevideo";
+        public static final String spotify = "com.spotify.tv.android";
     }
 }

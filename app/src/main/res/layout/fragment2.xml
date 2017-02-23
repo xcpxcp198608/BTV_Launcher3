@@ -29,6 +29,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:background="@drawable/item_main_bg"
             android:orientation="vertical"
@@ -37,7 +38,7 @@
             android:layout_height="match_parent">
 
             <FrameLayout
-                android:layout_weight="2.4"
+                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp">
 
@@ -58,152 +59,185 @@
                 android:layout_height="1dp" />
 
             <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp">
 
-                <FrameLayout
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent">
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp">
+
                     <ImageButton
                         android:id="@+id/ibt_user_guide"
-                        android:padding="25dp"
+                        android:padding="20dp"
                         android:background="@drawable/item_btv_bg"
                         android:scaleType="centerInside"
                         android:src="@drawable/user_guide_icon_4"
-                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent" />
-                </FrameLayout>
 
+                    <ImageView
+                        android:background="@color/colorGray1"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent" />
 
-                <ImageView
-                    android:background="@color/colorGray1"
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent" />
-
-
-                <FrameLayout
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent">
                     <ImageButton
                         android:id="@+id/ibt_setting"
-                        android:padding="25dp"
+                        android:padding="20dp"
                         android:background="@drawable/item_setting_bg"
                         android:scaleType="centerInside"
                         android:src="@drawable/setting_icon"
-                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent" />
 
-                </FrameLayout>
-
-                <ImageView
-                    android:background="@color/colorGray1"
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent" />
-
-                <FrameLayout
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent">
+                    <ImageView
+                        android:background="@color/colorGray1"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent" />
 
                     <ImageButton
-                        android:padding="25dp"
+                        android:padding="20dp"
                         android:id="@+id/ibt_apps"
                         android:background="@drawable/item_btv_bg"
                         android:scaleType="centerInside"
                         android:src="@drawable/apps_icon_3"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"/>
 
-                </FrameLayout>
+                </LinearLayout>
 
-
-            </LinearLayout>
-
-            <ImageView
+                <ImageView
                 android:background="@color/colorGray1"
                 android:layout_width="match_parent"
                 android:layout_height="1dp" />
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="0dp">
-
-                <FrameLayout
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent">
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp">
+
                     <ImageButton
                         android:id="@+id/ibt_market"
-                        android:padding="25dp"
+                        android:padding="20dp"
                         android:background="@drawable/item_market_bg"
                         android:scaleType="centerInside"
                         android:src="@drawable/market_icon"
-                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent" />
 
-                </FrameLayout>
+                    <ImageView
+                        android:background="@color/colorGray1"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent" />
 
-
-                <ImageView
-                    android:background="@color/colorGray1"
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent" />
-
-                <FrameLayout
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent" >
                     <ImageButton
                         android:id="@+id/ibt_anti_virus"
-                        android:padding="25dp"
+                        android:padding="20dp"
                         android:background="@drawable/item_btv_bg"
                         android:scaleType="centerInside"
                         android:src="@drawable/ld_opportunity_12"
-                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent" />
 
-                </FrameLayout>
+                    <ImageView
+                        android:background="@color/colorGray1"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent" />
+
+                    <FrameLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/ibt_privacy"
+                            android:padding="20dp"
+                            android:background="@drawable/item_message_bg"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/message_icon"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+
+                        <TextView
+                            android:id="@+id/tv_message_count"
+                            android:layout_gravity="right"
+                            android:layout_margin="20dp"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:textSize="25sp"
+                            android:textColor="@color/colorRed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </FrameLayout>
+
+                </LinearLayout>
 
                 <ImageView
                     android:background="@color/colorGray1"
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent" />
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" />
 
-                <FrameLayout
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent">
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp">
+
 
                     <ImageButton
-                        android:id="@+id/ibt_privacy"
-                        android:padding="25dp"
-                        android:background="@drawable/item_message_bg"
+                        android:id="@+id/ibt_7"
+                        android:padding="20dp"
+                        android:background="@drawable/item_btv_bg"
                         android:scaleType="centerInside"
-                        android:src="@drawable/message_icon"
-                        android:layout_width="match_parent"
+                        android:src="@drawable/tv_1"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent" />
 
-                    <TextView
-                        android:id="@+id/tv_message_count"
-                        android:layout_gravity="right"
-                        android:layout_margin="20dp"
-                        android:gravity="center"
-                        android:textStyle="bold"
-                        android:textSize="25sp"
-                        android:textColor="@color/colorRed"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                    <ImageView
+                        android:background="@color/colorGray1"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent" />
 
-                </FrameLayout>
+                    <ImageButton
+                        android:id="@+id/ibt_8"
+                        android:padding="20dp"
+                        android:background="@drawable/item_setting_bg"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/movie_1"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"/>
 
+                    <ImageView
+                        android:background="@color/colorGray1"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent" />
+
+                    <ImageButton
+                        android:id="@+id/ibt_9"
+                        android:padding="20dp"
+                        android:background="@drawable/item_btv_bg"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/music_1"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent" />
+
+                </LinearLayout>
 
             </LinearLayout>
+
 
         </LinearLayout>
 
