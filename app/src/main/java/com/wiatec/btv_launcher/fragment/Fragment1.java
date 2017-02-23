@@ -105,6 +105,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     private NetworkStatusReceiver networkStatusReceiver;
     private Subscription subscription;
     private Subscription videoSubscription;
+    private Subscription messageSubscription;
     private VideoInfo currentVideoInfo;
     private boolean isCloudImagePlaying = false;
     private boolean isVideoPlaying = false;
@@ -135,7 +136,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
             //Logger.d("f1 -isVisibleToUser " + isVisibleToUser);
             if (vv_Main != null && !vv_Main.isPlaying() && isF1Visible) {
                 // Logger.d("f1 -isVisibleToUser " +"play");
-                //playVideo();
                 if (SystemConfig.isNetworkConnected(Application.getContext())) {
                     if(!isVideoPlaying) {
                         presenter.loadVideo();
@@ -157,6 +157,9 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
             if (videoSubscription != null) {
                 isVideoPlaying = false;
                 videoSubscription.unsubscribe();
+            }
+            if (messageSubscription != null) {
+                messageSubscription.unsubscribe();
             }
         }
     }
@@ -212,6 +215,9 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         if (videoSubscription != null) {
             videoSubscription.unsubscribe();
         }
+        if (messageSubscription != null) {
+            messageSubscription.unsubscribe();
+        }
     }
 
     @Override
@@ -225,6 +231,9 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         }
         if (videoSubscription != null) {
             videoSubscription.unsubscribe();
+        }
+        if (messageSubscription != null) {
+            messageSubscription.unsubscribe();
         }
     }
 
@@ -408,7 +417,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     }
 
     private void checkMessageCount(){
-        Observable.just("")
+        messageSubscription = Observable.just("")
                 .subscribeOn(Schedulers.io())
                 .map(new Func1<String, List<MessageInfo>>() {
                     @Override

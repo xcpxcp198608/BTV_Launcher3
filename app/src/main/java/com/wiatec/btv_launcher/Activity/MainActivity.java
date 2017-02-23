@@ -360,7 +360,6 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
                 .subscribe(new Action1<Message1Info>() {
                     @Override
                     public void call(Message1Info message1Info) {
-//                        Logger.d(message1Info.toString());
                         if(message1Info == null){
                             return;
                         }
@@ -396,32 +395,6 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
                 intent.putExtra("updateInfo", updateInfo);
                 startActivity(intent);
                 alertDialog.dismiss();
-            }
-        });
-    }
-
-    private void downloadVideo(VideoInfo videoInfo) {
-        DownloadManager downloadManager = DownloadManager.getInstance(MainActivity.this);
-        downloadManager.startDownload(videoInfo.getName(), videoInfo.getUrl(), F.path.download);
-        downloadManager.setOnDownloadListener(new OnDownloadListener() {
-            @Override
-            public void onStart(int progress, boolean isStart) {
-                isVideoDownloading = true;
-            }
-
-            @Override
-            public void onProgressChange(int progress) {
-
-            }
-
-            @Override
-            public void onPause(int progress) {
-
-            }
-
-            @Override
-            public void onCompleted(int progress) {
-                isVideoDownloading = false;
             }
         });
     }
