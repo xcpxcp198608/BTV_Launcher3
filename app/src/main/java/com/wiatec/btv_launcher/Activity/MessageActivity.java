@@ -72,8 +72,8 @@ public class MessageActivity extends BaseActivity<IMessageActivity, MessagePrese
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         Observable.just("")
                 .subscribeOn(Schedulers.io())
                 .map(new Func1<String, List<MessageInfo>>() {

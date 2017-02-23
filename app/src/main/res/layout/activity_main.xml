@@ -42,6 +42,17 @@
         android:layout_width="32dp"
         android:layout_height="32dp" />
 
+    <TextView
+        android:layout_marginRight="5dp"
+        android:id="@+id/tv_temperature"
+        android:text="123"
+        android:gravity="center"
+        android:layout_toLeftOf="@id/ibt_weather"
+        android:textSize="25sp"
+        android:textColor="@color/colorWhite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <FrameLayout
         android:visibility="gone"
         android:id="@+id/fl_message"

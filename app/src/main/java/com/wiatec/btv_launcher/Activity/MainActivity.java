@@ -76,6 +76,8 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
 
     @BindView(R.id.tv_time)
     TextView tv_Time;
+    @BindView(R.id.tv_temperature)
+    TextView tv_Temperature;
     @BindView(R.id.iv_net)
     ImageView iv_Net;
     @BindView(R.id.tv_date)
@@ -159,27 +161,6 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
             intent.setAction("loadMessage");
             startService(intent);
         }
-        Observable.just("")
-                .subscribeOn(Schedulers.io())
-                .map(new Func1<String, List<MessageInfo>>() {
-                    @Override
-                    public List<MessageInfo> call(String s) {
-                        return messageDao.queryUnreadMessage();
-                    }
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<MessageInfo>>() {
-                    @Override
-                    public void call(List<MessageInfo> list) {
-                        if (list.size() > 0) {
-                            int count = list.size();
-                            tv_MessageCount.setText(count+"");
-                            fl_Message.setVisibility(View.VISIBLE);
-                        } else {
-                            fl_Message.setVisibility(View.GONE);
-                        }
-                    }
-                });
     }
 
     @Override
@@ -393,6 +374,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
     @Override
     public void loadWeather(WeatherInfo weatherInfo) {
         WeatherIconSetting.setIcon(ibt_Weather, weatherInfo.getIcon());
+        tv_Temperature.setText(weatherInfo.getTemperature());
     }
 
     private void showUpdateDialog(final UpdateInfo updateInfo) {

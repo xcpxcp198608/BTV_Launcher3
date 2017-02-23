@@ -44,6 +44,7 @@
         <activity android:name=".Activity.PinentryActivity"/>
         <activity android:name=".Activity.FMPlayActivity"/>
         <activity android:name=".Activity.MainActivity"/>
+        <activity android:name=".Activity.CloudImageFullScreenActivity"/>
 
         <receiver android:name=".receiver.AppInstallReceiver">
             <intent-filter>

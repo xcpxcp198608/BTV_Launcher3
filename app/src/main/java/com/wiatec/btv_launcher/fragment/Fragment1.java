@@ -11,11 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.jude.rollviewpager.RollPagerView;
+import com.wiatec.btv_launcher.Activity.CloudImageFullScreenActivity;
 import com.wiatec.btv_launcher.Activity.MenuActivity;
 import com.wiatec.btv_launcher.Activity.MessageActivity;
 import com.wiatec.btv_launcher.Activity.OpportunityActivity;
@@ -26,6 +28,7 @@ import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.OnNetworkStatusListener;
 import com.wiatec.btv_launcher.R;
+import com.wiatec.btv_launcher.SQL.MessageDao;
 import com.wiatec.btv_launcher.Utils.ApkCheck;
 import com.wiatec.btv_launcher.Utils.ApkLaunch;
 import com.wiatec.btv_launcher.Utils.Logger;
@@ -33,6 +36,7 @@ import com.wiatec.btv_launcher.Utils.SystemConfig;
 import com.wiatec.btv_launcher.adapter.RollImageAdapter;
 import com.wiatec.btv_launcher.animator.Zoom;
 import com.wiatec.btv_launcher.bean.ImageInfo;
+import com.wiatec.btv_launcher.bean.MessageInfo;
 import com.wiatec.btv_launcher.bean.VideoInfo;
 import com.wiatec.btv_launcher.presenter.Fragment1Presenter;
 import com.wiatec.btv_launcher.receiver.NetworkStatusReceiver;
@@ -79,12 +83,16 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     ImageButton ibt_LdStore;
     @BindView(R.id.ibt_ad_1)
     ImageButton ibt_Ad1;
+    @BindView(R.id.ibt_full_screen)
+    ImageButton ibt_FullScreen;
     @BindView(R.id.vv_main)
     VideoView vv_Main;
     @BindView(R.id.ibt_ld_cloud)
     ImageButton ibt_LdCloud;
     @BindView(R.id.fl_video)
     FrameLayout flVideo;
+    @BindView(R.id.tv_message_count)
+    TextView tvMessageCount;
 
     private boolean isF1Visible = false;
     private int playPosition = 0;
@@ -94,6 +102,8 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     private VideoInfo currentVideoInfo;
     private boolean isCloudImagePlaying = false;
     private boolean isVideoPlaying = false;
+    private int cloudImagePosition ;
+    private MessageDao messageDao;
 
     @Nullable
     @Override
@@ -104,6 +114,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         networkStatusReceiver = new NetworkStatusReceiver(null);
         networkStatusReceiver.setOnNetworkStatusListener(this);
         getContext().registerReceiver(networkStatusReceiver, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
+        messageDao = MessageDao.getInstance(getContext());
         return view;
     }
 
@@ -149,6 +160,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         super.onStart();
         //Logger.d("f1 -onStart ");
         setZoom();
+        ibt_LdCloud.setNextFocusDownId(R.id.ibt_full_screen);
     }
 
     @Override
@@ -175,6 +187,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         if(presenter != null && ! isCloudImagePlaying){
             presenter.loadCloudData();
         }
+        checkMessageCount();
     }
 
     @Override
@@ -200,10 +213,17 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         super.onDestroyView();
         //Logger.d("f1 -onDestroyView ");
         getContext().unregisterReceiver(networkStatusReceiver);
+        if (subscription != null) {
+            subscription.unsubscribe();
+            isCloudImagePlaying = false;
+        }
+        if (videoSubscription != null) {
+            videoSubscription.unsubscribe();
+        }
     }
 
     @OnClick({R.id.ibt_btv, R.id.ibt_user_guide, R.id.ibt_setting, R.id.ibt_apps, R.id.ibt_market,
-            R.id.ibt_anti_virus, R.id.ibt_privacy, R.id.ibt_ld_cloud ,R.id.fl_video})
+            R.id.ibt_anti_virus, R.id.ibt_privacy, R.id.ibt_ld_cloud ,R.id.fl_video ,R.id.ibt_full_screen})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ibt_btv:
@@ -244,6 +264,15 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                     intent1.putExtra("url" , currentVideoInfo.getUrl());
                     startActivity(intent1);
                 }
+                break;
+            case R.id.ibt_full_screen:
+                if(isCloudImagePlaying){
+                    Intent intent1 = new Intent(getContext() , CloudImageFullScreenActivity.class);
+                    intent1.putExtra("cloudImagePosition",cloudImagePosition);
+                    startActivity(intent1);
+                }
+                break;
+            default:
                 break;
         }
     }
@@ -337,7 +366,8 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                     .map(new Func1<Long, String>() {
                         @Override
                         public String call(Long aLong) {
-                            return files[Integer.parseInt(aLong + "")].getAbsolutePath();
+                            cloudImagePosition = Integer.parseInt(aLong + "");
+                            return files[cloudImagePosition].getAbsolutePath();
                         }
                     })
                     .observeOn(AndroidSchedulers.mainThread())
@@ -353,6 +383,30 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                         }
                     });
         }
+    }
+
+    private void checkMessageCount(){
+        Observable.just("")
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<String, List<MessageInfo>>() {
+                    @Override
+                    public List<MessageInfo> call(String s) {
+                        return messageDao.queryUnreadMessage();
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<List<MessageInfo>>() {
+                    @Override
+                    public void call(List<MessageInfo> list) {
+                        if (list.size() > 0) {
+                            int count = list.size();
+                            tvMessageCount.setText(count+"");
+                            tvMessageCount.setVisibility(View.VISIBLE);
+                        } else {
+                            tvMessageCount.setVisibility(View.GONE);
+                        }
+                    }
+                });
     }
 
     @Override
@@ -465,6 +519,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         ibt_LdStore.setOnFocusChangeListener(this);
         ibt_Ad1.setOnFocusChangeListener(this);
         ibt_LdCloud.setOnFocusChangeListener(this);
+        ibt_FullScreen.setOnFocusChangeListener(this);
     }
 
     @Override

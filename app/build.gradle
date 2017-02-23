@@ -44,6 +44,10 @@ android {
         abortOnError false
     }
 
+    dataBinding {
+        enabled true
+    }
+
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
             def outputFile = output.outputFile
