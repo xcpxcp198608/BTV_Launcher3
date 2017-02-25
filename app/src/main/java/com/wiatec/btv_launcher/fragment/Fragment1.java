@@ -34,10 +34,12 @@ import com.wiatec.btv_launcher.Utils.ApkLaunch;
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.SystemConfig;
 import com.wiatec.btv_launcher.adapter.RollImageAdapter;
+import com.wiatec.btv_launcher.adapter.RollOverViewAdapter;
 import com.wiatec.btv_launcher.animator.Zoom;
 import com.wiatec.btv_launcher.bean.ImageInfo;
 import com.wiatec.btv_launcher.bean.MessageInfo;
 import com.wiatec.btv_launcher.bean.VideoInfo;
+import com.wiatec.btv_launcher.custom_view.RollOverView;
 import com.wiatec.btv_launcher.presenter.Fragment1Presenter;
 import com.wiatec.btv_launcher.receiver.NetworkStatusReceiver;
 
@@ -81,8 +83,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     RollPagerView rpv_Main;
     @BindView(R.id.ibt_ld_store)
     ImageButton ibt_LdStore;
-    @BindView(R.id.ibt_ad_1)
-    ImageButton ibt_Ad1;
     @BindView(R.id.ibt_full_screen)
     ImageButton ibt_FullScreen;
     @BindView(R.id.ibt_7)
@@ -99,6 +99,8 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     FrameLayout flVideo;
     @BindView(R.id.tv_message_count)
     TextView tvMessageCount;
+    @BindView(R.id.roll_over_view)
+    RollOverView rollOverView;
 
     private boolean isF1Visible = false;
     private int playPosition = 0;
@@ -111,12 +113,15 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     private boolean isVideoPlaying = false;
     private int cloudImagePosition ;
     private MessageDao messageDao;
+    private RollOverViewAdapter rollOverViewAdapter;
+    private boolean rollOverStart = false;
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Logger.d("f1 -onCreateView ");
-        View view = inflater.inflate(R.layout.fragment2, container, false);
+        View view = inflater.inflate(R.layout.fragment5, container, false);
         ButterKnife.bind(this, view);
         networkStatusReceiver = new NetworkStatusReceiver(null);
         networkStatusReceiver.setOnNetworkStatusListener(this);
@@ -161,6 +166,10 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
             if (messageSubscription != null) {
                 messageSubscription.unsubscribe();
             }
+            if(rollOverView != null){
+                rollOverView.pause();
+                rollOverStart = false;
+            }
         }
     }
 
@@ -191,7 +200,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
             }
         }
         if (SystemConfig.isNetworkConnected(getContext())) {
-            presenter.loadData();
+            presenter.loadImageData();
         }
         if(presenter != null && ! isCloudImagePlaying){
             presenter.loadCloudData();
@@ -218,6 +227,10 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         if (messageSubscription != null) {
             messageSubscription.unsubscribe();
         }
+        if(rollOverView != null){
+            rollOverView.pause();
+            rollOverStart = false;
+        }
     }
 
     @Override
@@ -234,6 +247,10 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         }
         if (messageSubscription != null) {
             messageSubscription.unsubscribe();
+        }
+        if(rollOverView != null){
+            rollOverView.pause();
+            rollOverStart = false;
         }
     }
 
@@ -357,18 +374,12 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         Glide.with(Application.getContext()).load(list.get(5).getUrl()).placeholder(R.drawable.ld_opportunity_12).dontAnimate().into(ibt_AntiVirus);
         Glide.with(Application.getContext()).load(list.get(6).getUrl()).placeholder(R.drawable.message_icon).dontAnimate().into(ibt_Privacy);
         Glide.with(Application.getContext()).load(list.get(7).getUrl()).placeholder(R.drawable.ld_store_icon).dontAnimate().into(ibt_LdStore);
-        Glide.with(Application.getContext()).load(list.get(8).getUrl()).placeholder(R.drawable.bksound_icon_3).dontAnimate().into(ibt_Ad1);
+//        Glide.with(Application.getContext()).load(list.get(8).getUrl()).placeholder(R.drawable.bksound_icon_3).dontAnimate().into(ibt_Ad1);
         Glide.with(Application.getContext()).load(list.get(9).getUrl()).placeholder(R.drawable.ld_cloud_icon_3).dontAnimate().into(ibt_LdCloud);
         ibt_LdStore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showLinkByBrowser(list.get(7).getLink());
-            }
-        });
-        ibt_Ad1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showLinkByBrowser(list.get(8).getLink());
             }
         });
     }
@@ -384,8 +395,25 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     }
 
     @Override
-    public void loadRollImage2(List<ImageInfo> list) {
+    public void loadRollOverImage(final List<ImageInfo> list) {
         Logger.d(list.toString());
+        if(list.size() <=0){
+            return;
+        }
+        if(rollOverStart){
+            return;
+        }
+        rollOverStart = true;
+        rollOverViewAdapter = new RollOverViewAdapter(list);
+        rollOverView.setRollViewAdapter(rollOverViewAdapter);
+        rollOverViewAdapter.setOnItemClickListener(new RollOverViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                showLinkByBrowser(list.get(position).getLink());
+            }
+        });
+        rollOverView.setOffscreenPageLimit(list.size());
+        rollOverView.start();
     }
 
     @Override
@@ -405,7 +433,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                     .subscribe(new Action1<String>() {
                         @Override
                         public void call(String s) {
-                            Logger.d("f1--->" +s);
+//                            Logger.d("f1--->" +s);
                             Glide.with(getContext()).load(s)
                                     .placeholder(R.drawable.ld_cloud_icon_3)
                                     .error(R.drawable.ld_cloud_icon_3)
@@ -525,7 +553,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     @Override
     public void onConnected(boolean isConnected) {
         if (isConnected) {
-            presenter.loadData();
+            presenter.loadImageData();
             if(!isVideoPlaying) {
                 presenter.loadVideo();
             }
@@ -548,9 +576,11 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         ibt_AntiVirus.setOnFocusChangeListener(this);
         ibt_Privacy.setOnFocusChangeListener(this);
         ibt_LdStore.setOnFocusChangeListener(this);
-        ibt_Ad1.setOnFocusChangeListener(this);
         ibt_LdCloud.setOnFocusChangeListener(this);
         ibt_FullScreen.setOnFocusChangeListener(this);
+        ibt7.setOnFocusChangeListener(this);
+        ibt8.setOnFocusChangeListener(this);
+        ibt9.setOnFocusChangeListener(this);
     }
 
     @Override

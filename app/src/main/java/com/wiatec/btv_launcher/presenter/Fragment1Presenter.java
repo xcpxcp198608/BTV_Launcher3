@@ -13,6 +13,7 @@ import com.wiatec.btv_launcher.data.IVideoData;
 import com.wiatec.btv_launcher.data.ImageData;
 import com.wiatec.btv_launcher.data.RollImage2Data;
 import com.wiatec.btv_launcher.data.RollImageData;
+import com.wiatec.btv_launcher.data.RollOverImageData;
 import com.wiatec.btv_launcher.data.Video1Data;
 import com.wiatec.btv_launcher.data.VideoData;
 import com.wiatec.btv_launcher.fragment.IFragment1;
@@ -28,7 +29,7 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
     private IFragment1 iFragment1;
     private IImageData iImageData;
     private IRollImageData iRollImageData;
-    private IRollImageData iRollImageData2;
+    private IRollImageData iRollOverImage;
     private ICloudImageData iCloudImageData;
     private IVideoData iVideoData;
 
@@ -36,12 +37,12 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
         this.iFragment1 = iFragment1;
         iImageData = new ImageData();
         iRollImageData = new RollImageData();
-        iRollImageData2 = new RollImage2Data();
+        iRollOverImage = new RollOverImageData();
         iCloudImageData = new CloudImageData();
         iVideoData = new Video1Data();
     }
 
-    public void loadData(){
+    public void loadImageData(){
         if(iImageData !=null){
             iImageData.loadData(new IImageData.OnLoadListener() {
                 @Override
@@ -69,11 +70,11 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
                 }
             });
         }
-        if(iRollImageData2 != null){
-            iRollImageData2.loadData(new IRollImageData.OnLoadListener() {
+        if(iRollOverImage != null){
+            iRollOverImage.loadData(new IRollImageData.OnLoadListener() {
                 @Override
                 public void onSuccess(List<ImageInfo> list) {
-                    iFragment1.loadRollImage2(list);
+                    iFragment1.loadRollOverImage(list);
                 }
 
                 @Override

@@ -19,6 +19,7 @@ public final class F {
         public static final String splash_image="http://appota.gobeyondtv.co:8080/Launcher_EN/GetAdImage";
         public static final String roll_image="http://appota.gobeyondtv.co:8080/Launcher_EN/GetRollImage";
         public static final String roll_image2="http://appota.gobeyondtv.co:8080/Launcher_EN/GetRollImage2";
+        public static final String roll_over_image="http://appota.gobeyondtv.co:8080/Launcher_EN/GetRollOverImage";
         public static final String channel="http://appota.gobeyondtv.co:8080/Launcher_EN/GetChannel";
         public static final String message1="http://appota.gobeyondtv.co:8080/Launcher_EN/GetMessage1";
         public static final String message="http://appota.gobeyondtv.co:8080/Launcher_EN/GetMessage";

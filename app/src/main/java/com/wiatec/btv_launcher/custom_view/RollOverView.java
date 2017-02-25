@@ -55,7 +55,8 @@ public class RollOverView extends ViewPager{
                     Message message = handler.obtainMessage();
                     message.obj = i;
                     handler.sendMessage(message);
-                    Logger.d(i+"");
+//                    Logger.d(count+"");
+//                    Logger.d(i+"");
                     i++;
                     if(i >= count){
                         i=0;
@@ -158,6 +159,6 @@ public class RollOverView extends ViewPager{
         public int getmDuration() {
             return mDuration;
         }
-
     }
+
 }
