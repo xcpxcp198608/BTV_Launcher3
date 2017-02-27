@@ -44,6 +44,8 @@ import com.wiatec.btv_launcher.presenter.Fragment1Presenter;
 import com.wiatec.btv_launcher.receiver.NetworkStatusReceiver;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -116,6 +118,9 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     private RollOverViewAdapter rollOverViewAdapter;
     private boolean rollOverStart = false;
 
+    private long entryTime;
+    private long exitTime;
+    private long holdTime;
 
     @Nullable
     @Override
@@ -147,6 +152,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                     }
                 }
             }
+            entryTime = System.currentTimeMillis();
         } else {
             // Logger.d("f1 -isVisibleToUser " + isVisibleToUser);
             isF1Visible = false;
@@ -169,6 +175,14 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
             if(rollOverView != null){
                 rollOverView.pause();
                 rollOverStart = false;
+            }
+            exitTime = System.currentTimeMillis();
+            holdTime = exitTime - entryTime;
+            Date date = new Date(exitTime);
+            String eTime = new SimpleDateFormat("yy-MM-dd HH:mm:ss").format(date);
+            if(presenter != null && entryTime>0) {
+                Logger.d(eTime+"<--->"+holdTime);
+                presenter.uploadHoldTime(eTime, holdTime + "");
             }
         }
     }
@@ -230,6 +244,14 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         if(rollOverView != null){
             rollOverView.pause();
             rollOverStart = false;
+        }
+        exitTime = System.currentTimeMillis();
+        holdTime = exitTime - entryTime;
+        Date date = new Date(exitTime);
+        String eTime = new SimpleDateFormat("yy-MM-dd HH:mm:ss").format(date);
+        if(presenter != null && entryTime>0) {
+            Logger.d(eTime+"<--->"+holdTime);
+            presenter.uploadHoldTime(eTime, holdTime + "");
         }
     }
 

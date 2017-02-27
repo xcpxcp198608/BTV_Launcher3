@@ -11,6 +11,7 @@ import com.wiatec.btv_launcher.data.IVideoData;
 import com.wiatec.btv_launcher.data.ImageData;
 import com.wiatec.btv_launcher.data.RollImageData;
 import com.wiatec.btv_launcher.data.RollOverImageData;
+import com.wiatec.btv_launcher.data.UploadTimeData;
 import com.wiatec.btv_launcher.data.VideoData;
 import com.wiatec.btv_launcher.fragment.IFragment1;
 
@@ -28,6 +29,7 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
     private IRollImageData iRollOverImage;
     private ICloudImageData iCloudImageData;
     private IVideoData iVideoData;
+    private UploadTimeData uploadTimeData;
 
     public Fragment1Presenter(IFragment1 iFragment1) {
         this.iFragment1 = iFragment1;
@@ -36,6 +38,7 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
         iRollOverImage = new RollOverImageData();
         iCloudImageData = new CloudImageData();
         iVideoData = new VideoData();
+        uploadTimeData = new UploadTimeData();
     }
 
     public void loadImageData(){
@@ -110,6 +113,12 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
                     Logger.d(e);
                 }
             });
+        }
+    }
+
+    public void uploadHoldTime(String exitTime ,String holdTime){
+        if(uploadTimeData!= null) {
+            uploadTimeData.upload(exitTime, holdTime);
         }
     }
 }

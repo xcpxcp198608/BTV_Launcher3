@@ -34,6 +34,8 @@ public final class F {
         public static final String login="http://appota.gobeyondtv.co:8080/Launcher_EN/PinentryLogin";
         public static final String pinentry_login="http://appota.gobeyondtv.co:8080/Launcher_EN/PinentryLogin";
 
+        public static final String upload_hold_time="http://appota.gobeyondtv.co:8080/Launcher_EN/UploadHoldTime";
+
     }
 
     public static final class path {
