@@ -2,34 +2,34 @@ package com.wiatec.btv_launcher.data;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
+
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.bean.VideoInfo;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.List;
 
 /**
- * Created by patrick on 2017/1/2.
+ * Created by PX on 2016-11-14.
  */
 
-public class Video1Data implements IVideoData {
+public class BootAdVideoData implements IBootAdVideoData {
     @Override
     public void loadData(final OnLoadListener onLoadListener) {
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(F.url.video1,  new Response.Listener<JSONArray>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(F.url.boot_ad_video,null, new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(JSONArray response) {
+            public void onResponse(JSONObject response) {
                 if(response != null){
-                    List<VideoInfo> list = new Gson().fromJson(String.valueOf(response) , new TypeToken<List<VideoInfo>>(){}.getType());
-                    if(list != null){
-                        onLoadListener.onSuccess(list);
+                    VideoInfo videoInfo = new Gson().fromJson(String.valueOf(response) , new TypeToken<VideoInfo>(){}.getType());
+                    if(videoInfo ==null){
+                        return;
                     }
+                    onLoadListener.onSuccess(videoInfo);
                 }
             }
         }, new Response.ErrorListener() {
@@ -38,7 +38,7 @@ public class Video1Data implements IVideoData {
                 onLoadListener.onFailure(error.getMessage());
             }
         });
-        jsonArrayRequest.setTag("Video1");
-        Application.getRequestQueue().add(jsonArrayRequest);
+        jsonObjectRequest.setTag("VideoInfo");
+        Application.getRequestQueue().add(jsonObjectRequest);
     }
 }

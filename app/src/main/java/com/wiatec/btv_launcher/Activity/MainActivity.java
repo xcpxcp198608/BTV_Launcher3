@@ -160,6 +160,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
             Intent intent = new Intent(MainActivity.this, LoadService.class);
             intent.setAction("loadMessage");
             startService(intent);
+            presenter.loadVideo();
         }
     }
 
@@ -310,20 +311,26 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
     }
 
     @Override
-    public void loadVideo(List<VideoInfo> list) {
-//        Logger.d(videoInfo.toString());
-//        if (videoInfo == null) {
-//            return;
-//        }
-//        if (!FileCheck.isFileExists(F.path.download, "btvi3.mp4") && !isVideoDownloading) {
-//            //Logger.d("video is not exists");
-//            downloadVideo(videoInfo);
-//        } else if (!FileCheck.isFileIntact(F.path.download, "btvi3.mp4", videoInfo.getMd5()) && !isVideoDownloading) {
-//            //Logger.d("video is not intact");
-//            downloadVideo(videoInfo);
-//        } else {
-//            // Logger.d("video no need update");
-//        }
+    public void loadBootAdVideo(VideoInfo videoInfo) {
+        Logger.d(videoInfo.toString());
+        if (videoInfo == null) {
+            return;
+        }
+        if (!FileCheck.isFileExists(F.path.download, "btvbootad.mp4")) {
+            //Logger.d("video is not exists");
+            Intent intent = new Intent(MainActivity.this, DownloadService.class);
+            intent.putExtra("name", "btvbootad.mp4");
+            intent.putExtra("url", videoInfo.getUrl());
+            startService(intent);
+        } else if (!FileCheck.isFileIntact(F.path.download, "btvbootad.mp4", videoInfo.getMd5())) {
+            //Logger.d("video is not intact");
+            Intent intent = new Intent(MainActivity.this, DownloadService.class);
+            intent.putExtra("name", "btvbootad.mp4");
+            intent.putExtra("url", videoInfo.getUrl());
+            startService(intent);
+        } else {
+            // Logger.d("video no need update");
+        }
     }
 
     @Override
@@ -332,10 +339,12 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
         if (!FileCheck.isFileExists(F.path.download, "btvad.mp4")) {
            // Logger.d("video is not exists");
             Intent intent = new Intent(MainActivity.this, DownloadService.class);
+            intent.putExtra("name", "btvad.mp4");
             intent.putExtra("url", videoInfo.getUrl());
             startService(intent);
         } else if (!FileCheck.isFileIntact(F.path.download, "btvad.mp4", videoInfo.getMd5())) {
             Intent intent = new Intent(MainActivity.this, DownloadService.class);
+            intent.putExtra("name", "btvad.mp4");
             intent.putExtra("url", videoInfo.getUrl());
             startService(intent);
         } else {

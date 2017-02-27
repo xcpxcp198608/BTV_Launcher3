@@ -12,15 +12,17 @@ import com.wiatec.btv_launcher.Utils.FileDownload.OnDownloadListener;
 public class DownloadAdVideo implements Runnable {
 
     private String url;
+    private String name;
 
-    public DownloadAdVideo(String url) {
+    public DownloadAdVideo(String url ,String name) {
         this.url = url;
+        this.name = name;
     }
 
     @Override
     public void run() {
         DownloadManager downloadManager = DownloadManager.getInstance(Application.getContext());
-        downloadManager.startDownload("btvad.mp4" ,url , F.path.download);
+        downloadManager.startDownload(name ,url , F.path.download);
         downloadManager.setOnDownloadListener(new OnDownloadListener() {
             @Override
             public void onStart(int progress, boolean isStart) {

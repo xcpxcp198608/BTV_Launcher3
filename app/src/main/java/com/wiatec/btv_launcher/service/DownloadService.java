@@ -31,8 +31,13 @@ public class DownloadService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        String url = intent.getStringExtra("url");
-        executorService.execute(new DownloadAdVideo(url));
+        try {
+            String url = intent.getStringExtra("url");
+            String name = intent.getStringExtra("name");
+            executorService.execute(new DownloadAdVideo(url ,name));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return super.onStartCommand(intent, flags, startId);
     }
 }

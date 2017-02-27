@@ -63,7 +63,8 @@ public class LoadInstalledApp implements Runnable {
                             !"com.euroandroid.xbox".equals(noShowPackageName)&&
                             !"com.explusalpha.Snes9xPlus".equals(noShowPackageName)&&
                             !"com.koushikdutta.superuser".equals(noShowPackageName)&&
-                            !"com.droidlogic.appinstall".equals(noShowPackageName)){
+                            !"com.droidlogic.appinstall".equals(noShowPackageName)&&
+                            !"com.px.bmarket".equals(noShowPackageName)){
                 // Logger.d(installedAppInfo.toString());
                 if(!installedAppDao.isExists(installedApp)){
                     if(F.package_name.legacy_antivirus.equals(noShowPackageName)){

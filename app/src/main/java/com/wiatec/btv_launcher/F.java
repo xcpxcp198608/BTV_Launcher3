@@ -10,9 +10,9 @@ import android.renderscript.Sampler;
 public final class F {
     public static final class url {
         public static final String updater="http://appota.gobeyondtv.co:8080/Launcher_EN/GetUpdate";
-        public static final String video="http://appota.gobeyondtv.co:8081/json/VideoInfo.json";
         public static final String ad_video="http://appota.gobeyondtv.co:8081/json/AdVideoInfo.json";
-        public static final String video1="http://appota.gobeyondtv.co:8080/Launcher_EN/GetVideo";
+        public static final String boot_ad_video="http://appota.gobeyondtv.co:8081/json/BoootAdVideoInfo.json";
+        public static final String video="http://appota.gobeyondtv.co:8080/Launcher_EN/GetVideo";
 
         public static final String image="http://appota.gobeyondtv.co:8080/Launcher_EN/GetImage";
         public static final String image2="http://appota.gobeyondtv.co:8080/Launcher_EN/GetImage2";
@@ -40,6 +40,7 @@ public final class F {
         public static final String download= Environment.getExternalStorageDirectory().getAbsolutePath()+"/BLauncher/";
         public static final String video= Environment.getExternalStorageDirectory().getAbsolutePath()+"/BLauncher/btvi3.mp4";
         public static final String ad_video= Environment.getExternalStorageDirectory().getAbsolutePath()+"/BLauncher/btvad.mp4";
+        public static final String boot_ad_video= Environment.getExternalStorageDirectory().getAbsolutePath()+"/BLauncher/btvbootad.mp4";
     }
 
     public static final class sp {

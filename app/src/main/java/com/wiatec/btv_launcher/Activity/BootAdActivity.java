@@ -35,7 +35,7 @@ public class BootAdActivity extends AppCompatActivity {
         super.onStart();
         Logger.d(Application.getBootStatus()+"");
         if(Application.getBootStatus()){
-            vvBoot.setVideoPath(F.path.ad_video);
+            vvBoot.setVideoPath(F.path.boot_ad_video);
             vvBoot.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {

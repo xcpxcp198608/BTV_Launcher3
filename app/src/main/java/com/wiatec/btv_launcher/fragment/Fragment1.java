@@ -501,7 +501,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                                     currentVideoInfo = new VideoInfo();
                                 }
                                 currentVideoInfo.setUrl(s);
-                                playVideo1(s);
+                                playVideo(s);
                                 Logger.d("f1-->" + s);
                             }
                         }
@@ -510,7 +510,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
 
     }
 
-    private void playVideo1(final String url) {
+    private void playVideo(final String url) {
         vv_Main.setVideoPath(url);
         vv_Main.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override

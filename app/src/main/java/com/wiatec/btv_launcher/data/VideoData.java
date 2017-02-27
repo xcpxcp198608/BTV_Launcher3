@@ -16,18 +16,20 @@ import org.json.JSONObject;
 import java.util.List;
 
 /**
- * Created by PX on 2016-11-14.
+ * Created by patrick on 2017/1/2.
  */
 
 public class VideoData implements IVideoData {
     @Override
     public void loadData(final OnLoadListener onLoadListener) {
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(F.url.video, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(F.url.video,  new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 if(response != null){
                     List<VideoInfo> list = new Gson().fromJson(String.valueOf(response) , new TypeToken<List<VideoInfo>>(){}.getType());
-                    onLoadListener.onSuccess(list);
+                    if(list != null){
+                        onLoadListener.onSuccess(list);
+                    }
                 }
             }
         }, new Response.ErrorListener() {
@@ -36,7 +38,7 @@ public class VideoData implements IVideoData {
                 onLoadListener.onFailure(error.getMessage());
             }
         });
-        jsonArrayRequest.setTag("VideoInfo");
+        jsonArrayRequest.setTag("Video1");
         Application.getRequestQueue().add(jsonArrayRequest);
     }
 }

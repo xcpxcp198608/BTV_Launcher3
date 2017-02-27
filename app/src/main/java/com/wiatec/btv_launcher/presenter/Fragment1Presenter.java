@@ -1,9 +1,7 @@
 package com.wiatec.btv_launcher.presenter;
 
 import com.wiatec.btv_launcher.Utils.Logger;
-import com.wiatec.btv_launcher.bean.CloudImageInfo;
 import com.wiatec.btv_launcher.bean.ImageInfo;
-import com.wiatec.btv_launcher.bean.RollImageInfo;
 import com.wiatec.btv_launcher.bean.VideoInfo;
 import com.wiatec.btv_launcher.data.CloudImageData;
 import com.wiatec.btv_launcher.data.ICloudImageData;
@@ -11,10 +9,8 @@ import com.wiatec.btv_launcher.data.IImageData;
 import com.wiatec.btv_launcher.data.IRollImageData;
 import com.wiatec.btv_launcher.data.IVideoData;
 import com.wiatec.btv_launcher.data.ImageData;
-import com.wiatec.btv_launcher.data.RollImage2Data;
 import com.wiatec.btv_launcher.data.RollImageData;
 import com.wiatec.btv_launcher.data.RollOverImageData;
-import com.wiatec.btv_launcher.data.Video1Data;
 import com.wiatec.btv_launcher.data.VideoData;
 import com.wiatec.btv_launcher.fragment.IFragment1;
 
@@ -39,7 +35,7 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
         iRollImageData = new RollImageData();
         iRollOverImage = new RollOverImageData();
         iCloudImageData = new CloudImageData();
-        iVideoData = new Video1Data();
+        iVideoData = new VideoData();
     }
 
     public void loadImageData(){

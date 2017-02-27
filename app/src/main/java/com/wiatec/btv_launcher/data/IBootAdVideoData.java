@@ -5,13 +5,13 @@ import com.wiatec.btv_launcher.bean.VideoInfo;
 import java.util.List;
 
 /**
- * Created by patrick on 2017/2/27.
+ * Created by PX on 2016-11-14.
  */
 
-public interface IVideoData {
+public interface IBootAdVideoData {
     void loadData (OnLoadListener onLoadListener);
     interface OnLoadListener {
-        void onSuccess (List<VideoInfo> list);
+        void onSuccess (VideoInfo videoInfo);
         void onFailure (String e);
     }
 }

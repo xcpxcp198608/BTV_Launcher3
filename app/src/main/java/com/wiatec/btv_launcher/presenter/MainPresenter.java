@@ -7,14 +7,14 @@ import com.wiatec.btv_launcher.bean.UpdateInfo;
 import com.wiatec.btv_launcher.bean.VideoInfo;
 import com.wiatec.btv_launcher.bean.WeatherInfo;
 import com.wiatec.btv_launcher.data.AdVideoData;
+import com.wiatec.btv_launcher.data.BootAdVideoData;
 import com.wiatec.btv_launcher.data.IAdVideoData;
+import com.wiatec.btv_launcher.data.IBootAdVideoData;
 import com.wiatec.btv_launcher.data.IMessage1Data;
 import com.wiatec.btv_launcher.data.IUpdateData;
-import com.wiatec.btv_launcher.data.IVideoData;
 import com.wiatec.btv_launcher.data.IWeatherData;
 import com.wiatec.btv_launcher.data.Message1Data;
 import com.wiatec.btv_launcher.data.UpdateData;
-import com.wiatec.btv_launcher.data.VideoData;
 import com.wiatec.btv_launcher.data.WeatherData;
 
 import java.util.List;
@@ -28,7 +28,7 @@ public class MainPresenter extends BasePresenter<IMainActivity> {
     private IMainActivity iMainActivity;
     private IMessage1Data iMessage1Data;
     private IUpdateData iUpdateData;
-    private IVideoData iVideoData;
+    private IBootAdVideoData iBootAdVideoData;
     private IAdVideoData iAdVideoData;
     private IWeatherData iWeatherData;
 
@@ -36,7 +36,7 @@ public class MainPresenter extends BasePresenter<IMainActivity> {
         this.iMainActivity = iMainActivity;
         iMessage1Data = new Message1Data();
         iUpdateData = new UpdateData();
-        iVideoData = new VideoData();
+        iBootAdVideoData = new BootAdVideoData();
         iWeatherData = new WeatherData();
         iAdVideoData = new AdVideoData();
     }
@@ -59,19 +59,19 @@ public class MainPresenter extends BasePresenter<IMainActivity> {
 
     public void loadVideo (){
 
-//        if(iVideoData != null){
-//            iVideoData.loadData(new IVideoData.OnLoadListener() {
-//                @Override
-//                public void onSuccess(List<VideoInfo> list) {
-//                    iMainActivity.loadVideo(list);
-//                }
-//
-//                @Override
-//                public void onFailure(String e) {
-//                    Logger.d(e);
-//                }
-//            });
-//        }
+        if(iBootAdVideoData != null){
+            iBootAdVideoData.loadData(new IBootAdVideoData.OnLoadListener() {
+                @Override
+                public void onSuccess(VideoInfo videoInfo) {
+                    iMainActivity.loadBootAdVideo(videoInfo);
+                }
+
+                @Override
+                public void onFailure(String e) {
+                    Logger.d(e);
+                }
+            });
+        }
 
         if(iAdVideoData != null){
             iAdVideoData.loadData(new IAdVideoData.OnLoadListener() {
