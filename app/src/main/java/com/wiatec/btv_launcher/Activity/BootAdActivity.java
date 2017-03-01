@@ -42,7 +42,7 @@ public class BootAdActivity extends AppCompatActivity {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
                     mp.setVolume(0f,0f);
-                    vvBoot.start();
+                    mp.start();
                 }
             });
             vvBoot.setOnErrorListener(new MediaPlayer.OnErrorListener() {

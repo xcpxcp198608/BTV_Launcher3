@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">BTV_FW</string>
-    <string name="ui">LD UI 2.1.1</string>
+    <string name="ui">LD UI 2.2</string>
 
     <string name="confirm">确认</string>
     <string name="cancel">取消</string>
