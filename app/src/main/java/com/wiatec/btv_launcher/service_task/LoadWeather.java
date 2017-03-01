@@ -3,6 +3,7 @@ package com.wiatec.btv_launcher.service_task;
 import android.app.AlarmManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -40,7 +41,14 @@ public class LoadWeather implements Runnable {
                 if(response != null){
                     try {
                         String city = response.getString("city");
-                        Logger.d(city);
+                        String country = response.getString("country");
+                        String countryCode = response.getString("countryCode");
+                        Logger.d(country +"---"+ countryCode +"---"+ city);
+                        SharedPreferences sharedPreferences = Application.getContext().getSharedPreferences("location",Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("country",country);
+                        editor.putString("city",city);
+                        editor.commit();
                         loadWeather(city);
                     } catch (JSONException e) {
                         e.printStackTrace();

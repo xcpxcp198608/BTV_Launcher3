@@ -328,18 +328,24 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 }
                 break;
             case R.id.ibt_7:
-                if (ApkCheck.isApkInstalled(getContext(), F.package_name.tvplus)) {
-                    ApkLaunch.launchApkByPackageName(getContext(), F.package_name.tvplus);
+                if (ApkCheck.isApkInstalled(getContext(), F.package_name.joinme)) {
+                    ApkLaunch.launchApkByPackageName(getContext(), F.package_name.joinme);
+                }else{
+                    ApkLaunch.launchApkByPackageName(getContext(), F.package_name.market);
                 }
                 break;
             case R.id.ibt_8:
                 if (ApkCheck.isApkInstalled(getContext(), F.package_name.happy_chick)) {
                     ApkLaunch.launchApkByPackageName(getContext(), F.package_name.happy_chick);
+                }else{
+                    ApkLaunch.launchApkByPackageName(getContext(), F.package_name.market);
                 }
                 break;
             case R.id.ibt_9:
                 if (ApkCheck.isApkInstalled(getContext(), F.package_name.spotify)) {
                     ApkLaunch.launchApkByPackageName(getContext(), F.package_name.spotify);
+                }else{
+                    ApkLaunch.launchApkByPackageName(getContext(), F.package_name.market);
                 }
                 break;
             default:

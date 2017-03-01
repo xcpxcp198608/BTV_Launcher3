@@ -54,15 +54,13 @@ public final class F {
     public static final class package_name {
         public static final String btv= "org.xbmc.kodi";
         public static final String setting = "com.android.tv.settings";
-        public static final String browser = "com.android.browser";
-        public static final String chrome = "com.android.chrome";
         public static final String market = "com.px.bmarket";
         public static final String cloud = "com.legacydirect.tvphoto";
         public static final String legacy_antivirus =  "com.legacydirect.security.suite";
         public static final String legacy_privacy =  "com.legacydirect.privacyadvisor";
         public static final String file = "com.droidlogic.FileBrower";
         public static final String tvplus = "com.elinkway.tvlive2";
-        public static final String beevideo = "cn.beevideo";
+        public static final String joinme = "com.logmein.joinme";
         public static final String spotify = "com.spotify.tv.android";
         public static final String happy_chick = "com.xiaoji.tvbox";
     }
