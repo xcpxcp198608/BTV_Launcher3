@@ -45,7 +45,6 @@
     <TextView
         android:layout_marginRight="5dp"
         android:id="@+id/tv_temperature"
-        android:text="123"
         android:gravity="center"
         android:layout_toLeftOf="@id/ibt_weather"
         android:textSize="25sp"

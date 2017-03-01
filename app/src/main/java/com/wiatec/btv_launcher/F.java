@@ -64,5 +64,6 @@ public final class F {
         public static final String tvplus = "com.elinkway.tvlive2";
         public static final String beevideo = "cn.beevideo";
         public static final String spotify = "com.spotify.tv.android";
+        public static final String happy_chick = "com.xiaoji.tvbox";
     }
 }

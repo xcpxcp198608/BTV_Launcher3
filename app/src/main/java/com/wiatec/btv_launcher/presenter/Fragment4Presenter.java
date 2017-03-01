@@ -12,6 +12,7 @@ import com.wiatec.btv_launcher.data.Image2Data;
 import com.wiatec.btv_launcher.data.ImageData;
 import com.wiatec.btv_launcher.data.RollImage2Data;
 import com.wiatec.btv_launcher.data.RollImageData;
+import com.wiatec.btv_launcher.data.RollOverImageData;
 import com.wiatec.btv_launcher.fragment.IFragment4;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class Fragment4Presenter extends BasePresenter<IFragment4> {
     private IImageData iImageData;
     private IImage2Data iImage2Data;
     private IRollImageData iRollImageData;
-    private IRollImageData iRollImageData2;
+    private IRollImageData rollOverImageData;
     private IChannelData iChannelData;
 
 
@@ -34,7 +35,7 @@ public class Fragment4Presenter extends BasePresenter<IFragment4> {
         iImageData = new ImageData();
         iImage2Data = new Image2Data();
         iRollImageData = new RollImageData();
-        iRollImageData2 = new RollImage2Data();
+        rollOverImageData = new RollOverImageData();
         iChannelData = new ChannelData();
     }
 
@@ -96,11 +97,11 @@ public class Fragment4Presenter extends BasePresenter<IFragment4> {
             });
         }
 
-        if(iRollImageData2 != null){
-            iRollImageData2.loadData(new IRollImageData.OnLoadListener() {
+        if(rollOverImageData != null){
+            rollOverImageData.loadData(new IRollImageData.OnLoadListener() {
                 @Override
                 public void onSuccess(List<ImageInfo> list) {
-                    iFragment4.loadRollImage2(list);
+                    iFragment4.loadRollOverImage(list);
                 }
 
                 @Override

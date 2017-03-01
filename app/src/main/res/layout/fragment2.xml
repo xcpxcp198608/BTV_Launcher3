@@ -200,7 +200,7 @@
                         android:padding="10dp"
                         android:background="@drawable/item_btv_bg"
                         android:scaleType="centerInside"
-                        android:src="@drawable/tv_1"
+                        android:src="@drawable/tv_plus"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="match_parent" />

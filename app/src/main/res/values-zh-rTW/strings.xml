@@ -35,6 +35,6 @@
     <string name="warning">警告</string>
     <string name="warning_message">Welcome to BTVi3, By using this service you agree to the Terms of Service (TOS) on Legacy Direct websites. Legacy Direct reserves the right to change the TOS at any time. If you do not agree to any of these terms, please refrain from using the BTVi3 services and products.</string>
     <string name="noticce1">The programs shown are from internet and for learning purpose. Please check with Legacy Direct Term Of Service.</string>
-
+    <string name="no_support">Do not support this device</string>
 
 </resources>

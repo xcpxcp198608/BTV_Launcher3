@@ -1,9 +1,12 @@
 package com.wiatec.btv_launcher.Activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.WindowManager;
@@ -27,18 +30,18 @@ public class BootAdActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_boot_ad);
         vvBoot = (VideoView) findViewById(R.id.vv_boot);
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Logger.d(Application.getBootStatus()+"");
+//        Logger.d(Application.getBootStatus()+"");
         if(Application.getBootStatus()){
             vvBoot.setVideoPath(F.path.boot_ad_video);
             vvBoot.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
+                    mp.setVolume(0f,0f);
                     vvBoot.start();
                 }
             });

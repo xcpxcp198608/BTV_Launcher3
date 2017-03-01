@@ -198,9 +198,9 @@
                     <ImageButton
                         android:id="@+id/ibt_7"
                         android:padding="10dp"
-                        android:background="@drawable/item_btv_bg"
+                        android:background="@drawable/item_dark_blue_bg"
                         android:scaleType="centerInside"
-                        android:src="@drawable/tv_1"
+                        android:src="@drawable/tv_plus"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="match_parent" />
@@ -213,9 +213,9 @@
                     <ImageButton
                         android:id="@+id/ibt_8"
                         android:padding="10dp"
-                        android:background="@drawable/item_btv_bg"
+                        android:background="@drawable/item_dark_blue_bg"
                         android:scaleType="centerInside"
-                        android:src="@drawable/movie_1"
+                        android:src="@drawable/happychick_144"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"/>
@@ -228,7 +228,7 @@
                     <ImageButton
                         android:id="@+id/ibt_9"
                         android:padding="10dp"
-                        android:background="@drawable/item_btv_bg"
+                        android:background="@drawable/item_dark_blue_bg"
                         android:scaleType="centerInside"
                         android:src="@drawable/spotify_1"
                         android:layout_weight="1"

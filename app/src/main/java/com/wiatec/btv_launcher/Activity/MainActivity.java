@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -149,6 +150,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
     @Override
     protected void onStart() {
         super.onStart();
+        checkDevice();
         SharedPreferences sharedPreferences = getSharedPreferences("language", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         String language = SystemConfig.getLanguage(this);
@@ -171,6 +173,29 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
         unregisterReceiver(wifiStatusReceiver);
         unregisterReceiver(weatherStatusReceiver);
         unregisterReceiver(languageChangeReceiver);
+    }
+
+    private void  checkDevice(){
+        String device = Build.MODEL;
+        if(!"BTVi3".equals(device) && !"MorphoBT E110".equals(device)){
+            showWarningDialog();
+            return ;
+        }
+        Logger.d("no support");
+    }
+
+    private void showWarningDialog(){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+        dialog.setTitle(getString(R.string.warning));
+        dialog.setMessage(getString(R.string.no_support));
+        dialog.setCancelable(false);
+        dialog.setNegativeButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        dialog.show();
     }
 
     @Override

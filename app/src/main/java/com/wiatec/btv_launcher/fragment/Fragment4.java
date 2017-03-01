@@ -36,10 +36,12 @@ import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.adapter.ChannelGrideAdapter;
 import com.wiatec.btv_launcher.adapter.LinkListAdapter;
 import com.wiatec.btv_launcher.adapter.RollImageAdapter;
+import com.wiatec.btv_launcher.adapter.RollOverViewAdapter;
 import com.wiatec.btv_launcher.animator.Zoom;
 import com.wiatec.btv_launcher.bean.ChannelInfo;
 import com.wiatec.btv_launcher.bean.ImageInfo;
 import com.wiatec.btv_launcher.bean.InstalledApp;
+import com.wiatec.btv_launcher.custom_view.RollOverView;
 import com.wiatec.btv_launcher.presenter.Fragment4Presenter;
 
 import java.util.List;
@@ -80,8 +82,8 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
     RollPagerView rpvMain;
     @BindView(R.id.ibt_ld_store)
     ImageButton ibtLdStore;
-    @BindView(R.id.ibt_ad_1)
-    ImageButton ibtAd1;
+    @BindView(R.id.roll_over_view)
+    RollOverView rollOverView;
     @BindView(R.id.tv_notice)
     TextView tvNotice;
 
@@ -92,6 +94,8 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private boolean isShow = true;
+    private RollOverViewAdapter rollOverViewAdapter;
+    private boolean rollOverStart = false;
 
     @Override
     protected Fragment4Presenter createPresenter() {
@@ -101,7 +105,7 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment4, container, false);
+        View view = inflater.inflate(R.layout.fragment6, container, false);
         ButterKnife.bind(this, view);
         presenter.bind();
         installedAppDao = InstalledAppDao.getInstance(Application.getContext());
@@ -125,6 +129,11 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
                 presenter.showChannel("country" ,"BVISION",null);
             }
             presenter.loadRollImage();
+        }else{
+            if(rollOverView != null){
+                rollOverView.pause();
+                rollOverStart = false;
+            }
         }
     }
 
@@ -173,20 +182,39 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if(presenter != null){
+            presenter.loadRollImage();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(rollOverView != null){
+            rollOverView.pause();
+            rollOverStart = false;
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if(rollOverView != null){
+            rollOverView.pause();
+            rollOverStart = false;
+        }
+    }
+
+    @Override
     public void loadImage(final List<ImageInfo> list) {
         isLoaded = true;
         Glide.with(Application.getContext()).load(list.get(7).getUrl()).placeholder(R.drawable.ld_store_icon).into(ibtLdStore);
-        Glide.with(Application.getContext()).load(list.get(8).getUrl()).placeholder(R.drawable.bksound_icon_3).into(ibtAd1);
         ibtLdStore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showLinkByBrowser(list.get(7).getLink());
-            }
-        });
-        ibtAd1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showLinkByBrowser(list.get(8).getLink());
             }
         });
     }
@@ -254,8 +282,26 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
     }
 
     @Override
-    public void loadRollImage2(List<ImageInfo> list) {
+    public void loadRollOverImage(final List<ImageInfo> list) {
         Logger.d(list.toString());
+        if(list.size() <=0){
+            return;
+        }
+        if(rollOverStart){
+            return;
+        }
+        rollOverStart = true;
+        rollOverViewAdapter = new RollOverViewAdapter(list);
+        rollOverView.setRollViewAdapter(rollOverViewAdapter);
+        rollOverView.start();
+        rollOverViewAdapter.setOnItemClickListener(new RollOverViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                showLinkByBrowser(list.get(position).getLink());
+            }
+        });
+        rollOverView.setOffscreenPageLimit(list.size());
+        rollOverView.start();
     }
 
     @Override
@@ -374,7 +420,6 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
     }
 
     private void setZoom() {
-        ibtAd1.setOnFocusChangeListener(this);
         ibtLdStore.setOnFocusChangeListener(this);
         ibtC1.setOnFocusChangeListener(this);
         ibtC2.setOnFocusChangeListener(this);
