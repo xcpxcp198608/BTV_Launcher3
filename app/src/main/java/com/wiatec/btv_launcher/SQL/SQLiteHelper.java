@@ -38,7 +38,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             "name text ,url text,icon text,type text ,country text,sequence integer,style text,sequence1 integer)";
     private static final String DROP_TABLE_CHANNEL= "drop table if exists "+CHANNEL_TABLE;
 
-    private static final int VERSION =12;
+    private static final int VERSION =13;
 
     public SQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, VERSION);

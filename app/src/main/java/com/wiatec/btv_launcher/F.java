@@ -10,9 +10,9 @@ import android.renderscript.Sampler;
 public final class F {
     public static final class url {
         public static final String updater="http://appota.gobeyondtv.co:8080/Launcher_EN/GetUpdate";
+        public static final String video="http://appota.gobeyondtv.co:8080/Launcher_EN/GetVideo";
         public static final String ad_video="http://appota.gobeyondtv.co:8081/json/AdVideoInfo.json";
         public static final String boot_ad_video="http://appota.gobeyondtv.co:8081/json/BoootAdVideoInfo.json";
-        public static final String video="http://appota.gobeyondtv.co:8080/Launcher_EN/GetVideo";
 
         public static final String image="http://appota.gobeyondtv.co:8080/Launcher_EN/GetImage";
         public static final String image2="http://appota.gobeyondtv.co:8080/Launcher_EN/GetImage2";
@@ -23,7 +23,6 @@ public final class F {
         public static final String channel="http://appota.gobeyondtv.co:8080/Launcher_EN/GetChannel";
         public static final String message1="http://appota.gobeyondtv.co:8080/Launcher_EN/GetMessage1";
         public static final String message="http://appota.gobeyondtv.co:8080/Launcher_EN/GetMessage";
-
 
         public static final String message1_zh_CN="http://appota.gobeyondtv.co:8081/json/Message1_zh_CN.json";
         public static final String message1_zh_TW="http://appota.gobeyondtv.co:8081/json/Message1_zh_TW.json";
