@@ -1,5 +1,7 @@
 package com.wiatec.btv_launcher.presenter;
 
+import com.wiatec.btv_launcher.Application;
+import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Activity.IMainActivity;
 import com.wiatec.btv_launcher.bean.Message1Info;
@@ -16,7 +18,11 @@ import com.wiatec.btv_launcher.data.IWeatherData;
 import com.wiatec.btv_launcher.data.Message1Data;
 import com.wiatec.btv_launcher.data.UpdateData;
 import com.wiatec.btv_launcher.data.WeatherData;
+import com.wiatec.btv_launcher.service_task.LoadInstalledApp;
+import com.wiatec.btv_launcher.service_task.LoadKodiData;
+import com.wiatec.btv_launcher.service_task.LoadMessage;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -41,12 +47,12 @@ public class MainPresenter extends BasePresenter<IMainActivity> {
         iAdVideoData = new AdVideoData();
     }
 
-    public void loadWeatherIcon (){
+    public void loadWeatherInfo (){
         if(iWeatherData !=null){
             iWeatherData.loadData(new IWeatherData.OnLoadListener() {
                 @Override
                 public void onSuccess(WeatherInfo weatherInfo) {
-                    iMainActivity.loadWeather(weatherInfo);
+                    iMainActivity.loadWeatherInfo(weatherInfo);
                 }
 
                 @Override
@@ -118,5 +124,20 @@ public class MainPresenter extends BasePresenter<IMainActivity> {
                 }
             });
         }
+    }
+
+    public void loadInstalledApp(){
+        Application.getThreadPool().execute(new LoadInstalledApp());
+    }
+
+    public void loadKodiData(){
+        File kodiDir = new File(F.path.kodi_image_path);
+        if(kodiDir.exists()){
+            Application.getThreadPool().execute(new LoadKodiData());
+        }
+    }
+
+    public void loadMessage(){
+        Application.getThreadPool().execute(new LoadMessage());
     }
 }

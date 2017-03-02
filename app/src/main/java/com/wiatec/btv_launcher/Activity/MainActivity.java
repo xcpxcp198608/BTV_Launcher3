@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.wifi.WifiManager;
 import android.os.Build;
@@ -28,52 +27,44 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
-import com.wiatec.btv_launcher.OnLanguageChangeListener;
 import com.wiatec.btv_launcher.OnNetworkStatusListener;
 import com.wiatec.btv_launcher.OnWifiStatusListener;
 import com.wiatec.btv_launcher.R;
-import com.wiatec.btv_launcher.SQL.MessageDao;
 import com.wiatec.btv_launcher.Utils.ApkCheck;
 import com.wiatec.btv_launcher.Utils.FileCheck;
-import com.wiatec.btv_launcher.Utils.FileDownload.DownloadManager;
-import com.wiatec.btv_launcher.Utils.FileDownload.OnDownloadListener;
-import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.SystemConfig;
+import com.wiatec.btv_launcher.WifiStatusIconSetting;
 import com.wiatec.btv_launcher.adapter.FragmentAdapter;
 import com.wiatec.btv_launcher.bean.Message1Info;
-import com.wiatec.btv_launcher.bean.MessageInfo;
 import com.wiatec.btv_launcher.bean.UpdateInfo;
 import com.wiatec.btv_launcher.bean.VideoInfo;
 import com.wiatec.btv_launcher.bean.WeatherInfo;
 import com.wiatec.btv_launcher.fragment.Fragment1;
 import com.wiatec.btv_launcher.fragment.Fragment4;
 import com.wiatec.btv_launcher.presenter.MainPresenter;
-import com.wiatec.btv_launcher.receiver.LanguageChangeReceiver;
 import com.wiatec.btv_launcher.receiver.NetworkStatusReceiver;
 import com.wiatec.btv_launcher.receiver.WeatherStatusReceiver;
 import com.wiatec.btv_launcher.receiver.WifiStatusReceiver;
 import com.wiatec.btv_launcher.service.DownloadService;
 import com.wiatec.btv_launcher.service.LoadCloudService;
 import com.wiatec.btv_launcher.service.LoadService;
-import com.wiatec.btv_launcher.service_task.WeatherIconSetting;
-
+import com.wiatec.btv_launcher.WeatherIconSetting;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
-public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> implements IMainActivity, OnNetworkStatusListener, OnWifiStatusListener, OnLanguageChangeListener {
+public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> implements IMainActivity, OnNetworkStatusListener, OnWifiStatusListener {
 
     @BindView(R.id.tv_time)
     TextView tv_Time;
@@ -87,8 +78,8 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
     TextView tv_Message;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
-    @BindView(R.id.ibt_weather)
-    ImageButton ibt_Weather;
+    @BindView(R.id.iv_weather)
+    ImageView iv_Weather;
     @BindView(R.id.iv_message)
     ImageView iv_Message;
     @BindView(R.id.fl_message)
@@ -96,17 +87,18 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
     @BindView(R.id.tv_message_count)
     TextView tv_MessageCount;
 
-
     private Fragment1 fragment1;
     private Fragment4 fragment4;
     private List<Fragment> list;
-
     private NetworkStatusReceiver networkStatusReceiver;
     private WifiStatusReceiver wifiStatusReceiver;
     private WeatherStatusReceiver weatherStatusReceiver;
-    private LanguageChangeReceiver languageChangeReceiver;
-    private boolean isVideoDownloading = false;
-    private MessageDao messageDao;
+    private boolean isStartLoadNetData = false;
+
+    @Override
+    protected MainPresenter createPresenter() {
+        return new MainPresenter(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,54 +107,29 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         ButterKnife.bind(this);
 
-        if (fragment1 == null) {
-            fragment1 = new Fragment1();
-        }
-        if (fragment4 == null) {
-            fragment4 = new Fragment4();
-        }
-        if (list == null) {
-            list = new ArrayList<>();
-        }
-        list.add(fragment1);
-        list.add(fragment4);
-        viewPager.setAdapter(new FragmentAdapter(getSupportFragmentManager(), list));
+        initFragment();
+        checkDevice();
         showTimeAndData();
-        networkStatusReceiver = new NetworkStatusReceiver(iv_Net);
-        networkStatusReceiver.setOnNetworkStatusListener(this);
-        registerReceiver(networkStatusReceiver, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
-        wifiStatusReceiver = new WifiStatusReceiver();
-        wifiStatusReceiver.setOnWifiStatusListener(this);
-        registerReceiver(wifiStatusReceiver, new IntentFilter(WifiManager.RSSI_CHANGED_ACTION));
-        weatherStatusReceiver = new WeatherStatusReceiver(ibt_Weather);
-        registerReceiver(weatherStatusReceiver, new IntentFilter("action.Weather.Change"));
-        languageChangeReceiver = new LanguageChangeReceiver();
-        registerReceiver(languageChangeReceiver, new IntentFilter(Intent.ACTION_CONFIGURATION_CHANGED));
-        languageChangeReceiver.setOnLanguageChangeListener(this);
-
-        Intent intent = new Intent(MainActivity.this, LoadService.class);
-        intent.setAction("loadInstalledApp");
-        startService(intent);
-
-        messageDao = MessageDao.getInstance(MainActivity.this);
+        registerBroadcastReceiver();
+        if(presenter != null){
+            presenter.loadInstalledApp();
+        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        checkDevice();
-        SharedPreferences sharedPreferences = getSharedPreferences("language", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        String language = SystemConfig.getLanguage(this);
-        editor.putString("language", language);
-        editor.commit();
-        presenter.loadWeatherIcon();
-        if (SystemConfig.isNetworkConnected(MainActivity.this)) {
-            presenter.loadUpdate();
-            Intent intent = new Intent(MainActivity.this, LoadService.class);
-            intent.setAction("loadMessage");
-            startService(intent);
-            presenter.loadVideo();
+        if(presenter != null){
+            presenter.loadWeatherInfo();
+            if (SystemConfig.isNetworkConnected(MainActivity.this)) {
+                isStartLoadNetData = true;
+                presenter.loadUpdate();
+                presenter.loadMessage();
+                presenter.loadVideo();
+                presenter.loadMessage1();
+                presenter.loadKodiData();
+                startAlarmService();
+            }
         }
     }
 
@@ -172,30 +139,6 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
         unregisterReceiver(networkStatusReceiver);
         unregisterReceiver(wifiStatusReceiver);
         unregisterReceiver(weatherStatusReceiver);
-        unregisterReceiver(languageChangeReceiver);
-    }
-
-    private void  checkDevice(){
-        String device = Build.MODEL;
-        if(!"BTVi3".equals(device) && !"MorphoBT E110".equals(device)){
-            showWarningDialog();
-            return ;
-        }
-        Logger.d("no support");
-    }
-
-    private void showWarningDialog(){
-        AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
-        dialog.setTitle(getString(R.string.warning));
-        dialog.setMessage(getString(R.string.no_support));
-        dialog.setCancelable(false);
-        dialog.setNegativeButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                finish();
-            }
-        });
-        dialog.show();
     }
 
     @Override
@@ -209,98 +152,30 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
         return super.onKeyDown(keyCode, event);
     }
 
-    private Handler handler = new Handler(Looper.getMainLooper()) {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case 1:
-                    tv_Time.setText((String) msg.obj);
-                    break;
-                case 2:
-                    tv_Date.setText((String) msg.obj);
-                    break;
-            }
-        }
-    };
-
-    private void showTimeAndData() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    while (true) {
-                        Thread.sleep(1000);
-                        Date d = new Date(System.currentTimeMillis());
-                        String time = new SimpleDateFormat("h:mm a").format(d);
-                        String date = new SimpleDateFormat("MM-dd-yyyy").format(d);
-                        handler.obtainMessage(1, time).sendToTarget();
-                        handler.obtainMessage(2, date).sendToTarget();
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
-
     @Override
     public void onConnected(boolean isConnected) {
         if (isConnected) {
-            showNetworkStatus();
+            //showNetworkStatus();
+            if(isStartLoadNetData){
+                return;
+            }
             presenter.loadVideo();
             presenter.loadUpdate();
             presenter.loadMessage1();
-
-            //启动服务加载天气信息，并通过alarm定时每120分钟加载一次
-            Intent alarmIntent = new Intent(MainActivity.this, LoadService.class);
-            alarmIntent.setAction("loadWeather");
-            PendingIntent alarmPendingIntent = PendingIntent.getService(MainActivity.this, 0, alarmIntent, 0);
-            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            long startTime = SystemClock.elapsedRealtime();
-            long repeatTime = 120 * 60 * 1000;
-            alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, startTime, repeatTime, alarmPendingIntent);
-
-            //启动服务加载cloud照片信息列表,定时每2分钟读取一次
-            Intent cloudIntent = new Intent(MainActivity.this , LoadCloudService.class);
-            PendingIntent cloudPendingIntent = PendingIntent.getService(MainActivity.this, 0 ,cloudIntent , 0);
-            AlarmManager alarmManager1 = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            long repeatTime1 = 3*60*1000;
-            alarmManager1.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP ,startTime , repeatTime1 ,cloudPendingIntent);
+            presenter.loadMessage();
+            presenter.loadKodiData();
+            startAlarmService();
         }
     }
 
     @Override
     public void onDisconnect(boolean disConnected) {
-        showNetworkStatus();
+        //showNetworkStatus();
     }
 
     @Override
     public void onWifiLevelChange(int level) {
-        switch (level) {
-            case 4:
-                iv_Net.setImageResource(R.drawable.wifi4);
-                break;
-            case 3:
-                iv_Net.setImageResource(R.drawable.wifi3);
-                break;
-            case 2:
-                iv_Net.setImageResource(R.drawable.wifi2);
-                break;
-            case 1:
-                iv_Net.setImageResource(R.drawable.wifi1);
-                break;
-            case 0:
-                iv_Net.setImageResource(R.drawable.wifi0);
-                break;
-        }
-    }
-
-    @Override
-    public void onChange(String language) {
-        if (SystemConfig.isNetworkConnected(MainActivity.this)) {
-            presenter.loadMessage1();
-        }
+        WifiStatusIconSetting.setIcon(iv_Net , level);
     }
 
     private void showNetworkStatus() {
@@ -319,16 +194,9 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
     }
 
     @Override
-    protected MainPresenter createPresenter() {
-        return new MainPresenter(this);
-    }
-
-    @Override
     public void loadUpdate(UpdateInfo updateInfo) {
-        //Logger.d(updateInfo.toString());
         String info = updateInfo.getInfo();
         String info2 = info.replaceAll("\\n" ,"\n");
-        Logger.d(info2);
         int localVersion = ApkCheck.getInstalledApkVersionCode(MainActivity.this, getPackageName());
         if (localVersion < updateInfo.getCode()) {
             showUpdateDialog(updateInfo);
@@ -337,7 +205,6 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
 
     @Override
     public void loadBootAdVideo(VideoInfo videoInfo) {
-        Logger.d(videoInfo.toString());
         if (videoInfo == null) {
             return;
         }
@@ -360,9 +227,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
 
     @Override
     public void loadAdVideo(VideoInfo videoInfo) {
-        // Logger.d(videoInfo.toString());
         if (!FileCheck.isFileExists(F.path.download, "btvad.mp4")) {
-           // Logger.d("video is not exists");
             Intent intent = new Intent(MainActivity.this, DownloadService.class);
             intent.putExtra("name", "btvad.mp4");
             intent.putExtra("url", videoInfo.getUrl());
@@ -379,7 +244,6 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
 
     @Override
     public void loadMessage1(final List<Message1Info> list) {
-//        Logger.d(list.toString());
         Observable.interval(6, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .take(list.size())
@@ -405,8 +269,8 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
     }
 
     @Override
-    public void loadWeather(WeatherInfo weatherInfo) {
-        WeatherIconSetting.setIcon(ibt_Weather, weatherInfo.getIcon());
+    public void loadWeatherInfo(WeatherInfo weatherInfo) {
+        WeatherIconSetting.setIcon(iv_Weather, weatherInfo.getIcon());
         tv_Temperature.setText(weatherInfo.getTemperature());
     }
 
@@ -433,12 +297,105 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
         });
     }
 
-    @OnClick({R.id.ibt_weather})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.ibt_weather:
-                startActivity(new Intent(MainActivity.this, WeatherActivity.class));
-                break;
+    private void checkDevice(){
+        String device = Build.MODEL;
+        if(!"BTVi3".equals(device) && !"MorphoBT E110".equals(device)&& !"BTV3".equals(device)){
+            showWarningDialog();
+            return ;
         }
     }
+
+    private void showWarningDialog(){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+        dialog.setTitle(getString(R.string.warning));
+        dialog.setMessage(getString(R.string.no_support));
+        dialog.setCancelable(false);
+        dialog.setNegativeButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        dialog.show();
+    }
+
+    private void initFragment(){
+        if (fragment1 == null) {
+            fragment1 = new Fragment1();
+        }
+        if (fragment4 == null) {
+            fragment4 = new Fragment4();
+        }
+        if (list == null) {
+            list = new ArrayList<>();
+        }
+        list.add(fragment1);
+        list.add(fragment4);
+        viewPager.setAdapter(new FragmentAdapter(getSupportFragmentManager(), list));
+    }
+
+    private Handler handler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:
+                    tv_Time.setText((String) msg.obj);
+                    break;
+                case 2:
+                    tv_Date.setText((String) msg.obj);
+                    break;
+            }
+        }
+    };
+
+    private void showTimeAndData() {
+        Application.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    while (true) {
+                        Thread.sleep(1000);
+                        Date d = new Date(System.currentTimeMillis());
+                        String time = new SimpleDateFormat("h:mm a").format(d);
+                        String date = new SimpleDateFormat("MM-dd-yyyy").format(d);
+                        handler.obtainMessage(1, time).sendToTarget();
+                        handler.obtainMessage(2, date).sendToTarget();
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void registerBroadcastReceiver() {
+        networkStatusReceiver = new NetworkStatusReceiver(iv_Net);
+        networkStatusReceiver.setOnNetworkStatusListener(this);
+        registerReceiver(networkStatusReceiver, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
+        wifiStatusReceiver = new WifiStatusReceiver();
+        wifiStatusReceiver.setOnWifiStatusListener(this);
+        registerReceiver(wifiStatusReceiver, new IntentFilter(WifiManager.RSSI_CHANGED_ACTION));
+        weatherStatusReceiver = new WeatherStatusReceiver(iv_Weather);
+        registerReceiver(weatherStatusReceiver, new IntentFilter("action.Weather.Change"));
+    }
+
+    private void startAlarmService() {
+        //启动服务加载天气信息，并通过alarm定时每120分钟加载一次
+        Intent alarmIntent = new Intent(MainActivity.this, LoadService.class);
+        alarmIntent.setAction("loadWeather");
+        PendingIntent alarmPendingIntent = PendingIntent.getService(MainActivity.this, 0, alarmIntent, 0);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        long startTime = SystemClock.elapsedRealtime();
+        long repeatTime = 120 * 60 * 1000;
+        alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, startTime, repeatTime, alarmPendingIntent);
+
+        //启动服务加载cloud照片信息列表,定时每3分钟读取一次
+        Intent cloudIntent = new Intent(MainActivity.this , LoadCloudService.class);
+        PendingIntent cloudPendingIntent = PendingIntent.getService(MainActivity.this, 0 ,cloudIntent , 0);
+        AlarmManager alarmManager1 = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        long repeatTime1 = 3*60*1000;
+        alarmManager1.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP ,startTime , repeatTime1 ,cloudPendingIntent);
+    }
+
 }

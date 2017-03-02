@@ -30,7 +30,7 @@ public class ApkCheck {
             context.getPackageManager().getPackageInfo(apkPackageName , PackageManager.GET_ACTIVITIES);
             return true;
         } catch (PackageManager.NameNotFoundException e) {
-            Log.d("----px----" , e.getMessage());
+           // Log.d("----px----" , e.getMessage());
             return false;
         }
     }

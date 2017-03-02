@@ -31,6 +31,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:padding="3dp"
             android:background="@drawable/item_main_bg"
             android:orientation="vertical"
             android:layout_weight="4.1"
@@ -260,7 +261,6 @@
                 android:layout_weight="2"
                 android:layout_height="0dp"
                 android:layout_width="match_parent"/>
-
 
             <FrameLayout
                 android:layout_marginTop="5dp"

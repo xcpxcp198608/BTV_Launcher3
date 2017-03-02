@@ -16,5 +16,5 @@ public interface IMainActivity {
     void loadBootAdVideo (VideoInfo videoInfo);
     void loadAdVideo (VideoInfo videoInfo);
     void loadMessage1 (List<Message1Info> list);
-    void loadWeather (WeatherInfo weatherInfo);
+    void loadWeatherInfo (WeatherInfo weatherInfo);
 }

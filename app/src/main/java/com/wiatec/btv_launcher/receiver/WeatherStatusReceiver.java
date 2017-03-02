@@ -4,9 +4,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.wiatec.btv_launcher.SQL.WeatherDao;
-import com.wiatec.btv_launcher.service_task.WeatherIconSetting;
+import com.wiatec.btv_launcher.WeatherIconSetting;
 import com.wiatec.btv_launcher.bean.WeatherInfo;
 
 /**
@@ -15,17 +16,17 @@ import com.wiatec.btv_launcher.bean.WeatherInfo;
 
 public class WeatherStatusReceiver extends BroadcastReceiver {
 
-    private ImageButton imageButton;
+    private ImageView imageView;
 
-    public WeatherStatusReceiver(ImageButton imageButton) {
-        this.imageButton = imageButton;
+    public WeatherStatusReceiver(ImageView imageView) {
+        this.imageView = imageView;
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
         if("action.Weather.Change".equals(intent.getAction())){
             WeatherInfo weatherInfo = WeatherDao.getInstance(context).query();
-            WeatherIconSetting.setIcon(imageButton ,  weatherInfo.getIcon());
+            WeatherIconSetting.setIcon(imageView ,  weatherInfo.getIcon());
         }
     }
 }

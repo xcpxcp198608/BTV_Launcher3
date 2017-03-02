@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
+import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.service_task.DownloadAdVideo;
 
 import java.util.concurrent.ExecutorService;
@@ -20,7 +21,7 @@ public class DownloadService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        executorService = Executors.newCachedThreadPool();
+        executorService = Application.getThreadPool();
     }
 
     @Nullable

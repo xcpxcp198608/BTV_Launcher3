@@ -34,7 +34,8 @@ public final class F {
         public static final String pinentry_login="http://appota.gobeyondtv.co:8080/Launcher_EN/PinentryLogin";
 
         public static final String upload_hold_time="http://appota.gobeyondtv.co:8080/Launcher_EN/UploadHoldTime";
-
+        public static final String kodi_image_data="http://appota.gobeyondtv.co:8080/Launcher_EN/UploadHoldTime";
+        public static final String kodi_video_data="http://appota.gobeyondtv.co:8080/Launcher_EN/UploadHoldTime";
     }
 
     public static final class path {
@@ -42,6 +43,10 @@ public final class F {
         public static final String video= Environment.getExternalStorageDirectory().getAbsolutePath()+"/BLauncher/btvi3.mp4";
         public static final String ad_video= Environment.getExternalStorageDirectory().getAbsolutePath()+"/BLauncher/btvad.mp4";
         public static final String boot_ad_video= Environment.getExternalStorageDirectory().getAbsolutePath()+"/BLauncher/btvbootad.mp4";
+        public static final String kodi_image_path = Environment.getExternalStorageDirectory().getAbsolutePath()
+                +"/Android/data/org.xbmc.kodi/files/.kodi/addons/skin.beyondtv/backgrounds/";
+        public static final String kodi_video_path = Environment.getExternalStorageDirectory().getAbsolutePath()
+        +"/Android/data/org.xbmc.kodi/files/.kodi/addons/skin.beyondtv/extras/Intro/";
     }
 
     public static final class sp {

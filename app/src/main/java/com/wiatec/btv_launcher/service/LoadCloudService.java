@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 
+import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.bean.TokenInfo;
 import com.wiatec.btv_launcher.service_task.LoadCloud;
@@ -23,7 +24,7 @@ public class LoadCloudService extends IntentService {
 
     public LoadCloudService() {
         super("LoadCloudService");
-        executorService = Executors.newCachedThreadPool();
+        executorService = Application.getThreadPool();
     }
 
     @Override

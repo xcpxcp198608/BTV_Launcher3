@@ -115,7 +115,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     private boolean isVideoPlaying = false;
     private int cloudImagePosition ;
     private MessageDao messageDao;
-    private RollOverViewAdapter rollOverViewAdapter;
     private boolean rollOverStart = false;
 
     private long entryTime;
@@ -181,7 +180,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
             Date date = new Date(exitTime);
             String eTime = new SimpleDateFormat("yy-MM-dd HH:mm:ss").format(date);
             if(presenter != null && entryTime>0) {
-                Logger.d(eTime+"<--->"+holdTime);
                 presenter.uploadHoldTime(eTime, holdTime + "");
             }
         }
@@ -250,7 +248,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         Date date = new Date(exitTime);
         String eTime = new SimpleDateFormat("yy-MM-dd HH:mm:ss").format(date);
         if(presenter != null && entryTime>0) {
-            Logger.d(eTime+"<--->"+holdTime);
             presenter.uploadHoldTime(eTime, holdTime + "");
         }
     }
@@ -424,7 +421,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
 
     @Override
     public void loadRollOverImage(final List<ImageInfo> list) {
-        Logger.d(list.toString());
+       // Logger.d(list.toString());
         if(list.size() <=0){
             return;
         }
@@ -432,7 +429,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
             return;
         }
         rollOverStart = true;
-        rollOverViewAdapter = new RollOverViewAdapter(list);
+        RollOverViewAdapter rollOverViewAdapter = new RollOverViewAdapter(list);
         rollOverView.setRollViewAdapter(rollOverViewAdapter);
         rollOverViewAdapter.setOnItemClickListener(new RollOverViewAdapter.OnItemClickListener() {
             @Override
@@ -530,7 +527,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                                 }
                                 currentVideoInfo.setUrl(s);
                                 playVideo(s);
-                                Logger.d("f1-->" + s);
+                               // Logger.d("f1-->" + s);
                             }
                         }
                     });

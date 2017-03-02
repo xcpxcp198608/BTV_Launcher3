@@ -28,8 +28,8 @@ public class NetworkStatusReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        showNetworkStatus(context);
         if(SystemConfig.isNetworkConnected(context)){
-            showNetworkStatus(context);
             if(onNetworkStatusListener !=null){
                 onNetworkStatusListener.onConnected(true);
             }

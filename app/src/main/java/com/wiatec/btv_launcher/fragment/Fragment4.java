@@ -31,6 +31,7 @@ import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.SQL.InstalledAppDao;
 import com.wiatec.btv_launcher.Utils.ApkCheck;
+import com.wiatec.btv_launcher.Utils.ApkInstall;
 import com.wiatec.btv_launcher.Utils.ApkLaunch;
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.adapter.ChannelGrideAdapter;
@@ -283,7 +284,7 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
 
     @Override
     public void loadRollOverImage(final List<ImageInfo> list) {
-        Logger.d(list.toString());
+        //Logger.d(list.toString());
         if(list.size() <=0){
             return;
         }
@@ -327,6 +328,12 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
                     Intent intent = new Intent(getContext() , FMPlayActivity.class);
                     intent.putExtra("url",channelInfo.getUrl());
                     startActivity(intent);
+                }else if("app".equals(channelInfo.getType())){
+                    if(ApkCheck.isApkInstalled(getContext() , channelInfo.getUrl())){
+                        ApkLaunch.launchApkByPackageName(getContext() , channelInfo.getUrl());
+                    }else{
+                        ApkLaunch.launchApkByPackageName(getContext() , F.package_name.market);
+                    }
                 }
             }
         });
