@@ -1,23 +1,15 @@
 package com.wiatec.btv_launcher.Activity;
 
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
+import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.wiatec.btv_launcher.R;
-import com.wiatec.btv_launcher.Utils.Logger;
-import com.wiatec.btv_launcher.databinding.ActivityCloudImageFullScreenBinding;
 import com.wiatec.btv_launcher.presenter.CloudImageFullScreenPresenter;
 import java.io.File;
-import java.util.concurrent.TimeUnit;
 
-import rx.Observable;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
 
 /**
  * Created by patrick on 2017/2/22.
@@ -25,7 +17,7 @@ import rx.functions.Func1;
 
 public class CloudImageFullScreenActivity extends BaseActivity<ICloudImageFullScreenActivity , CloudImageFullScreenPresenter> implements ICloudImageFullScreenActivity {
 
-    private ActivityCloudImageFullScreenBinding binding;
+    private ImageView ivFull;
     private File[] mFiles;
     private int cloudImagePosition;
 
@@ -37,7 +29,8 @@ public class CloudImageFullScreenActivity extends BaseActivity<ICloudImageFullSc
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_cloud_image_full_screen);
+        setContentView(R.layout.activity_cloud_image_full_screen);
+        ivFull = (ImageView) findViewById(R.id.iv_full);
         cloudImagePosition = getIntent().getIntExtra("cloudImagePosition",0);
     }
 
@@ -64,7 +57,7 @@ public class CloudImageFullScreenActivity extends BaseActivity<ICloudImageFullSc
                     .placeholder(R.drawable.ld_cloud_icon_3)
                     .error(R.drawable.ld_cloud_icon_3)
                     .dontAnimate()
-                    .into(binding.ivFull);
+                    .into(ivFull);
         }
     }
 

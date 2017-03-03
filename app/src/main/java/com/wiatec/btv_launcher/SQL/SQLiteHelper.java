@@ -28,17 +28,12 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             "pressure text,maxTemperature text,minTemperature text,deg text,spd text,sunrise text,sunset text,date text)";
     private static final String DROP_TABLE_WEATHER= "drop table if exists "+WEATHER_TABLE;
 
-    public static final String CLOUD_IMAGE_TABLE = "CLOUD_IMAGE";
-    private static final String CREATE_TABLE_CLOUD_IMAGE = "create table if not exists "+CLOUD_IMAGE_TABLE+"(_id integer primary key autoincrement," +
-            "name text ,url text,path text,finished text)";
-    private static final String DROP_TABLE_CLOUD_IMAGE= "drop table if exists "+CLOUD_IMAGE_TABLE;
-
     public static final String CHANNEL_TABLE = "CHANNEL";
     private static final String CREATE_TABLE_CHANNEL = "create table if not exists "+CHANNEL_TABLE+"(_id integer primary key autoincrement," +
             "name text ,url text,icon text,type text ,country text,sequence integer,style text,sequence1 integer)";
     private static final String DROP_TABLE_CHANNEL= "drop table if exists "+CHANNEL_TABLE;
 
-    private static final int VERSION =13;
+    private static final int VERSION =14;
 
     public SQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, VERSION);
@@ -49,7 +44,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE);
         db.execSQL(CREATE_TABLE_MESSAGE);
         db.execSQL(CREATE_TABLE_WEATHER);
-        db.execSQL(CREATE_TABLE_CLOUD_IMAGE);
         db.execSQL(CREATE_TABLE_CHANNEL);
     }
 
@@ -58,7 +52,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         db.execSQL(DROP_TABLE);
         db.execSQL(DROP_TABLE_MESSAGE);
         db.execSQL(DROP_TABLE_WEATHER);
-        db.execSQL(DROP_TABLE_CLOUD_IMAGE);
         db.execSQL(DROP_TABLE_CHANNEL);
         this.onCreate(db);
     }

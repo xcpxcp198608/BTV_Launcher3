@@ -40,7 +40,6 @@ public class LoadKodiData implements Runnable {
 
     @Override
     public void run() {
-        Logger.d("run");
         loadImageData();
         loadVideoData();
     }

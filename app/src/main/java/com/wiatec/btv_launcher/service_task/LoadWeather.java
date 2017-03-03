@@ -1,18 +1,19 @@
 package com.wiatec.btv_launcher.service_task;
 
-import android.app.AlarmManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Looper;
+import android.text.TextUtils;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.wiatec.btv_launcher.Application;
-import com.wiatec.btv_launcher.OnWeatherChangeListener;
 import com.wiatec.btv_launcher.SQL.WeatherDao;
 import com.wiatec.btv_launcher.Utils.Logger;
+import com.wiatec.btv_launcher.Utils.SPUtils;
 import com.wiatec.btv_launcher.bean.WeatherInfo;
 
 import org.json.JSONException;
@@ -29,45 +30,16 @@ public class LoadWeather implements Runnable {
 
     @Override
     public void run() {
-       // Logger.d("start load weather");
-        loadLocation();
-    }
-
-    private void loadLocation (){
-        String url = "http://ip-api.com/json";
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                if(response != null){
-                    try {
-                        String city = response.getString("city");
-                        String country = response.getString("country");
-                        String countryCode = response.getString("countryCode");
-                        Logger.d(country +"---"+ countryCode +"---"+ city);
-                        SharedPreferences sharedPreferences = Application.getContext().getSharedPreferences("location",Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("country",country);
-                        editor.putString("city",city);
-                        editor.commit();
-                        loadWeather(city);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Logger.d(error.getMessage());
-            }
-        });
-        jsonObjectRequest.setTag("location");
-        Application.getRequestQueue().add(jsonObjectRequest);
+        String city = (String) SPUtils.get(Application.getContext() , "city" ,"");
+        if(TextUtils.isEmpty(city)){
+            //Logger.d("city info not exists ,can not load weather");
+            return;
+        }
+        loadWeather(city);
     }
 
     private void loadWeather (String city){
         String apiKey = "c0c69463f12ddb77b388fe9fac994407";
-        String langUrl = "http://api.openweathermap.org/data/2.5/weather?q=shenzhen&lang=zh_cn&APPID=c0c69463f12ddb77b388fe9fac994407";
         String url = "http://api.openweathermap.org/data/2.5/weather?q="+city+"&APPID="+apiKey;
         String forecastUrl = "http://api.openweathermap.org/data/2.5/forecast?q=shenzhen,cn&APPID=c0c69463f12ddb77b388fe9fac994407";
         StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {

@@ -1,4 +1,4 @@
-package com.wiatec.btv_launcher;
+package com.wiatec.btv_launcher.receiver;
 
 import com.wiatec.btv_launcher.bean.WeatherInfo;
 

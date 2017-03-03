@@ -1,4 +1,4 @@
-package com.wiatec.btv_launcher.RxEvent;
+package com.wiatec.btv_launcher.rxevent;
 
 /**
  * Created by patrick on 2017/3/2.

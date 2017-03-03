@@ -12,6 +12,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.wiatec.btv_launcher.Application;
@@ -19,12 +21,20 @@ import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.Utils.Logger;
 
+import java.util.concurrent.TimeUnit;
+
+import rx.Observable;
+import rx.Subscription;
+
 /**
  * Created by patrick on 2017/2/15.
  */
 
 public class BootAdActivity extends AppCompatActivity {
     private VideoView vvBoot;
+    private LinearLayout llDelay;
+    private TextView tvTimeDelay;
+    private Subscription subscription;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,8 +42,11 @@ public class BootAdActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_boot_ad);
         vvBoot = (VideoView) findViewById(R.id.vv_boot);
+        llDelay = (LinearLayout) findViewById(R.id.ll_delay);
+        tvTimeDelay = (TextView) findViewById(R.id.tv_delay_time);
         AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC , 0 , 0);
+        int index = (int) (audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)*0.2);
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC , index , 0);
     }
 
     @Override
@@ -45,7 +58,6 @@ public class BootAdActivity extends AppCompatActivity {
             vvBoot.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
-                    mp.setVolume(0f,0f);
                     mp.start();
                 }
             });
@@ -71,6 +83,9 @@ public class BootAdActivity extends AppCompatActivity {
             startActivity(new Intent(BootAdActivity.this , MainActivity.class));
             finish();
         }
+    }
+
+    private void showDelayTime(){
 
     }
 

@@ -4,6 +4,7 @@ import android.os.Environment;
 import android.renderscript.Sampler;
 
 /**
+ * constants class
  * Created by PX on 2016-10-10.
  */
 
@@ -34,8 +35,8 @@ public final class F {
         public static final String pinentry_login="http://appota.gobeyondtv.co:8080/Launcher_EN/PinentryLogin";
 
         public static final String upload_hold_time="http://appota.gobeyondtv.co:8080/Launcher_EN/UploadHoldTime";
-        public static final String kodi_image_data="http://appota.gobeyondtv.co:8080/Launcher_EN/UploadHoldTime";
-        public static final String kodi_video_data="http://appota.gobeyondtv.co:8080/Launcher_EN/UploadHoldTime";
+        public static final String kodi_image_data="http://appota.gobeyondtv.co:8080/Launcher_EN/GetKodiImage";
+        public static final String kodi_video_data="http://appota.gobeyondtv.co:8080/Launcher_EN/GetKodiVideo";
     }
 
     public static final class path {
@@ -52,7 +53,6 @@ public final class F {
     public static final class sp {
         public static final String name = "launcher";
         public static final String key_video = "video";
-
     }
 
     public static final class package_name {

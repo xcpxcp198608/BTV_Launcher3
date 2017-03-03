@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.wiatec.btv_launcher.Utils.SPUtils;
 import com.wiatec.btv_launcher.presenter.BasePresenter;
 
 /**
@@ -12,17 +13,18 @@ import com.wiatec.btv_launcher.presenter.BasePresenter;
 
 public abstract class BaseActivity <V ,T extends BasePresenter> extends AppCompatActivity {
     protected T presenter;
+    protected String countryCode ;
+    protected String userName;
+    protected String token;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
         presenter = createPresenter();
         presenter.attachView(this);
+        countryCode = (String) SPUtils.get(this ,countryCode ,"");
+        userName = (String) SPUtils.get(this ,userName ,"");
+        token = (String) SPUtils.get(this ,token ,"");
     }
 
     @Override

@@ -1,10 +1,19 @@
 package com.wiatec.btv_launcher.presenter;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.SQL.MessageDao;
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Activity.IMainActivity;
+import com.wiatec.btv_launcher.Utils.SPUtils;
 import com.wiatec.btv_launcher.bean.Message1Info;
+import com.wiatec.btv_launcher.bean.MessageInfo;
 import com.wiatec.btv_launcher.bean.UpdateInfo;
 import com.wiatec.btv_launcher.bean.VideoInfo;
 import com.wiatec.btv_launcher.bean.WeatherInfo;
@@ -20,7 +29,10 @@ import com.wiatec.btv_launcher.data.UpdateData;
 import com.wiatec.btv_launcher.data.WeatherData;
 import com.wiatec.btv_launcher.service_task.LoadInstalledApp;
 import com.wiatec.btv_launcher.service_task.LoadKodiData;
-import com.wiatec.btv_launcher.service_task.LoadMessage;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.List;
@@ -138,6 +150,54 @@ public class MainPresenter extends BasePresenter<IMainActivity> {
     }
 
     public void loadMessage(){
-        Application.getThreadPool().execute(new LoadMessage());
+        final MessageDao messageDao = MessageDao.getInstance(Application.getContext());
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(F.url.message, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                if(response != null) {
+                    List<MessageInfo> list = new Gson().fromJson(String.valueOf(response), new TypeToken<List<MessageInfo>>() {
+                    }.getType());
+                    for (MessageInfo messageInfo:list){
+                        messageDao.insertMessage(messageInfo);
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Logger.d(error.getMessage());
+            }
+        });
+        jsonArrayRequest.setTag("MessageInfo");
+        Application.getRequestQueue().add(jsonArrayRequest);
+    }
+
+    public void loadLocation(){
+        String url = "http://ip-api.com/json";
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                if(response != null){
+                    try {
+                        String city = response.getString("city");
+                        String country = response.getString("country");
+                        String countryCode = response.getString("countryCode");
+                        Logger.d(country +"---"+ countryCode +"---"+ city);
+                        SPUtils.put(Application.getContext() , "countryCode",countryCode);
+                        SPUtils.put(Application.getContext() , "country",country);
+                        SPUtils.put(Application.getContext() , "city",city);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Logger.d("location load error "+error.getMessage());
+            }
+        });
+        jsonObjectRequest.setTag("location");
+        Application.getRequestQueue().add(jsonObjectRequest);
     }
 }

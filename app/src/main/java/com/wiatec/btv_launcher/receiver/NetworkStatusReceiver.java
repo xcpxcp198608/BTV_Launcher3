@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.ImageView;
 
-import com.wiatec.btv_launcher.OnNetworkStatusListener;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.Utils.SystemConfig;
 

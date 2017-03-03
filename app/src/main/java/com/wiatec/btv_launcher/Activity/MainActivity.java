@@ -23,14 +23,13 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
-import com.wiatec.btv_launcher.OnNetworkStatusListener;
-import com.wiatec.btv_launcher.OnWifiStatusListener;
+import com.wiatec.btv_launcher.receiver.OnNetworkStatusListener;
+import com.wiatec.btv_launcher.receiver.OnWifiStatusListener;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.Utils.ApkCheck;
 import com.wiatec.btv_launcher.Utils.FileCheck;
@@ -42,9 +41,10 @@ import com.wiatec.btv_launcher.bean.UpdateInfo;
 import com.wiatec.btv_launcher.bean.VideoInfo;
 import com.wiatec.btv_launcher.bean.WeatherInfo;
 import com.wiatec.btv_launcher.fragment.Fragment1;
-import com.wiatec.btv_launcher.fragment.Fragment4;
+import com.wiatec.btv_launcher.fragment.Fragment2;
 import com.wiatec.btv_launcher.presenter.MainPresenter;
 import com.wiatec.btv_launcher.receiver.NetworkStatusReceiver;
+import com.wiatec.btv_launcher.receiver.ScreenWeekUpReceiver;
 import com.wiatec.btv_launcher.receiver.WeatherStatusReceiver;
 import com.wiatec.btv_launcher.receiver.WifiStatusReceiver;
 import com.wiatec.btv_launcher.service.DownloadService;
@@ -88,12 +88,14 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
     TextView tv_MessageCount;
 
     private Fragment1 fragment1;
-    private Fragment4 fragment4;
+    private Fragment2 fragment2;
     private List<Fragment> list;
     private NetworkStatusReceiver networkStatusReceiver;
     private WifiStatusReceiver wifiStatusReceiver;
     private WeatherStatusReceiver weatherStatusReceiver;
+    private ScreenWeekUpReceiver screenWeekUpReceiver;
     private boolean isStartLoadNetData = false;
+    private boolean isStartAlarmService =false;
 
     @Override
     protected MainPresenter createPresenter() {
@@ -123,12 +125,15 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
             presenter.loadWeatherInfo();
             if (SystemConfig.isNetworkConnected(MainActivity.this)) {
                 isStartLoadNetData = true;
+                presenter.loadLocation();
                 presenter.loadUpdate();
                 presenter.loadMessage();
                 presenter.loadVideo();
                 presenter.loadMessage1();
                 presenter.loadKodiData();
-                startAlarmService();
+                if(!isStartAlarmService) {
+                    startAlarmService();
+                }
             }
         }
     }
@@ -136,9 +141,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(networkStatusReceiver);
-        unregisterReceiver(wifiStatusReceiver);
-        unregisterReceiver(weatherStatusReceiver);
+        unregister();
     }
 
     @Override
@@ -156,15 +159,18 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
     public void onConnected(boolean isConnected) {
         if (isConnected) {
             //showNetworkStatus();
+            if(!isStartAlarmService) {
+                startAlarmService();
+            }
             if(isStartLoadNetData){
                 return;
             }
+            presenter.loadLocation();
             presenter.loadVideo();
             presenter.loadUpdate();
             presenter.loadMessage1();
             presenter.loadMessage();
             presenter.loadKodiData();
-            startAlarmService();
         }
     }
 
@@ -323,14 +329,14 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
         if (fragment1 == null) {
             fragment1 = new Fragment1();
         }
-        if (fragment4 == null) {
-            fragment4 = new Fragment4();
+        if (fragment2 == null) {
+            fragment2 = new Fragment2();
         }
         if (list == null) {
             list = new ArrayList<>();
         }
         list.add(fragment1);
-        list.add(fragment4);
+        list.add(fragment2);
         viewPager.setAdapter(new FragmentAdapter(getSupportFragmentManager(), list));
     }
 
@@ -373,14 +379,27 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
         networkStatusReceiver = new NetworkStatusReceiver(iv_Net);
         networkStatusReceiver.setOnNetworkStatusListener(this);
         registerReceiver(networkStatusReceiver, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
+
         wifiStatusReceiver = new WifiStatusReceiver();
         wifiStatusReceiver.setOnWifiStatusListener(this);
         registerReceiver(wifiStatusReceiver, new IntentFilter(WifiManager.RSSI_CHANGED_ACTION));
+
         weatherStatusReceiver = new WeatherStatusReceiver(iv_Weather);
         registerReceiver(weatherStatusReceiver, new IntentFilter("action.Weather.Change"));
+
+        screenWeekUpReceiver = new ScreenWeekUpReceiver();
+        registerReceiver(screenWeekUpReceiver , new IntentFilter(Intent.ACTION_SCREEN_ON));
+    }
+
+    private void unregister() {
+        unregisterReceiver(networkStatusReceiver);
+        unregisterReceiver(wifiStatusReceiver);
+        unregisterReceiver(weatherStatusReceiver);
+        unregisterReceiver(screenWeekUpReceiver);
     }
 
     private void startAlarmService() {
+        isStartAlarmService = true;
         //启动服务加载天气信息，并通过alarm定时每120分钟加载一次
         Intent alarmIntent = new Intent(MainActivity.this, LoadService.class);
         alarmIntent.setAction("loadWeather");

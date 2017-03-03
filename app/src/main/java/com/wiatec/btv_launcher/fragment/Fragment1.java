@@ -26,7 +26,7 @@ import com.wiatec.btv_launcher.Activity.PlayAdActivity;
 import com.wiatec.btv_launcher.Activity.UserManualActivity;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
-import com.wiatec.btv_launcher.OnNetworkStatusListener;
+import com.wiatec.btv_launcher.receiver.OnNetworkStatusListener;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.SQL.MessageDao;
 import com.wiatec.btv_launcher.Utils.ApkCheck;
@@ -47,15 +47,12 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
-import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -88,9 +85,9 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     @BindView(R.id.ibt_full_screen)
     ImageButton ibt_FullScreen;
     @BindView(R.id.ibt_7)
-    ImageButton ibt7;
+    FrameLayout ibt7;
     @BindView(R.id.ibt_8)
-    ImageButton ibt8;
+    FrameLayout ibt8;
     @BindView(R.id.ibt_9)
     ImageButton ibt9;
     @BindView(R.id.vv_main)
@@ -105,7 +102,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     RollOverView rollOverView;
 
     private boolean isF1Visible = false;
-    private int playPosition = 0;
     private NetworkStatusReceiver networkStatusReceiver;
     private Subscription subscription;
     private Subscription videoSubscription;
@@ -124,8 +120,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // Logger.d("f1 -onCreateView ");
-        View view = inflater.inflate(R.layout.fragment5, container, false);
+        View view = inflater.inflate(R.layout.fragment1, container, false);
         ButterKnife.bind(this, view);
         networkStatusReceiver = new NetworkStatusReceiver(null);
         networkStatusReceiver.setOnNetworkStatusListener(this);
@@ -142,9 +137,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
             if(presenter != null && ! isCloudImagePlaying){
                 presenter.loadCloudData();
             }
-            //Logger.d("f1 -isVisibleToUser " + isVisibleToUser);
             if (vv_Main != null && !vv_Main.isPlaying() && isF1Visible) {
-                // Logger.d("f1 -isVisibleToUser " +"play");
                 if (SystemConfig.isNetworkConnected(Application.getContext())) {
                     if(!isVideoPlaying) {
                         presenter.loadVideo();
@@ -153,11 +146,8 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
             }
             entryTime = System.currentTimeMillis();
         } else {
-            // Logger.d("f1 -isVisibleToUser " + isVisibleToUser);
             isF1Visible = false;
             if (vv_Main != null) {
-                //Logger.d("f1 -stopPlayback " + "f1-->" +isF1Visible);
-                playPosition = vv_Main.getCurrentPosition();
                 vv_Main.stopPlayback();
             }
             if (subscription != null) {
@@ -201,7 +191,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     @Override
     public void onResume() {
         super.onResume();
-        //Logger.d("f1 -onResume ");
         if (vv_Main != null && !vv_Main.isPlaying()) {
             if (isF1Visible) {
                 if (SystemConfig.isNetworkConnected(Application.getContext())) {
@@ -226,7 +215,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         isVideoPlaying = false;
         //Logger.d("f1 -onPause ");
         if (vv_Main != null && vv_Main.isPlaying()) {
-            playPosition = vv_Main.getCurrentPosition();
             vv_Main.stopPlayback();
         }
         if (subscription != null) {
@@ -328,6 +316,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 if (ApkCheck.isApkInstalled(getContext(), F.package_name.joinme)) {
                     ApkLaunch.launchApkByPackageName(getContext(), F.package_name.joinme);
                 }else{
+                    Toast.makeText(getContext() , getString(R.string.download_guide)+" Joinme",Toast.LENGTH_SHORT).show();
                     ApkLaunch.launchApkByPackageName(getContext(), F.package_name.market);
                 }
                 break;
@@ -335,6 +324,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 if (ApkCheck.isApkInstalled(getContext(), F.package_name.happy_chick)) {
                     ApkLaunch.launchApkByPackageName(getContext(), F.package_name.happy_chick);
                 }else{
+                    Toast.makeText(getContext() , getString(R.string.download_guide)+" HappyChick",Toast.LENGTH_SHORT).show();
                     ApkLaunch.launchApkByPackageName(getContext(), F.package_name.market);
                 }
                 break;
@@ -342,6 +332,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 if (ApkCheck.isApkInstalled(getContext(), F.package_name.spotify)) {
                     ApkLaunch.launchApkByPackageName(getContext(), F.package_name.spotify);
                 }else{
+                    Toast.makeText(getContext() , getString(R.string.download_guide)+" Spotify",Toast.LENGTH_SHORT).show();
                     ApkLaunch.launchApkByPackageName(getContext(), F.package_name.market);
                 }
                 break;
@@ -350,44 +341,8 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         }
     }
 
-    private void playVideo() {
-        vv_Main.setVideoPath(F.path.video);
-        vv_Main.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                //Logger.d("f1-->prepare");
-                if (isF1Visible) {
-                    vv_Main.seekTo(playPosition);
-                    vv_Main.start();
-                }
-            }
-        });
-        vv_Main.setOnErrorListener(new MediaPlayer.OnErrorListener() {
-            @Override
-            public boolean onError(MediaPlayer mp, int what, int extra) {
-                vv_Main.setVideoURI(Uri.parse("android.resource://" + getContext().getPackageName() + "/" + R.raw.btvi3));
-                vv_Main.start();
-                return true;
-            }
-        });
-        vv_Main.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                try {
-                    playPosition = 0;
-                    vv_Main.setVideoPath(F.path.video);
-                    vv_Main.start();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Logger.d(e.getMessage());
-                }
-            }
-        });
-    }
-
     @Override
     public void loadImage(final List<ImageInfo> list) {
-        //Logger.d(list.toString());
         if(list == null || list.size() <1){
             return;
         }
@@ -399,7 +354,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         Glide.with(Application.getContext()).load(list.get(5).getUrl()).placeholder(R.drawable.ld_opportunity_12).dontAnimate().into(ibt_AntiVirus);
         Glide.with(Application.getContext()).load(list.get(6).getUrl()).placeholder(R.drawable.message_icon).dontAnimate().into(ibt_Privacy);
         Glide.with(Application.getContext()).load(list.get(7).getUrl()).placeholder(R.drawable.ld_store_icon).dontAnimate().into(ibt_LdStore);
-//        Glide.with(Application.getContext()).load(list.get(8).getUrl()).placeholder(R.drawable.bksound_icon_3).dontAnimate().into(ibt_Ad1);
         Glide.with(Application.getContext()).load(list.get(9).getUrl()).placeholder(R.drawable.ld_cloud_icon_3).dontAnimate().into(ibt_LdCloud);
         ibt_LdStore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -411,7 +365,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
 
     @Override
     public void loadRollImage(List<ImageInfo> list) {
-        //Logger.d(list.toString());
         if(list == null || list.size() <1){
             return;
         }
@@ -421,7 +374,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
 
     @Override
     public void loadRollOverImage(final List<ImageInfo> list) {
-       // Logger.d(list.toString());
         if(list.size() <=0){
             return;
         }
@@ -458,7 +410,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                     .subscribe(new Action1<String>() {
                         @Override
                         public void call(String s) {
-//                            Logger.d("f1--->" +s);
                             Glide.with(getContext()).load(s)
                                     .placeholder(R.drawable.ld_cloud_icon_3)
                                     .error(R.drawable.ld_cloud_icon_3)
@@ -497,7 +448,8 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     public void loadVideo(final List<VideoInfo> list) {
         if (list.size() > 0) {
             isVideoPlaying = true;
-            videoSubscription = Observable.interval(0,list.get(0).getPlayInterval(),TimeUnit.MILLISECONDS).take(list.size())
+            videoSubscription = Observable.interval(0,list.get(0).getPlayInterval(),TimeUnit.MILLISECONDS)
+                    .take(list.size())
                     .subscribeOn(Schedulers.io())
                     .repeat()
                     .map(new Func1<Long, String>() {
@@ -508,26 +460,15 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                         }
                     })
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Subscriber<String>() {
+                    .subscribe(new Action1<String>() {
                         @Override
-                        public void onCompleted() {
-
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-
-                        }
-
-                        @Override
-                        public void onNext(String s) {
+                        public void call(String s) {
                             if(vv_Main != null ){
                                 if(currentVideoInfo == null){
                                     currentVideoInfo = new VideoInfo();
                                 }
                                 currentVideoInfo.setUrl(s);
                                 playVideo(s);
-                               // Logger.d("f1-->" + s);
                             }
                         }
                     });
@@ -540,7 +481,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         vv_Main.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
-                //Logger.d("f1-->prepare");
                 if (isF1Visible) {
                     vv_Main.start();
                 }
@@ -611,7 +551,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         if (hasFocus) {
-            if(v.getId() == R.id.ibt_btv || v.getId() == R.id.ibt_ld_store || v.getId() == R.id.ibt_ad_1) {
+            if(v.getId() == R.id.ibt_btv || v.getId() == R.id.ibt_ld_store ) {
                 Zoom.zoomIn10_11(v);
             }else {
                 Zoom.zoomIn09_10(v);

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.WifiManager;
 
-import com.wiatec.btv_launcher.OnWifiStatusListener;
 import com.wiatec.btv_launcher.Utils.SystemConfig;
 
 /**

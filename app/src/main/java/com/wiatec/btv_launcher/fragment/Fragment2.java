@@ -1,7 +1,6 @@
 package com.wiatec.btv_launcher.fragment;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -18,12 +17,12 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.jude.rollviewpager.RollPagerView;
 import com.wiatec.btv_launcher.Activity.AppSelectActivity;
 import com.wiatec.btv_launcher.Activity.FMPlayActivity;
-import com.wiatec.btv_launcher.Activity.LoginActivity;
 import com.wiatec.btv_launcher.Activity.PlayActivity;
 import com.wiatec.btv_launcher.Activity.SplashActivity;
 import com.wiatec.btv_launcher.Application;
@@ -31,7 +30,6 @@ import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.SQL.InstalledAppDao;
 import com.wiatec.btv_launcher.Utils.ApkCheck;
-import com.wiatec.btv_launcher.Utils.ApkInstall;
 import com.wiatec.btv_launcher.Utils.ApkLaunch;
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.adapter.ChannelGrideAdapter;
@@ -49,7 +47,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -60,7 +57,7 @@ import rx.schedulers.Schedulers;
  * Created by patrick on 2016/12/28.
  */
 
-public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> implements IFragment4 ,View.OnFocusChangeListener ,View.OnClickListener{
+public class Fragment2 extends BaseFragment<IFragment4, Fragment4Presenter> implements IFragment4 ,View.OnFocusChangeListener ,View.OnClickListener{
     @BindView(R.id.lv_country)
     ListView lvCountry;
     @BindView(R.id.gv_channel)
@@ -106,12 +103,13 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment6, container, false);
+        View view = inflater.inflate(R.layout.fragment2, container, false);
         ButterKnife.bind(this, view);
         presenter.bind();
         installedAppDao = InstalledAppDao.getInstance(Application.getContext());
         sharedPreferences = Application.getContext().getSharedPreferences(F.sp.name , Context.MODE_PRIVATE);
         isShow = sharedPreferences.getBoolean("isShow" , true);
+        lvCountry.setNextFocusRightId(R.id.gv_channel);
         return view;
     }
 
@@ -332,6 +330,7 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
                     if(ApkCheck.isApkInstalled(getContext() , channelInfo.getUrl())){
                         ApkLaunch.launchApkByPackageName(getContext() , channelInfo.getUrl());
                     }else{
+                        Toast.makeText(getContext() , getString(R.string.download_guide)+" TV2.0+",Toast.LENGTH_SHORT).show();
                         ApkLaunch.launchApkByPackageName(getContext() , F.package_name.market);
                     }
                 }
@@ -405,7 +404,7 @@ public class Fragment4 extends BaseFragment<IFragment4, Fragment4Presenter> impl
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         if (hasFocus) {
-            if(v.getId() == R.id.ibt_c1 || v.getId() == R.id.ibt_ld_store || v.getId() == R.id.ibt_ad_1){
+            if(v.getId() == R.id.ibt_c1 || v.getId() == R.id.ibt_ld_store){
                 Zoom.zoomIn10_11(v);
             }else {
                 Zoom.zoomIn09_10(v);
