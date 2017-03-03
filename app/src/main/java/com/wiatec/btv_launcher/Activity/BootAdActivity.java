@@ -52,7 +52,6 @@ public class BootAdActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-//        Logger.d(Application.getBootStatus()+"");
         if(Application.getBootStatus()){
             vvBoot.setVideoPath(F.path.boot_ad_video);
             vvBoot.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
