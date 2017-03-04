@@ -29,8 +29,8 @@
     <string name="error_key">Key or Password Error</string>
     <string name="error_connect">Connect Error</string>
     <string name="error_repeat">Login Repeat</string>
-    <string name="input_key">Input key</string>
-    <string name="input_password">Input password</string>
+    <string name="input_key">UserName</string>
+    <string name="input_password">Password</string>
     <string name="warning">Warning</string>
     <string name="warning_message">Welcome to BTVi3, By using this service you agree to the Terms of Service (TOS) on Legacy Direct websites. Legacy Direct reserves the right to change the TOS at any time. If you do not agree to any of these terms, please refrain from using the BTVi3 services and products.</string>
     <string name="notice1">The programs shown are from internet and for learning purpose. Please check with Legacy Direct Term Of Service.</string>
@@ -38,4 +38,5 @@
     <string name="legacy_institute">LEGACY\nINSTITUTE</string>
     <string name="game1">GAME</string>
     <string name="download_guide">please go to app market download and install </string>
+
 </resources>

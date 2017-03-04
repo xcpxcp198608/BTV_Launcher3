@@ -12,6 +12,7 @@ public final class F {
     public static final class url {
         public static final String updater="http://appota.gobeyondtv.co:8080/Launcher_EN/GetUpdate";
         public static final String video="http://appota.gobeyondtv.co:8080/Launcher_EN/GetVideo";
+        public static final String opportunity="http://appota.gobeyondtv.co:8080/Launcher_EN/GetOpportunityImage";
         public static final String ad_video="http://appota.gobeyondtv.co:8081/json/AdVideoInfo.json";
         public static final String boot_ad_video="http://appota.gobeyondtv.co:8081/json/BoootAdVideoInfo.json";
 
@@ -31,7 +32,7 @@ public final class F {
         public static final String message1_es_US="http://appota.gobeyondtv.co:8081/json/Message1_es_US.json";
         public static final String message1_it_IT="http://appota.gobeyondtv.co:8081/json/Message1_it_IT.json";
 
-        public static final String login="http://appota.gobeyondtv.co:8080/Launcher_EN/PinentryLogin";
+        public static final String login="http://appota.gobeyondtv.co:8080/Launcher_EN/Login";
         public static final String pinentry_login="http://appota.gobeyondtv.co:8080/Launcher_EN/PinentryLogin";
 
         public static final String upload_hold_time="http://appota.gobeyondtv.co:8080/Launcher_EN/UploadHoldTime";

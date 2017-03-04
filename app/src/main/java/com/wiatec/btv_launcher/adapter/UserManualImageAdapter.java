@@ -1,5 +1,6 @@
 package com.wiatec.btv_launcher.adapter;
 
+
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,13 +8,13 @@ import android.view.ViewGroup;
 import java.util.List;
 
 /**
- * Created by PX on 2016-12-02.
+ * Created by patrick on 2017/3/4.
  */
 
-public class OpportunityPagerAdapter extends PagerAdapter {
+public class UserManualImageAdapter extends PagerAdapter {
     private List<View> list;
 
-    public OpportunityPagerAdapter(List<View> list) {
+    public UserManualImageAdapter(List<View> list) {
         this.list = list;
     }
 

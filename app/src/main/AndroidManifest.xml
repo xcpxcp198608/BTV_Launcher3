@@ -47,6 +47,7 @@
         <activity android:name=".Activity.MainActivity"/>
         <activity android:name=".Activity.CloudImageFullScreenActivity"/>
         <activity android:name=".Activity.WeekUpAdActivity"/>
+        <activity android:name=".Activity.MemberChannelActivity"/>
 
         <receiver android:name=".receiver.AppInstallReceiver">
             <intent-filter>

@@ -20,10 +20,10 @@ import java.util.List;
  * Created by PX on 2016-11-14.
  */
 
-public class RollImageAdapter extends StaticPagerAdapter {
+public class OpportunityImageAdapter extends StaticPagerAdapter {
     private List<ImageInfo> list ;
 
-    public RollImageAdapter(List<ImageInfo> list) {
+    public OpportunityImageAdapter(List<ImageInfo> list) {
         this.list = list;
     }
 
@@ -39,7 +39,8 @@ public class RollImageAdapter extends StaticPagerAdapter {
             return imageView;
         }
         Glide.with(container.getContext()).load(imageInfo.getUrl())
-                .placeholder(R.drawable.follow)
+                .placeholder(R.drawable.btv12)
+                .dontAnimate()
                 .into(imageView);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageView.setCropToPadding(true);
