@@ -218,8 +218,8 @@
                             android:background="@color/colorTranslucent"
                             android:scaleType="centerInside"
                             android:src="@drawable/joinme_144"
-                            android:layout_width="28dp"
-                            android:layout_height="28dp" />
+                            android:layout_width="33dp"
+                            android:layout_height="33dp" />
 
                     </FrameLayout>
 
@@ -251,8 +251,8 @@
                             android:layout_gravity="right"
                             android:scaleType="centerInside"
                             android:src="@drawable/happychick_144"
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"/>
+                            android:layout_width="33dp"
+                            android:layout_height="33dp"/>
 
                     </FrameLayout>
 
