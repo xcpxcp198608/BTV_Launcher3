@@ -38,7 +38,7 @@ public class OpportunityImageAdapter extends StaticPagerAdapter {
             return imageView;
         }
         Glide.with(container.getContext()).load(imageInfo.getUrl())
-                .placeholder(R.drawable.btv1)
+                .placeholder(R.drawable.loading)
                 .dontAnimate()
                 .into(imageView);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);

@@ -23,25 +23,8 @@ public class Message1Data implements IMessage1Data{
 
     @Override
     public void loadData(final OnLoadListener onLoadListener) {
-        String url = "";
-        String language = Application.getContext().getSharedPreferences("language" , Context.MODE_PRIVATE).getString("language" ,"en");
-        if("en_US".equals(language)){
-            url = F.url.message1;
-        }else if("zh_CN".equals(language)){
-            url = F.url.message1_zh_CN;
-        }else if("zh_TW".equals(language)){
-            url = F.url.message1_zh_TW;
-        }else if("es_ES".equals(language)){
-            url = F.url.message1_es_ES;
-        }else if("es_US".equals(language)){
-            url = F.url.message1_es_US;
-        }else if("it_IT".equals(language)){
-            url = F.url.message1_it_IT;
-        }else {
-            url = F.url.message1;
-        }
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(F.url.message1, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 if(response != null){

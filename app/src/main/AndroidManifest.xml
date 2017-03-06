@@ -20,8 +20,7 @@
         android:name=".Application"
         android:theme="@style/AppTheme">
         <activity android:name=".Activity.BootAdActivity"
-            android:clearTaskOnLaunch="true"
-            android:launchMode="singleTask">
+            android:clearTaskOnLaunch="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.HOME"/>
@@ -44,7 +43,8 @@
         <activity android:name=".Activity.LoginActivity"/>
         <activity android:name=".Activity.PinentryActivity"/>
         <activity android:name=".Activity.FMPlayActivity"/>
-        <activity android:name=".Activity.MainActivity"/>
+        <activity android:name=".Activity.MainActivity"
+            android:launchMode="singleTask"/>
         <activity android:name=".Activity.CloudImageFullScreenActivity"/>
         <activity android:name=".Activity.WeekUpAdActivity"/>
         <activity android:name=".Activity.MemberChannelActivity"/>
