@@ -1,9 +1,9 @@
 package com.wiatec.btv_launcher.Activity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -12,10 +12,12 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.bumptech.glide.Glide;
+import com.jude.rollviewpager.RollPagerView;
 import com.wiatec.btv_launcher.R;
-import com.wiatec.btv_launcher.adapter.OpportunityImageAdapter;
+import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.adapter.UserManualImageAdapter;
-import com.wiatec.btv_launcher.animator.OpportunityPagerTransformer;
+import com.wiatec.btv_launcher.bean.ImageInfo;
+import com.wiatec.btv_launcher.presenter.UserManualPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,81 +26,108 @@ import java.util.List;
  * Created by PX on 2016-12-06.
  */
 
-public class UserManualActivity extends AppCompatActivity {
-    private ViewPager viewPager;
-    private List<View> list;
+public class UserManualActivity extends BaseActivity<IUserManualActivity ,UserManualPresenter> implements IUserManualActivity {
+    private RollPagerView rpvManual;
     private UserManualImageAdapter adapter;
-    private  String language;
-    private Spinner spinner;
+    private String language;
+    private String product;
     private int [] englishResIds = {R.drawable.m1, R.drawable.m2, R.drawable.m3, R.drawable.m4, R.drawable.m5,
             R.drawable.m6, R.drawable.m7 , R.drawable.m8 };
     private int [] spanishResIds = {R.drawable.ms1, R.drawable.ms2, R.drawable.ms3, R.drawable.ms4, R.drawable.ms5,
             R.drawable.ms6, R.drawable.ms7 ,};
-    private String [] languages ;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_manual);
-        viewPager = (ViewPager) findViewById(R.id.view_pager_manual);
-        spinner = (Spinner) findViewById(R.id.spinner);
-        language = getIntent().getStringExtra("language");
-        languages = getResources().getStringArray(R.array.language);
-
+        rpvManual = (RollPagerView) findViewById(R.id.rpv_manual);
+        showSelectProduct();
     }
-
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        selectLanguage(languages);
+    protected UserManualPresenter createPresenter() {
+        return new UserManualPresenter(this);
     }
 
-    private void selectLanguage (String [] languages){
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(UserManualActivity.this ,
-                android.support.v7.appcompat.R.layout.support_simple_spinner_dropdown_item , languages);
-        arrayAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        spinner.setAdapter(arrayAdapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+    private void showSelectProduct() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(UserManualActivity.this);
+        builder.setCancelable(false);
+        builder.setTitle("Select Product");
+        builder.setSingleChoiceItems(getResources().getStringArray(R.array.products), 0, new DialogInterface.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position == 0){
-
-                }else {
-                    if (position == 1) {
-                        language = "english";
-                    } else if (position == 2) {
-                        language = "spanish";
-                    }
-                    spinner.setVisibility(View.GONE);
-                    showManual();
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case 0:
+                        product = "btvi3";
+                        break;
+                    case 1:
+                        product = "bksound";
+                        break;
+                    case 2:
+                        product = "bkeymo";
+                        break;
                 }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+                if(dialog != null){
+                    dialog.dismiss();
+                }
+                showSelectLanguage();
             }
         });
+        builder.show();
     }
 
-    private void showManual(){
+    private void showSelectLanguage (){
+        AlertDialog.Builder builder = new AlertDialog.Builder(UserManualActivity.this);
+        builder.setCancelable(false);
+        builder.setTitle("Select Language");
+        builder.setSingleChoiceItems(getResources().getStringArray(R.array.languages), 0, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case 0:
+                        language = "en";
+                        break;
+                    case 1:
+                        language = "es_us";
+                        break;
+                }
+                if(dialog != null){
+                    dialog.dismiss();
+                }
+                if("btvi3".equals(product)){
+                    showBTVi3Manual(language);
+                }else{
+                    presenter.loadImage(product , language);
+                }
+            }
+        });
+        builder.show();
+    }
+
+    private void showBTVi3Manual(String language) {
         int[] resIds;
-        if("spanish".equals(language)){
+        if("es_us".equals(language)){
             resIds = spanishResIds;
         }else {
             resIds = englishResIds;
         }
-        list = new ArrayList<>();
-        for (int resId : resIds){
-            ImageView imageView = new ImageView(this);
-            Glide.with(this).load(resId).into(imageView);
-            imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT , ViewGroup.LayoutParams.MATCH_PARENT));
-            list.add(imageView);
+        List<ImageInfo> list = new ArrayList<>();
+        for (int resId :resIds) {
+            String url = "android.resource://" + getPackageName() + "/" +resId;
+            ImageInfo imageInfo = new ImageInfo();
+            imageInfo.setUrl(url);
+            list.add(imageInfo);
         }
         adapter = new UserManualImageAdapter(list);
-        viewPager.setAdapter(adapter);
-        viewPager.setPageTransformer(true , new OpportunityPagerTransformer());
-        viewPager.setVisibility(View.VISIBLE);
+        rpvManual.setAdapter(adapter);
+        rpvManual.setHintView(null);
+        rpvManual.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public void loadImage(List<ImageInfo> list) {
+        adapter = new UserManualImageAdapter(list);
+        rpvManual.setAdapter(adapter);
+        rpvManual.setHintView(null);
+        rpvManual.setVisibility(View.VISIBLE);
+    }
 }

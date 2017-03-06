@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="language">
-        <item>Select Language</item>
+    <string-array name="languages">
         <item>English</item>
         <item>Spanish</item>
+    </string-array>
+
+
+    <string-array name="products">
+        <item>BTVi3</item>
+        <item>BKSOUND</item>
+        <item>BKEYMO</item>
     </string-array>
 
 </resources>

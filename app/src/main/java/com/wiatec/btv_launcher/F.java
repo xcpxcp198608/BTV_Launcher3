@@ -13,6 +13,7 @@ public final class F {
         public static final String updater="http://appota.gobeyondtv.co:8080/Launcher_EN/GetUpdate";
         public static final String video="http://appota.gobeyondtv.co:8080/Launcher_EN/GetVideo";
         public static final String opportunity="http://appota.gobeyondtv.co:8080/Launcher_EN/GetOpportunityImage";
+        public static final String manual_image = "http://appota.gobeyondtv.co:8080/Launcher_EN/GetManualImage";
         public static final String ad_video="http://appota.gobeyondtv.co:8081/json/AdVideoInfo.json";
         public static final String boot_ad_video="http://appota.gobeyondtv.co:8081/json/BoootAdVideoInfo.json";
 

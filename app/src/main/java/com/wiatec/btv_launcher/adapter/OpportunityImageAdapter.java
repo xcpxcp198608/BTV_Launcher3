@@ -30,7 +30,6 @@ public class OpportunityImageAdapter extends StaticPagerAdapter {
     @Override
     public View getView(final ViewGroup container, final int position) {
         ImageView imageView = new ImageView(container.getContext());
-        imageView.setBackgroundResource(R.drawable.white_side);
         imageView.setFocusable(true);
         imageView.setClickable(true);
         imageView.setPadding(3,3,3,3);
@@ -45,26 +44,6 @@ public class OpportunityImageAdapter extends StaticPagerAdapter {
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageView.setCropToPadding(true);
         imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT ,ViewGroup.LayoutParams.MATCH_PARENT));
-        imageView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    Zoom.zoomIn09_10(v);
-                }
-            }
-        });
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(imageInfo.getLink()!= null) {
-                    try {
-                        container.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(imageInfo.getLink())));
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
         return imageView;
     }
 
