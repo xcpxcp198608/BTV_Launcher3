@@ -2,8 +2,6 @@ package com.wiatec.btv_launcher.service_task;
 
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
-import com.wiatec.btv_launcher.Utils.FileDownload.DownloadManager;
-import com.wiatec.btv_launcher.Utils.FileDownload.OnDownloadListener;
 import com.wiatec.btv_launcher.Utils.OkHttp.Bean.DownloadInfo;
 import com.wiatec.btv_launcher.Utils.OkHttp.Listener.DownloadListener;
 import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;

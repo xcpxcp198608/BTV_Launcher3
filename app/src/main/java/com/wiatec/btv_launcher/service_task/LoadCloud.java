@@ -8,10 +8,7 @@ import android.text.TextUtils;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.Utils.ApkCheck;
-import com.wiatec.btv_launcher.Utils.FileDownload.DownloadManager;
 import com.wiatec.btv_launcher.Utils.Logger;
-import com.wiatec.btv_launcher.Utils.OkHttp.Bean.DownloadInfo;
-import com.wiatec.btv_launcher.Utils.OkHttp.Listener.DownloadListener;
 import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
 import com.wiatec.btv_launcher.bean.CloudImageInfo;
 import com.wiatec.btv_launcher.bean.CloudInfo;
@@ -102,7 +99,6 @@ public class LoadCloud implements Runnable {
             public void onResponse(Call call, Response response) throws IOException {
                 if (response != null) {
                     String jsonString = response.body().string();
-                    DownloadManager downloadManager = DownloadManager.getInstance(Application.getContext());
                     try {
                         JSONObject result = new JSONObject(jsonString);
                         JSONObject jsonObject = result.getJSONObject("result");
