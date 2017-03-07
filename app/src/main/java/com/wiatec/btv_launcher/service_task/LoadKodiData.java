@@ -9,6 +9,7 @@ import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.Utils.FileCheck;
 import com.wiatec.btv_launcher.Utils.FileDownload.DownloadManager;
 import com.wiatec.btv_launcher.Utils.Logger;
+import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
 import com.wiatec.btv_launcher.bean.ImageInfo;
 import com.wiatec.btv_launcher.bean.VideoInfo;
 
@@ -65,7 +66,11 @@ public class LoadKodiData implements Runnable {
                         return;
                     }
                     for(ImageInfo imageInfo : list){
-                        downloadManager.startDownload(imageInfo.getName() , imageInfo.getUrl() , F.path.kodi_image_path);
+                        OkMaster.download(Application.getContext())
+                                .name(imageInfo.getName())
+                                .path(F.path.kodi_image_path)
+                                .url(imageInfo.getUrl())
+                                .startDownload(null);
                     }
                 }
             });
@@ -95,9 +100,17 @@ public class LoadKodiData implements Runnable {
                         return;
                     }
                     if(!FileCheck.isFileExists(F.path.kodi_video_path , videoInfo.getName())){
-                        downloadManager.startDownload(videoInfo.getName() , videoInfo.getUrl() , F.path.kodi_video_path);
+                        OkMaster.download(Application.getContext())
+                                .name(videoInfo.getName())
+                                .path(F.path.kodi_video_path)
+                                .url(videoInfo.getUrl())
+                                .startDownload(null);
                     }else if (!FileCheck.isFileIntact(F.path.kodi_video_path ,videoInfo.getName() ,videoInfo.getMd5())){
-                        downloadManager.startDownload(videoInfo.getName() , videoInfo.getUrl() , F.path.kodi_video_path);
+                        OkMaster.download(Application.getContext())
+                                .name(videoInfo.getName())
+                                .path(F.path.kodi_video_path)
+                                .url(videoInfo.getUrl())
+                                .startDownload(null);
                     }else{
                         Logger.d("kodi video do not need download");
                     }

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 import android.widget.Scroller;
 
+import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.Utils.Logger;
 
 import java.lang.reflect.Field;
@@ -47,7 +48,7 @@ public class RollOverView extends ViewPager{
     public void start(){
         final int count = getChildCount();
         isRoll = true;
-        new Thread(new Runnable() {
+        Application.getThreadPool().execute(new Runnable() {
             @Override
             public void run() {
                 int i =0;
@@ -68,7 +69,7 @@ public class RollOverView extends ViewPager{
                     }
                 }
             }
-        }).start();
+        });
     }
 
     public void pause(){
