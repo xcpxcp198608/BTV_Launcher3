@@ -7,6 +7,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +22,7 @@ import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.Utils.Logger;
 
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
@@ -47,6 +49,21 @@ public class BootAdActivity extends AppCompatActivity {
         AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         int index = (int) (audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)*0.2);
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC , index , 0);
+        deleteOldFolder();
+    }
+
+    private void deleteOldFolder() {
+        String path = Environment.getExternalStorageDirectory().getAbsolutePath()+"/BLauncher/";
+        File file = new File(path);
+        if(file.exists()){
+            if(file.isDirectory()){
+                File [] files = file.listFiles();
+                for(File file1 : files){
+                    file1.delete();
+                }
+                file.delete();
+            }
+        }
     }
 
     @Override
