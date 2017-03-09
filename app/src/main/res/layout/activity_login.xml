@@ -8,7 +8,7 @@
     <EditText
         android:textSize="18sp"
         android:textColorHint="@color/colorItemGrayBlue"
-        android:id="@+id/et_key"
+        android:id="@+id/et_username"
         android:hint="@string/input_key"
         android:background="@color/colorBTV"
         android:layout_width="300dp"

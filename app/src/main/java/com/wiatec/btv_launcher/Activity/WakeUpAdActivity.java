@@ -18,7 +18,7 @@ import com.wiatec.btv_launcher.R;
  * Created by patrick on 2017/3/3.
  */
 
-public class WeekUpAdActivity extends AppCompatActivity {
+public class WakeUpAdActivity extends AppCompatActivity {
 
     private VideoView vvWake;
     @Override

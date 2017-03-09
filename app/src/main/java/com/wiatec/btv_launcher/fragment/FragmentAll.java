@@ -16,7 +16,6 @@ import com.wiatec.btv_launcher.Activity.SplashActivity;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.SQL.InstalledAppDao;
 import com.wiatec.btv_launcher.Utils.ApkLaunch;
-import com.wiatec.btv_launcher.Utils.FileDownload.SQLiteDao;
 import com.wiatec.btv_launcher.adapter.MenuItemAdapter;
 import com.wiatec.btv_launcher.animator.Zoom;
 import com.wiatec.btv_launcher.bean.InstalledApp;

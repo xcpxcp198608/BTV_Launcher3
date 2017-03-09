@@ -173,7 +173,6 @@
                             android:layout_marginTop="5dp"
                             android:gravity="right|top"
                             android:textStyle="bold"
-                            android:text="2"
                             android:textSize="25sp"
                             android:textColor="@color/colorRed"
                             android:layout_width="match_parent"
@@ -206,7 +205,8 @@
 
                         <TextView
                             android:gravity="left"
-                            android:textSize="16sp"
+                            android:textSize="17sp"
+                            android:textStyle="bold"
                             android:textColor="@color/colorWhite"
                             android:text="@string/legacy_institute"
                             android:layout_width="match_parent"
@@ -217,8 +217,8 @@
                             android:background="@color/colorTranslucent"
                             android:scaleType="centerInside"
                             android:src="@drawable/joinme_144"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp" />
+                            android:layout_width="33dp"
+                            android:layout_height="33dp" />
 
                     </FrameLayout>
 
@@ -240,6 +240,7 @@
                         <TextView
                             android:gravity="center"
                             android:textSize="18sp"
+                            android:textStyle="bold"
                             android:textColor="@color/colorWhite"
                             android:text="@string/game1"
                             android:layout_width="match_parent"
@@ -249,8 +250,8 @@
                             android:layout_gravity="right"
                             android:scaleType="centerInside"
                             android:src="@drawable/happychick_144"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"/>
+                            android:layout_width="33dp"
+                            android:layout_height="33dp"/>
 
                     </FrameLayout>
 
@@ -272,7 +273,6 @@
                 </LinearLayout>
 
             </LinearLayout>
-
 
         </LinearLayout>
 
@@ -354,54 +354,6 @@
                     android:layout_height="50dp" />
 
             </FrameLayout>
-            <!--
-            <LinearLayout
-                android:background="@color/colorWhite"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="0dp">
-
-                <ImageButton
-                    android:id="@+id/ibt_ld_cloud"
-                    android:padding="3dp"
-                    android:adjustViewBounds="true"
-                    android:background="@drawable/item_ldcloud_bg"
-                    android:src="@drawable/ld_cloud_icon_3"
-                    android:scaleType="fitCenter"
-                    android:cropToPadding="true"
-                    android:layout_weight="9"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent" />
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_weight="2"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent">
-                    <ImageView
-                        android:layout_margin="5dp"
-                        android:scaleType="centerCrop"
-                        android:layout_gravity="right"
-                        android:src="@drawable/cloud_shuiyin"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp" />
-                    <android.support.v4.widget.Space
-                        android:layout_weight="1"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp" />
-                    <ImageButton
-                        android:id="@+id/ibt_full_screen"
-                        android:background="@drawable/full_screen"
-                        android:layout_margin="5dp"
-                        android:scaleType="centerInside"
-                        android:layout_gravity="bottom|center_horizontal"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp" />
-                </LinearLayout>
-            </LinearLayout>
-            -->
 
             <FrameLayout
                 android:background="@color/colorWhite"

@@ -76,7 +76,6 @@ public class MainPresenter extends BasePresenter<IMainActivity> {
     }
 
     public void loadVideo (){
-
         if(iBootAdVideoData != null){
             iBootAdVideoData.loadData(new IBootAdVideoData.OnLoadListener() {
                 @Override

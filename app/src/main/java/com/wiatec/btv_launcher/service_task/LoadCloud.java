@@ -8,8 +8,8 @@ import android.text.TextUtils;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.Utils.ApkCheck;
-import com.wiatec.btv_launcher.Utils.FileDownload.DownloadManager;
 import com.wiatec.btv_launcher.Utils.Logger;
+import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
 import com.wiatec.btv_launcher.bean.CloudImageInfo;
 import com.wiatec.btv_launcher.bean.CloudInfo;
 import com.wiatec.btv_launcher.bean.TokenInfo;
@@ -28,6 +28,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by PX on 2016-12-01.
@@ -88,60 +89,53 @@ public class LoadCloud implements Runnable {
             return;
         }
         final String baseUrl = "https://apps.legacydirect.cloud/api/file/get?authcode="+ cloudInfo.getToken()+"&path=";
-        OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        builder.connectTimeout(30, TimeUnit.SECONDS);
-        OkHttpClient okHttpClient = builder.build();
-        try {
-            Request request = new Request.Builder().get().url(cloudInfo.getUrl()).build();
-            Call call = okHttpClient.newCall(request);
-            call.enqueue(new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    Logger.d(e.getMessage());
-                }
+        OkMaster.get(cloudInfo.getUrl()).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Logger.d(e.getMessage());
+            }
 
-                @Override
-                public void onResponse(Call call, okhttp3.Response response) throws IOException {
-                    if (response != null) {
-                        String jsonString = response.body().string();
-                        DownloadManager downloadManager = DownloadManager.getInstance(Application.getContext());
-                        try {
-                            JSONObject result = new JSONObject(jsonString);
-                            JSONObject jsonObject = result.getJSONObject("result");
-                            JSONArray jsonArray = jsonObject.getJSONArray("file");
-                            if (jsonArray != null && jsonArray.length() > 0) {
-                                List<String> list = new ArrayList<>();
-                                int length = 0;
-                                if (jsonArray.length() > 10) {
-                                    length = 10;
-                                } else {
-                                    length = jsonArray.length();
-                                }
-                                for (int i = 0; i < length; i++) {
-                                    final CloudImageInfo imageInfo = new CloudImageInfo();
-                                    String url1 = jsonArray.getString(i);
-                                    String name = url1.split("/")[2];
-                                    String url = baseUrl + url1;
-                                    imageInfo.setUrl(url);
-                                    imageInfo.setName(name);
-                                    imageInfo.setPath(path);
-                                    Logger.d(imageInfo.toString());
-                                    downloadManager.startDownload(imageInfo.getName(), imageInfo.getUrl(), imageInfo.getPath());
-                                    list.add(imageInfo.getName());
-                                }
-                                isContainsFile(path, list);
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response != null) {
+                    String jsonString = response.body().string();
+                    try {
+                        JSONObject result = new JSONObject(jsonString);
+                        JSONObject jsonObject = result.getJSONObject("result");
+                        JSONArray jsonArray = jsonObject.getJSONArray("file");
+                        if (jsonArray != null && jsonArray.length() > 0) {
+                            List<String> list = new ArrayList<>();
+                            int length = 0;
+                            if (jsonArray.length() > 10) {
+                                length = 10;
+                            } else {
+                                length = jsonArray.length();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                            for (int i = 0; i < length; i++) {
+                                final CloudImageInfo imageInfo = new CloudImageInfo();
+                                String url1 = jsonArray.getString(i);
+                                String name = url1.split("/")[2];
+                                String url = baseUrl + url1;
+                                imageInfo.setUrl(url);
+                                imageInfo.setName(name);
+                                imageInfo.setPath(path);
+                                Logger.d(imageInfo.toString());
+                                OkMaster.download(Application.getContext()).path(imageInfo.getPath())
+                                        .name(imageInfo.getName())
+                                        .url(imageInfo.getUrl())
+                                        .startDownload(null);
+                                list.add(imageInfo.getName());
+                            }
+                            isContainsFile(path, list);
                         }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 }
-            });
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
+            }
+        });
 
+    }
 
     private void isContainsFile(String path , List<String> list){
         File file = new File(path);

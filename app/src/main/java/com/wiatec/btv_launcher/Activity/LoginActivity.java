@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.Utils.Logger;
+import com.wiatec.btv_launcher.bean.Result;
 import com.wiatec.btv_launcher.presenter.LoginPresenter;
 
 import butterknife.BindView;
@@ -24,8 +25,8 @@ import butterknife.OnClick;
 
 public class LoginActivity extends BaseActivity<ILoginActivity, LoginPresenter> implements ILoginActivity {
 
-    @BindView(R.id.et_key)
-    EditText etKey;
+    @BindView(R.id.et_username)
+    EditText etUserName;
     @BindView(R.id.et_password)
     EditText etPassword;
     @BindView(R.id.bt_login)
@@ -47,10 +48,10 @@ public class LoginActivity extends BaseActivity<ILoginActivity, LoginPresenter> 
 
     @OnClick(R.id.bt_login)
     public void onClick() {
-        String key = etKey.getText().toString().trim();
+        String userName = etUserName.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
-        if(!TextUtils.isEmpty(key) && ! TextUtils.isEmpty(password)){
-            presenter.login(key ,password);
+        if(!TextUtils.isEmpty(userName) && ! TextUtils.isEmpty(password)){
+            presenter.login(userName ,password);
             progressBar.setVisibility(View.VISIBLE);
         }else{
             Toast.makeText(LoginActivity.this , getString(R.string.error_input) , Toast.LENGTH_LONG).show();
@@ -58,18 +59,13 @@ public class LoginActivity extends BaseActivity<ILoginActivity, LoginPresenter> 
     }
 
     @Override
-    public void login(String result) {
-        Logger.d(result);
-        if ("ok".equals(result)) {
+    public void login(Result result) {
+        Logger.d(result.toString());
+        int code = result.getCode();
+        if (code == Result.CODE_LOGIN_OK) {
             progressBar.setVisibility(View.GONE);
-            startActivity(new Intent(LoginActivity.this, PinentryActivity.class));
+            startActivity(new Intent(LoginActivity.this, MemberChannelActivity.class));
             finish();
-        } else  if ("repeat".equals(result)){
-            progressBar.setVisibility(View.GONE);
-            Toast.makeText(LoginActivity.this , getString(R.string.error_repeat) , Toast.LENGTH_LONG).show();
-        }else  if ("error1".equals(result)){
-            progressBar.setVisibility(View.GONE);
-            Toast.makeText(LoginActivity.this , getString(R.string.error_connect) , Toast.LENGTH_LONG).show();
         } else {
             progressBar.setVisibility(View.GONE);
             Toast.makeText(LoginActivity.this , getString(R.string.error_key) , Toast.LENGTH_LONG).show();

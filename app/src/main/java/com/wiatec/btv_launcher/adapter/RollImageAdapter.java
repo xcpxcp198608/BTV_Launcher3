@@ -56,7 +56,11 @@ public class RollImageAdapter extends StaticPagerAdapter {
             @Override
             public void onClick(View v) {
                 if(imageInfo.getLink()!= null) {
-                    container.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(imageInfo.getLink())));
+                    try {
+                        container.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(imageInfo.getLink())));
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                 }
             }
         });

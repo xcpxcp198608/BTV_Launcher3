@@ -3,6 +3,7 @@ package com.wiatec.btv_launcher.presenter;
 import com.wiatec.btv_launcher.Activity.BaseActivity;
 import com.wiatec.btv_launcher.Activity.ILoginActivity;
 import com.wiatec.btv_launcher.Utils.Logger;
+import com.wiatec.btv_launcher.bean.Result;
 import com.wiatec.btv_launcher.data.ILoginData;
 import com.wiatec.btv_launcher.data.LoginData;
 
@@ -20,11 +21,11 @@ public class LoginPresenter extends BasePresenter<ILoginActivity> {
         iLoginData = new LoginData();
     }
 
-    public void login(String key ,String password){
+    public void login(String userName ,String password){
         if(iLoginData != null){
-            iLoginData.login(key, password, new ILoginData.OnLoginListener() {
+            iLoginData.login(userName, password, new ILoginData.OnLoginListener() {
                 @Override
-                public void onSuccess(String result) {
+                public void onSuccess(Result result) {
                     iLoginActivity.login(result);
                 }
 
