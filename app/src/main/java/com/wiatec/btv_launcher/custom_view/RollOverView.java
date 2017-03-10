@@ -16,6 +16,14 @@ import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.Utils.Logger;
 
 import java.lang.reflect.Field;
+import java.util.concurrent.TimeUnit;
+
+import rx.Observable;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by patrick on 2017/2/20.
@@ -23,6 +31,7 @@ import java.lang.reflect.Field;
 
 public class RollOverView extends ViewPager{
 
+    private Subscription subscription;
     private boolean isRoll = true;
     private long interval = 6000;
     private int mTransformerDuration = 1800;
@@ -47,33 +56,28 @@ public class RollOverView extends ViewPager{
 
     public void start(){
         final int count = getChildCount();
-        isRoll = true;
-        Application.getThreadPool().execute(new Runnable() {
-            @Override
-            public void run() {
-                int i =0;
-                while(isRoll){
-                    Message message = handler.obtainMessage();
-                    message.obj = i;
-                    handler.sendMessage(message);
-//                    Logger.d(count+"");
-//                    Logger.d(i+"");
-                    i++;
-                    if(i >= count){
-                        i=0;
+        subscription = Observable.interval(0,interval, TimeUnit.MILLISECONDS).take(count)
+                .subscribeOn(Schedulers.io())
+                .repeat()
+                .map(new Func1<Long, Integer>() {
+                    @Override
+                    public Integer call(Long aLong) {
+                        return aLong.intValue();
                     }
-                    try {
-                        Thread.sleep(interval);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Integer>() {
+                    @Override
+                    public void call(Integer integer) {
+                        setCurrentItem(integer);
                     }
-                }
-            }
-        });
+                });
     }
 
     public void pause(){
-        isRoll = false;
+        if(subscription != null){
+            subscription.unsubscribe();
+        }
     }
 
     public void setRollViewAdapter(final RollOverAdapter rollOverAdapter) {
