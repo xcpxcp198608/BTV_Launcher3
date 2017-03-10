@@ -398,6 +398,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         if (files != null && files.length > 0) {
             isCloudImagePlaying = true;
             subscription = Observable.interval(6000, TimeUnit.MILLISECONDS).take(files.length)
+                    .subscribeOn(Schedulers.io())
                     .repeat()
                     .map(new Func1<Long, String>() {
                         @Override
@@ -477,6 +478,9 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     }
 
     private void playVideo(final String url) {
+        if(vv_Main.isPlaying()){
+            vv_Main.stopPlayback();
+        }
         vv_Main.setVideoPath(url);
         vv_Main.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
