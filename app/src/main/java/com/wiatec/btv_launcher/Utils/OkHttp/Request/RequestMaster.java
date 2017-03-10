@@ -45,6 +45,11 @@ public abstract class RequestMaster {
         return this;
     }
 
+    public RequestMaster parames(String key , Object value){
+        parameters.put(key ,value);
+        return this;
+    }
+
     public RequestMaster parames(Parameters parameters){
         this.parameters = parameters;
         return this;

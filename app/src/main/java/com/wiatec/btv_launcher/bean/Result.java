@@ -5,11 +5,9 @@ package com.wiatec.btv_launcher.bean;
  */
 
 public class Result {
-<<<<<<< HEAD
-=======
 
-    public static final int CODE_LOGIN_OK = 100;
-    public static final String STATUS_LOGIN_OK = "login success";
+    public static final int CODE_OK = 100;
+    public static final String STATUS_OK = "request success";
 
     public static final int CODE_USERNAME_ERROR = 101;
     public static final String STATUS_USERNAME_ERROR = "User Name Error";
@@ -24,7 +22,7 @@ public class Result {
     public static final String STATUS_EMAIL_EXISTS = "Email exists";
 
     public static final int CODE_USERNAME_EXISTS = 105;
-    public static final String STATUS_USERNAME_EXISTS = "Email exists";
+    public static final String STATUS_USERNAME_EXISTS = "UserName exists";
 
     public static final int CODE_REGISTER_OK = 106;
     public static final String STATUS_REGISTER_OK = "Register success";
@@ -38,41 +36,42 @@ public class Result {
     public static final int CODE_INPUT_ERROR = 109;
     public static final String STATUS_INPUT_ERROR = "input error";
 
->>>>>>> v2.2.1
+    public static final int CODE_LOGIN_ERROR = 110;
+    public static final String STATUS_LOGIN_ERROR = "Login Error";
+
+    public static final int CODE_LOGIN_REPEAT = 111;
+    public static final String STATUS_LOGIN_REPEAT = "Login Repeat";
+
+    public static final int CODE_EMAIL_CONFIRM_ERROR = 112;
+    public static final String STATUS_EMAIL_CONFIRM_ERROR = "Email confirm failure";
+
     private int code;
     private String status;
     private Object object;
-
     public int getCode() {
         return code;
     }
-
     public void setCode(int code) {
         this.code = code;
     }
-
     public String getStatus() {
         return status;
     }
-
     public void setStatus(String status) {
         this.status = status;
     }
-
     public Object getObject() {
         return object;
     }
-
     public void setObject(Object object) {
         this.object = object;
     }
-
     @Override
     public String toString() {
-        return "Result{" +
-                "code=" + code +
-                ", status='" + status + '\'' +
-                ", object=" + object +
-                '}';
+        return "Result [code=" + code + ", status=" + status + ", object="
+                + object + ", getCode()=" + getCode() + ", getStatus()="
+                + getStatus() + ", getObject()=" + getObject()
+                + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+                + ", toString()=" + super.toString() + "]";
     }
 }

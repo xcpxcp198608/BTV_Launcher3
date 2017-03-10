@@ -23,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.jude.rollviewpager.RollPagerView;
 import com.wiatec.btv_launcher.Activity.AppSelectActivity;
 import com.wiatec.btv_launcher.Activity.FMPlayActivity;
+import com.wiatec.btv_launcher.Activity.LoginActivity;
 import com.wiatec.btv_launcher.Activity.PlayActivity;
 import com.wiatec.btv_launcher.Activity.SplashActivity;
 import com.wiatec.btv_launcher.Application;
@@ -32,6 +33,7 @@ import com.wiatec.btv_launcher.SQL.InstalledAppDao;
 import com.wiatec.btv_launcher.Utils.ApkCheck;
 import com.wiatec.btv_launcher.Utils.ApkLaunch;
 import com.wiatec.btv_launcher.Utils.Logger;
+import com.wiatec.btv_launcher.Utils.SPUtils;
 import com.wiatec.btv_launcher.adapter.ChannelGrideAdapter;
 import com.wiatec.btv_launcher.adapter.LinkListAdapter;
 import com.wiatec.btv_launcher.adapter.RollImageAdapter;
@@ -89,8 +91,6 @@ public class Fragment2 extends BaseFragment<IFragment4, Fragment4Presenter> impl
     private ChannelGrideAdapter grideAdapter;
     private boolean isLoaded = false;
     private InstalledAppDao installedAppDao;
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
     private boolean isShow = true;
     private RollOverViewAdapter rollOverViewAdapter;
     private boolean rollOverStart = false;
@@ -107,8 +107,7 @@ public class Fragment2 extends BaseFragment<IFragment4, Fragment4Presenter> impl
         ButterKnife.bind(this, view);
         presenter.bind();
         installedAppDao = InstalledAppDao.getInstance(Application.getContext());
-        sharedPreferences = Application.getContext().getSharedPreferences(F.sp.name , Context.MODE_PRIVATE);
-        isShow = sharedPreferences.getBoolean("isShow" , true);
+        isShow = (boolean) SPUtils.get(getContext(), "isShow" , true);
         lvCountry.setNextFocusRightId(R.id.gv_channel);
         return view;
     }
@@ -117,7 +116,7 @@ public class Fragment2 extends BaseFragment<IFragment4, Fragment4Presenter> impl
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if(isVisibleToUser){
-            isShow = sharedPreferences.getBoolean("isShow" , true);
+            isShow = (boolean) SPUtils.get(getContext(), "isShow" , true);
             if(isShow){
                 showWarning();
             }
@@ -150,18 +149,14 @@ public class Fragment2 extends BaseFragment<IFragment4, Fragment4Presenter> impl
         btConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editor = sharedPreferences.edit();
-                editor.putBoolean("isShow" ,false);
-                editor.commit();
+                SPUtils.put(getContext(), "isShow" ,false);
                 alertDialog.dismiss();
             }
         });
         btCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editor = sharedPreferences.edit();
-                editor.putBoolean("isShow" ,true);
-                editor.commit();
+                SPUtils.put(getContext(), "isShow" ,false);
                 alertDialog.dismiss();
             }
         });
@@ -172,12 +167,12 @@ public class Fragment2 extends BaseFragment<IFragment4, Fragment4Presenter> impl
         super.onStart();
         setZoom();
         ibtC1.setOnClickListener(this);
+        ibtC7.setOnClickListener(this);
         showCustomShortCut(ibtC2 ,"c2");
         showCustomShortCut(ibtC3 ,"c3");
         showCustomShortCut(ibtC4 ,"c4");
         showCustomShortCut(ibtC5 ,"c5");
         showCustomShortCut(ibtC6 ,"c6");
-        showCustomShortCut(ibtC7 ,"c7");
     }
 
     @Override
@@ -312,7 +307,7 @@ public class Fragment2 extends BaseFragment<IFragment4, Fragment4Presenter> impl
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ChannelInfo channelInfo = list.get(position);
-                isShow = sharedPreferences.getBoolean("isShow" , true);
+                isShow = (boolean) SPUtils.get(getContext(), "isShow" , true);
                 if(isShow){
                     return;
                 }
@@ -419,6 +414,9 @@ public class Fragment2 extends BaseFragment<IFragment4, Fragment4Presenter> impl
                 Intent intent = new Intent(getActivity() , FMPlayActivity.class);
                 intent.putExtra("url" , "http://142.4.216.91:8280/");
                 getContext().startActivity(intent);
+                break;
+            case R.id.ibt_c7:
+                startActivity(new Intent(getContext(), LoginActivity.class));
                 break;
             default:
                 break;

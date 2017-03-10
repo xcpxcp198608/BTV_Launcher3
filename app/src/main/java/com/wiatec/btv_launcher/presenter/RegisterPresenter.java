@@ -1,16 +1,8 @@
-package com.wiatec.btv_launcher.data;
+package com.wiatec.btv_launcher.presenter;
 
-import android.app.Application;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.wiatec.btv_launcher.Activity.ILoginActivity;
+import com.wiatec.btv_launcher.Activity.IRegisterActivity;
 import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.OkHttp.Listener.StringListener;
@@ -20,19 +12,23 @@ import com.wiatec.btv_launcher.bean.Result;
 import com.wiatec.btv_launcher.bean.UserInfo;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
- * Created by patrick on 2016/12/29.
+ * Created by patrick on 2017/3/10.
  */
 
-public class LoginData implements ILoginData {
-    @Override
-    public void login(final UserInfo userInfo, final DeviceInfo deviceInfo, final OnLoginListener onLoginListener) {
-        OkMaster.get(F.url.login)
-                .parames("userInfo" , userInfo)
-                .parames("deviceInfo" ,deviceInfo)
+public class RegisterPresenter extends BasePresenter<IRegisterActivity> {
+
+    private IRegisterActivity iRegisterActivity;
+
+    public RegisterPresenter(IRegisterActivity iRegisterActivity) {
+        this.iRegisterActivity = iRegisterActivity;
+    }
+
+    public void register (UserInfo userInfo , DeviceInfo deviceInfo){
+        OkMaster.get(F.url.register)
+                .parames("userInfo",userInfo)
+                .parames("deviceInfo", deviceInfo)
                 .enqueue(new StringListener() {
                     @Override
                     public void onSuccess(String s) throws IOException {
@@ -40,14 +36,13 @@ public class LoginData implements ILoginData {
                             return;
                         }
                         Result result = new Gson().fromJson(s , new TypeToken<Result>(){}.getType());
-                        onLoginListener.onSuccess(result);
+                        iRegisterActivity.register(result);
                     }
 
                     @Override
                     public void onFailure(String e) {
-                        onLoginListener.onFailure(e);
+                        Logger.d(e);
                     }
                 });
-
     }
 }

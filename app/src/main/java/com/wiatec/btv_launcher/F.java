@@ -10,35 +10,30 @@ import android.renderscript.Sampler;
 
 public final class F {
     public static final class url {
-        public static final String updater="http://appota.gobeyondtv.co:8080/Launcher_EN/GetUpdate";
-        public static final String video="http://appota.gobeyondtv.co:8080/Launcher_EN/GetVideo";
-        public static final String opportunity="http://appota.gobeyondtv.co:8080/Launcher_EN/GetOpportunityImage";
-        public static final String manual_image = "http://appota.gobeyondtv.co:8080/Launcher_EN/GetManualImage";
-        public static final String ad_video="http://appota.gobeyondtv.co:8081/json/AdVideoInfo.json";
-        public static final String boot_ad_video="http://appota.gobeyondtv.co:8081/json/BoootAdVideoInfo.json";
+        public static final String updater="http://appota.gobeyondtv.co:8080/launcher/update/get";
+        public static final String channel_type="http://appota.gobeyondtv.co:8080/launcher/channeltype/get";
+        public static final String channel="http://appota.gobeyondtv.co:8080/launcher/channel/get";
 
-        public static final String image="http://appota.gobeyondtv.co:8080/Launcher_EN/GetImage";
-        public static final String image2="http://appota.gobeyondtv.co:8080/Launcher_EN/GetImage2";
-        public static final String splash_image="http://appota.gobeyondtv.co:8080/Launcher_EN/GetAdImage";
-        public static final String roll_image="http://appota.gobeyondtv.co:8080/Launcher_EN/GetRollImage";
-        public static final String roll_image2="http://appota.gobeyondtv.co:8080/Launcher_EN/GetRollImage2";
-        public static final String roll_over_image="http://appota.gobeyondtv.co:8080/Launcher_EN/GetRollOverImage";
-        public static final String channel="http://appota.gobeyondtv.co:8080/Launcher_EN/GetChannel";
-        public static final String message1="http://appota.gobeyondtv.co:8080/Launcher_EN/GetMessage1";
-        public static final String message="http://appota.gobeyondtv.co:8080/Launcher_EN/GetMessage";
+        public static final String video="http://appota.gobeyondtv.co:8080/launcher/video/get";
+        public static final String ad_video="http://appota.gobeyondtv.co:8080/launcher/advideo/get";
+        public static final String boot_ad_video="http://appota.gobeyondtv.co:8080/launcher/bootadvideo/get";
+        public static final String kodi_video="http://appota.gobeyondtv.co:8080/launcher/kodivideo/get";
 
-        public static final String message1_zh_CN="http://appota.gobeyondtv.co:8081/json/Message1_zh_CN.json";
-        public static final String message1_zh_TW="http://appota.gobeyondtv.co:8081/json/Message1_zh_TW.json";
-        public static final String message1_es_ES="http://appota.gobeyondtv.co:8081/son/Message1_es_ES.json";
-        public static final String message1_es_US="http://appota.gobeyondtv.co:8081/json/Message1_es_US.json";
-        public static final String message1_it_IT="http://appota.gobeyondtv.co:8081/json/Message1_it_IT.json";
+        public static final String kodi_image="http://appota.gobeyondtv.co:8080/launcher/kodiimage/get";
+        public static final String image="http://appota.gobeyondtv.co:8080/launcher/image/get";
+        public static final String splash_image="http://appota.gobeyondtv.co:8080/launcher/adimage/get";
+        public static final String roll_image="http://appota.gobeyondtv.co:8080/launcher/rollimage/get";
+        public static final String roll_over_image="http://appota.gobeyondtv.co:8080/launcher/rolloverimage/get";
+        public static final String opportunity_image="http://appota.gobeyondtv.co:8080/launcher/opportunityimage/get";
+        public static final String manual_image = "http://appota.gobeyondtv.co:8080/launcher/manualimage/get";
 
-        public static final String login="http://appota.gobeyondtv.co:8080/Launcher_EN/Login";
-        public static final String pinentry_login="http://appota.gobeyondtv.co:8080/Launcher_EN/PinentryLogin";
+        public static final String message="http://appota.gobeyondtv.co:8080/launcher/message/get";
+        public static final String message1="http://appota.gobeyondtv.co:8080/launcher/message1/get";
 
-        public static final String upload_hold_time="http://appota.gobeyondtv.co:8080/Launcher_EN/UploadHoldTime";
-        public static final String kodi_image_data="http://appota.gobeyondtv.co:8080/Launcher_EN/GetKodiImage";
-        public static final String kodi_video_data="http://appota.gobeyondtv.co:8080/Launcher_EN/GetKodiVideo";
+        public static final String login="http://appota.gobeyondtv.co:8080/launcher/user/login";
+        public static final String register="http://appota.gobeyondtv.co:8080/launcher/user/register";
+        public static final String login_repeat_check="http://appota.gobeyondtv.co:8080/launcher/user/check";
+        public static final String upload_data="http://appota.gobeyondtv.co:8080/launcher/userdata/upload?userData.userName=1&userData.ip=321&userData.mac=24&userData.country=12321&userData.city=2432&userData.exitTime=234234&userData.stayTime=234";
     }
 
     public static final class path {
@@ -51,11 +46,6 @@ public final class F {
                 +"/Android/data/org.xbmc.kodi/files/.kodi/addons/skin.beyondtv/backgrounds/";
         public static final String kodi_video_path = Environment.getExternalStorageDirectory().getAbsolutePath()
         +"/Android/data/org.xbmc.kodi/files/.kodi/addons/skin.beyondtv/extras/Intro/";
-    }
-
-    public static final class sp {
-        public static final String name = "launcher";
-        public static final String key_video = "video";
     }
 
     public static final class package_name {

@@ -30,13 +30,21 @@
     <string name="error_key">密钥错误</string>
     <string name="error_connect">链接错误</string>
     <string name="error_repeat">重复登录</string>
-    <string name="input_key">输入密钥</string>
-    <string name="input_password">输入密码</string>
+    <string name="input_key">用户名</string>
+    <string name="input_password">密码</string>
+    <string name="email">邮箱</string>
     <string name="warning">警告</string>
     <string name="warning_message">Welcome to BTVi3, By using this service you agree to the Terms of Service (TOS) on Legacy Direct websites. Legacy Direct reserves the right to change the TOS at any time. If you do not agree to any of these terms, please refrain from using the BTVi3 services and products.</string>
     <string name="notice1">The programs shown are from internet and for learning purpose. Please check with Legacy Direct Term Of Service.</string>
     <string name="no_support">Do not support this device</string>
     <string name="legacy_institute">LEGACY\nINSTITUTE</string>
     <string name="game1">GAME</string>
-    <string name="download_guide">please go to app market download and install </string>
+    <string name="download_guide">请去App Market下载安装</string>
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="create_account">创建账号</string>
+    <string name="username_input_error">UserName input error</string>
+    <string name="password_input_error">Password input error</string>
+    <string name="password_input_different">Password input different</string>
+    <string name="email_input_error">Email input error</string>
 </resources>

@@ -1,10 +1,14 @@
 package com.wiatec.btv_launcher.Activity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.wiatec.btv_launcher.Utils.SPUtils;
+import com.wiatec.btv_launcher.Utils.SystemConfig;
+import com.wiatec.btv_launcher.bean.DeviceInfo;
+import com.wiatec.btv_launcher.bean.UserInfo;
 import com.wiatec.btv_launcher.presenter.BasePresenter;
 
 /**
@@ -13,18 +17,33 @@ import com.wiatec.btv_launcher.presenter.BasePresenter;
 
 public abstract class BaseActivity <V ,T extends BasePresenter> extends AppCompatActivity {
     protected T presenter;
-    protected String countryCode ;
-    protected String userName;
-    protected String token;
+    protected int currentLoginCount;
+    protected UserInfo userInfo;
+    protected DeviceInfo deviceInfo;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = createPresenter();
         presenter.attachView(this);
-        countryCode = (String) SPUtils.get(this ,countryCode ,"");
-        userName = (String) SPUtils.get(this ,userName ,"");
-        token = (String) SPUtils.get(this ,token ,"");
+        userInfo = new UserInfo();
+        deviceInfo = new DeviceInfo();
+        String mac = SystemConfig.getWifiMac1(this);
+        deviceInfo.setMac(mac);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        currentLoginCount = (int) SPUtils.get(this , "currentLoginCount" , 1);
+        userInfo.setUserName((String) SPUtils.get(this , "userName" , ""));
+        userInfo.setToken((String) SPUtils.get(this , "token" , ""));
+        deviceInfo.setUserName((String) SPUtils.get(this , "userName" , ""));
+        deviceInfo.setCity((String) SPUtils.get(this , "city" , ""));
+        deviceInfo.setCountry((String) SPUtils.get(this , "country" , ""));
+        deviceInfo.setCountryCode((String) SPUtils.get(this , "countryCode" , ""));
+        deviceInfo.setRegionName((String) SPUtils.get(this , "regionName" , ""));
+        deviceInfo.setTimeZone((String) SPUtils.get(this , "timezone" , ""));
     }
 
     @Override

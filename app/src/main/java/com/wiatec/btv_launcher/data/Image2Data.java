@@ -20,7 +20,7 @@ import java.util.List;
 public class Image2Data implements IImage2Data {
     @Override
     public void loadData(final OnLoadListener onLoadListener) {
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(F.url.image2, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(F.url.channel_type, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 if(response != null){

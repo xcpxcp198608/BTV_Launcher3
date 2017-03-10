@@ -34,7 +34,7 @@ public class UploadTimeData {
 
     public void upload(final String exitTime , final String holdTime){
         Request.Builder builder = new Request.Builder();
-        builder.url(F.url.upload_hold_time);
+        builder.url(F.url.upload_data);
         FormBody.Builder formBuilder = new FormBody.Builder();
         formBuilder.add("exitTime",exitTime);
         formBuilder.add("holdTime",holdTime);

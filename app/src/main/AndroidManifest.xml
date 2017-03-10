@@ -40,7 +40,10 @@
         <activity android:name=".Activity.PlayAdActivity"/>
         <activity android:name=".Activity.OpportunityActivity"/>
         <activity android:name=".Activity.UserManualActivity"/>
-        <activity android:name=".Activity.LoginActivity"/>
+        <activity android:name=".Activity.LoginActivity"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".Activity.RegisterActivity"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".Activity.PinentryActivity"/>
         <activity android:name=".Activity.FMPlayActivity"/>
         <activity android:name=".Activity.MainActivity"

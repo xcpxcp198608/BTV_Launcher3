@@ -21,7 +21,7 @@ public class OpportunityData implements IOpportunityData{
 
     @Override
     public void loadData(final OnLoadListener onLoadListener){
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(F.url.opportunity, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(F.url.opportunity_image, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 if(response == null){

@@ -12,6 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Parameters {
     public Map<String ,String> stringMap = new ConcurrentHashMap<>();
     public Map<String ,File> fileMap = new ConcurrentHashMap<>();
+    public Map<String ,Object> objectMap = new ConcurrentHashMap<>();
 
     public Parameters() {
 
@@ -25,12 +26,20 @@ public class Parameters {
         put(key ,value);
     }
 
+    public Parameters(String key , Object value){
+        put(key ,value);
+    }
+
     public void put (String key ,String value){
         stringMap.put(key ,value);
     }
 
     public void put (String key ,File value){
         fileMap.put(key ,value);
+    }
+
+    public void put (String key ,Object value){
+        objectMap.put(key ,value);
     }
 
     public String getStringValue (String key){
@@ -40,6 +49,10 @@ public class Parameters {
 
     public File getFileValue (String key){
         return fileMap.get(key);
+    }
+
+    public Object getObjectValue (String key){
+        return objectMap.get(key);
     }
 
 }

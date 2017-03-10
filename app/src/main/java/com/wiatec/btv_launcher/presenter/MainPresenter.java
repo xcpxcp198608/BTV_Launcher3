@@ -181,9 +181,13 @@ public class MainPresenter extends BasePresenter<IMainActivity> {
                         String city = response.getString("city");
                         String country = response.getString("country");
                         String countryCode = response.getString("countryCode");
+                        String regionName = response.getString("regionName");
+                        String timeZone = response.getString("timezone");
                         Logger.d(country +"---"+ countryCode +"---"+ city);
                         SPUtils.put(Application.getContext() , "countryCode",countryCode);
                         SPUtils.put(Application.getContext() , "country",country);
+                        SPUtils.put(Application.getContext() , "regionName",regionName);
+                        SPUtils.put(Application.getContext() , "timezone",timeZone);
                         SPUtils.put(Application.getContext() , "city",city);
                     } catch (JSONException e) {
                         e.printStackTrace();

@@ -12,7 +12,9 @@ import android.widget.Toast;
 
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.Utils.Logger;
+import com.wiatec.btv_launcher.Utils.SPUtils;
 import com.wiatec.btv_launcher.bean.Result;
+import com.wiatec.btv_launcher.bean.UserInfo;
 import com.wiatec.btv_launcher.presenter.LoginPresenter;
 
 import butterknife.BindView;
@@ -31,6 +33,8 @@ public class LoginActivity extends BaseActivity<ILoginActivity, LoginPresenter> 
     EditText etPassword;
     @BindView(R.id.bt_login)
     Button btLogin;
+    @BindView(R.id.bt_create_account)
+    Button btCreateAccount;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
 
@@ -46,15 +50,25 @@ public class LoginActivity extends BaseActivity<ILoginActivity, LoginPresenter> 
         ButterKnife.bind(this);
     }
 
-    @OnClick(R.id.bt_login)
-    public void onClick() {
-        String userName = etUserName.getText().toString().trim();
-        String password = etPassword.getText().toString().trim();
-        if(!TextUtils.isEmpty(userName) && ! TextUtils.isEmpty(password)){
-            presenter.login(userName ,password);
-            progressBar.setVisibility(View.VISIBLE);
-        }else{
-            Toast.makeText(LoginActivity.this , getString(R.string.error_input) , Toast.LENGTH_LONG).show();
+    @OnClick({R.id.bt_login, R.id.bt_create_account})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.bt_login:
+                String userName = etUserName.getText().toString().trim();
+                String password = etPassword.getText().toString().trim();
+                if(!TextUtils.isEmpty(userName) && ! TextUtils.isEmpty(password)){
+                    UserInfo userInfo = new UserInfo();
+                    userInfo.setUserName(userName);
+                    userInfo.setPassword(password);
+                    presenter.login(userInfo , deviceInfo);
+                    progressBar.setVisibility(View.VISIBLE);
+                }else{
+                    Toast.makeText(LoginActivity.this , getString(R.string.error_input) , Toast.LENGTH_LONG).show();
+                }
+                break;
+            case R.id.bt_create_account:
+                startActivity(new Intent(this ,RegisterActivity.class));
+                break;
         }
     }
 
@@ -62,15 +76,14 @@ public class LoginActivity extends BaseActivity<ILoginActivity, LoginPresenter> 
     public void login(Result result) {
         Logger.d(result.toString());
         int code = result.getCode();
-        if (code == Result.CODE_LOGIN_OK) {
+        if (code == Result.CODE_OK) {
             progressBar.setVisibility(View.GONE);
-            startActivity(new Intent(LoginActivity.this, MemberChannelActivity.class));
-            finish();
+            Toast.makeText(LoginActivity.this, "login success", Toast.LENGTH_LONG).show();
+            int currentLoginCount = (int) result.getObject();
+            SPUtils.put(LoginActivity.this,"currentLoginCount",currentLoginCount);
         } else {
             progressBar.setVisibility(View.GONE);
-            Toast.makeText(LoginActivity.this , getString(R.string.error_key) , Toast.LENGTH_LONG).show();
+            Toast.makeText(LoginActivity.this, getString(R.string.error_key), Toast.LENGTH_LONG).show();
         }
     }
-
-
 }

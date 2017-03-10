@@ -34,7 +34,7 @@ public class ChannelDao {
     }
 
     public boolean isExists (ChannelInfo channelInfo){
-        Cursor cursor = sqLiteDatabase.query(SQLiteHelper.CHANNEL_TABLE ,null , "name=?" , new String[]{channelInfo.getName()} ,null,null,null);
+        Cursor cursor = sqLiteDatabase.query(SQLiteHelper.CHANNEL_TABLE ,null , "tag=?" , new String[]{channelInfo.getTag()} ,null,null,null);
         boolean flag = cursor.moveToNext();
         if(cursor != null){
             cursor.close();
@@ -44,28 +44,28 @@ public class ChannelDao {
 
     public void insert(ChannelInfo channelInfo){
         ContentValues contentValues = new ContentValues();
+        contentValues.put("sequence",channelInfo.getSequence());
+        contentValues.put("tag",channelInfo.getTag());
         contentValues.put("name",channelInfo.getName());
         contentValues.put("url",channelInfo.getUrl());
         contentValues.put("icon",channelInfo.getIcon());
         contentValues.put("type",channelInfo.getType());
         contentValues.put("country",channelInfo.getCountry());
-        contentValues.put("sequence",channelInfo.getSequence());
         contentValues.put("style",channelInfo.getStyle());
-        contentValues.put("sequence1",channelInfo.getSequence1());
         sqLiteDatabase.insert(SQLiteHelper.CHANNEL_TABLE ,null ,contentValues);
     }
 
     public void update (ChannelInfo channelInfo){
         ContentValues contentValues = new ContentValues();
+        contentValues.put("sequence",channelInfo.getSequence());
+        contentValues.put("tag",channelInfo.getTag());
         contentValues.put("name",channelInfo.getName());
         contentValues.put("url",channelInfo.getUrl());
         contentValues.put("icon",channelInfo.getIcon());
         contentValues.put("type",channelInfo.getType());
         contentValues.put("country",channelInfo.getCountry());
-        contentValues.put("sequence",channelInfo.getSequence());
         contentValues.put("style",channelInfo.getStyle());
-        contentValues.put("sequence1",channelInfo.getSequence1());
-        sqLiteDatabase.update(SQLiteHelper.CHANNEL_TABLE ,contentValues , "name=?" , new String []{channelInfo.getName()});
+        sqLiteDatabase.update(SQLiteHelper.CHANNEL_TABLE ,contentValues , "tag=?" , new String []{channelInfo.getTag()});
     }
 
 
@@ -86,78 +86,14 @@ public class ChannelDao {
         List<ChannelInfo> list = new ArrayList<>();
         while(cursor.moveToNext()){
             ChannelInfo channelInfo = new ChannelInfo();
+            channelInfo.setSequence(cursor.getInt(cursor.getColumnIndex("sequence")));
+            channelInfo.setTag(cursor.getString(cursor.getColumnIndex("tag")));
             channelInfo.setName(cursor.getString(cursor.getColumnIndex("name")));
             channelInfo.setUrl(cursor.getString(cursor.getColumnIndex("url")));
             channelInfo.setIcon(cursor.getString(cursor.getColumnIndex("icon")));
             channelInfo.setType(cursor.getString(cursor.getColumnIndex("type")));
             channelInfo.setCountry(cursor.getString(cursor.getColumnIndex("country")));
-            channelInfo.setSequence(cursor.getInt(cursor.getColumnIndex("sequence")));
             channelInfo.setStyle(cursor.getString(cursor.getColumnIndex("style")));
-            channelInfo.setSequence1(cursor.getInt(cursor.getColumnIndex("sequence1")));
-            list.add(channelInfo);
-        }
-        if(cursor!= null){
-            cursor.close();
-        }
-        return list;
-    }
-
-
-    public List<ChannelInfo> queryByCountry(String country){
-        Cursor cursor = sqLiteDatabase.query(SQLiteHelper.CHANNEL_TABLE ,null,"country=?" , new String []{country} ,null,null,"sequence");
-        List<ChannelInfo> list = new ArrayList<>();
-        while(cursor.moveToNext()){
-            ChannelInfo channelInfo = new ChannelInfo();
-            channelInfo.setName(cursor.getString(cursor.getColumnIndex("name")));
-            channelInfo.setUrl(cursor.getString(cursor.getColumnIndex("url")));
-            channelInfo.setIcon(cursor.getString(cursor.getColumnIndex("icon")));
-            channelInfo.setType(cursor.getString(cursor.getColumnIndex("type")));
-            channelInfo.setCountry(cursor.getString(cursor.getColumnIndex("country")));
-            channelInfo.setSequence(cursor.getInt(cursor.getColumnIndex("sequence")));
-            channelInfo.setStyle(cursor.getString(cursor.getColumnIndex("style")));
-            channelInfo.setSequence1(cursor.getInt(cursor.getColumnIndex("sequence1")));
-            list.add(channelInfo);
-        }
-        if(cursor!= null){
-            cursor.close();
-        }
-        return list;
-    }
-
-    public List<ChannelInfo> queryByCountry1(String country){
-        Cursor cursor = sqLiteDatabase.query(SQLiteHelper.CHANNEL_TABLE ,null,"country=?" , new String []{country} ,null,null,"name");
-        List<ChannelInfo> list = new ArrayList<>();
-        while(cursor.moveToNext()){
-            ChannelInfo channelInfo = new ChannelInfo();
-            channelInfo.setName(cursor.getString(cursor.getColumnIndex("name")));
-            channelInfo.setUrl(cursor.getString(cursor.getColumnIndex("url")));
-            channelInfo.setIcon(cursor.getString(cursor.getColumnIndex("icon")));
-            channelInfo.setType(cursor.getString(cursor.getColumnIndex("type")));
-            channelInfo.setCountry(cursor.getString(cursor.getColumnIndex("country")));
-            channelInfo.setSequence(cursor.getInt(cursor.getColumnIndex("sequence")));
-            channelInfo.setStyle(cursor.getString(cursor.getColumnIndex("style")));
-            channelInfo.setSequence1(cursor.getInt(cursor.getColumnIndex("sequence1")));
-            list.add(channelInfo);
-        }
-        if(cursor!= null){
-            cursor.close();
-        }
-        return list;
-    }
-
-    public List<ChannelInfo> queryByStyle(String style){
-        Cursor cursor = sqLiteDatabase.query(SQLiteHelper.CHANNEL_TABLE ,null,"style=?" , new String []{style} ,null,null,"name");
-        List<ChannelInfo> list = new ArrayList<>();
-        while(cursor.moveToNext()){
-            ChannelInfo channelInfo = new ChannelInfo();
-            channelInfo.setName(cursor.getString(cursor.getColumnIndex("name")));
-            channelInfo.setUrl(cursor.getString(cursor.getColumnIndex("url")));
-            channelInfo.setIcon(cursor.getString(cursor.getColumnIndex("icon")));
-            channelInfo.setType(cursor.getString(cursor.getColumnIndex("type")));
-            channelInfo.setCountry(cursor.getString(cursor.getColumnIndex("country")));
-            channelInfo.setSequence(cursor.getInt(cursor.getColumnIndex("sequence")));
-            channelInfo.setStyle(cursor.getString(cursor.getColumnIndex("style")));
-            channelInfo.setSequence1(cursor.getInt(cursor.getColumnIndex("sequence1")));
             list.add(channelInfo);
         }
         if(cursor!= null){

@@ -29,7 +29,7 @@ public class LoadKodiData implements Runnable {
     }
 
     private void loadImageData() {
-        OkMaster.get(F.url.kodi_image_data).enqueue(new Callback() {
+        OkMaster.get(F.url.kodi_image).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Logger.d(e.getMessage());
@@ -57,7 +57,7 @@ public class LoadKodiData implements Runnable {
     }
 
     private void loadVideoData() {
-        OkMaster.get(F.url.kodi_video_data).enqueue(new Callback() {
+        OkMaster.get(F.url.kodi_video).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Logger.d(e.getMessage());
