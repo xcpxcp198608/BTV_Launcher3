@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.wiatec.btv_launcher.R;
+import com.wiatec.btv_launcher.bean.ChannelTypeInfo;
 import com.wiatec.btv_launcher.bean.ImageInfo;
 
 import java.util.List;
@@ -18,10 +19,10 @@ import java.util.List;
 
 public class LinkListAdapter extends BaseAdapter {
     private Context context;
-    private List<ImageInfo> list;
+    private List<ChannelTypeInfo> list;
     private LayoutInflater layoutInflater;
 
-    public LinkListAdapter(Context context, List<ImageInfo> list) {
+    public LinkListAdapter(Context context, List<ChannelTypeInfo> list) {
         this.context = context;
         this.list = list;
         layoutInflater = LayoutInflater.from(context);
@@ -47,16 +48,16 @@ public class LinkListAdapter extends BaseAdapter {
         ViewHolder viewHolder = new ViewHolder();
         if(convertView == null){
             convertView = layoutInflater.inflate(R.layout.item_channel_type,parent , false);
-            viewHolder.tv_Link = (TextView) convertView.findViewById(R.id.tv_link);
+            viewHolder.tvChannelType = (TextView) convertView.findViewById(R.id.tv_channel_type);
             convertView.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.tv_Link.setText(list.get(position).getName());
+        viewHolder.tvChannelType.setText(list.get(position).getName());
         return convertView;
     }
 
     class ViewHolder {
-        public TextView tv_Link;
+        public TextView tvChannelType;
     }
 }

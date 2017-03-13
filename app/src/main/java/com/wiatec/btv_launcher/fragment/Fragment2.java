@@ -2,7 +2,6 @@ package com.wiatec.btv_launcher.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -23,7 +22,7 @@ import com.bumptech.glide.Glide;
 import com.jude.rollviewpager.RollPagerView;
 import com.wiatec.btv_launcher.Activity.AppSelectActivity;
 import com.wiatec.btv_launcher.Activity.FMPlayActivity;
-import com.wiatec.btv_launcher.Activity.LoginActivity;
+import com.wiatec.btv_launcher.Activity.MainActivity;
 import com.wiatec.btv_launcher.Activity.PlayActivity;
 import com.wiatec.btv_launcher.Activity.SplashActivity;
 import com.wiatec.btv_launcher.Application;
@@ -37,13 +36,14 @@ import com.wiatec.btv_launcher.Utils.SPUtils;
 import com.wiatec.btv_launcher.adapter.ChannelGrideAdapter;
 import com.wiatec.btv_launcher.adapter.LinkListAdapter;
 import com.wiatec.btv_launcher.adapter.RollImageAdapter;
-import com.wiatec.btv_launcher.adapter.RollOverViewAdapter;
+import com.wiatec.btv_launcher.adapter.RollOverViewAdapter1;
 import com.wiatec.btv_launcher.animator.Zoom;
 import com.wiatec.btv_launcher.bean.ChannelInfo;
+import com.wiatec.btv_launcher.bean.ChannelTypeInfo;
 import com.wiatec.btv_launcher.bean.ImageInfo;
 import com.wiatec.btv_launcher.bean.InstalledApp;
 import com.wiatec.btv_launcher.custom_view.RollOverView;
-import com.wiatec.btv_launcher.presenter.Fragment4Presenter;
+import com.wiatec.btv_launcher.presenter.Fragment2Presenter;
 
 import java.util.List;
 
@@ -59,7 +59,7 @@ import rx.schedulers.Schedulers;
  * Created by patrick on 2016/12/28.
  */
 
-public class Fragment2 extends BaseFragment<IFragment4, Fragment4Presenter> implements IFragment4 ,View.OnFocusChangeListener ,View.OnClickListener{
+public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> implements IFragment2,View.OnFocusChangeListener ,View.OnClickListener{
     @BindView(R.id.lv_country)
     ListView lvCountry;
     @BindView(R.id.gv_channel)
@@ -92,12 +92,13 @@ public class Fragment2 extends BaseFragment<IFragment4, Fragment4Presenter> impl
     private boolean isLoaded = false;
     private InstalledAppDao installedAppDao;
     private boolean isShow = true;
-    private RollOverViewAdapter rollOverViewAdapter;
+    private RollOverViewAdapter1 rollOverViewAdapter1;
     private boolean rollOverStart = false;
+    private MainActivity activity;
 
     @Override
-    protected Fragment4Presenter createPresenter() {
-        return new Fragment4Presenter(this);
+    protected Fragment2Presenter createPresenter() {
+        return new Fragment2Presenter(this);
     }
 
     @Nullable
@@ -107,30 +108,34 @@ public class Fragment2 extends BaseFragment<IFragment4, Fragment4Presenter> impl
         ButterKnife.bind(this, view);
         presenter.bind();
         installedAppDao = InstalledAppDao.getInstance(Application.getContext());
-        isShow = (boolean) SPUtils.get(getContext(), "isShow" , true);
+        isShow = (boolean) SPUtils.get(getContext() , "isShow" , true);
         lvCountry.setNextFocusRightId(R.id.gv_channel);
         return view;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        activity = (MainActivity) context;
     }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if(isVisibleToUser){
-            isShow = (boolean) SPUtils.get(getContext(), "isShow" , true);
+            isShow = (boolean) SPUtils.get(getContext() , "isShow" , true);
             if(isShow){
                 showWarning();
             }
             if(!isLoaded){
                 presenter.bind();
+                presenter.loadChannelType(activity.mDeviceInfo);
             }
             if(isLoaded){
                 presenter.showChannel("country" ,"BVISION",null);
             }
-            presenter.loadRollImage();
-        }else{
-            if(rollOverView != null){
-                rollOverView.pause();
-                rollOverStart = false;
+            if(presenter != null && !rollOverStart){
+                presenter.loadRollImage();
             }
         }
     }
@@ -143,20 +148,20 @@ public class Fragment2 extends BaseFragment<IFragment4, Fragment4Presenter> impl
         if(window == null){
             return;
         }
-        window.setContentView(R.layout.dialog_warning_f4);
+        window.setContentView(R.layout.dialog_warning_f2);
         Button btConfirm = (Button) window.findViewById(R.id.bt_confirm);
         Button btCancel = (Button) window.findViewById(R.id.bt_cancel);
         btConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SPUtils.put(getContext(), "isShow" ,false);
+                SPUtils.put(getContext() , "isShow" , false);
                 alertDialog.dismiss();
             }
         });
         btCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SPUtils.put(getContext(), "isShow" ,false);
+                SPUtils.put(getContext() , "isShow" , true);
                 alertDialog.dismiss();
             }
         });
@@ -167,12 +172,12 @@ public class Fragment2 extends BaseFragment<IFragment4, Fragment4Presenter> impl
         super.onStart();
         setZoom();
         ibtC1.setOnClickListener(this);
-        ibtC7.setOnClickListener(this);
         showCustomShortCut(ibtC2 ,"c2");
         showCustomShortCut(ibtC3 ,"c3");
         showCustomShortCut(ibtC4 ,"c4");
         showCustomShortCut(ibtC5 ,"c5");
         showCustomShortCut(ibtC6 ,"c6");
+        showCustomShortCut(ibtC7 ,"c7");
     }
 
     @Override
@@ -180,24 +185,6 @@ public class Fragment2 extends BaseFragment<IFragment4, Fragment4Presenter> impl
         super.onResume();
         if(presenter != null){
             presenter.loadRollImage();
-        }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if(rollOverView != null){
-            rollOverView.pause();
-            rollOverStart = false;
-        }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if(rollOverView != null){
-            rollOverView.pause();
-            rollOverStart = false;
         }
     }
 
@@ -223,7 +210,28 @@ public class Fragment2 extends BaseFragment<IFragment4, Fragment4Presenter> impl
     }
 
     @Override
-    public void loadImage2(final List<ImageInfo> list) {
+    public void loadRollImage(List<ImageInfo> list) {
+        RollImageAdapter rollImageAdapter = new RollImageAdapter(list);
+        rpvMain.setAdapter(rollImageAdapter);
+    }
+
+    @Override
+    public void loadRollOverImage(final List<ImageInfo> list) {
+        if(list.size() <=0){
+            return;
+        }
+        rollOverViewAdapter1 = new RollOverViewAdapter1(list);
+        rollOverView.setRollViewAdapter(rollOverViewAdapter1);
+        rollOverViewAdapter1.setOnItemClickListener(new RollOverViewAdapter1.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                showLinkByBrowser(list.get(position).getLink());
+            }
+        });
+    }
+
+    @Override
+    public void loadChannelType(final List<ChannelTypeInfo> list) {
         if(list == null){
             return;
         }
@@ -234,30 +242,30 @@ public class Fragment2 extends BaseFragment<IFragment4, Fragment4Presenter> impl
         lvCountry.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ImageInfo imageInfo = list.get(position);
-                if(imageInfo.getQuery_flag() == 0){
-                    if("CHINA".equals(imageInfo.getName()) || "TAIWAN".equals(imageInfo.getName())){
-                        presenter.showChannel("country" ,imageInfo.getName(),"sequence");
+                ChannelTypeInfo channelTypeInfo = list.get(position);
+                if(channelTypeInfo.getFlag() == 0){
+                    if("CHINA".equals(channelTypeInfo.getName()) || "TAIWAN".equals(channelTypeInfo.getName())){
+                        presenter.showChannel("country" ,channelTypeInfo.getName(),"sequence");
                     }else{
-                        presenter.showChannel("country" ,imageInfo.getName(),"name");
+                        presenter.showChannel("country" ,channelTypeInfo.getName(),"name");
                     }
-                }else if(imageInfo.getQuery_flag() == 1){
-                    presenter.showChannel("style" ,imageInfo.getName(),"name");
+                }else if(channelTypeInfo.getFlag() == 1){
+                    presenter.showChannel("style" ,channelTypeInfo.getName(),"name");
                 }
             }
         });
         lvCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                ImageInfo imageInfo = list.get(position);
-                if(imageInfo.getQuery_flag() == 0){
-                    if("CHINA".equals(imageInfo.getName()) || "TAIWAN".equals(imageInfo.getName())){
-                        presenter.showChannel("country" ,imageInfo.getName(),"sequence");
+                ChannelTypeInfo channelTypeInfo = list.get(position);
+                if(channelTypeInfo.getFlag() == 0){
+                    if("CHINA".equals(channelTypeInfo.getName()) || "TAIWAN".equals(channelTypeInfo.getName())){
+                        presenter.showChannel("country" ,channelTypeInfo.getName(),"sequence");
                     }else{
-                        presenter.showChannel("country" ,imageInfo.getName(),"name");
+                        presenter.showChannel("country" ,channelTypeInfo.getName(),"name");
                     }
-                }else if(imageInfo.getQuery_flag() == 1){
-                    presenter.showChannel("style" ,imageInfo.getName(),"name");
+                }else if(channelTypeInfo.getFlag() == 1){
+                    presenter.showChannel("style" ,channelTypeInfo.getName(),"name");
                 }
                 Zoom.zoomIn09_10(view);
             }
@@ -270,35 +278,6 @@ public class Fragment2 extends BaseFragment<IFragment4, Fragment4Presenter> impl
     }
 
     @Override
-    public void loadRollImage(List<ImageInfo> list) {
-        RollImageAdapter rollImageAdapter = new RollImageAdapter(list);
-        rpvMain.setAdapter(rollImageAdapter);
-    }
-
-    @Override
-    public void loadRollOverImage(final List<ImageInfo> list) {
-        //Logger.d(list.toString());
-        if(list.size() <=0){
-            return;
-        }
-        if(rollOverStart){
-            return;
-        }
-        rollOverStart = true;
-        rollOverViewAdapter = new RollOverViewAdapter(list);
-        rollOverView.setRollViewAdapter(rollOverViewAdapter);
-        rollOverView.start();
-        rollOverViewAdapter.setOnItemClickListener(new RollOverViewAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                showLinkByBrowser(list.get(position).getLink());
-            }
-        });
-        rollOverView.setOffscreenPageLimit(list.size());
-        rollOverView.start();
-    }
-
-    @Override
     public void showChannel(final List<ChannelInfo> list) {
         grideAdapter = new ChannelGrideAdapter(Application.getContext() ,list);
         gridView.setAdapter(grideAdapter);
@@ -307,7 +286,7 @@ public class Fragment2 extends BaseFragment<IFragment4, Fragment4Presenter> impl
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ChannelInfo channelInfo = list.get(position);
-                isShow = (boolean) SPUtils.get(getContext(), "isShow" , true);
+                isShow = (boolean) SPUtils.get(getContext() , "isShow" , true);
                 if(isShow){
                     return;
                 }
@@ -414,9 +393,6 @@ public class Fragment2 extends BaseFragment<IFragment4, Fragment4Presenter> impl
                 Intent intent = new Intent(getActivity() , FMPlayActivity.class);
                 intent.putExtra("url" , "http://142.4.216.91:8280/");
                 getContext().startActivity(intent);
-                break;
-            case R.id.ibt_c7:
-                startActivity(new Intent(getContext(), LoginActivity.class));
                 break;
             default:
                 break;

@@ -6,10 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+    <com.wiatec.btv_launcher.custom_view.RollOverView
+        android:id="@+id/roll_over_view"
         android:layout_margin="10dp"
         android:layout_gravity="right"
-        android:src="@drawable/shuiyin"
         android:layout_width="100dp"
         android:layout_height="50dp" />
 
@@ -20,10 +20,26 @@
         android:layout_width="match_parent"
         android:layout_height="0dp" />
 
-    <com.wiatec.btv_launcher.custom_view.VoiceSpectrumView
-        android:id="@+id/vsv_radio"
+
+    <FrameLayout
         android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="0dp" />
+        android:layout_height="0dp">
+
+        <com.wiatec.btv_launcher.custom_view.VoiceSpectrumView
+            android:visibility="gone"
+            android:id="@+id/vsv_radio"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="@style/progress1"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </FrameLayout>
+
 
 </LinearLayout>

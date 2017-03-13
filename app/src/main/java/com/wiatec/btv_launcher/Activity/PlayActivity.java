@@ -10,14 +10,12 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
-import android.widget.VideoView;
 
 import com.wiatec.btv_launcher.R;
+import com.wiatec.btv_launcher.adapter.RollOverView2Adapter;
+import com.wiatec.btv_launcher.custom_view.RollOverView;
 
 import java.io.IOException;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by PX on 2016-11-14.
@@ -30,6 +28,8 @@ public class PlayActivity extends AppCompatActivity implements SurfaceHolder.Cal
     private ProgressBar progressBar;
     private String url;
     private int resId;
+    private RollOverView rollOverView;
+    private RollOverView2Adapter rollOverView2Adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,11 +38,20 @@ public class PlayActivity extends AppCompatActivity implements SurfaceHolder.Cal
         setContentView(R.layout.activity_play);
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
         surfaceView = (SurfaceView) findViewById(R.id.vv_play);
+        rollOverView = (RollOverView) findViewById(R.id.roll_over_view);
         surfaceHolder = surfaceView.getHolder();
         surfaceHolder.addCallback(this);
 
         resId = getIntent().getIntExtra("resId" ,0);
         url = getIntent().getStringExtra("url");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        rollOverView2Adapter = new RollOverView2Adapter();
+        rollOverView.setRollViewAdapter(rollOverView2Adapter);
+
     }
 
     @Override
@@ -97,11 +106,15 @@ public class PlayActivity extends AppCompatActivity implements SurfaceHolder.Cal
     @Override
     protected void onPause() {
         super.onPause();
-        if(mediaPlayer != null ){
+        if (mediaPlayer != null) {
             mediaPlayer.stop();
             mediaPlayer.release();
             mediaPlayer = null;
         }
+        if (rollOverView != null){
+            rollOverView.stop();
+        }
+        rollOverView.stop();
     }
 
     @Override
@@ -112,6 +125,9 @@ public class PlayActivity extends AppCompatActivity implements SurfaceHolder.Cal
             mediaPlayer.release();
             mediaPlayer = null;
         }
+        if (rollOverView != null){
+            rollOverView.stop();
+        }
     }
 
     @Override
@@ -121,6 +137,9 @@ public class PlayActivity extends AppCompatActivity implements SurfaceHolder.Cal
             mediaPlayer.stop();
             mediaPlayer.release();
             mediaPlayer = null;
+        }
+        if (rollOverView != null){
+            rollOverView.stop();
         }
     }
 }

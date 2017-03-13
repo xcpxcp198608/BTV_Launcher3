@@ -1,5 +1,7 @@
 package com.wiatec.btv_launcher.Utils.OkHttp.Request;
 
+import android.util.Log;
+
 import com.wiatec.btv_launcher.Utils.OkHttp.Listener.DownloadCallback;
 import com.wiatec.btv_launcher.Utils.OkHttp.Bean.DownloadInfo;
 import com.wiatec.btv_launcher.Utils.OkHttp.Listener.DownloadListener;
@@ -68,26 +70,38 @@ public abstract class RequestMaster {
     protected abstract Request createRequest(Header header, Parameters parameters ,Object tag);
     //异步执行请求
     public void enqueue (Callback callback){
-        Request request = createRequest(header,parameters ,mTag);
-        Call call = OkMaster.okHttpClient.newCall(request);
-        call.enqueue(callback);
-        if(mTag!=null) {
-            callMap.put(mTag, call);
+        try {
+            Request request = createRequest(header, parameters, mTag);
+            Call call = OkMaster.okHttpClient.newCall(request);
+            call.enqueue(callback);
+            if (mTag != null) {
+                callMap.put(mTag, call);
+            }
+        }catch (Exception e){
+            Log.d("okhttp",e.getMessage());
         }
     }
     //异步执行下载
     public void startDownload (DownloadListener downloadListener){
-        Request request = createRequest(header , parameters ,mTag);
-        Call call = OkMaster.okHttpClient.newCall(request);
-        call.enqueue(new DownloadCallback(mDownloadInfo ,downloadListener));
-        if(mTag!=null) {
-            callMap.put(mTag, call);
+        try {
+            Request request = createRequest(header , parameters ,mTag);
+            Call call = OkMaster.okHttpClient.newCall(request);
+            call.enqueue(new DownloadCallback(mDownloadInfo ,downloadListener));
+            if(mTag!=null) {
+                callMap.put(mTag, call);
+            }
+        }catch (Exception e){
+            Log.d("okhttp",e.getMessage());
         }
     }
     public void upload(UploadListener uploadListener){
-        Request request = createRequest(header , parameters ,mTag);
-        Call call = OkMaster.okHttpClient.newCall(request);
-        call.enqueue(uploadListener);
+        try {
+            Request request = createRequest(header , parameters ,mTag);
+            Call call = OkMaster.okHttpClient.newCall(request);
+            call.enqueue(uploadListener);
+        }catch (Exception e){
+            Log.d("okhttp",e.getMessage());
+        }
     }
     //通过标签取消请求
     public void cancel (Object tag){

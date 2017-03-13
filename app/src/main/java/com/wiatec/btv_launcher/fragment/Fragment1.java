@@ -26,6 +26,7 @@ import com.wiatec.btv_launcher.Activity.PlayAdActivity;
 import com.wiatec.btv_launcher.Activity.UserManualActivity;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.custom_view.RollOverView;
 import com.wiatec.btv_launcher.receiver.OnNetworkStatusListener;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.SQL.MessageDao;
@@ -39,7 +40,6 @@ import com.wiatec.btv_launcher.animator.Zoom;
 import com.wiatec.btv_launcher.bean.ImageInfo;
 import com.wiatec.btv_launcher.bean.MessageInfo;
 import com.wiatec.btv_launcher.bean.VideoInfo;
-import com.wiatec.btv_launcher.custom_view.RollOverView;
 import com.wiatec.btv_launcher.presenter.Fragment1Presenter;
 import com.wiatec.btv_launcher.receiver.NetworkStatusReceiver;
 
@@ -111,7 +111,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     private boolean isVideoPlaying = false;
     private int cloudImagePosition ;
     private MessageDao messageDao;
-    private boolean rollOverStart = false;
 
     private long entryTime;
     private long exitTime;
@@ -144,6 +143,9 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                     }
                 }
             }
+            if(presenter != null){
+                presenter.loadImageData();
+            }
             entryTime = System.currentTimeMillis();
         } else {
             isF1Visible = false;
@@ -160,10 +162,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
             }
             if (messageSubscription != null) {
                 messageSubscription.unsubscribe();
-            }
-            if(rollOverView != null){
-                rollOverView.pause();
-                rollOverStart = false;
             }
             exitTime = System.currentTimeMillis();
             holdTime = exitTime - entryTime;
@@ -206,6 +204,9 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         if(presenter != null && ! isCloudImagePlaying){
             presenter.loadCloudData();
         }
+        if(presenter != null){
+            presenter.loadImageData();
+        }
         checkMessageCount();
     }
 
@@ -226,10 +227,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         }
         if (messageSubscription != null) {
             messageSubscription.unsubscribe();
-        }
-        if(rollOverView != null){
-            rollOverView.pause();
-            rollOverStart = false;
         }
         exitTime = System.currentTimeMillis();
         holdTime = exitTime - entryTime;
@@ -254,10 +251,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         }
         if (messageSubscription != null) {
             messageSubscription.unsubscribe();
-        }
-        if(rollOverView != null){
-            rollOverView.pause();
-            rollOverStart = false;
         }
     }
 
@@ -374,13 +367,9 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
 
     @Override
     public void loadRollOverImage(final List<ImageInfo> list) {
-        if(list.size() <=0){
+        if (list.size() <= 0) {
             return;
         }
-        if(rollOverStart){
-            return;
-        }
-        rollOverStart = true;
         RollOverViewAdapter rollOverViewAdapter = new RollOverViewAdapter(list);
         rollOverView.setRollViewAdapter(rollOverViewAdapter);
         rollOverViewAdapter.setOnItemClickListener(new RollOverViewAdapter.OnItemClickListener() {
@@ -389,8 +378,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 showLinkByBrowser(list.get(position).getLink());
             }
         });
-        rollOverView.setOffscreenPageLimit(list.size());
-        rollOverView.start();
     }
 
     @Override
@@ -411,6 +398,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                     .subscribe(new Action1<String>() {
                         @Override
                         public void call(String s) {
+                            Logger.d("cloud_image:<---->"+s);
                             Glide.with(getContext()).load(s)
                                     .placeholder(R.drawable.ld_cloud_icon_3)
                                     .error(R.drawable.ld_cloud_icon_3)
@@ -478,7 +466,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     }
 
     private void playVideo(final String url) {
-        if(vv_Main.isPlaying()){
+        if(vv_Main != null && vv_Main.isPlaying()){
             vv_Main.stopPlayback();
         }
         vv_Main.setVideoPath(url);

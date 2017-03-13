@@ -2,7 +2,9 @@ package com.wiatec.btv_launcher.Utils.OkHttp.Request;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
+import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.OkHttp.Bean.DownloadInfo;
 
 import java.util.Map;

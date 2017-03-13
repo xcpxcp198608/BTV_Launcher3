@@ -17,13 +17,13 @@ import java.util.List;
  * Created by patrick on 2017/2/25.
  */
 
-public class RollOverViewAdapter extends RollOverAdapter {
+public class RollOverViewAdapter1 extends RollOverAdapter {
 
     private List<ImageInfo> list;
     private ImageButton imageButton;
     private OnItemClickListener onItemClickListener;
 
-    public RollOverViewAdapter(List<ImageInfo> list) {
+    public RollOverViewAdapter1(List<ImageInfo> list) {
         this.list = list;
     }
 

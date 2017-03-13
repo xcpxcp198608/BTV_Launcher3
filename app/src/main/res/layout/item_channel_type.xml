@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/tv_link"
+        android:id="@+id/tv_channel_type"
         android:textSize="24sp"
         android:text="text"
         android:singleLine="true"

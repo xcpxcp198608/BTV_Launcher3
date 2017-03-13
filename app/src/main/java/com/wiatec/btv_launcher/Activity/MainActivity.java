@@ -17,6 +17,7 @@ import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.text.Html;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -28,6 +29,7 @@ import android.widget.TextView;
 
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.bean.DeviceInfo;
 import com.wiatec.btv_launcher.receiver.OnNetworkStatusListener;
 import com.wiatec.btv_launcher.receiver.OnWifiStatusListener;
 import com.wiatec.btv_launcher.R;
@@ -59,6 +61,7 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -96,6 +99,9 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
     private ScreenWeekUpReceiver screenWeekUpReceiver;
     private boolean isStartLoadNetData = false;
     private boolean isStartAlarmService =false;
+    private boolean isStartLoadRss = false;
+    private Subscription rssSubscription;
+    public DeviceInfo mDeviceInfo;
 
     @Override
     protected MainPresenter createPresenter() {
@@ -121,6 +127,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
     @Override
     protected void onStart() {
         super.onStart();
+        mDeviceInfo = deviceInfo;
         if(presenter != null){
             presenter.loadWeatherInfo();
             if (SystemConfig.isNetworkConnected(MainActivity.this)) {
@@ -135,6 +142,15 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
                     startAlarmService();
                 }
             }
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isStartLoadRss = false;
+        if(rssSubscription != null){
+            rssSubscription.unsubscribe();
         }
     }
 
@@ -250,28 +266,33 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
 
     @Override
     public void loadMessage1(final List<Message1Info> list) {
-        Observable.interval(6, TimeUnit.SECONDS)
-                .subscribeOn(Schedulers.io())
-                .take(list.size())
-                .repeat()
-                .map(new Func1<Long, Message1Info>() {
-                    @Override
-                    public Message1Info call(Long l) {
-                        return list.get(l.intValue());
-                    }
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Message1Info>() {
-                    @Override
-                    public void call(Message1Info message1Info) {
-                        if(message1Info == null){
-                            return;
+        if(isStartLoadRss){
+
+        }else {
+            isStartLoadRss = true;
+            rssSubscription = Observable.interval(6, TimeUnit.SECONDS)
+                    .subscribeOn(Schedulers.io())
+                    .take(list.size())
+                    .repeat()
+                    .map(new Func1<Long, Message1Info>() {
+                        @Override
+                        public Message1Info call(Long l) {
+                            return list.get(l.intValue());
                         }
-                        tv_Message.setVisibility(View.VISIBLE);
-                        tv_Message.setTextColor(Color.rgb(message1Info.getColorR(), message1Info.getColorG(), message1Info.getColorB()));
-                        tv_Message.setText("  " + message1Info.getContent());
-                    }
-                });
+                    })
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Action1<Message1Info>() {
+                        @Override
+                        public void call(Message1Info message1Info) {
+                            if (message1Info == null) {
+                                return;
+                            }
+                            tv_Message.setVisibility(View.VISIBLE);
+                            //tv_Message.setTextColor(Color.rgb(message1Info.getColorR(), message1Info.getColorG(), message1Info.getColorB()));
+                            tv_Message.setText("  " + message1Info.getContent());
+                        }
+                    });
+        }
     }
 
     @Override
@@ -291,7 +312,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
         window.setContentView(R.layout.dialog_update);
         TextView tvInfo = (TextView) window.findViewById(R.id.tv_info);
         Button btConfirm = (Button) window.findViewById(R.id.bt_confirm);
-        tvInfo.setText(updateInfo.getInfo());
+        tvInfo.setText(Html.fromHtml(updateInfo.getInfo()));
         btConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

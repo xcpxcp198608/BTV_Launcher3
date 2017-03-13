@@ -8,8 +8,11 @@ import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.wiatec.btv_launcher.R;
+import com.wiatec.btv_launcher.adapter.RollOverView2Adapter;
+import com.wiatec.btv_launcher.custom_view.RollOverView;
 import com.wiatec.btv_launcher.custom_view.VoiceSpectrumView;
 
 import java.io.IOException;
@@ -30,7 +33,10 @@ public class FMPlayActivity extends AppCompatActivity {
     private String url;
     private ImageView ivLogo;
     private VoiceSpectrumView vsvRadio;
+    private ProgressBar progressBar;
     private Subscription subscription;
+    private RollOverView rollOverView;
+    private RollOverView2Adapter rollOverView2Adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,18 +45,21 @@ public class FMPlayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_fm_play);
         ivLogo  = (ImageView) findViewById(R.id.iv_logo);
         vsvRadio = (VoiceSpectrumView) findViewById(R.id.vsv_radio);
+        rollOverView = (RollOverView) findViewById(R.id.roll_over_view);
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         url = getIntent().getStringExtra("url");
         if("http://142.4.216.91:8280/".equals(url)){
-            ivLogo.setImageResource(R.drawable.eu);
+            ivLogo.setImageResource(R.drawable.euf_big);
         }else{
             ivLogo.setImageResource(R.drawable.btv);
         }
-        voiceViewStart();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        rollOverView2Adapter = new RollOverView2Adapter();
+        rollOverView.setRollViewAdapter(rollOverView2Adapter);
         if(mediaPlayer == null){
             mediaPlayer = new MediaPlayer();
         }
@@ -63,6 +72,9 @@ public class FMPlayActivity extends AppCompatActivity {
                     @Override
                     public void onPrepared(MediaPlayer mp) {
                         mediaPlayer.start();
+                        progressBar.setVisibility(View.GONE);
+                        voiceViewStart();
+                        vsvRadio.setVisibility(View.VISIBLE);
                     }
                 });
                 mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
@@ -107,6 +119,7 @@ public class FMPlayActivity extends AppCompatActivity {
         if(subscription != null){
             subscription.unsubscribe();
         }
+        rollOverView.stop();
     }
 
     @Override

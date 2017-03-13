@@ -9,4 +9,12 @@
         <item name="android:windowBackground">@drawable/main_bg</item>
     </style>
 
+    <style name="progress1">
+        <item name="android:indeterminateDrawable">@anim/progress</item>
+        <item name="android:minHeight">80dp</item>
+        <item name="android:minWidth">80dp</item>
+        <item name="android:maxHeight">80dp</item>
+        <item name="android:maxWidth">80dp</item>
+    </style>
+
 </resources>

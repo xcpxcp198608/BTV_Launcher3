@@ -2,28 +2,19 @@ package com.wiatec.btv_launcher.custom_view;
 
 import android.content.Context;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 import android.widget.Scroller;
 
-import com.wiatec.btv_launcher.Application;
-import com.wiatec.btv_launcher.Utils.Logger;
 
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
-import java.util.concurrent.TimeUnit;
-
-import rx.Observable;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by patrick on 2017/2/20.
@@ -31,10 +22,11 @@ import rx.schedulers.Schedulers;
 
 public class RollOverView extends ViewPager{
 
-    private Subscription subscription;
     private boolean isRoll = true;
     private long interval = 6000;
     private int mTransformerDuration = 1800;
+    private PagerAdapter mPagerAdapter;
+    private Timer mTimer;
 
     public RollOverView(Context context) {
         this(context ,null);
@@ -45,65 +37,69 @@ public class RollOverView extends ViewPager{
         setScrollDuration(mTransformerDuration);
     }
 
-    private Handler handler = new Handler(Looper.getMainLooper()){
+    private final static class RollHandler extends Handler{
+        private WeakReference<RollOverView> weakReference;
+
+        public RollHandler (RollOverView rollOverView){
+            weakReference = new WeakReference<>(rollOverView);
+        }
+
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            int position = (int) msg.obj;
-            setCurrentItem(position);
+            RollOverView rollOverView = weakReference.get();
+            int currentItem = rollOverView.getCurrentItem()+1;
+            if(currentItem >= rollOverView.mPagerAdapter.getCount()) {
+                currentItem = 0;
+            }
+            rollOverView.setCurrentItem(currentItem);
+            if(rollOverView.mPagerAdapter.getCount() <= 1){
+                rollOverView.stop();
+            }
         }
-    };
+    }
+    private RollHandler rollHandler = new RollHandler(this);
+
+    private static class RollTimeTask extends TimerTask{
+        private WeakReference<RollOverView> weakReference;
+        public RollTimeTask (RollOverView rollOverView){
+            weakReference = new WeakReference<>(rollOverView);
+        }
+
+        @Override
+        public void run() {
+            RollOverView rollOverView = weakReference.get();
+            if(rollOverView !=null && rollOverView.isShown()){
+                rollOverView.rollHandler.sendEmptyMessage(0);
+            }else{
+                cancel();
+            }
+        }
+    }
 
     public void start(){
-        final int count = getChildCount();
-        subscription = Observable.interval(0,interval, TimeUnit.MILLISECONDS).take(count)
-                .subscribeOn(Schedulers.io())
-                .repeat()
-                .map(new Func1<Long, Integer>() {
-                    @Override
-                    public Integer call(Long aLong) {
-                        return aLong.intValue();
-                    }
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Integer>() {
-                    @Override
-                    public void call(Integer integer) {
-                        setCurrentItem(integer);
-                    }
-                });
+        if(interval <= 0 || mPagerAdapter == null || mPagerAdapter.getCount()<=1 ){
+            return;
+        }
+        if(mTimer != null){
+            mTimer.cancel();
+        }
+        mTimer = new Timer();
+        mTimer.schedule(new RollTimeTask(this) ,interval,interval);
     }
 
-    public void pause(){
-        if(subscription != null){
-            subscription.unsubscribe();
+    public void stop() {
+        if (mTimer!=null){
+            mTimer.cancel();
+            mTimer = null;
         }
     }
 
-    public void setRollViewAdapter(final RollOverAdapter rollOverAdapter) {
-        PagerAdapter pagerAdapter = new PagerAdapter() {
-            @Override
-            public int getCount() {
-                return rollOverAdapter.getCount();
-            }
-
-            @Override
-            public boolean isViewFromObject(View view, Object object) {
-                return rollOverAdapter.isViewFromObject(view,object);
-            }
-
-            @Override
-            public Object instantiateItem(ViewGroup container, int position) {
-                return rollOverAdapter.instantiateItem(container,position);
-            }
-
-            @Override
-            public void destroyItem(ViewGroup container, int position, Object object) {
-                rollOverAdapter.destroyItem(container,position,object);
-            }
-        };
-        setAdapter(pagerAdapter);
+    public void setRollViewAdapter(PagerAdapter pagerAdapter) {
+        mPagerAdapter = pagerAdapter;
+        setAdapter(mPagerAdapter);
         setPageTransformer(true , new RollOverPageTransformer());
+        start();
     }
 
     public class RollOverPageTransformer implements PageTransformer {
@@ -164,6 +160,6 @@ public class RollOverView extends ViewPager{
         public int getmDuration() {
             return mDuration;
         }
-    }
 
+    }
 }
