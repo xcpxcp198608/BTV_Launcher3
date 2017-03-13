@@ -509,12 +509,12 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
 
     @Override
     public void onConnected(boolean isConnected) {
-        if (isConnected) {
-            presenter.loadImageData();
-            if(!isVideoPlaying) {
-                presenter.loadVideo();
-            }
-        }
+//        if (isConnected) {
+//            presenter.loadImageData();
+//            if(!isVideoPlaying) {
+//                presenter.loadVideo();
+//            }
+//        }
     }
 
     @Override
