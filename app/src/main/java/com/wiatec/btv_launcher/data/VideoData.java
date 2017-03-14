@@ -8,11 +8,15 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.Utils.OkHttp.Listener.StringListener;
+import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
+import com.wiatec.btv_launcher.Utils.SPUtils;
 import com.wiatec.btv_launcher.bean.VideoInfo;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -22,23 +26,23 @@ import java.util.List;
 public class VideoData implements IVideoData {
     @Override
     public void loadData(final OnLoadListener onLoadListener) {
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(F.url.video,  new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                if(response != null){
-                    List<VideoInfo> list = new Gson().fromJson(String.valueOf(response) , new TypeToken<List<VideoInfo>>(){}.getType());
-                    if(list != null){
-                        onLoadListener.onSuccess(list);
+        OkMaster.get(F.url.video)
+                .parames("deviceInfo.countryCode", SPUtils.get(Application.getContext() , "countryCode" , ""))
+                .enqueue(new StringListener() {
+                    @Override
+                    public void onSuccess(String s) throws IOException {
+                        if(s != null){
+                            List<VideoInfo> list = new Gson().fromJson(s , new TypeToken<List<VideoInfo>>(){}.getType());
+                            if(list != null){
+                                onLoadListener.onSuccess(list);
+                            }
+                        }
                     }
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                onLoadListener.onFailure(error.getMessage());
-            }
-        });
-        jsonArrayRequest.setTag("Video1");
-        Application.getRequestQueue().add(jsonArrayRequest);
+
+                    @Override
+                    public void onFailure(String e) {
+                        onLoadListener.onFailure(e);
+                    }
+                });
     }
 }

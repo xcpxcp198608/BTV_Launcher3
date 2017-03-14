@@ -9,10 +9,15 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.Utils.OkHttp.Listener.StringListener;
+import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
+import com.wiatec.btv_launcher.Utils.SPUtils;
 import com.wiatec.btv_launcher.bean.Message1Info;
+import com.wiatec.btv_launcher.bean.VideoInfo;
 
 import org.json.JSONArray;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -23,23 +28,21 @@ public class Message1Data implements IMessage1Data{
 
     @Override
     public void loadData(final OnLoadListener onLoadListener) {
+        OkMaster.get(F.url.message1)
+                .parames("deviceInfo.countryCode", SPUtils.get(Application.getContext() , "countryCode" , ""))
+                .enqueue(new StringListener() {
+                    @Override
+                    public void onSuccess(String s) throws IOException {
+                        if(s != null){
+                            List<Message1Info> list = new Gson().fromJson(s , new TypeToken<List<Message1Info>>(){}.getType());
+                            onLoadListener.onSuccess(list);
+                        }
+                    }
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(F.url.message1, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                if(response != null){
-                    List<Message1Info> list = new Gson().fromJson(String.valueOf(response) , new TypeToken<List<Message1Info>>(){}.getType());
-                    onLoadListener.onSuccess(list);
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                onLoadListener.onFailure(error.getMessage());
-            }
-        });
-        jsonArrayRequest.setTag("Message1Info");
-        Application.getRequestQueue().add(jsonArrayRequest);
-
+                    @Override
+                    public void onFailure(String e) {
+                        onLoadListener.onFailure(e);
+                    }
+                });
     }
 }

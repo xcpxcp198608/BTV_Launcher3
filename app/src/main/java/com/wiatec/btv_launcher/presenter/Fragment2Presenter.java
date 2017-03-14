@@ -3,16 +3,13 @@ package com.wiatec.btv_launcher.presenter;
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.bean.ChannelInfo;
 import com.wiatec.btv_launcher.bean.ChannelTypeInfo;
-import com.wiatec.btv_launcher.bean.DeviceInfo;
 import com.wiatec.btv_launcher.bean.ImageInfo;
 import com.wiatec.btv_launcher.data.ChannelData;
 import com.wiatec.btv_launcher.data.ChannelTypeData;
 import com.wiatec.btv_launcher.data.IChannelData;
 import com.wiatec.btv_launcher.data.IChannelTypeData;
-import com.wiatec.btv_launcher.data.IImage2Data;
 import com.wiatec.btv_launcher.data.IImageData;
 import com.wiatec.btv_launcher.data.IRollImageData;
-import com.wiatec.btv_launcher.data.Image2Data;
 import com.wiatec.btv_launcher.data.ImageData;
 import com.wiatec.btv_launcher.data.RollImageData;
 import com.wiatec.btv_launcher.data.RollOverImageData;
@@ -71,7 +68,7 @@ public class Fragment2Presenter extends BasePresenter<IFragment2> {
         }
     }
 
-    public void loadChannelType (DeviceInfo deviceInfo){
+    public void loadChannelType (){
         if(iChannelTyepData != null){
             iChannelTyepData.loadData(new IChannelTypeData.OnLoadListener() {
                 @Override
@@ -83,7 +80,7 @@ public class Fragment2Presenter extends BasePresenter<IFragment2> {
                 public void onFailure(String e) {
                     Logger.d(e);
                 }
-            } , deviceInfo);
+            });
         }
     }
 

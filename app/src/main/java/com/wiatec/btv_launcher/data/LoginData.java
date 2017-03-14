@@ -31,8 +31,14 @@ public class LoginData implements ILoginData {
     @Override
     public void login(final UserInfo userInfo, final DeviceInfo deviceInfo, final OnLoginListener onLoginListener) {
         OkMaster.get(F.url.login)
-                .parames("userInfo" , userInfo)
-                .parames("deviceInfo" ,deviceInfo)
+                .parames("userInfo.userName" , userInfo.getUserName())
+                .parames("userInfo.password" , userInfo.getPassword())
+                .parames("deviceInfo.mac" ,deviceInfo.getMac())
+                .parames("deviceInfo.country" ,deviceInfo.getCountry())
+                .parames("deviceInfo.countryCode" ,deviceInfo.getCountryCode())
+                .parames("deviceInfo.regionName" ,deviceInfo.getRegionName())
+                .parames("deviceInfo.timeZone" ,deviceInfo.getTimeZone())
+                .parames("deviceInfo.city" ,deviceInfo.getCity())
                 .enqueue(new StringListener() {
                     @Override
                     public void onSuccess(String s) throws IOException {

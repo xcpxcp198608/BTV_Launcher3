@@ -10,7 +10,7 @@ import java.util.List;
  */
 
 public interface IChannelTypeData {
-    void loadData(OnLoadListener onLoadListener , DeviceInfo deviceInfo);
+    void loadData(OnLoadListener onLoadListener);
     interface OnLoadListener{
         void onSuccess(List<ChannelTypeInfo> list);
         void onFailure(String e);

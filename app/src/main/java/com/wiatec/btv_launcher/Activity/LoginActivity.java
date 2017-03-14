@@ -38,6 +38,9 @@ public class LoginActivity extends BaseActivity<ILoginActivity, LoginPresenter> 
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
 
+    private String userName;
+    private String password;
+
     @Override
     protected LoginPresenter createPresenter() {
         return new LoginPresenter(this);
@@ -48,14 +51,16 @@ public class LoginActivity extends BaseActivity<ILoginActivity, LoginPresenter> 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        userName = (String) SPUtils.get(LoginActivity.this , "userName" ,"");
+        etUserName.setText(userName);
     }
 
     @OnClick({R.id.bt_login, R.id.bt_create_account})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_login:
-                String userName = etUserName.getText().toString().trim();
-                String password = etPassword.getText().toString().trim();
+                userName = etUserName.getText().toString().trim();
+                password = etPassword.getText().toString().trim();
                 if(!TextUtils.isEmpty(userName) && ! TextUtils.isEmpty(password)){
                     UserInfo userInfo = new UserInfo();
                     userInfo.setUserName(userName);
@@ -79,11 +84,14 @@ public class LoginActivity extends BaseActivity<ILoginActivity, LoginPresenter> 
         if (code == Result.CODE_OK) {
             progressBar.setVisibility(View.GONE);
             Toast.makeText(LoginActivity.this, "login success", Toast.LENGTH_LONG).show();
-            int currentLoginCount = (int) result.getObject();
-            SPUtils.put(LoginActivity.this,"currentLoginCount",currentLoginCount);
+            SPUtils.put(LoginActivity.this,"currentLoginCount", result.getCount());
         } else {
             progressBar.setVisibility(View.GONE);
             Toast.makeText(LoginActivity.this, getString(R.string.error_key), Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void goTarget(){
+
     }
 }

@@ -26,6 +26,8 @@ import com.wiatec.btv_launcher.Activity.PlayAdActivity;
 import com.wiatec.btv_launcher.Activity.UserManualActivity;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.Utils.SPUtils;
+import com.wiatec.btv_launcher.bean.UserDataInfo;
 import com.wiatec.btv_launcher.custom_view.RollOverView;
 import com.wiatec.btv_launcher.receiver.OnNetworkStatusListener;
 import com.wiatec.btv_launcher.R;
@@ -115,6 +117,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     private long entryTime;
     private long exitTime;
     private long holdTime;
+    private UserDataInfo userDataInfo;
 
     @Nullable
     @Override
@@ -125,6 +128,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         networkStatusReceiver.setOnNetworkStatusListener(this);
         getContext().registerReceiver(networkStatusReceiver, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
         messageDao = MessageDao.getInstance(getContext());
+        userDataInfo = new UserDataInfo();
         return view;
     }
 
@@ -163,12 +167,19 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
             if (messageSubscription != null) {
                 messageSubscription.unsubscribe();
             }
-            exitTime = System.currentTimeMillis();
-            holdTime = exitTime - entryTime;
-            Date date = new Date(exitTime);
-            String eTime = new SimpleDateFormat("yy-MM-dd HH:mm:ss").format(date);
-            if(presenter != null && entryTime>0) {
-                presenter.uploadHoldTime(eTime, holdTime + "");
+            if(userDataInfo != null){
+                exitTime = System.currentTimeMillis();
+                holdTime = exitTime - entryTime;
+                String eTime = new SimpleDateFormat("yy-MM-dd HH:mm:ss").format(new Date(exitTime));
+                userDataInfo.setExitTime(eTime);
+                userDataInfo.setStayTime(holdTime+"");
+                userDataInfo.setUserName((String) SPUtils.get(Application.getContext(),"userName" ,""));
+                userDataInfo.setMac((String) SPUtils.get(Application.getContext(),"mac" ,""));
+                userDataInfo.setCountry((String) SPUtils.get(Application.getContext(),"country" ,""));
+                userDataInfo.setCity((String) SPUtils.get(Application.getContext(),"city" ,""));
+                if(presenter != null && entryTime>0) {
+                    presenter.uploadHoldTime(userDataInfo);
+                }
             }
         }
     }
@@ -208,6 +219,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
             presenter.loadImageData();
         }
         checkMessageCount();
+        entryTime = System.currentTimeMillis();
     }
 
     @Override
@@ -230,10 +242,15 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         }
         exitTime = System.currentTimeMillis();
         holdTime = exitTime - entryTime;
-        Date date = new Date(exitTime);
-        String eTime = new SimpleDateFormat("yy-MM-dd HH:mm:ss").format(date);
+        String eTime = new SimpleDateFormat("yy-MM-dd HH:mm:ss").format(new Date(exitTime));
+        userDataInfo.setExitTime(eTime);
+        userDataInfo.setStayTime(holdTime+"");
+        userDataInfo.setUserName((String) SPUtils.get(Application.getContext(),"userName" ,""));
+        userDataInfo.setMac((String) SPUtils.get(Application.getContext(),"mac" ,""));
+        userDataInfo.setCountry((String) SPUtils.get(Application.getContext(),"country" ,""));
+        userDataInfo.setCity((String) SPUtils.get(Application.getContext(),"city" ,""));
         if(presenter != null && entryTime>0) {
-            presenter.uploadHoldTime(eTime, holdTime + "");
+            presenter.uploadHoldTime(userDataInfo);
         }
     }
 
@@ -398,7 +415,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                     .subscribe(new Action1<String>() {
                         @Override
                         public void call(String s) {
-                            Logger.d("cloud_image:<---->"+s);
+                            //Logger.d("cloud_image:<---->"+s);
                             Glide.with(getContext()).load(s)
                                     .placeholder(R.drawable.ld_cloud_icon_3)
                                     .error(R.drawable.ld_cloud_icon_3)

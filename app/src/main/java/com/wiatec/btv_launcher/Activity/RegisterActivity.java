@@ -1,25 +1,47 @@
 package com.wiatec.btv_launcher.Activity;
 
-import android.databinding.DataBindingUtil;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.Utils.Logger;
+import com.wiatec.btv_launcher.Utils.SPUtils;
 import com.wiatec.btv_launcher.bean.Result;
 import com.wiatec.btv_launcher.bean.UserInfo;
-
 import com.wiatec.btv_launcher.presenter.RegisterPresenter;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by patrick on 2017/3/10.
  */
 
-public class RegisterActivity extends BaseActivity<IRegisterActivity , RegisterPresenter> implements IRegisterActivity {
+public class RegisterActivity extends BaseActivity<IRegisterActivity, RegisterPresenter> implements IRegisterActivity {
 
+
+    @BindView(R.id.et_username)
+    EditText etUsername;
+    @BindView(R.id.et_password)
+    EditText etPassword;
+    @BindView(R.id.et_password1)
+    EditText etPassword1;
+    @BindView(R.id.et_email)
+    EditText etEmail;
+    @BindView(R.id.bt_register)
+    Button btRegister;
+
+    private String userName;
+    private String password;
+    private String password1;
+    private String email;
 
     @Override
     protected RegisterPresenter createPresenter() {
@@ -30,51 +52,51 @@ public class RegisterActivity extends BaseActivity<IRegisterActivity , RegisterP
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-       // binding.setOnEvent(new OnEventListener());
+        ButterKnife.bind(this);
+
     }
 
-//    public class OnEventListener{
-//        public void onClick(View view){
-//            switch (view.getId()){
-//                case R.id.bt_register:
-//                    String userName = binding.etUsername.getText().toString().trim();
-//                    String password = binding.etPassword.getText().toString().trim();
-//                    String password1 = binding.etPassword1.getText().toString().trim();
-//                    String email = binding.etEmail.getText().toString().trim();
-//                    if(TextUtils.isEmpty(userName)){
-//                        Toast.makeText(RegisterActivity.this , getString(R.string.username_input_error), Toast.LENGTH_SHORT).show();
-//                        return;
-//                    }
-//                    if(TextUtils.isEmpty(password)){
-//                        Toast.makeText(RegisterActivity.this , getString(R.string.password_input_error), Toast.LENGTH_SHORT).show();
-//                        return;
-//                    }
-//                    if(TextUtils.isEmpty(password1)){
-//                        Toast.makeText(RegisterActivity.this , getString(R.string.password_input_error), Toast.LENGTH_SHORT).show();
-//                        return;
-//                    }
-//                    if(TextUtils.isEmpty(email)){
-//                        Toast.makeText(RegisterActivity.this , getString(R.string.password_input_error), Toast.LENGTH_SHORT).show();
-//                        return;
-//                    }
-//                    if(! password.equals(password1)){
-//                        Toast.makeText(RegisterActivity.this , getString(R.string.password_input_different), Toast.LENGTH_SHORT).show();
-//                        return;
-//                    }
-//                    UserInfo userInfo = new UserInfo();
-//                    userInfo.setUserName(userName);
-//                    userInfo.setPassword(password);
-//                    userInfo.setEmail(email);
-//                    presenter.register(userInfo , deviceInfo);
-//                    break;
-//                default:
-//                    break;
-//            }
-//        }
-//    }
+    @OnClick(R.id.bt_register)
+    public void onClick() {
+        userName = etUsername.getText().toString().trim();
+        password = etPassword.getText().toString().trim();
+        password1 = etPassword1.getText().toString().trim();
+        email = etEmail.getText().toString().trim();
+        if (TextUtils.isEmpty(userName)) {
+            Toast.makeText(RegisterActivity.this, getString(R.string.username_input_error), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(password)) {
+            Toast.makeText(RegisterActivity.this, getString(R.string.password_input_error), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(password1)) {
+            Toast.makeText(RegisterActivity.this, getString(R.string.password_input_error), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(email)) {
+            Toast.makeText(RegisterActivity.this, getString(R.string.password_input_error), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (!password.equals(password1)) {
+            Toast.makeText(RegisterActivity.this, getString(R.string.password_input_different), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUserName(userName);
+        userInfo.setPassword(password);
+        userInfo.setEmail(email);
+        presenter.register(userInfo, deviceInfo);
+    }
 
     @Override
     public void register(Result result) {
-        Logger.d(result.toString());
+        if (result.getCode() == Result.CODE_REGISTER_OK){
+            SPUtils.put(RegisterActivity.this , "userName" , userName);
+            Toast.makeText(this, getString(R.string.register_success), Toast.LENGTH_LONG).show();
+            finish();
+        }else{
+            Toast.makeText(this, result.getStatus(), Toast.LENGTH_LONG).show();
+        }
     }
 }

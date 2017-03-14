@@ -6,6 +6,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.Utils.OkHttp.Listener.StringListener;
+import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
+import com.wiatec.btv_launcher.bean.UserDataInfo;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -26,31 +29,24 @@ import okio.BufferedSink;
 
 public class UploadTimeData {
 
-    private  OkHttpClient okHttpClient;
+    public void upload(UserDataInfo userDataInfo){
+        OkMaster.get(F.url.upload_data)
+                .parames("userData.userName",userDataInfo.getUserName())
+                .parames("userData.country",userDataInfo.getCountry())
+                .parames("userData.city",userDataInfo.getCity())
+                .parames("userData.mac",userDataInfo.getMac())
+                .parames("userData.exitTime",userDataInfo.getExitTime())
+                .parames("userData.stayTime",userDataInfo.getStayTime())
+                .enqueue(new StringListener() {
+                    @Override
+                    public void onSuccess(String s) throws IOException {
 
-    public UploadTimeData() {
-        okHttpClient = new OkHttpClient();
-    }
+                    }
 
-    public void upload(final String exitTime , final String holdTime){
-        Request.Builder builder = new Request.Builder();
-        builder.url(F.url.upload_data);
-        FormBody.Builder formBuilder = new FormBody.Builder();
-        formBuilder.add("exitTime",exitTime);
-        formBuilder.add("holdTime",holdTime);
-        builder.post(formBuilder.build());
-        Request request = builder.build();
-        Call call = okHttpClient.newCall(request);
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
+                    @Override
+                    public void onFailure(String e) {
 
-            }
-
-            @Override
-            public void onResponse(Call call, okhttp3.Response response) throws IOException {
-
-            }
-        });
+                    }
+                });
     }
 }

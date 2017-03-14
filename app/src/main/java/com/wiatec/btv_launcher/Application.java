@@ -1,10 +1,12 @@
 package com.wiatec.btv_launcher;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.wiatec.btv_launcher.Utils.Logger;
+import com.wiatec.btv_launcher.service.CheckLoginService;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -48,5 +50,9 @@ public class Application extends android.app.Application {
 
     public static ExecutorService getThreadPool (){
         return executorService;
+    }
+
+    public void startLoginCheckService(){
+        startService(new Intent(context , CheckLoginService.class));
     }
 }

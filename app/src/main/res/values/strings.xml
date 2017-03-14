@@ -46,4 +46,5 @@
     <string name="password_input_error">Password input error</string>
     <string name="password_input_different">Password input different</string>
     <string name="email_input_error">Email input error</string>
+    <string name="register_success">Congratulations !register success , please go to your email confirm then login you account</string>
 </resources>

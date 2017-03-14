@@ -71,6 +71,7 @@
         <service android:name=".service.LoadService"/>
         <service android:name=".service.DownloadService"/>
         <service android:name=".service.LoadCloudService"/>
+        <service android:name=".service.CheckLoginService"/>
     </application>
 
 </manifest>

@@ -29,6 +29,7 @@ public abstract class BaseActivity <V ,T extends BasePresenter> extends AppCompa
         userInfo = new UserInfo();
         deviceInfo = new DeviceInfo();
         String mac = SystemConfig.getWifiMac1(this);
+        SPUtils.put(this ,"mac",mac);
         deviceInfo.setMac(mac);
     }
 
@@ -36,14 +37,14 @@ public abstract class BaseActivity <V ,T extends BasePresenter> extends AppCompa
     protected void onStart() {
         super.onStart();
         currentLoginCount = (int) SPUtils.get(this , "currentLoginCount" , 1);
-        userInfo.setUserName((String) SPUtils.get(this , "userName" , ""));
-        userInfo.setToken((String) SPUtils.get(this , "token" , ""));
-        deviceInfo.setUserName((String) SPUtils.get(this , "userName" , ""));
-        deviceInfo.setCity((String) SPUtils.get(this , "city" , ""));
-        deviceInfo.setCountry((String) SPUtils.get(this , "country" , ""));
-        deviceInfo.setCountryCode((String) SPUtils.get(this , "countryCode" , ""));
-        deviceInfo.setRegionName((String) SPUtils.get(this , "regionName" , ""));
-        deviceInfo.setTimeZone((String) SPUtils.get(this , "timezone" , ""));
+        userInfo.setUserName((String) SPUtils.get(this , "userName" , " "));
+        userInfo.setToken((String) SPUtils.get(this , "token" , " "));
+        deviceInfo.setUserName((String) SPUtils.get(this , "userName" , " "));
+        deviceInfo.setCity((String) SPUtils.get(this , "city" , "1"));
+        deviceInfo.setCountry((String) SPUtils.get(this , "country" , "1"));
+        deviceInfo.setCountryCode((String) SPUtils.get(this , "countryCode" , "1"));
+        deviceInfo.setRegionName((String) SPUtils.get(this , "regionName" , "1"));
+        deviceInfo.setTimeZone((String) SPUtils.get(this , "timezone" , "1"));
     }
 
     @Override

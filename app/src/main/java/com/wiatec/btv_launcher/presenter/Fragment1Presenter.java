@@ -2,6 +2,7 @@ package com.wiatec.btv_launcher.presenter;
 
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.bean.ImageInfo;
+import com.wiatec.btv_launcher.bean.UserDataInfo;
 import com.wiatec.btv_launcher.bean.VideoInfo;
 import com.wiatec.btv_launcher.data.CloudImageData;
 import com.wiatec.btv_launcher.data.ICloudImageData;
@@ -116,9 +117,9 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
         }
     }
 
-    public void uploadHoldTime(String exitTime ,String holdTime){
+    public void uploadHoldTime(UserDataInfo userDataInfo){
         if(uploadTimeData!= null) {
-            uploadTimeData.upload(exitTime, holdTime);
+            uploadTimeData.upload(userDataInfo);
         }
     }
 }

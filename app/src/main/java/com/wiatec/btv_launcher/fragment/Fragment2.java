@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.jude.rollviewpager.RollPagerView;
 import com.wiatec.btv_launcher.Activity.AppSelectActivity;
 import com.wiatec.btv_launcher.Activity.FMPlayActivity;
+import com.wiatec.btv_launcher.Activity.LoginActivity;
 import com.wiatec.btv_launcher.Activity.MainActivity;
 import com.wiatec.btv_launcher.Activity.PlayActivity;
 import com.wiatec.btv_launcher.Activity.SplashActivity;
@@ -33,6 +34,7 @@ import com.wiatec.btv_launcher.Utils.ApkCheck;
 import com.wiatec.btv_launcher.Utils.ApkLaunch;
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.SPUtils;
+import com.wiatec.btv_launcher.Utils.SystemConfig;
 import com.wiatec.btv_launcher.adapter.ChannelGrideAdapter;
 import com.wiatec.btv_launcher.adapter.LinkListAdapter;
 import com.wiatec.btv_launcher.adapter.RollImageAdapter;
@@ -49,6 +51,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -59,7 +62,7 @@ import rx.schedulers.Schedulers;
  * Created by patrick on 2016/12/28.
  */
 
-public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> implements IFragment2,View.OnFocusChangeListener ,View.OnClickListener{
+public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> implements IFragment2, View.OnFocusChangeListener, View.OnClickListener {
     @BindView(R.id.lv_country)
     ListView lvCountry;
     @BindView(R.id.gv_channel)
@@ -106,9 +109,12 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment2, container, false);
         ButterKnife.bind(this, view);
-        presenter.bind();
+        if (SystemConfig.isNetworkConnected(activity)) {
+            presenter.bind();
+            presenter.loadChannelType();
+        }
         installedAppDao = InstalledAppDao.getInstance(Application.getContext());
-        isShow = (boolean) SPUtils.get(getContext() , "isShow" , true);
+        isShow = (boolean) SPUtils.get(getContext(), "isShow", true);
         lvCountry.setNextFocusRightId(R.id.gv_channel);
         return view;
     }
@@ -122,19 +128,19 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if(isVisibleToUser){
-            isShow = (boolean) SPUtils.get(getContext() , "isShow" , true);
-            if(isShow){
+        if (isVisibleToUser) {
+            isShow = (boolean) SPUtils.get(getContext(), "isShow", true);
+            if (isShow) {
                 showWarning();
             }
-            if(!isLoaded){
+            if (!isLoaded) {
                 presenter.bind();
-                presenter.loadChannelType(activity.mDeviceInfo);
+                presenter.loadChannelType();
             }
-            if(isLoaded){
-                presenter.showChannel("country" ,"BVISION",null);
+            if (isLoaded) {
+                presenter.showChannel("country", "BVISION", "name");
             }
-            if(presenter != null && !rollOverStart){
+            if (presenter != null && !rollOverStart) {
                 presenter.loadRollImage();
             }
         }
@@ -145,7 +151,7 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
         alertDialog.show();
         alertDialog.setCancelable(false);
         Window window = alertDialog.getWindow();
-        if(window == null){
+        if (window == null) {
             return;
         }
         window.setContentView(R.layout.dialog_warning_f2);
@@ -154,14 +160,14 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
         btConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SPUtils.put(getContext() , "isShow" , false);
+                SPUtils.put(getContext(), "isShow", false);
                 alertDialog.dismiss();
             }
         });
         btCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SPUtils.put(getContext() , "isShow" , true);
+                SPUtils.put(getContext(), "isShow", true);
                 alertDialog.dismiss();
             }
         });
@@ -172,18 +178,18 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
         super.onStart();
         setZoom();
         ibtC1.setOnClickListener(this);
-        showCustomShortCut(ibtC2 ,"c2");
-        showCustomShortCut(ibtC3 ,"c3");
-        showCustomShortCut(ibtC4 ,"c4");
-        showCustomShortCut(ibtC5 ,"c5");
-        showCustomShortCut(ibtC6 ,"c6");
-        showCustomShortCut(ibtC7 ,"c7");
+        showCustomShortCut(ibtC2, "c2");
+        showCustomShortCut(ibtC3, "c3");
+        showCustomShortCut(ibtC4, "c4");
+        showCustomShortCut(ibtC5, "c5");
+        showCustomShortCut(ibtC6, "c6");
+        //showCustomShortCut(ibtC7, "c7");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if(presenter != null){
+        if (presenter != null) {
             presenter.loadRollImage();
         }
     }
@@ -200,10 +206,10 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
         });
     }
 
-    public void showLinkByBrowser(String url){
+    public void showLinkByBrowser(String url) {
         try {
-            startActivity(new Intent(Intent.ACTION_VIEW , Uri.parse(url)));
-        }catch (Exception e){
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+        } catch (Exception e) {
             e.printStackTrace();
             Logger.d(e.getMessage());
         }
@@ -217,7 +223,7 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
 
     @Override
     public void loadRollOverImage(final List<ImageInfo> list) {
-        if(list.size() <=0){
+        if (list.size() <= 0) {
             return;
         }
         rollOverViewAdapter1 = new RollOverViewAdapter1(list);
@@ -232,25 +238,25 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
 
     @Override
     public void loadChannelType(final List<ChannelTypeInfo> list) {
-        if(list == null){
+        if (list == null) {
             return;
         }
         lvCountry.setBackground(null);
         tvNotice.setVisibility(View.VISIBLE);
-        listAdapter = new LinkListAdapter(Application.getContext() , list);
+        listAdapter = new LinkListAdapter(Application.getContext(), list);
         lvCountry.setAdapter(listAdapter);
         lvCountry.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ChannelTypeInfo channelTypeInfo = list.get(position);
-                if(channelTypeInfo.getFlag() == 0){
-                    if("CHINA".equals(channelTypeInfo.getName()) || "TAIWAN".equals(channelTypeInfo.getName())){
-                        presenter.showChannel("country" ,channelTypeInfo.getName(),"sequence");
-                    }else{
-                        presenter.showChannel("country" ,channelTypeInfo.getName(),"name");
+                if (channelTypeInfo.getFlag() == 0) {
+                    if ("CHINA".equals(channelTypeInfo.getName()) || "TAIWAN".equals(channelTypeInfo.getName())) {
+                        presenter.showChannel("country", channelTypeInfo.getName(), "sequence");
+                    } else {
+                        presenter.showChannel("country", channelTypeInfo.getName(), "name");
                     }
-                }else if(channelTypeInfo.getFlag() == 1){
-                    presenter.showChannel("style" ,channelTypeInfo.getName(),"name");
+                } else if (channelTypeInfo.getFlag() == 1) {
+                    presenter.showChannel("style", channelTypeInfo.getName(), "name");
                 }
             }
         });
@@ -258,14 +264,14 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 ChannelTypeInfo channelTypeInfo = list.get(position);
-                if(channelTypeInfo.getFlag() == 0){
-                    if("CHINA".equals(channelTypeInfo.getName()) || "TAIWAN".equals(channelTypeInfo.getName())){
-                        presenter.showChannel("country" ,channelTypeInfo.getName(),"sequence");
-                    }else{
-                        presenter.showChannel("country" ,channelTypeInfo.getName(),"name");
+                if (channelTypeInfo.getFlag() == 0) {
+                    if ("CHINA".equals(channelTypeInfo.getName()) || "TAIWAN".equals(channelTypeInfo.getName())) {
+                        presenter.showChannel("country", channelTypeInfo.getName(), "sequence");
+                    } else {
+                        presenter.showChannel("country", channelTypeInfo.getName(), "name");
                     }
-                }else if(channelTypeInfo.getFlag() == 1){
-                    presenter.showChannel("style" ,channelTypeInfo.getName(),"name");
+                } else if (channelTypeInfo.getFlag() == 1) {
+                    presenter.showChannel("style", channelTypeInfo.getName(), "name");
                 }
                 Zoom.zoomIn09_10(view);
             }
@@ -279,33 +285,33 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
 
     @Override
     public void showChannel(final List<ChannelInfo> list) {
-        grideAdapter = new ChannelGrideAdapter(Application.getContext() ,list);
+        grideAdapter = new ChannelGrideAdapter(Application.getContext(), list);
         gridView.setAdapter(grideAdapter);
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ChannelInfo channelInfo = list.get(position);
-                isShow = (boolean) SPUtils.get(getContext() , "isShow" , true);
-                if(isShow){
+                isShow = (boolean) SPUtils.get(getContext(), "isShow", true);
+                if (isShow) {
                     return;
                 }
-                if("link".equals(channelInfo.getType())){
+                if ("link".equals(channelInfo.getType())) {
                     showLinkByBrowser(channelInfo.getUrl());
-                }else if("live".equals(channelInfo.getType())){
-                    Intent intent = new Intent(getContext() , PlayActivity.class);
-                    intent.putExtra("url",channelInfo.getUrl());
+                } else if ("live".equals(channelInfo.getType())) {
+                    Intent intent = new Intent(getContext(), PlayActivity.class);
+                    intent.putExtra("url", channelInfo.getUrl());
                     startActivity(intent);
-                }else if("radio".equals(channelInfo.getType())){
-                    Intent intent = new Intent(getContext() , FMPlayActivity.class);
-                    intent.putExtra("url",channelInfo.getUrl());
+                } else if ("radio".equals(channelInfo.getType())) {
+                    Intent intent = new Intent(getContext(), FMPlayActivity.class);
+                    intent.putExtra("url", channelInfo.getUrl());
                     startActivity(intent);
-                }else if("app".equals(channelInfo.getType())){
-                    if(ApkCheck.isApkInstalled(getContext() , channelInfo.getUrl())){
-                        ApkLaunch.launchApkByPackageName(getContext() , channelInfo.getUrl());
-                    }else{
-                        Toast.makeText(getContext() , getString(R.string.download_guide)+" TV2.0+",Toast.LENGTH_SHORT).show();
-                        ApkLaunch.launchApkByPackageName(getContext() , F.package_name.market);
+                } else if ("app".equals(channelInfo.getType())) {
+                    if (ApkCheck.isApkInstalled(getContext(), channelInfo.getUrl())) {
+                        ApkLaunch.launchApkByPackageName(getContext(), channelInfo.getUrl());
+                    } else {
+                        Toast.makeText(getContext(), getString(R.string.download_guide) + " TV2.0+", Toast.LENGTH_SHORT).show();
+                        ApkLaunch.launchApkByPackageName(getContext(), F.package_name.market);
                     }
                 }
             }
@@ -323,16 +329,16 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
         });
     }
 
-    private void showCustomShortCut (final ImageButton imageButton , final String type){
+    private void showCustomShortCut(final ImageButton imageButton, final String type) {
         Observable.just(type)
                 .subscribeOn(Schedulers.io())
                 .map(new Func1<String, InstalledApp>() {
                     @Override
                     public InstalledApp call(String s) {
                         List<InstalledApp> list = installedAppDao.queryDataByType(s);
-                        if(list.size() ==1){
+                        if (list.size() == 1) {
                             return installedAppDao.queryDataByType(s).get(0);
-                        }else {
+                        } else {
                             return null;
                         }
                     }
@@ -342,7 +348,7 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
                     @Override
                     public void call(final InstalledApp installedApp) {
                         if (installedApp != null) {
-                            imageButton.setImageDrawable(ApkCheck.getInstalledApkIcon(getContext() , installedApp.getAppPackageName()));
+                            imageButton.setImageDrawable(ApkCheck.getInstalledApkIcon(getContext(), installedApp.getAppPackageName()));
                             imageButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -354,19 +360,19 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
                             imageButton.setOnLongClickListener(new View.OnLongClickListener() {
                                 @Override
                                 public boolean onLongClick(View v) {
-                                    Intent intent = new Intent(getContext() , AppSelectActivity.class);
-                                    intent.putExtra("type" ,type);
+                                    Intent intent = new Intent(getContext(), AppSelectActivity.class);
+                                    intent.putExtra("type", type);
                                     startActivity(intent);
                                     return true;
                                 }
                             });
-                        }else {
+                        } else {
                             imageButton.setImageResource(R.drawable.add1);
                             imageButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    Intent intent = new Intent(getContext() , AppSelectActivity.class);
-                                    intent.putExtra("type" ,type);
+                                    Intent intent = new Intent(getContext(), AppSelectActivity.class);
+                                    intent.putExtra("type", type);
                                     startActivity(intent);
                                 }
                             });
@@ -378,24 +384,11 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         if (hasFocus) {
-            if(v.getId() == R.id.ibt_c1 || v.getId() == R.id.ibt_ld_store){
+            if (v.getId() == R.id.ibt_c1 || v.getId() == R.id.ibt_ld_store) {
                 Zoom.zoomIn10_11(v);
-            }else {
+            } else {
                 Zoom.zoomIn09_10(v);
             }
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.ibt_c1:
-                Intent intent = new Intent(getActivity() , FMPlayActivity.class);
-                intent.putExtra("url" , "http://142.4.216.91:8280/");
-                getContext().startActivity(intent);
-                break;
-            default:
-                break;
         }
     }
 
@@ -410,4 +403,17 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
         ibtC7.setOnFocusChangeListener(this);
     }
 
+    @OnClick({R.id.ibt_c1, R.id.ibt_c7})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.ibt_c1:
+                Intent intent = new Intent(getActivity(), FMPlayActivity.class);
+                intent.putExtra("url", "http://142.4.216.91:8280/");
+                getContext().startActivity(intent);
+                break;
+            case R.id.ibt_c7:
+                startActivity(new Intent(getContext() , LoginActivity.class));
+                break;
+        }
+    }
 }

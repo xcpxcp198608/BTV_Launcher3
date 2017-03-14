@@ -47,31 +47,38 @@ public class Result {
 
     private int code;
     private String status;
-    private Object object;
+    private int count;
+
     public int getCode() {
         return code;
     }
+
     public void setCode(int code) {
         this.code = code;
     }
+
     public String getStatus() {
         return status;
     }
+
     public void setStatus(String status) {
         this.status = status;
     }
-    public Object getObject() {
-        return object;
+
+    public int getCount() {
+        return count;
     }
-    public void setObject(Object object) {
-        this.object = object;
+
+    public void setCount(int count) {
+        this.count = count;
     }
+
     @Override
     public String toString() {
-        return "Result [code=" + code + ", status=" + status + ", object="
-                + object + ", getCode()=" + getCode() + ", getStatus()="
-                + getStatus() + ", getObject()=" + getObject()
-                + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-                + ", toString()=" + super.toString() + "]";
+        return "Result{" +
+                "code=" + code +
+                ", status='" + status + '\'' +
+                ", count=" + count +
+                '}';
     }
 }

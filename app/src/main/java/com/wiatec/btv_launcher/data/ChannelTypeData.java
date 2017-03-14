@@ -3,6 +3,7 @@ package com.wiatec.btv_launcher.data;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.OkHttp.Listener.StringListener;
 import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
 import com.wiatec.btv_launcher.bean.ChannelTypeInfo;
@@ -17,9 +18,8 @@ import java.util.List;
 
 public class ChannelTypeData implements IChannelTypeData {
     @Override
-    public void loadData(final OnLoadListener onLoadListener , DeviceInfo deviceInfo) {
+    public void loadData(final OnLoadListener onLoadListener) {
         OkMaster.get(F.url.channel_type)
-                .parames("deviceInfo",deviceInfo)
                 .enqueue(new StringListener() {
                     @Override
                     public void onSuccess(String s) throws IOException {

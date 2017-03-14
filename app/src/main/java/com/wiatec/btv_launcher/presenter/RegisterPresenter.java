@@ -27,8 +27,11 @@ public class RegisterPresenter extends BasePresenter<IRegisterActivity> {
 
     public void register (UserInfo userInfo , DeviceInfo deviceInfo){
         OkMaster.get(F.url.register)
-                .parames("userInfo",userInfo)
-                .parames("deviceInfo", deviceInfo)
+                .parames("userInfo.userName",userInfo.getUserName())
+                .parames("userInfo.password",userInfo.getPassword())
+                .parames("userInfo.email",userInfo.getEmail())
+                .parames("deviceInfo.mac", deviceInfo.getMac())
+                .parames("deviceInfo.city", deviceInfo.getCity())
                 .enqueue(new StringListener() {
                     @Override
                     public void onSuccess(String s) throws IOException {
