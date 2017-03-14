@@ -107,7 +107,7 @@ public class ViewPagerIndicator extends LinearLayout {
         mShapeHeightRate =shapeHeightRate;
     }
     //设置Table为TextView
-    public void setTextTitle(String [] texts ,int textSize ,int textColor, int textSelectColor) {
+    public void setTextTitle(String [] texts ,int textSize ,int textColor, int textSelectColor ,int selectBackgroundId) {
         mTableCount = texts.length;
         if(textSize>0){
             mTextSize = textSize;
@@ -117,6 +117,9 @@ public class ViewPagerIndicator extends LinearLayout {
         }
         if(textSelectColor>0){
             mTextSelectColor = textSelectColor;
+        }
+        if(selectBackgroundId>0){
+            mSelectBackgroundId = selectBackgroundId;
         }
 
         if(texts.length>0){
@@ -313,6 +316,9 @@ public class ViewPagerIndicator extends LinearLayout {
             if(view instanceof ImageView){
                 ((ImageView) view).setBackgroundResource(mBackgroundId);
             }
+            if(view instanceof TextView){
+                ((TextView) view).setBackgroundResource(mBackgroundId);
+            }
         }
     }
 
@@ -321,6 +327,9 @@ public class ViewPagerIndicator extends LinearLayout {
         View view = getChildAt(position);
         if(view instanceof ImageView){
             ((ImageView) view).setBackgroundResource(mSelectBackgroundId);
+        }
+        if(view instanceof TextView){
+            ((TextView) view).setBackgroundResource(mSelectBackgroundId);
         }
     }
 

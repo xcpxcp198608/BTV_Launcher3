@@ -8,7 +8,7 @@
     <com.wiatec.btv_launcher.custom_view.ViewPagerIndicator
         android:id="@+id/viewpager_indicator"
         android:layout_width="match_parent"
-        android:layout_height="40dp"/>
+        android:layout_height="60dp"/>
     <ImageView
         android:background="@color/colorWhite"
         android:layout_width="match_parent"

@@ -31,6 +31,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:layout_margin="3dp"
             android:background="@drawable/item_main_bg"
             android:orientation="vertical"
             android:layout_weight="4.1"
@@ -277,7 +278,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginLeft="5dp"
             android:orientation="vertical"
             android:layout_weight="2.8"
             android:layout_width="0dp"
@@ -290,13 +290,12 @@
                 android:clickable="false"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-                android:background="@drawable/follow"
+                android:background="@drawable/bg_roll_image"
                 android:layout_weight="2"
                 android:layout_height="0dp"
                 android:layout_width="match_parent"/>
 
             <FrameLayout
-                android:layout_marginTop="5dp"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp">
@@ -313,9 +312,9 @@
             </FrameLayout>
 
             <com.wiatec.btv_launcher.custom_view.RollOverView
-                android:background="@color/colorItemTransparentW1"
+                android:paddingBottom="3dp"
+                android:background="@drawable/bg_roll_over_image"
                 android:id="@+id/roll_over_view"
-                android:layout_marginTop="5dp"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp" />
@@ -323,7 +322,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginLeft="5dp"
             android:orientation="vertical"
             android:layout_weight="4.5"
             android:layout_width="0dp"
@@ -356,23 +354,11 @@
             </FrameLayout>
 
             <FrameLayout
-                android:background="@color/colorWhite"
-                android:layout_marginTop="5dp"
+                android:background="@drawable/bg_cloud"
                 android:orientation="horizontal"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp">
-
-                <ImageButton
-                    android:id="@+id/ibt_ld_cloud"
-                    android:padding="3dp"
-                    android:adjustViewBounds="true"
-                    android:background="@drawable/item_ldcloud_bg"
-                    android:src="@drawable/ld_cloud_icon_3"
-                    android:scaleType="fitCenter"
-                    android:cropToPadding="true"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
 
                 <ImageView
                     android:layout_margin="5dp"
@@ -390,6 +376,17 @@
                     android:layout_gravity="bottom|right"
                     android:layout_width="50dp"
                     android:layout_height="50dp" />
+
+                <ImageButton
+                    android:id="@+id/ibt_ld_cloud"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/item_ldcloud_bg"
+                    android:cropToPadding="true"
+                    android:padding="3dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ld_cloud_icon_3" />
 
             </FrameLayout>
 

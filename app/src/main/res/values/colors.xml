@@ -56,7 +56,7 @@
     <color name="colorItemTransparentW1">#12ffffff</color>
     <color name="colorItemTransparentW5">#55ffffff</color>
     <color name="colorItemTransparentWD">#dbffffff</color>
-
+    <color name="colorOrange">#ec7513</color>
     <color name="colorDialogBG">#0E2038</color>
 
 </resources>

@@ -9,7 +9,7 @@
         android:numColumns="7"
         android:horizontalSpacing="5dp"
         android:verticalSpacing="5dp"
-        android:listSelector="@drawable/menu_item_bg"
+        android:listSelector="@drawable/app_select_bg_focus1"
         android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

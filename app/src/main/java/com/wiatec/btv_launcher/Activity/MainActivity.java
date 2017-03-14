@@ -302,7 +302,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
     }
 
     private void showUpdateDialog(final UpdateInfo updateInfo) {
-        final AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+        final AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this,R.style.dialog).create();
         alertDialog.show();
         alertDialog.setCancelable(false);
         Window window = alertDialog.getWindow();

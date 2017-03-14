@@ -147,9 +147,10 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
     }
 
     private void showWarning() {
-        final AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+        final AlertDialog alertDialog = new AlertDialog.Builder(getContext() ,R.style.dialog).create();
         alertDialog.show();
         alertDialog.setCancelable(false);
+
         Window window = alertDialog.getWindow();
         if (window == null) {
             return;
