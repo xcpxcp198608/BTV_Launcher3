@@ -9,8 +9,16 @@
         <item name="android:windowBackground">@drawable/main_bg</item>
     </style>
 
-    <style name="progress1">
-        <item name="android:indeterminateDrawable">@anim/progress</item>
+    <style name="progress_yellow">
+        <item name="android:indeterminateDrawable">@anim/progress_yellow</item>
+        <item name="android:minHeight">80dp</item>
+        <item name="android:minWidth">80dp</item>
+        <item name="android:maxHeight">80dp</item>
+        <item name="android:maxWidth">80dp</item>
+    </style>
+
+    <style name="progress_blue">
+        <item name="android:indeterminateDrawable">@anim/progress_blue</item>
         <item name="android:minHeight">80dp</item>
         <item name="android:minWidth">80dp</item>
         <item name="android:maxHeight">80dp</item>

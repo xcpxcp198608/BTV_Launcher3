@@ -12,7 +12,7 @@
         android:layout_height="match_parent" />
 
     <ProgressBar
-        style="@style/progress1"
+        style="@style/progress_yellow"
         android:id="@+id/progressbar"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
