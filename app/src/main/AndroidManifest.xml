@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="com.legacydirect.tvphoto.permission.READAUTH"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.ACCOUNT_MANAGER"/>
 
     <application
         android:allowBackup="true"
@@ -20,6 +21,7 @@
         android:name=".Application"
         android:theme="@style/AppTheme">
         <activity android:name=".Activity.BootAdActivity"
+            android:launchMode="singleTask"
             android:clearTaskOnLaunch="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,6 +32,7 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".Activity.MainActivity"/>
         <activity android:name=".Activity.MenuActivity"/>
         <activity android:name=".Activity.UpdateActivity"/>
         <activity android:name=".Activity.PlayActivity"/>
@@ -46,8 +49,6 @@
             android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".Activity.PinentryActivity"/>
         <activity android:name=".Activity.FMPlayActivity"/>
-        <activity android:name=".Activity.MainActivity"
-            android:launchMode="singleTask"/>
         <activity android:name=".Activity.CloudImageFullScreenActivity"/>
         <activity android:name=".Activity.WakeUpAdActivity"/>
         <activity android:name=".Activity.MemberChannelActivity"/>
@@ -69,7 +70,6 @@
         </receiver>
 
         <service android:name=".service.LoadService"/>
-        <service android:name=".service.DownloadService"/>
         <service android:name=".service.LoadCloudService"/>
         <service android:name=".service.CheckLoginService"/>
     </application>

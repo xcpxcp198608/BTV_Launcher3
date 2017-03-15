@@ -15,7 +15,7 @@ import java.util.List;
  * Created by patrick on 2017/3/4.
  */
 
-public class MemberChannelActivity extends BaseActivity<IMemberChannelActivity , MemberChannelPresenter> implements IMemberChannelActivity {
+public class MemberChannelActivity extends Base1Activity<IMemberChannelActivity , MemberChannelPresenter> implements IMemberChannelActivity {
 
     private GridView gridView;
     private ChannelGrideAdapter channelGrideAdapter;

@@ -11,6 +11,8 @@ import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.SQL.MessageDao;
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Activity.IMainActivity;
+import com.wiatec.btv_launcher.Utils.OkHttp.Bean.DownloadInfo;
+import com.wiatec.btv_launcher.Utils.OkHttp.Listener.DownloadListener;
 import com.wiatec.btv_launcher.Utils.OkHttp.Listener.StringListener;
 import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
 import com.wiatec.btv_launcher.Utils.SPUtils;
@@ -198,35 +200,82 @@ public class MainPresenter extends BasePresenter<IMainActivity> {
     }
 
     public void loadLocation(){
-        String url = "http://ip-api.com/json";
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                if(response != null){
-                    try {
-                        String city = response.getString("city");
-                        String country = response.getString("country");
-                        String countryCode = response.getString("countryCode");
-                        String regionName = response.getString("regionName");
-                        String timeZone = response.getString("timezone");
-                       // Logger.d(country +"---"+ countryCode +"---"+ city);
-                        SPUtils.put(Application.getContext() , "countryCode",countryCode);
-                        SPUtils.put(Application.getContext() , "country",country);
-                        SPUtils.put(Application.getContext() , "regionName",regionName);
-                        SPUtils.put(Application.getContext() , "timezone",timeZone);
-                        SPUtils.put(Application.getContext() , "city",city);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+        try {
+            String url = "http://ip-api.com/json";
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    if(response != null){
+                        try {
+                            String city = response.getString("city");
+                            String country = response.getString("country");
+                            String countryCode = response.getString("countryCode");
+                            String regionName = response.getString("regionName");
+                            String timeZone = response.getString("timezone");
+                            // Logger.d(country +"---"+ countryCode +"---"+ city);
+                            SPUtils.put(Application.getContext() , "countryCode",countryCode);
+                            SPUtils.put(Application.getContext() , "country",country);
+                            SPUtils.put(Application.getContext() , "regionName",regionName);
+                            SPUtils.put(Application.getContext() , "timezone",timeZone);
+                            SPUtils.put(Application.getContext() , "city",city);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-              //  Logger.d("location load error "+error.getMessage());
-            }
-        });
-        jsonObjectRequest.setTag("location");
-        Application.getRequestQueue().add(jsonObjectRequest);
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    //  Logger.d("location load error "+error.getMessage());
+                }
+            });
+            jsonObjectRequest.setTag("location");
+            Application.getRequestQueue().add(jsonObjectRequest);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void downloadAdVideo (String name , String url){
+        OkMaster.download(Application.getContext())
+                .path(F.path.download)
+                .name(name)
+                .url(url)
+                .startDownload(new DownloadListener() {
+                    @Override
+                    public void onPending(DownloadInfo downloadInfo) {
+
+                    }
+
+                    @Override
+                    public void onStart(DownloadInfo downloadInfo) {
+
+                    }
+
+                    @Override
+                    public void onPause(DownloadInfo downloadInfo) {
+
+                    }
+
+                    @Override
+                    public void onProgress(DownloadInfo downloadInfo) {
+
+                    }
+
+                    @Override
+                    public void onFinished(DownloadInfo downloadInfo) {
+
+                    }
+
+                    @Override
+                    public void onCancel(DownloadInfo downloadInfo) {
+
+                    }
+
+                    @Override
+                    public void onError(DownloadInfo downloadInfo) {
+
+                    }
+                });
     }
 }

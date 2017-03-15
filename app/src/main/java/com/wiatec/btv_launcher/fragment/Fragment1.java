@@ -266,9 +266,9 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ibt_btv:
-                Intent intent = new Intent(getContext(), PlayAdActivity.class);
-                intent.putExtra("packageName", F.package_name.btv);
-                startActivity(intent);
+                if (ApkCheck.isApkInstalled(getContext(), F.package_name.btv)) {
+                    ApkLaunch.launchApkByPackageName(getContext(), F.package_name.btv);
+                }
                 break;
             case R.id.ibt_user_guide:
                 startActivity(new Intent(getContext(), UserManualActivity.class));

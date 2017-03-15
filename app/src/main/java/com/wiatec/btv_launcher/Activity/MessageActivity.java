@@ -40,7 +40,7 @@ import rx.schedulers.Schedulers;
  * Created by PX on 2016-11-14.
  */
 
-public class MessageActivity extends BaseActivity<IMessageActivity, MessagePresenter> implements IMessageActivity {
+public class MessageActivity extends Base1Activity<IMessageActivity, MessagePresenter> implements IMessageActivity {
 
     @BindView(R.id.lv_message)
     ListView lv_Message;

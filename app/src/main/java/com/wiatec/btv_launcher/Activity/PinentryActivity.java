@@ -23,7 +23,7 @@ import java.util.List;
  * Created by patrick on 2016/12/29.
  */
 
-public class PinentryActivity extends BaseActivity<IPinentryActivity ,PinentryPresenter> implements IPinentryActivity{
+public class PinentryActivity extends Base1Activity<IPinentryActivity ,PinentryPresenter> implements IPinentryActivity{
 
     private GridView gridView;
     private ChannelGrideAdapter channelGrideAdapter;

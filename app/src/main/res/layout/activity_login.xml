@@ -26,7 +26,7 @@
 
     <Button
         android:textAllCaps="false"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/bt_login"
         android:textSize="22sp"
         android:text="@string/login"
@@ -35,6 +35,7 @@
         android:layout_height="50dp" />
 
     <Button
+        android:layout_marginTop="10dp"
         android:id="@+id/bt_create_account"
         android:text="@string/create_account"
         android:textSize="20sp"
@@ -48,7 +49,7 @@
     <ProgressBar
         android:visibility="gone"
         style="@style/progress_blue"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/progressBar" />

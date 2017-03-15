@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -49,7 +48,6 @@ import com.wiatec.btv_launcher.receiver.NetworkStatusReceiver;
 import com.wiatec.btv_launcher.receiver.ScreenWeekUpReceiver;
 import com.wiatec.btv_launcher.receiver.WeatherStatusReceiver;
 import com.wiatec.btv_launcher.receiver.WifiStatusReceiver;
-import com.wiatec.btv_launcher.service.DownloadService;
 import com.wiatec.btv_launcher.service.LoadCloudService;
 import com.wiatec.btv_launcher.service.LoadService;
 import com.wiatec.btv_launcher.WeatherIconSetting;
@@ -232,16 +230,10 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
         }
         if (!FileCheck.isFileExists(F.path.download, "btvbootad.mp4")) {
             //Logger.d("video is not exists");
-            Intent intent = new Intent(MainActivity.this, DownloadService.class);
-            intent.putExtra("name", "btvbootad.mp4");
-            intent.putExtra("url", videoInfo.getUrl());
-            startService(intent);
+            presenter.downloadAdVideo("btvbootad.mp4" ,videoInfo.getUrl());
         } else if (!FileCheck.isFileIntact(F.path.download, "btvbootad.mp4", videoInfo.getMd5())) {
             //Logger.d("video is not intact");
-            Intent intent = new Intent(MainActivity.this, DownloadService.class);
-            intent.putExtra("name", "btvbootad.mp4");
-            intent.putExtra("url", videoInfo.getUrl());
-            startService(intent);
+            presenter.downloadAdVideo("btvbootad.mp4" ,videoInfo.getUrl());
         } else {
             // Logger.d("video no need update");
         }
@@ -250,15 +242,9 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
     @Override
     public void loadAdVideo(VideoInfo videoInfo) {
         if (!FileCheck.isFileExists(F.path.download, "btvad.mp4")) {
-            Intent intent = new Intent(MainActivity.this, DownloadService.class);
-            intent.putExtra("name", "btvad.mp4");
-            intent.putExtra("url", videoInfo.getUrl());
-            startService(intent);
+            presenter.downloadAdVideo("btvad.mp4" ,videoInfo.getUrl());
         } else if (!FileCheck.isFileIntact(F.path.download, "btvad.mp4", videoInfo.getMd5())) {
-            Intent intent = new Intent(MainActivity.this, DownloadService.class);
-            intent.putExtra("name", "btvad.mp4");
-            intent.putExtra("url", videoInfo.getUrl());
-            startService(intent);
+            presenter.downloadAdVideo("btvad.mp4" ,videoInfo.getUrl());
         } else {
             //Logger.d("video no need update");
         }

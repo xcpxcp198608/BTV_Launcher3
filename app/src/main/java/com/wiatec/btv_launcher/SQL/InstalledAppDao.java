@@ -91,7 +91,7 @@ public class InstalledAppDao {
     public List<InstalledApp> queryData(){
         List<InstalledApp> list =new ArrayList<>();
         Cursor cursor = sqLiteDatabase.query(SQLiteHelper.TABLE_NAME , null , "_id>?",
-                new String []{"0"} ,null ,null ,"sequence");
+                new String []{"0"} ,null ,null ,"appName");
         while(cursor.moveToNext()){
             InstalledApp installedApp = new InstalledApp();
             installedApp.setType(cursor.getString(cursor.getColumnIndex("type")));

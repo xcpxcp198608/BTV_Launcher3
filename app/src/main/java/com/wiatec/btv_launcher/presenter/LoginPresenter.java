@@ -24,18 +24,22 @@ public class LoginPresenter extends BasePresenter<ILoginActivity> {
     }
 
     public void login(UserInfo userInfo , DeviceInfo deviceInfo){
-        if(iLoginData != null){
-            iLoginData.login(userInfo, deviceInfo, new ILoginData.OnLoginListener() {
-                @Override
-                public void onSuccess(Result result) {
-                    iLoginActivity.login(result);
-                }
+        try {
+            if(iLoginData != null){
+                iLoginData.login(userInfo, deviceInfo, new ILoginData.OnLoginListener() {
+                    @Override
+                    public void onSuccess(Result result) {
+                        iLoginActivity.login(result);
+                    }
 
-                @Override
-                public void onFailure(String e) {
-                    Logger.d(e);
-                }
-            });
+                    @Override
+                    public void onFailure(String e) {
+                        Logger.d(e);
+                    }
+                });
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 }

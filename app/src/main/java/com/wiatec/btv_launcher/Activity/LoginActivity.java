@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.SPUtils;
@@ -25,7 +26,7 @@ import butterknife.OnClick;
  * Created by patrick on 2016/12/29.
  */
 
-public class LoginActivity extends BaseActivity<ILoginActivity, LoginPresenter> implements ILoginActivity {
+public class LoginActivity extends Base1Activity<ILoginActivity, LoginPresenter> implements ILoginActivity {
 
     @BindView(R.id.et_username)
     EditText etUserName;
@@ -83,15 +84,13 @@ public class LoginActivity extends BaseActivity<ILoginActivity, LoginPresenter> 
         int code = result.getCode();
         if (code == Result.CODE_OK) {
             progressBar.setVisibility(View.GONE);
-            Toast.makeText(LoginActivity.this, "login success", Toast.LENGTH_LONG).show();
+            Toast.makeText(Application.getContext(), "login success", Toast.LENGTH_LONG).show();
+            SPUtils.put(LoginActivity.this,"userName", userName);
             SPUtils.put(LoginActivity.this,"currentLoginCount", result.getCount());
         } else {
             progressBar.setVisibility(View.GONE);
-            Toast.makeText(LoginActivity.this, getString(R.string.error_key), Toast.LENGTH_LONG).show();
+            Toast.makeText(Application.getContext(), result.getStatus(), Toast.LENGTH_LONG).show();
         }
     }
 
-    private void goTarget(){
-
-    }
 }

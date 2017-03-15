@@ -32,10 +32,13 @@ public class LoadWeather implements Runnable {
     public void run() {
         String city = (String) SPUtils.get(Application.getContext() , "city" ,"");
         if(TextUtils.isEmpty(city)){
-            //Logger.d("city info not exists ,can not load weather");
             return;
         }
-        loadWeather(city);
+        try {
+            loadWeather(city);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void loadWeather (String city){
