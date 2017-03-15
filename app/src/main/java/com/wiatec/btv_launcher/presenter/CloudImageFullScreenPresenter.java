@@ -6,6 +6,7 @@ import com.wiatec.btv_launcher.data.CloudImageData;
 import com.wiatec.btv_launcher.data.ICloudImageData;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * Created by patrick on 2017/2/22.
@@ -25,8 +26,8 @@ public class CloudImageFullScreenPresenter extends BasePresenter<ICloudImageFull
         if(iCloudImageData != null){
             iCloudImageData.loadData(new ICloudImageData.OnLoadListener() {
                 @Override
-                public void onSuccess(File[] files) {
-                    iCloudImageFullScreenActivity.loadImages(files);
+                public void onSuccess(List<String> list) {
+                    iCloudImageFullScreenActivity.loadImages(list);
                 }
 
                 @Override

@@ -28,6 +28,7 @@ import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.Utils.SPUtils;
 import com.wiatec.btv_launcher.bean.UserDataInfo;
+import com.wiatec.btv_launcher.custom_view.MultiImage;
 import com.wiatec.btv_launcher.custom_view.RollOverView;
 import com.wiatec.btv_launcher.receiver.OnNetworkStatusListener;
 import com.wiatec.btv_launcher.R;
@@ -95,7 +96,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     @BindView(R.id.vv_main)
     VideoView vv_Main;
     @BindView(R.id.ibt_ld_cloud)
-    ImageButton ibt_LdCloud;
+    MultiImage ibt_LdCloud;
     @BindView(R.id.fl_video)
     FrameLayout flVideo;
     @BindView(R.id.tv_message_count)
@@ -105,14 +106,12 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
 
     private boolean isF1Visible = false;
     private NetworkStatusReceiver networkStatusReceiver;
-    private Subscription subscription;
     private Subscription videoSubscription;
     private Subscription messageSubscription;
     private VideoInfo currentVideoInfo;
-    private boolean isCloudImagePlaying = false;
     private boolean isVideoPlaying = false;
-    private int cloudImagePosition ;
     private MessageDao messageDao;
+    private boolean isCloudImagePlaying = false;
 
     private long entryTime;
     private long exitTime;
@@ -137,28 +136,21 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             isF1Visible = true;
-            if(presenter != null && ! isCloudImagePlaying){
-                presenter.loadCloudData();
+            if(!SystemConfig.isNetworkConnected(Application.getContext())){
+                return;
             }
-            if (vv_Main != null && !vv_Main.isPlaying() && isF1Visible) {
-                if (SystemConfig.isNetworkConnected(Application.getContext())) {
-                    if(!isVideoPlaying) {
-                        presenter.loadVideo();
-                    }
-                }
+            if (vv_Main != null && !vv_Main.isPlaying() && isF1Visible && !isVideoPlaying) {
+                presenter.loadVideo();
             }
             if(presenter != null){
                 presenter.loadImageData();
+                presenter.loadCloudData();
             }
             entryTime = System.currentTimeMillis();
         } else {
             isF1Visible = false;
             if (vv_Main != null) {
                 vv_Main.stopPlayback();
-            }
-            if (subscription != null) {
-                subscription.unsubscribe();
-                isCloudImagePlaying = false;
             }
             if (videoSubscription != null) {
                 isVideoPlaying = false;
@@ -177,17 +169,23 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 userDataInfo.setMac((String) SPUtils.get(Application.getContext(),"mac" ,""));
                 userDataInfo.setCountry((String) SPUtils.get(Application.getContext(),"country" ,""));
                 userDataInfo.setCity((String) SPUtils.get(Application.getContext(),"city" ,""));
-                if(presenter != null && entryTime>0) {
+                if(presenter != null && entryTime >0) {
                     presenter.uploadHoldTime(userDataInfo);
                 }
             }
+            if(rollOverView != null){
+                rollOverView.stop();
+            }
+            if(ibt_LdCloud!= null){
+                ibt_LdCloud.stop();
+            }
+            isCloudImagePlaying = false;
         }
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        //Logger.d("f1 -onStart ");
         setZoom();
         ibt_LdCloud.setNextFocusDownId(R.id.ibt_full_screen);
     }
@@ -200,23 +198,15 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     @Override
     public void onResume() {
         super.onResume();
-        if (vv_Main != null && !vv_Main.isPlaying()) {
-            if (isF1Visible) {
-                if (SystemConfig.isNetworkConnected(Application.getContext())) {
-                    if(!isVideoPlaying) {
-                        presenter.loadVideo();
-                    }
-                }
-            }
+        if (!SystemConfig.isNetworkConnected(getContext())){
+            return;
         }
-        if (SystemConfig.isNetworkConnected(getContext())) {
+        if (vv_Main != null && !vv_Main.isPlaying() && isF1Visible && !isVideoPlaying) {
+            presenter.loadVideo();
+        }
+        if (presenter != null && isF1Visible) {
             presenter.loadImageData();
-        }
-        if(presenter != null && ! isCloudImagePlaying){
             presenter.loadCloudData();
-        }
-        if(presenter != null){
-            presenter.loadImageData();
         }
         checkMessageCount();
         entryTime = System.currentTimeMillis();
@@ -226,13 +216,8 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     public void onPause() {
         super.onPause();
         isVideoPlaying = false;
-        //Logger.d("f1 -onPause ");
         if (vv_Main != null && vv_Main.isPlaying()) {
             vv_Main.stopPlayback();
-        }
-        if (subscription != null) {
-            subscription.unsubscribe();
-            isCloudImagePlaying = false;
         }
         if (videoSubscription != null) {
             videoSubscription.unsubscribe();
@@ -240,29 +225,33 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         if (messageSubscription != null) {
             messageSubscription.unsubscribe();
         }
-        exitTime = System.currentTimeMillis();
-        holdTime = exitTime - entryTime;
-        String eTime = new SimpleDateFormat("yy-MM-dd HH:mm:ss").format(new Date(exitTime));
-        userDataInfo.setExitTime(eTime);
-        userDataInfo.setStayTime(holdTime+"");
-        userDataInfo.setUserName((String) SPUtils.get(Application.getContext(),"userName" ,""));
-        userDataInfo.setMac((String) SPUtils.get(Application.getContext(),"mac" ,""));
-        userDataInfo.setCountry((String) SPUtils.get(Application.getContext(),"country" ,""));
-        userDataInfo.setCity((String) SPUtils.get(Application.getContext(),"city" ,""));
-        if(presenter != null && entryTime>0) {
-            presenter.uploadHoldTime(userDataInfo);
+        if(userDataInfo != null){
+            exitTime = System.currentTimeMillis();
+            holdTime = exitTime - entryTime;
+            String eTime = new SimpleDateFormat("yy-MM-dd HH:mm:ss").format(new Date(exitTime));
+            userDataInfo.setExitTime(eTime);
+            userDataInfo.setStayTime(holdTime+"");
+            userDataInfo.setUserName((String) SPUtils.get(Application.getContext(),"userName" ,""));
+            userDataInfo.setMac((String) SPUtils.get(Application.getContext(),"mac" ,""));
+            userDataInfo.setCountry((String) SPUtils.get(Application.getContext(),"country" ,""));
+            userDataInfo.setCity((String) SPUtils.get(Application.getContext(),"city" ,""));
+            if(presenter != null && entryTime>0) {
+                presenter.uploadHoldTime(userDataInfo);
+            }
         }
+        if(rollOverView != null){
+            rollOverView.stop();
+        }
+        if(ibt_LdCloud!= null){
+            ibt_LdCloud.stop();
+        }
+        isCloudImagePlaying = false;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        //Logger.d("f1 -onDestroyView ");
         getContext().unregisterReceiver(networkStatusReceiver);
-        if (subscription != null) {
-            subscription.unsubscribe();
-            isCloudImagePlaying = false;
-        }
         if (videoSubscription != null) {
             videoSubscription.unsubscribe();
         }
@@ -318,7 +307,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
             case R.id.ibt_full_screen:
                 if(isCloudImagePlaying){
                     Intent intent1 = new Intent(getContext() , CloudImageFullScreenActivity.class);
-                    intent1.putExtra("cloudImagePosition",cloudImagePosition);
+                    intent1.putExtra("cloudImagePosition",ibt_LdCloud.getCurrentPosition());
                     startActivity(intent1);
                 }
                 break;
@@ -398,32 +387,12 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     }
 
     @Override
-    public void loadCloudImage(final File[] files) {
-        if (files != null && files.length > 0) {
-            isCloudImagePlaying = true;
-            subscription = Observable.interval(6000, TimeUnit.MILLISECONDS).take(files.length)
-                    .subscribeOn(Schedulers.io())
-                    .repeat()
-                    .map(new Func1<Long, String>() {
-                        @Override
-                        public String call(Long aLong) {
-                            cloudImagePosition = Integer.parseInt(aLong + "");
-                            return files[cloudImagePosition].getAbsolutePath();
-                        }
-                    })
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<String>() {
-                        @Override
-                        public void call(String s) {
-                            //Logger.d("cloud_image:<---->"+s);
-                            Glide.with(getContext()).load(s)
-                                    .placeholder(R.drawable.ld_cloud_icon_3)
-                                    .error(R.drawable.ld_cloud_icon_3)
-                                    .dontAnimate()
-                                    .into(ibt_LdCloud);
-                        }
-                    });
+    public void loadCloudImage(List<String> list) {
+        if (list == null || list.size() <=0 ){
+            return;
         }
+        isCloudImagePlaying = true;
+        ibt_LdCloud.setImages(list);
     }
 
     private void checkMessageCount(){

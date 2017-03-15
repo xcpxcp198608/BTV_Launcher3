@@ -98,6 +98,7 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
     private RollOverViewAdapter1 rollOverViewAdapter1;
     private boolean rollOverStart = false;
     private MainActivity activity;
+    private boolean isF2VisibleToUser = false;
 
     @Override
     protected Fragment2Presenter createPresenter() {
@@ -129,6 +130,7 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
+            isF2VisibleToUser = true;
             isShow = (boolean) SPUtils.get(getContext(), "isShow", true);
             if (isShow) {
                 showWarning();
@@ -142,6 +144,14 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
             }
             if (presenter != null && !rollOverStart) {
                 presenter.loadRollImage();
+            }
+            if(presenter != null){
+                presenter.loadChannel();
+            }
+        }else{
+            isF2VisibleToUser = false;
+            if(rollOverView != null){
+                rollOverView.stop();
             }
         }
     }
@@ -190,8 +200,16 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
     @Override
     public void onResume() {
         super.onResume();
-        if (presenter != null) {
+        if (presenter != null && isF2VisibleToUser) {
             presenter.loadRollImage();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(rollOverView != null){
+            rollOverView.stop();
         }
     }
 

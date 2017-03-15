@@ -75,11 +75,10 @@ public class MenuActivity extends AppCompatActivity {
         fragmentList.add(fragmentMusic);
         fragmentAdapter = new FragmentAdapter(getSupportFragmentManager() ,fragmentList);
         viewPager.setAdapter(fragmentAdapter);
-
         String [] titles = {getString(R.string.favorite) ,getString(R.string.all) ,getString(R.string.video)
                 ,getString(R.string.game) ,getString(R.string.music)};
-        viewpagerIndicator.setItem(8,1/8f ,1/12f);
-        viewpagerIndicator.setTextTitle(titles ,30 ,0xffa3a2a2 ,0xffffffff ,R.drawable.icon_bg_selected);
+        viewpagerIndicator.setItem(7,0f ,0f);
+        viewpagerIndicator.setTextTitle(titles ,35 ,0xffa3a2a2 ,0xffffffff ,R.drawable.icon_bg_selected);
         viewpagerIndicator.setPaint("#ffffff" ,2);
         viewpagerIndicator.setShape(ViewPagerIndicator.SHAPE_TRIANGLE);
         viewpagerIndicator.attachViewPager(viewPager ,1);

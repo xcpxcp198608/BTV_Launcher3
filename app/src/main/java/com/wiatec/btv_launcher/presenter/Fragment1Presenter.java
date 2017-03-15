@@ -43,83 +43,99 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
     }
 
     public void loadImageData(){
-        if(iImageData !=null){
-            iImageData.loadData(new IImageData.OnLoadListener() {
-                @Override
-                public void onSuccess(List<ImageInfo> list) {
-                    iFragment1.loadImage(list);
-                }
+        try {
+            if(iImageData !=null){
+                iImageData.loadData(new IImageData.OnLoadListener() {
+                    @Override
+                    public void onSuccess(List<ImageInfo> list) {
+                        iFragment1.loadImage(list);
+                    }
 
-                @Override
-                public void onFailure(String e) {
-                    Logger.d(e);
-                }
-            });
-        }
+                    @Override
+                    public void onFailure(String e) {
+                        Logger.d(e);
+                    }
+                });
+            }
 
-        if(iRollImageData != null){
-            iRollImageData.loadData(new IRollImageData.OnLoadListener() {
-                @Override
-                public void onSuccess(List<ImageInfo> list) {
-                    iFragment1.loadRollImage(list);
-                }
+            if(iRollImageData != null){
+                iRollImageData.loadData(new IRollImageData.OnLoadListener() {
+                    @Override
+                    public void onSuccess(List<ImageInfo> list) {
+                        iFragment1.loadRollImage(list);
+                    }
 
-                @Override
-                public void onFailure(String e) {
-                    Logger.d(e);
-                }
-            });
-        }
-        if(iRollOverImage != null){
-            iRollOverImage.loadData(new IRollImageData.OnLoadListener() {
-                @Override
-                public void onSuccess(List<ImageInfo> list) {
-                    iFragment1.loadRollOverImage(list);
-                }
+                    @Override
+                    public void onFailure(String e) {
+                        Logger.d(e);
+                    }
+                });
+            }
+            if(iRollOverImage != null){
+                iRollOverImage.loadData(new IRollImageData.OnLoadListener() {
+                    @Override
+                    public void onSuccess(List<ImageInfo> list) {
+                        iFragment1.loadRollOverImage(list);
+                    }
 
-                @Override
-                public void onFailure(String e) {
-                    Logger.d(e);
-                }
-            });
+                    @Override
+                    public void onFailure(String e) {
+                        Logger.d(e);
+                    }
+                });
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
     public void loadCloudData(){
-        if(iCloudImageData != null){
-            iCloudImageData.loadData(new ICloudImageData.OnLoadListener() {
-                @Override
-                public void onSuccess(File[] files) {
-                    iFragment1.loadCloudImage(files);
-                }
+        try {
+            if(iCloudImageData != null){
+                iCloudImageData.loadData(new ICloudImageData.OnLoadListener() {
+                    @Override
+                    public void onSuccess(List<String> list) {
+                        iFragment1.loadCloudImage(list);
+                    }
 
-                @Override
-                public void onFailure(String e) {
-                    Logger.d(e);
-                }
-            });
+                    @Override
+                    public void onFailure(String e) {
+                        Logger.d(e);
+                    }
+                });
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
     public void loadVideo (){
-        if(iVideoData != null){
-            iVideoData.loadData(new IVideoData.OnLoadListener() {
-                @Override
-                public void onSuccess(List<VideoInfo> list) {
-                    iFragment1.loadVideo(list);
-                }
+        try {
+            if(iVideoData != null){
+                iVideoData.loadData(new IVideoData.OnLoadListener() {
+                    @Override
+                    public void onSuccess(List<VideoInfo> list) {
+                        iFragment1.loadVideo(list);
+                    }
 
-                @Override
-                public void onFailure(String e) {
-                    Logger.d(e);
-                }
-            });
+                    @Override
+                    public void onFailure(String e) {
+                        Logger.d(e);
+                    }
+                });
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
     public void uploadHoldTime(UserDataInfo userDataInfo){
-        if(uploadTimeData!= null) {
-            uploadTimeData.upload(userDataInfo);
+        try {
+            if(uploadTimeData!= null) {
+                uploadTimeData.upload(userDataInfo);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 }

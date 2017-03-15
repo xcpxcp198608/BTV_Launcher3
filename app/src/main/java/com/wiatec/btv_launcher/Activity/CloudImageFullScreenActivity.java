@@ -7,8 +7,10 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.wiatec.btv_launcher.R;
+import com.wiatec.btv_launcher.custom_view.MultiImage;
 import com.wiatec.btv_launcher.presenter.CloudImageFullScreenPresenter;
 import java.io.File;
+import java.util.List;
 
 
 /**
@@ -17,8 +19,8 @@ import java.io.File;
 
 public class CloudImageFullScreenActivity extends BaseActivity<ICloudImageFullScreenActivity , CloudImageFullScreenPresenter> implements ICloudImageFullScreenActivity {
 
-    private ImageView ivFull;
-    private File[] mFiles;
+    private MultiImage multiImage;
+    private List<String> mList;
     private int cloudImagePosition;
 
     @Override
@@ -30,7 +32,7 @@ public class CloudImageFullScreenActivity extends BaseActivity<ICloudImageFullSc
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cloud_image_full_screen);
-        ivFull = (ImageView) findViewById(R.id.iv_full);
+        multiImage = (MultiImage) findViewById(R.id.multi_image);
         cloudImagePosition = getIntent().getIntExtra("cloudImagePosition",0);
     }
 
@@ -41,23 +43,23 @@ public class CloudImageFullScreenActivity extends BaseActivity<ICloudImageFullSc
     }
 
     @Override
-    public void loadImages(final File[] files) {
-        mFiles = files;
+    public void loadImages(List<String> list) {
+        mList = list;
         showImage(cloudImagePosition);
     }
 
     private void showImage(int position){
-        if (mFiles != null && mFiles.length > 0) {
-            if(position <0 || position >=mFiles.length){
+        if (mList != null && mList.size() > 0) {
+            if(position <0 || position >=mList.size()){
                 return;
             }
-            String path = mFiles [position].getAbsolutePath();
+            String path = mList.get(position);
             Glide.with(CloudImageFullScreenActivity.this)
                     .load(path)
                     .placeholder(R.drawable.ld_cloud_icon_3)
                     .error(R.drawable.ld_cloud_icon_3)
                     .dontAnimate()
-                    .into(ivFull);
+                    .into(multiImage);
         }
     }
 
@@ -66,13 +68,13 @@ public class CloudImageFullScreenActivity extends BaseActivity<ICloudImageFullSc
         if(event.getKeyCode() == KeyEvent.KEYCODE_DPAD_LEFT){
             cloudImagePosition -- ;
             if(cloudImagePosition <0){
-                cloudImagePosition = mFiles.length-1;
+                cloudImagePosition = mList.size()-1;
             }
             showImage(cloudImagePosition);
         }
         if(event.getKeyCode() == KeyEvent.KEYCODE_DPAD_RIGHT){
             cloudImagePosition ++;
-            if(cloudImagePosition >=mFiles.length){
+            if(cloudImagePosition >=mList.size()){
                 cloudImagePosition = 0;
             }
             showImage(cloudImagePosition);

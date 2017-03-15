@@ -52,6 +52,7 @@ public class ChannelDao {
         contentValues.put("type",channelInfo.getType());
         contentValues.put("country",channelInfo.getCountry());
         contentValues.put("style",channelInfo.getStyle());
+        contentValues.put("visible",channelInfo.getVisible());
         sqLiteDatabase.insert(SQLiteHelper.CHANNEL_TABLE ,null ,contentValues);
     }
 
@@ -65,6 +66,7 @@ public class ChannelDao {
         contentValues.put("type",channelInfo.getType());
         contentValues.put("country",channelInfo.getCountry());
         contentValues.put("style",channelInfo.getStyle());
+        contentValues.put("visible",channelInfo.getVisible());
         sqLiteDatabase.update(SQLiteHelper.CHANNEL_TABLE ,contentValues , "tag=?" , new String []{channelInfo.getTag()});
     }
 
@@ -82,7 +84,7 @@ public class ChannelDao {
     }
 
     public List<ChannelInfo> query (String selection , String where ,String order){
-        Cursor cursor = sqLiteDatabase.query(SQLiteHelper.CHANNEL_TABLE ,null,selection+"=?" , new String []{where} ,null,null,order);
+        Cursor cursor = sqLiteDatabase.query(SQLiteHelper.CHANNEL_TABLE ,null,selection+"=? and visible=?" , new String []{where , "1"} ,null,null,order);
         List<ChannelInfo> list = new ArrayList<>();
         while(cursor.moveToNext()){
             ChannelInfo channelInfo = new ChannelInfo();
@@ -94,6 +96,7 @@ public class ChannelDao {
             channelInfo.setType(cursor.getString(cursor.getColumnIndex("type")));
             channelInfo.setCountry(cursor.getString(cursor.getColumnIndex("country")));
             channelInfo.setStyle(cursor.getString(cursor.getColumnIndex("style")));
+            channelInfo.setVisible(cursor.getInt(cursor.getColumnIndex("visible")));
             list.add(channelInfo);
         }
         if(cursor!= null){

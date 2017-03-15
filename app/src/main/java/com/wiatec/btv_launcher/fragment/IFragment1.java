@@ -16,6 +16,6 @@ public interface IFragment1 {
     void loadImage(List<ImageInfo> list);
     void loadRollImage(List<ImageInfo> list);
     void loadRollOverImage(List<ImageInfo> list);
-    void loadCloudImage(File[] files);
+    void loadCloudImage(List<String> list);
     void loadVideo(List<VideoInfo> list);
 }

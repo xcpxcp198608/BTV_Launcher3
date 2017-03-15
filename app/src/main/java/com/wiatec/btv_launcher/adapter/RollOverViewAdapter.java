@@ -42,7 +42,8 @@ public class RollOverViewAdapter extends RollOverAdapter {
         imageButton.setBackgroundResource(R.drawable.roll_over_bg);
         imageButton.setScaleType(ImageButton.ScaleType.CENTER_CROP);
         Glide.with(container.getContext()).load(list.get(position).getUrl())
-                .error(R.color.colorBlue)
+                .placeholder(R.drawable.loading)
+                .error(R.drawable.loading)
                 .dontAnimate()
                 .into(imageButton);
         imageButton.setOnClickListener(new View.OnClickListener() {

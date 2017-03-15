@@ -9,8 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/iv_full"
+        <com.wiatec.btv_launcher.custom_view.MultiImage
+            android:id="@+id/multi_image"
+            android:background="@color/colorTranslucent"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

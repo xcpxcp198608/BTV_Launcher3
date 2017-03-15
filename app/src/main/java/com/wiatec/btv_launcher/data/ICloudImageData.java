@@ -14,7 +14,7 @@ public interface ICloudImageData {
 
     void loadData(OnLoadListener onLoadListener);
     interface OnLoadListener{
-        void onSuccess (File[] files);
+        void onSuccess (List<String> list);
         void onFailure (String e);
     }
 }

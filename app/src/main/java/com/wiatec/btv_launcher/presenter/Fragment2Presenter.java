@@ -39,94 +39,116 @@ public class Fragment2Presenter extends BasePresenter<IFragment2> {
     }
 
     public void bind (){
-        if(iImageData != null){
-            iImageData.loadData(new IImageData.OnLoadListener() {
-                @Override
-                public void onSuccess(List<ImageInfo> list) {
-                    iFragment2.loadImage(list);
-                }
+        try {
+            if(iImageData != null){
+                iImageData.loadData(new IImageData.OnLoadListener() {
+                    @Override
+                    public void onSuccess(List<ImageInfo> list) {
+                        iFragment2.loadImage(list);
+                    }
 
-                @Override
-                public void onFailure(String e) {
-                    Logger.d(e);
-                }
-            });
-        }
-
-        if(iChannelData != null){
-            iChannelData.loadData(new IChannelData.OnLoadListener() {
-                @Override
-                public void onSuccess(List<ChannelInfo> list) {
-
-                }
-
-                @Override
-                public void onFailure(String e) {
-                    Logger.d(e);
-                }
-            });
+                    @Override
+                    public void onFailure(String e) {
+                        Logger.d(e);
+                    }
+                });
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
     public void loadChannelType (){
-        if(iChannelTyepData != null){
-            iChannelTyepData.loadData(new IChannelTypeData.OnLoadListener() {
-                @Override
-                public void onSuccess(List<ChannelTypeInfo> list) {
-                    iFragment2.loadChannelType(list);
-                }
+        try {
+            if(iChannelTyepData != null){
+                iChannelTyepData.loadData(new IChannelTypeData.OnLoadListener() {
+                    @Override
+                    public void onSuccess(List<ChannelTypeInfo> list) {
+                        iFragment2.loadChannelType(list);
+                    }
 
-                @Override
-                public void onFailure(String e) {
-                    Logger.d(e);
-                }
-            });
+                    @Override
+                    public void onFailure(String e) {
+                        Logger.d(e);
+                    }
+                });
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
     public void loadRollImage(){
-        if(iRollImageData != null){
-            iRollImageData.loadData(new IRollImageData.OnLoadListener() {
-                @Override
-                public void onSuccess(List<ImageInfo> list) {
-                    iFragment2.loadRollImage(list);
-                }
+        try {
+            if(iRollImageData != null){
+                iRollImageData.loadData(new IRollImageData.OnLoadListener() {
+                    @Override
+                    public void onSuccess(List<ImageInfo> list) {
+                        iFragment2.loadRollImage(list);
+                    }
 
-                @Override
-                public void onFailure(String e) {
-                    Logger.d(e);
-                }
-            });
+                    @Override
+                    public void onFailure(String e) {
+                        Logger.d(e);
+                    }
+                });
+            }
+
+            if(rollOverImageData != null){
+                rollOverImageData.loadData(new IRollImageData.OnLoadListener() {
+                    @Override
+                    public void onSuccess(List<ImageInfo> list) {
+                        iFragment2.loadRollOverImage(list);
+                    }
+
+                    @Override
+                    public void onFailure(String e) {
+                        Logger.d(e);
+                    }
+                });
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
+    }
 
-        if(rollOverImageData != null){
-            rollOverImageData.loadData(new IRollImageData.OnLoadListener() {
-                @Override
-                public void onSuccess(List<ImageInfo> list) {
-                    iFragment2.loadRollOverImage(list);
-                }
+    public void loadChannel(){
+        try {
+            if(iChannelData != null){
+                iChannelData.loadData(new IChannelData.OnLoadListener() {
+                    @Override
+                    public void onSuccess(List<ChannelInfo> list) {
 
-                @Override
-                public void onFailure(String e) {
-                    Logger.d(e);
-                }
-            });
+                    }
+
+                    @Override
+                    public void onFailure(String e) {
+
+                    }
+                });
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
     public void showChannel(String selection,String where ,String order){
-        if(iChannelData != null){
-            iChannelData.showChannel(selection ,where ,order, new IChannelData.OnLoadListener() {
-                @Override
-                public void onSuccess(List<ChannelInfo> list) {
-                    iFragment2.showChannel(list);
-                }
+        try {
+            if(iChannelData != null){
+                iChannelData.showChannel(selection ,where ,order, new IChannelData.OnLoadListener() {
+                    @Override
+                    public void onSuccess(List<ChannelInfo> list) {
+                        iFragment2.showChannel(list);
+                    }
 
-                @Override
-                public void onFailure(String e) {
-                    Logger.d(e);
-                }
-            });
+                    @Override
+                    public void onFailure(String e) {
+                        Logger.d(e);
+                    }
+                });
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 

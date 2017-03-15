@@ -11,6 +11,8 @@ import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.SQL.MessageDao;
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Activity.IMainActivity;
+import com.wiatec.btv_launcher.Utils.OkHttp.Listener.StringListener;
+import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
 import com.wiatec.btv_launcher.Utils.SPUtils;
 import com.wiatec.btv_launcher.bean.Message1Info;
 import com.wiatec.btv_launcher.bean.MessageInfo;
@@ -35,6 +37,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -60,80 +63,96 @@ public class MainPresenter extends BasePresenter<IMainActivity> {
     }
 
     public void loadWeatherInfo (){
-        if(iWeatherData !=null){
-            iWeatherData.loadData(new IWeatherData.OnLoadListener() {
-                @Override
-                public void onSuccess(WeatherInfo weatherInfo) {
-                    iMainActivity.loadWeatherInfo(weatherInfo);
-                }
+        try {
+            if(iWeatherData !=null){
+                iWeatherData.loadData(new IWeatherData.OnLoadListener() {
+                    @Override
+                    public void onSuccess(WeatherInfo weatherInfo) {
+                        iMainActivity.loadWeatherInfo(weatherInfo);
+                    }
 
-                @Override
-                public void onFailure(String e) {
-                    Logger.d(e);
-                }
-            });
+                    @Override
+                    public void onFailure(String e) {
+                       // Logger.d(e);
+                    }
+                });
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
     public void loadVideo (){
-        if(iBootAdVideoData != null){
-            iBootAdVideoData.loadData(new IBootAdVideoData.OnLoadListener() {
-                @Override
-                public void onSuccess(VideoInfo videoInfo) {
-                    iMainActivity.loadBootAdVideo(videoInfo);
-                }
+        try {
+            if(iBootAdVideoData != null){
+                iBootAdVideoData.loadData(new IBootAdVideoData.OnLoadListener() {
+                    @Override
+                    public void onSuccess(VideoInfo videoInfo) {
+                        iMainActivity.loadBootAdVideo(videoInfo);
+                    }
 
-                @Override
-                public void onFailure(String e) {
-                    Logger.d(e);
-                }
-            });
-        }
+                    @Override
+                    public void onFailure(String e) {
+                        Logger.d(e);
+                    }
+                });
+            }
 
-        if(iAdVideoData != null){
-            iAdVideoData.loadData(new IAdVideoData.OnLoadListener() {
-                @Override
-                public void onSuccess(VideoInfo videoInfo) {
-                    iMainActivity.loadAdVideo(videoInfo);
-                }
+            if(iAdVideoData != null){
+                iAdVideoData.loadData(new IAdVideoData.OnLoadListener() {
+                    @Override
+                    public void onSuccess(VideoInfo videoInfo) {
+                        iMainActivity.loadAdVideo(videoInfo);
+                    }
 
-                @Override
-                public void onFailure(String e) {
-                    Logger.d(e);
-                }
-            });
+                    @Override
+                    public void onFailure(String e) {
+                        Logger.d(e);
+                    }
+                });
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
     public void loadUpdate(){
-        if(iUpdateData != null){
-            iUpdateData.loadData(new IUpdateData.OnLoadListener() {
-                @Override
-                public void onSuccess(UpdateInfo updateInfo) {
-                    iMainActivity.loadUpdate(updateInfo);
-                }
+        try {
+            if(iUpdateData != null){
+                iUpdateData.loadData(new IUpdateData.OnLoadListener() {
+                    @Override
+                    public void onSuccess(UpdateInfo updateInfo) {
+                        iMainActivity.loadUpdate(updateInfo);
+                    }
 
-                @Override
-                public void onFailure(String e) {
-                    Logger.d(e);
-                }
-            });
+                    @Override
+                    public void onFailure(String e) {
+                        Logger.d(e);
+                    }
+                });
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
     public void loadMessage1 (){
-        if(iMessage1Data != null){
-            iMessage1Data.loadData(new IMessage1Data.OnLoadListener() {
-                @Override
-                public void onSuccess(List<Message1Info> list) {
-                    iMainActivity.loadMessage1(list);
-                }
+        try {
+            if(iMessage1Data != null){
+                iMessage1Data.loadData(new IMessage1Data.OnLoadListener() {
+                    @Override
+                    public void onSuccess(List<Message1Info> list) {
+                        iMainActivity.loadMessage1(list);
+                    }
 
-                @Override
-                public void onFailure(String e) {
-                    Logger.d(e);
-                }
-            });
+                    @Override
+                    public void onFailure(String e) {
+                        Logger.d(e);
+                    }
+                });
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
@@ -149,26 +168,33 @@ public class MainPresenter extends BasePresenter<IMainActivity> {
     }
 
     public void loadMessage(){
-        final MessageDao messageDao = MessageDao.getInstance(Application.getContext());
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(F.url.message, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                if(response != null) {
-                    List<MessageInfo> list = new Gson().fromJson(String.valueOf(response), new TypeToken<List<MessageInfo>>() {
-                    }.getType());
-                    for (MessageInfo messageInfo:list){
-                        messageDao.insertMessage(messageInfo);
-                    }
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Logger.d(error.getMessage());
-            }
-        });
-        jsonArrayRequest.setTag("MessageInfo");
-        Application.getRequestQueue().add(jsonArrayRequest);
+        try {
+            final MessageDao messageDao = MessageDao.getInstance(Application.getContext());
+            OkMaster.get(F.url.message)
+                    .parames("deviceInfo.countryCode", SPUtils.get(Application.getContext() , "countryCode" , ""))
+                    .enqueue(new StringListener() {
+                        @Override
+                        public void onSuccess(String s) throws IOException {
+                            if(s != null) {
+                                List<MessageInfo> list = new Gson().fromJson(s, new TypeToken<List<MessageInfo>>() {
+                                }.getType());
+                                if(list == null){
+                                    return;
+                                }
+                                for (MessageInfo messageInfo:list){
+                                    messageDao.insertMessage(messageInfo);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(String e) {
+
+                        }
+                    });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void loadLocation(){
@@ -197,7 +223,7 @@ public class MainPresenter extends BasePresenter<IMainActivity> {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Logger.d("location load error "+error.getMessage());
+              //  Logger.d("location load error "+error.getMessage());
             }
         });
         jsonObjectRequest.setTag("location");

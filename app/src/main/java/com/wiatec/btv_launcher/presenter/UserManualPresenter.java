@@ -23,18 +23,22 @@ public class UserManualPresenter extends BasePresenter<IUserManualActivity> {
     }
 
     public void loadImage(String product ,String language){
-        if(iManualData != null){
-            iManualData.loadData(new IManualData.OnLoadListener() {
-                @Override
-                public void onSuccess(List<ImageInfo> list) {
-                    iUserManualActivity.loadImage(list);
-                }
+        try {
+            if(iManualData != null){
+                iManualData.loadData(new IManualData.OnLoadListener() {
+                    @Override
+                    public void onSuccess(List<ImageInfo> list) {
+                        iUserManualActivity.loadImage(list);
+                    }
 
-                @Override
-                public void onFailure(String e) {
-                    Logger.d(e);
-                }
-            } ,product, language );
+                    @Override
+                    public void onFailure(String e) {
+                        Logger.d(e);
+                    }
+                } ,product, language );
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 }
