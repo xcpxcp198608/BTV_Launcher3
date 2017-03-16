@@ -17,7 +17,7 @@ import java.util.List;
  * Created by patrick on 2017/2/22.
  */
 
-public class CloudImageFullScreenActivity extends Base1Activity<ICloudImageFullScreenActivity , CloudImageFullScreenPresenter> implements ICloudImageFullScreenActivity {
+public class CloudImageFullScreenActivity extends BaseActivity<ICloudImageFullScreenActivity , CloudImageFullScreenPresenter> implements ICloudImageFullScreenActivity {
 
     private MultiImage multiImage;
     private List<String> mList;

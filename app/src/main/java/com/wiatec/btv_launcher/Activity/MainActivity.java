@@ -48,9 +48,10 @@ import com.wiatec.btv_launcher.receiver.NetworkStatusReceiver;
 import com.wiatec.btv_launcher.receiver.ScreenWeekUpReceiver;
 import com.wiatec.btv_launcher.receiver.WeatherStatusReceiver;
 import com.wiatec.btv_launcher.receiver.WifiStatusReceiver;
-import com.wiatec.btv_launcher.service.LoadCloudService;
-import com.wiatec.btv_launcher.service.LoadService;
 import com.wiatec.btv_launcher.WeatherIconSetting;
+import com.wiatec.btv_launcher.service.LoadCloudService;
+import com.wiatec.btv_launcher.service.LoadWeatherService;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -112,13 +113,15 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
         setContentView(R.layout.activity_main);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         ButterKnife.bind(this);
-
         initFragment();
         checkDevice();
         showTimeAndData();
         registerBroadcastReceiver();
         if(presenter != null){
             presenter.loadInstalledApp();
+        }
+        if(SystemConfig.isNetworkConnected(MainActivity.this) && !isStartAlarmService){
+            startAlarmService();
         }
     }
 
@@ -136,9 +139,6 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
                 presenter.loadVideo();
                 presenter.loadMessage1();
                 presenter.loadKodiData();
-                if(!isStartAlarmService) {
-                    startAlarmService();
-                }
             }
         }
     }
@@ -172,7 +172,6 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
     @Override
     public void onConnected(boolean isConnected) {
         if (isConnected) {
-            //showNetworkStatus();
             if(!isStartAlarmService) {
                 startAlarmService();
             }
@@ -190,27 +189,11 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
 
     @Override
     public void onDisconnect(boolean disConnected) {
-        //showNetworkStatus();
     }
 
     @Override
     public void onWifiLevelChange(int level) {
         WifiStatusIconSetting.setIcon(iv_Net , level);
-    }
-
-    private void showNetworkStatus() {
-        int i = SystemConfig.networkConnectType(MainActivity.this);
-        switch (i) {
-            case 0:
-                iv_Net.setImageResource(R.drawable.disconnect);
-                break;
-            case 1:
-                iv_Net.setImageResource(R.drawable.wifi4);
-                break;
-            case 3:
-                iv_Net.setImageResource(R.drawable.ethernet);
-                break;
-        }
     }
 
     @Override
@@ -408,7 +391,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
     private void startAlarmService() {
         isStartAlarmService = true;
         //启动服务加载天气信息，并通过alarm定时每120分钟加载一次
-        Intent alarmIntent = new Intent(MainActivity.this, LoadService.class);
+        Intent alarmIntent = new Intent(MainActivity.this, LoadWeatherService.class);
         alarmIntent.setAction("loadWeather");
         PendingIntent alarmPendingIntent = PendingIntent.getService(MainActivity.this, 0, alarmIntent, 0);
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
@@ -417,11 +400,10 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
         alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, startTime, repeatTime, alarmPendingIntent);
 
         //启动服务加载cloud照片信息列表,定时每3分钟读取一次
-        Intent cloudIntent = new Intent(MainActivity.this , LoadCloudService.class);
+        Intent cloudIntent = new Intent(MainActivity.this, LoadCloudService.class);
         PendingIntent cloudPendingIntent = PendingIntent.getService(MainActivity.this, 0 ,cloudIntent , 0);
         AlarmManager alarmManager1 = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        long repeatTime1 = 3*60*1000;
+        long repeatTime1 = 5*60*1000;
         alarmManager1.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP ,startTime , repeatTime1 ,cloudPendingIntent);
     }
-
 }

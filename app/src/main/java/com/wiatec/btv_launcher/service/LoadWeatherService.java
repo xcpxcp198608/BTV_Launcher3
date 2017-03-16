@@ -12,12 +12,12 @@ import java.util.concurrent.ExecutorService;
  * Created by PX on 2016-11-14.
  */
 
-public class LoadService extends IntentService {
+public class LoadWeatherService extends IntentService {
 
     private ExecutorService executorService;
 
-    public LoadService() {
-        super("LoadService");
+    public LoadWeatherService() {
+        super("LoadWeatherService");
         executorService = Application.getThreadPool();
     }
 

@@ -45,6 +45,7 @@ public class LoadCloud implements Runnable {
     @Override
     public void run() {
         try {
+            Logger.d("load cloud");
             loadCloudImage(loadCloudToken());
         }catch (Exception e){
             e.printStackTrace();

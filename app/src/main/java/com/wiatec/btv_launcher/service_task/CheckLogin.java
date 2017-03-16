@@ -1,11 +1,13 @@
 package com.wiatec.btv_launcher.service_task;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.OkHttp.Listener.StringListener;
 import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
 import com.wiatec.btv_launcher.Utils.RxBus;
@@ -22,6 +24,8 @@ import java.io.IOException;
 
 public class CheckLogin implements Runnable {
 
+    private  int currentLoginCount;
+    private  String userName;
     @Override
     public void run() {
         while(true) {
@@ -35,13 +39,14 @@ public class CheckLogin implements Runnable {
     }
 
     public void check(){
-        int currentLoginCount = (int) SPUtils.get(Application.getContext() , "currentLoginCount" , 1);
-        String userName = (String) SPUtils.get(Application.getContext(),"userName" , "");
+        currentLoginCount = (int) SPUtils.get(Application.getContext() , "currentLoginCount" , 0);
+        userName = (String) SPUtils.get(Application.getContext(),"userName" , "");
         if(TextUtils.isEmpty(userName)){
+            Logger.d("no userName do not execute check");
             return;
         }
         OkMaster.get(F.url.login_repeat_check)
-                .parames("count", currentLoginCount)
+                .parames("count", currentLoginCount+"")
                 .parames("userInfo.userName",userName)
                 .enqueue(new StringListener() {
                     @Override
@@ -50,7 +55,7 @@ public class CheckLogin implements Runnable {
                             return;
                         }
                         Result result = new Gson().fromJson(s,new TypeToken<Result>(){}.getType());
-                        if(result ==null){
+                        if(result == null){
                             return;
                         }
                         if(result.getCode() == Result.CODE_OK){
@@ -63,7 +68,7 @@ public class CheckLogin implements Runnable {
 
                     @Override
                     public void onFailure(String e) {
-
+                        Logger.d(e);
                     }
                 });
 

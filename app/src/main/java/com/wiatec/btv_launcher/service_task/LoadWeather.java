@@ -30,6 +30,7 @@ public class LoadWeather implements Runnable {
 
     @Override
     public void run() {
+        Logger.d("load weather");
         String city = (String) SPUtils.get(Application.getContext() , "city" ,"");
         if(TextUtils.isEmpty(city)){
             return;

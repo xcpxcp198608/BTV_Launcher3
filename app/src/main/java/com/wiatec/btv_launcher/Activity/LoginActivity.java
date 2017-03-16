@@ -85,12 +85,16 @@ public class LoginActivity extends Base1Activity<ILoginActivity, LoginPresenter>
         if (code == Result.CODE_OK) {
             progressBar.setVisibility(View.GONE);
             Toast.makeText(Application.getContext(), "login success", Toast.LENGTH_LONG).show();
+            Logger.d(""+result.getCount());
             SPUtils.put(LoginActivity.this,"userName", userName);
             SPUtils.put(LoginActivity.this,"currentLoginCount", result.getCount());
         } else {
             progressBar.setVisibility(View.GONE);
             Toast.makeText(Application.getContext(), result.getStatus(), Toast.LENGTH_LONG).show();
+            finish();
         }
     }
+
+
 
 }

@@ -32,7 +32,7 @@ import rx.android.schedulers.AndroidSchedulers;
  * Created by PX on 2016-11-14.
  */
 
-public class SplashActivity extends Base1Activity<ISplashActivity, SplashPresenter> implements ISplashActivity {
+public class SplashActivity extends BaseActivity<ISplashActivity, SplashPresenter> implements ISplashActivity {
     @BindView(R.id.iv_splash)
     ImageView iv_Splash;
     @BindView(R.id.ibt_know)

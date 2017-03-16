@@ -17,7 +17,7 @@ import java.util.List;
  * Created by PX on 2016-11-30.
  */
 
-public class OpportunityActivity extends Base1Activity<IOpportunityActivity , OpportunityPresenter> implements IOpportunityActivity {
+public class OpportunityActivity extends BaseActivity<IOpportunityActivity , OpportunityPresenter> implements IOpportunityActivity {
 
     private RollPagerView rpvOpportunity;
     private OpportunityImageAdapter opportunityImageAdapter;

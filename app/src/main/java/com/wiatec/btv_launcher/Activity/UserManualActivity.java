@@ -26,7 +26,7 @@ import java.util.List;
  * Created by PX on 2016-12-06.
  */
 
-public class UserManualActivity extends Base1Activity<IUserManualActivity ,UserManualPresenter> implements IUserManualActivity {
+public class UserManualActivity extends BaseActivity<IUserManualActivity ,UserManualPresenter> implements IUserManualActivity {
     private RollPagerView rpvManual;
     private UserManualImageAdapter adapter;
     private String language;
