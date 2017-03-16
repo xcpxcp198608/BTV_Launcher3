@@ -16,7 +16,7 @@ import com.wiatec.btv_launcher.Utils.ApkLaunch;
  * Created by PX on 2016-11-25.
  */
 
-public class PlayAdActivity extends AppCompatActivity {
+public class PlayAdActivity extends Base1Activity {
     private VideoView vv_PlayAd;
 
     @Override

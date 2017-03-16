@@ -45,6 +45,9 @@ public class CheckLogin implements Runnable {
             Logger.d("no userName do not execute check");
             return;
         }
+        if(currentLoginCount ==0){
+            return;
+        }
         OkMaster.get(F.url.login_repeat_check)
                 .parames("count", currentLoginCount+"")
                 .parames("userInfo.userName",userName)

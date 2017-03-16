@@ -19,6 +19,7 @@
         android:layout_marginTop="10dp"
         android:textColorHint="@color/colorItemGrayBlue"
         android:id="@+id/et_password"
+        android:inputType="textPassword"
         android:hint="@string/input_password"
         android:background="@color/colorBTV"
         android:layout_width="350dp"

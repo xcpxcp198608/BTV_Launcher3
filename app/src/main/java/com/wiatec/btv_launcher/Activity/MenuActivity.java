@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
  * Created by PX on 2016-11-12.
  */
 
-public class MenuActivity extends AppCompatActivity {
+public class MenuActivity extends Base1Activity {
 
     @BindView(R.id.viewpager_indicator)
     ViewPagerIndicator viewpagerIndicator;
@@ -41,7 +41,6 @@ public class MenuActivity extends AppCompatActivity {
     private ArrayList<Fragment> fragmentList;
     private FragmentAdapter fragmentAdapter;
 
-    private MenuItemAdapter menuItemAdapter;
     public InstalledAppDao installedAppDao;
 
     @Override

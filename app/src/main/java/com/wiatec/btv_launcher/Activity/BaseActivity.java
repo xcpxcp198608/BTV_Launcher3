@@ -31,92 +31,30 @@ import rx.functions.Action1;
  * Created by PX on 2016-11-14.
  */
 
-public abstract class BaseActivity <V ,T extends BasePresenter> extends AppCompatActivity {
+public abstract class BaseActivity <V ,T extends BasePresenter> extends Base1Activity {
     protected T presenter;
-    protected int currentLoginCount;
-    protected UserInfo userInfo;
-    protected DeviceInfo deviceInfo;
-    protected Subscription checkLoginSubscription;
-    protected boolean isLoginChecking = false;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = createPresenter();
         presenter.attachView(this);
-        userInfo = new UserInfo();
-        deviceInfo = new DeviceInfo();
-        String mac = SystemConfig.getWifiMac1(this);
-        SPUtils.put(this ,"mac",mac);
-        deviceInfo.setMac(mac);
-        if(!isLoginChecking) {
-            checkLoginResult();
-        }
+
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        currentLoginCount = (int) SPUtils.get(this , "currentLoginCount" , 1);
-        userInfo.setUserName((String) SPUtils.get(this , "userName" , " "));
-        userInfo.setToken((String) SPUtils.get(this , "token" , " "));
-        deviceInfo.setUserName((String) SPUtils.get(this , "userName" , " "));
-        deviceInfo.setCity((String) SPUtils.get(this , "city" , "1"));
-        deviceInfo.setCountry((String) SPUtils.get(this , "country" , "1"));
-        deviceInfo.setCountryCode((String) SPUtils.get(this , "countryCode" , "1"));
-        deviceInfo.setRegionName((String) SPUtils.get(this , "regionName" , "1"));
-        deviceInfo.setTimeZone((String) SPUtils.get(this , "timezone" , "1"));
-        if(!isLoginChecking) {
-            checkLoginResult();
-        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         presenter.detachView();
-        if(checkLoginSubscription != null){
-            checkLoginSubscription.unsubscribe();
-        }
+
     }
 
     protected abstract T createPresenter();
 
-    protected void checkLoginResult(){
-        isLoginChecking = true;
-        checkLoginSubscription = RxBus.getDefault().toObservable(CheckLoginEvent.class)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<CheckLoginEvent>() {
-                    @Override
-                    public void call(CheckLoginEvent checkLoginEvent) {
-                        if(checkLoginEvent.getCode() == CheckLoginEvent.CODE_LOGIN_NORMAL){
-                            Logger.d("login normal ");
-                        }else{
-                            Logger.d("login repeat ");
-                            showLoginAgainDialog();
-                            checkLoginSubscription.unsubscribe();
-                            isLoginChecking = false;
-                        }
-                    }
-                });
-    }
 
-    private void showLoginAgainDialog(){
-        final AlertDialog alertDialog = new AlertDialog.Builder(this , R.style.dialog).create();
-        alertDialog.setCancelable(false);
-        alertDialog.show();
-        Window window = alertDialog.getWindow();
-        if(window == null){
-            return;
-        }
-        window.setContentView(R.layout.dialog_login_repeat);
-        Button btnConfirm = (Button) window.findViewById(R.id.bt_confirm);
-        btnConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-                startActivity(new Intent(BaseActivity.this , LoginActivity.class));
-            }
-        });
-    }
 }

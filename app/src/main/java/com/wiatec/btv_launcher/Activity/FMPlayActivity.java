@@ -27,7 +27,7 @@ import rx.functions.Func1;
  * Created by patrick on 2017/1/9.
  */
 
-public class FMPlayActivity extends AppCompatActivity {
+public class FMPlayActivity extends Base1Activity {
 
     private MediaPlayer mediaPlayer;
     private String url;

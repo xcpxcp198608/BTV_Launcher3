@@ -26,7 +26,7 @@ import rx.schedulers.Schedulers;
  * Created by PX on 2016-11-19.
  */
 
-public class AppSelectActivity extends AppCompatActivity {
+public class AppSelectActivity extends Base1Activity {
 
     private List<InstalledApp> list;
     private AppSelectAdapter appSelectAdapter;

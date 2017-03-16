@@ -26,7 +26,7 @@ import butterknife.OnClick;
  * Created by patrick on 2016/12/29.
  */
 
-public class LoginActivity extends Base1Activity<ILoginActivity, LoginPresenter> implements ILoginActivity {
+public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter> implements ILoginActivity {
 
     @BindView(R.id.et_username)
     EditText etUserName;
@@ -85,13 +85,12 @@ public class LoginActivity extends Base1Activity<ILoginActivity, LoginPresenter>
         if (code == Result.CODE_OK) {
             progressBar.setVisibility(View.GONE);
             Toast.makeText(Application.getContext(), "login success", Toast.LENGTH_LONG).show();
-            Logger.d(""+result.getCount());
             SPUtils.put(LoginActivity.this,"userName", userName);
             SPUtils.put(LoginActivity.this,"currentLoginCount", result.getCount());
+            finish();
         } else {
             progressBar.setVisibility(View.GONE);
             Toast.makeText(Application.getContext(), result.getStatus(), Toast.LENGTH_LONG).show();
-            finish();
         }
     }
 

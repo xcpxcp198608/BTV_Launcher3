@@ -24,7 +24,7 @@ import butterknife.OnClick;
  * Created by patrick on 2017/3/10.
  */
 
-public class RegisterActivity extends Base1Activity<IRegisterActivity, RegisterPresenter> implements IRegisterActivity {
+public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterPresenter> implements IRegisterActivity {
 
 
     @BindView(R.id.et_username)
