@@ -17,13 +17,12 @@ import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.jude.rollviewpager.RollPagerView;
-import com.wiatec.btv_launcher.Activity.CloudImageFullScreenActivity;
+import com.wiatec.btv_launcher.Activity.CloudImageFullScreen1Activity;
 import com.wiatec.btv_launcher.Activity.MenuActivity;
-import com.wiatec.btv_launcher.Activity.MessageActivity;
-import com.wiatec.btv_launcher.Activity.OpportunityActivity;
+import com.wiatec.btv_launcher.Activity.Message1Activity;
+import com.wiatec.btv_launcher.Activity.Opportunity1Activity;
 import com.wiatec.btv_launcher.Activity.PlayActivity;
-import com.wiatec.btv_launcher.Activity.PlayAdActivity;
-import com.wiatec.btv_launcher.Activity.UserManualActivity;
+import com.wiatec.btv_launcher.Activity.UserManual1Activity;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.Utils.SPUtils;
@@ -46,7 +45,6 @@ import com.wiatec.btv_launcher.bean.VideoInfo;
 import com.wiatec.btv_launcher.presenter.Fragment1Presenter;
 import com.wiatec.btv_launcher.receiver.NetworkStatusReceiver;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -271,7 +269,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 }
                 break;
             case R.id.ibt_user_guide:
-                startActivity(new Intent(getContext(), UserManualActivity.class));
+                startActivity(new Intent(getContext(), UserManual1Activity.class));
                 break;
             case R.id.ibt_setting:
                 if (ApkCheck.isApkInstalled(getContext(), F.package_name.setting)) {
@@ -287,10 +285,10 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 }
                 break;
             case R.id.ibt_anti_virus:
-                startActivity(new Intent(getContext(), OpportunityActivity.class));
+                startActivity(new Intent(getContext(), Opportunity1Activity.class));
                 break;
             case R.id.ibt_privacy:
-                startActivity(new Intent(getContext(), MessageActivity.class));
+                startActivity(new Intent(getContext(), Message1Activity.class));
                 break;
             case R.id.ibt_ld_cloud:
                 if (ApkCheck.isApkInstalled(getContext(), F.package_name.cloud)) {
@@ -306,7 +304,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 break;
             case R.id.ibt_full_screen:
                 if(isCloudImagePlaying){
-                    Intent intent1 = new Intent(getContext() , CloudImageFullScreenActivity.class);
+                    Intent intent1 = new Intent(getContext() , CloudImageFullScreen1Activity.class);
                     intent1.putExtra("cloudImagePosition",ibt_LdCloud.getCurrentPosition());
                     startActivity(intent1);
                 }

@@ -7,7 +7,6 @@ import com.jude.rollviewpager.RollPagerView;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.adapter.OpportunityImageAdapter;
-import com.wiatec.btv_launcher.adapter.RollImageAdapter;
 import com.wiatec.btv_launcher.bean.ImageInfo;
 import com.wiatec.btv_launcher.presenter.OpportunityPresenter;
 
@@ -17,7 +16,7 @@ import java.util.List;
  * Created by PX on 2016-11-30.
  */
 
-public class OpportunityActivity extends BaseActivity<IOpportunityActivity , OpportunityPresenter> implements IOpportunityActivity {
+public class Opportunity1Activity extends Base1Activity<IOpportunityActivity , OpportunityPresenter> implements IOpportunityActivity {
 
     private RollPagerView rpvOpportunity;
     private OpportunityImageAdapter opportunityImageAdapter;

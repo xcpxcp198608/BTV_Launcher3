@@ -1,7 +1,6 @@
 package com.wiatec.btv_launcher.Activity;
 
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,7 +19,6 @@ import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.SQL.MessageDao;
 import com.wiatec.btv_launcher.Utils.ApkCheck;
 import com.wiatec.btv_launcher.Utils.ApkLaunch;
-import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.adapter.MessageAdapter;
 import com.wiatec.btv_launcher.bean.MessageInfo;
 import com.wiatec.btv_launcher.presenter.MessagePresenter;
@@ -40,7 +38,7 @@ import rx.schedulers.Schedulers;
  * Created by PX on 2016-11-14.
  */
 
-public class MessageActivity extends BaseActivity<IMessageActivity, MessagePresenter> implements IMessageActivity {
+public class Message1Activity extends Base1Activity<IMessageActivity, MessagePresenter> implements IMessageActivity {
 
     @BindView(R.id.lv_message)
     ListView lv_Message;
@@ -63,7 +61,7 @@ public class MessageActivity extends BaseActivity<IMessageActivity, MessagePrese
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
         ButterKnife.bind(this);
-        messageDao = MessageDao.getInstance(MessageActivity.this);
+        messageDao = MessageDao.getInstance(Message1Activity.this);
         popView = getLayoutInflater().inflate(R.layout.message_popupwindow, null, false);
         if (popupWindow == null) {
             popupWindow = new PopupWindow(popView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
@@ -86,7 +84,7 @@ public class MessageActivity extends BaseActivity<IMessageActivity, MessagePrese
                 .subscribe(new Action1<List<MessageInfo>>() {
                     @Override
                     public void call(final List<MessageInfo> messageInfos) {
-                        messageAdapter = new MessageAdapter(MessageActivity.this, messageInfos);
+                        messageAdapter = new MessageAdapter(Message1Activity.this, messageInfos);
                         lv_Message.setAdapter(messageAdapter);
                         lv_Message.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
@@ -128,8 +126,8 @@ public class MessageActivity extends BaseActivity<IMessageActivity, MessagePrese
             bt_Popup.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(ApkCheck.isApkInstalled(MessageActivity.this ,messageInfo.getLink())){
-                        ApkLaunch.launchApkByPackageName(MessageActivity.this , messageInfo.getLink());
+                    if(ApkCheck.isApkInstalled(Message1Activity.this ,messageInfo.getLink())){
+                        ApkLaunch.launchApkByPackageName(Message1Activity.this , messageInfo.getLink());
                     }
                     popupWindow.dismiss();
                 }

@@ -23,9 +23,9 @@ import com.jude.rollviewpager.RollPagerView;
 import com.wiatec.btv_launcher.Activity.AppSelectActivity;
 import com.wiatec.btv_launcher.Activity.FMPlayActivity;
 import com.wiatec.btv_launcher.Activity.LoginActivity;
-import com.wiatec.btv_launcher.Activity.MainActivity;
+import com.wiatec.btv_launcher.Activity.Main1Activity;
 import com.wiatec.btv_launcher.Activity.PlayActivity;
-import com.wiatec.btv_launcher.Activity.SplashActivity;
+import com.wiatec.btv_launcher.Activity.Splash1Activity;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.R;
@@ -97,7 +97,7 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
     private boolean isShow = true;
     private RollOverViewAdapter1 rollOverViewAdapter1;
     private boolean rollOverStart = false;
-    private MainActivity activity;
+    private Main1Activity activity;
     private boolean isF2VisibleToUser = false;
 
     @Override
@@ -123,7 +123,7 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        activity = (MainActivity) context;
+        activity = (Main1Activity) context;
     }
 
     @Override
@@ -371,7 +371,7 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
                             imageButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    Intent intent = new Intent(getActivity(), SplashActivity.class);
+                                    Intent intent = new Intent(getActivity(), Splash1Activity.class);
                                     intent.putExtra("packageName", installedApp.getAppPackageName());
                                     startActivity(intent);
                                 }

@@ -5,16 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.Spinner;
 
-import com.bumptech.glide.Glide;
 import com.jude.rollviewpager.RollPagerView;
 import com.wiatec.btv_launcher.R;
-import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.adapter.UserManualImageAdapter;
 import com.wiatec.btv_launcher.bean.ImageInfo;
 import com.wiatec.btv_launcher.presenter.UserManualPresenter;
@@ -26,7 +19,7 @@ import java.util.List;
  * Created by PX on 2016-12-06.
  */
 
-public class UserManualActivity extends BaseActivity<IUserManualActivity ,UserManualPresenter> implements IUserManualActivity {
+public class UserManual1Activity extends Base1Activity<IUserManualActivity ,UserManualPresenter> implements IUserManualActivity {
     private RollPagerView rpvManual;
     private UserManualImageAdapter adapter;
     private String language;
@@ -49,7 +42,7 @@ public class UserManualActivity extends BaseActivity<IUserManualActivity ,UserMa
     }
 
     private void showSelectProduct() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(UserManualActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(UserManual1Activity.this);
         builder.setCancelable(false);
         builder.setTitle("Select Product");
         builder.setSingleChoiceItems(getResources().getStringArray(R.array.products), 0, new DialogInterface.OnClickListener() {
@@ -76,7 +69,7 @@ public class UserManualActivity extends BaseActivity<IUserManualActivity ,UserMa
     }
 
     private void showSelectLanguage (){
-        AlertDialog.Builder builder = new AlertDialog.Builder(UserManualActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(UserManual1Activity.this);
         builder.setCancelable(false);
         builder.setTitle("Select Language");
         builder.setSingleChoiceItems(getResources().getStringArray(R.array.languages), 0, new DialogInterface.OnClickListener() {

@@ -3,7 +3,6 @@ package com.wiatec.btv_launcher.Activity;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 import android.widget.VideoView;
 
@@ -16,7 +15,7 @@ import com.wiatec.btv_launcher.Utils.ApkLaunch;
  * Created by PX on 2016-11-25.
  */
 
-public class PlayAdActivity extends Base1Activity {
+public class PlayAdActivity extends BaseActivity {
     private VideoView vv_PlayAd;
 
     @Override

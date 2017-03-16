@@ -3,8 +3,6 @@ package com.wiatec.btv_launcher.Activity;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -27,7 +25,7 @@ import rx.functions.Func1;
  * Created by patrick on 2017/1/9.
  */
 
-public class FMPlayActivity extends Base1Activity {
+public class FMPlayActivity extends BaseActivity {
 
     private MediaPlayer mediaPlayer;
     private String url;

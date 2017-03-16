@@ -2,7 +2,6 @@ package com.wiatec.btv_launcher.Activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
@@ -13,7 +12,6 @@ import com.wiatec.btv_launcher.SQL.InstalledAppDao;
 import com.wiatec.btv_launcher.adapter.AppSelectAdapter;
 import com.wiatec.btv_launcher.bean.InstalledApp;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
@@ -26,7 +24,7 @@ import rx.schedulers.Schedulers;
  * Created by PX on 2016-11-19.
  */
 
-public class AppSelectActivity extends Base1Activity {
+public class AppSelectActivity extends BaseActivity {
 
     private List<InstalledApp> list;
     private AppSelectAdapter appSelectAdapter;

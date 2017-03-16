@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
  * Created by PX on 2016-11-15.
  */
 
-public class WeatherActivity extends BaseActivity<IWeatherActivity, WeatherPresenter> implements IWeatherActivity {
+public class Weather1Activity extends Base1Activity<IWeatherActivity, WeatherPresenter> implements IWeatherActivity {
     @BindView(R.id.iv_icon)
     ImageView iv_Icon;
     @BindView(R.id.tv_city)

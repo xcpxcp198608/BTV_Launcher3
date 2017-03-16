@@ -66,7 +66,7 @@ import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
-public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> implements IMainActivity, OnNetworkStatusListener, OnWifiStatusListener {
+public class Main1Activity extends Base1Activity<IMainActivity, MainPresenter> implements IMainActivity, OnNetworkStatusListener, OnWifiStatusListener {
 
     @BindView(R.id.tv_time)
     TextView tv_Time;
@@ -120,7 +120,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
         if(presenter != null){
             presenter.loadInstalledApp();
         }
-        if(SystemConfig.isNetworkConnected(MainActivity.this) && !isStartAlarmService){
+        if(SystemConfig.isNetworkConnected(Main1Activity.this) && !isStartAlarmService){
             startAlarmService();
         }
     }
@@ -131,7 +131,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
         mDeviceInfo = deviceInfo;
         if(presenter != null){
             presenter.loadWeatherInfo();
-            if (SystemConfig.isNetworkConnected(MainActivity.this)) {
+            if (SystemConfig.isNetworkConnected(Main1Activity.this)) {
                 isStartLoadNetData = true;
                 presenter.loadLocation();
                 presenter.loadUpdate();
@@ -200,7 +200,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
     public void loadUpdate(UpdateInfo updateInfo) {
         String info = updateInfo.getInfo();
         String info2 = info.replaceAll("\\n" ,"\n");
-        int localVersion = ApkCheck.getInstalledApkVersionCode(MainActivity.this, getPackageName());
+        int localVersion = ApkCheck.getInstalledApkVersionCode(Main1Activity.this, getPackageName());
         if (localVersion < updateInfo.getCode()) {
             showUpdateDialog(updateInfo);
         }
@@ -271,7 +271,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
     }
 
     private void showUpdateDialog(final UpdateInfo updateInfo) {
-        final AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this,R.style.dialog).create();
+        final AlertDialog alertDialog = new AlertDialog.Builder(Main1Activity.this,R.style.dialog).create();
         alertDialog.show();
         alertDialog.setCancelable(false);
         Window window = alertDialog.getWindow();
@@ -285,7 +285,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
         btConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, UpdateActivity.class);
+                Intent intent = new Intent(Main1Activity.this, UpdateActivity.class);
                 intent.putExtra("updateInfo", updateInfo);
                 startActivity(intent);
                 alertDialog.dismiss();
@@ -302,7 +302,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
     }
 
     private void showWarningDialog(){
-        AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(Main1Activity.this);
         dialog.setTitle(getString(R.string.warning));
         dialog.setMessage(getString(R.string.no_support));
         dialog.setCancelable(false);
@@ -391,17 +391,17 @@ public class MainActivity extends BaseActivity<IMainActivity, MainPresenter> imp
     private void startAlarmService() {
         isStartAlarmService = true;
         //启动服务加载天气信息，并通过alarm定时每120分钟加载一次
-        Intent alarmIntent = new Intent(MainActivity.this, LoadWeatherService.class);
+        Intent alarmIntent = new Intent(Main1Activity.this, LoadWeatherService.class);
         alarmIntent.setAction("loadWeather");
-        PendingIntent alarmPendingIntent = PendingIntent.getService(MainActivity.this, 0, alarmIntent, 0);
+        PendingIntent alarmPendingIntent = PendingIntent.getService(Main1Activity.this, 0, alarmIntent, 0);
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         long startTime = SystemClock.elapsedRealtime();
         long repeatTime = 120 * 60 * 1000;
         alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, startTime, repeatTime, alarmPendingIntent);
 
         //启动服务加载cloud照片信息列表,定时每3分钟读取一次
-        Intent cloudIntent = new Intent(MainActivity.this, LoadCloudService.class);
-        PendingIntent cloudPendingIntent = PendingIntent.getService(MainActivity.this, 0 ,cloudIntent , 0);
+        Intent cloudIntent = new Intent(Main1Activity.this, LoadCloudService.class);
+        PendingIntent cloudPendingIntent = PendingIntent.getService(Main1Activity.this, 0 ,cloudIntent , 0);
         AlarmManager alarmManager1 = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         long repeatTime1 = 5*60*1000;
         alarmManager1.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP ,startTime , repeatTime1 ,cloudPendingIntent);

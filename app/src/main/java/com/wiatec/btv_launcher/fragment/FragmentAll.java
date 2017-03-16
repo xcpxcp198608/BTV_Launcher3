@@ -1,6 +1,5 @@
 package com.wiatec.btv_launcher.fragment;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,7 +11,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.wiatec.btv_launcher.Activity.MenuActivity;
-import com.wiatec.btv_launcher.Activity.SplashActivity;
+import com.wiatec.btv_launcher.Activity.Splash1Activity;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.SQL.InstalledAppDao;
 import com.wiatec.btv_launcher.Utils.ApkLaunch;
@@ -77,7 +76,7 @@ public class FragmentAll extends Fragment {
                                 if("com.wiatec.update".equals(packageName)){
                                     ApkLaunch.launchApkByPackageName(getContext() ,packageName);
                                 }else {
-                                    Intent intent = new Intent(activity, SplashActivity.class);
+                                    Intent intent = new Intent(activity, Splash1Activity.class);
                                     intent.putExtra("packageName", packageName);
                                     startActivity(intent);
                                 }

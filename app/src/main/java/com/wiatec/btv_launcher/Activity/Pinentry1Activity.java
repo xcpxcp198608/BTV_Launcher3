@@ -3,18 +3,15 @@ package com.wiatec.btv_launcher.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.R;
-import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.adapter.ChannelGrideAdapter;
 import com.wiatec.btv_launcher.animator.Zoom;
 import com.wiatec.btv_launcher.bean.ChannelInfo;
-import com.wiatec.btv_launcher.presenter.BasePresenter;
 import com.wiatec.btv_launcher.presenter.PinentryPresenter;
 
 import java.util.List;
@@ -23,7 +20,7 @@ import java.util.List;
  * Created by patrick on 2016/12/29.
  */
 
-public class PinentryActivity extends BaseActivity<IPinentryActivity ,PinentryPresenter> implements IPinentryActivity{
+public class Pinentry1Activity extends Base1Activity<IPinentryActivity ,PinentryPresenter> implements IPinentryActivity{
 
     private GridView gridView;
     private ChannelGrideAdapter channelGrideAdapter;
@@ -56,7 +53,7 @@ public class PinentryActivity extends BaseActivity<IPinentryActivity ,PinentryPr
                 ChannelInfo channelInfo = list.get(position);
                 //Logger.d(channelInfo.toString());
                 if("live".equals(channelInfo.getType())){
-                    Intent intent = new Intent(PinentryActivity.this , PlayActivity.class);
+                    Intent intent = new Intent(Pinentry1Activity.this , PlayActivity.class);
                     intent.putExtra("url",channelInfo.getUrl());
                     startActivity(intent);
                 }else{

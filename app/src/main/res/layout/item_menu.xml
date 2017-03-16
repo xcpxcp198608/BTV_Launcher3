@@ -18,7 +18,7 @@
         android:ellipsize="marquee"
         android:marqueeRepeatLimit="marquee_forever"
         android:textSize="18dp"
-        android:textColor="@drawable/menu_text_color"
+        android:textColor="@drawable/bg_text_menu_item"
         android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

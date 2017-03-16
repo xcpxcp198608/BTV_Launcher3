@@ -4,12 +4,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.SQL.InstalledAppDao;
 import com.wiatec.btv_launcher.adapter.FragmentAdapter;
-import com.wiatec.btv_launcher.adapter.MenuItemAdapter;
 import com.wiatec.btv_launcher.custom_view.ViewPagerIndicator;
 import com.wiatec.btv_launcher.fragment.FragmentAll;
 import com.wiatec.btv_launcher.fragment.FragmentFavorite;
@@ -26,7 +24,7 @@ import butterknife.ButterKnife;
  * Created by PX on 2016-11-12.
  */
 
-public class MenuActivity extends Base1Activity {
+public class MenuActivity extends BaseActivity {
 
     @BindView(R.id.viewpager_indicator)
     ViewPagerIndicator viewpagerIndicator;

@@ -1,15 +1,12 @@
 package com.wiatec.btv_launcher.Activity;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.WindowManager;
@@ -20,12 +17,9 @@ import android.widget.VideoView;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.R;
-import com.wiatec.btv_launcher.Utils.Logger;
 
 import java.io.File;
-import java.util.concurrent.TimeUnit;
 
-import rx.Observable;
 import rx.Subscription;
 
 /**
@@ -81,7 +75,7 @@ public class BootAdActivity extends AppCompatActivity {
                 @Override
                 public boolean onError(MediaPlayer mp, int what, int extra) {
                     Application.setBootStatus(false);
-                    startActivity(new Intent(BootAdActivity.this , MainActivity.class));
+                    startActivity(new Intent(BootAdActivity.this , Main1Activity.class));
                     finish();
                     return true;
                 }
@@ -90,13 +84,13 @@ public class BootAdActivity extends AppCompatActivity {
                 @Override
                 public void onCompletion(MediaPlayer mp) {
                     Application.setBootStatus(false);
-                    startActivity(new Intent(BootAdActivity.this , MainActivity.class));
+                    startActivity(new Intent(BootAdActivity.this , Main1Activity.class));
                     finish();
                 }
             });
         }else{
             Application.setBootStatus(false);
-            startActivity(new Intent(BootAdActivity.this , MainActivity.class));
+            startActivity(new Intent(BootAdActivity.this , Main1Activity.class));
             finish();
         }
     }

@@ -32,7 +32,7 @@ import rx.android.schedulers.AndroidSchedulers;
  * Created by PX on 2016-11-14.
  */
 
-public class SplashActivity extends BaseActivity<ISplashActivity, SplashPresenter> implements ISplashActivity {
+public class Splash1Activity extends Base1Activity<ISplashActivity, SplashPresenter> implements ISplashActivity {
     @BindView(R.id.iv_splash)
     ImageView iv_Splash;
     @BindView(R.id.ibt_know)
@@ -98,7 +98,7 @@ public class SplashActivity extends BaseActivity<ISplashActivity, SplashPresente
         //Logger.d(list.toString());
         final ImageInfo imageInfo = list.get(0);
         try {
-            Glide.with(SplashActivity.this).load(imageInfo.getUrl()).placeholder(R.drawable.btv1).into(iv_Splash);
+            Glide.with(Splash1Activity.this).load(imageInfo.getUrl()).placeholder(R.drawable.btv1).into(iv_Splash);
         }catch (Exception e){
             e.printStackTrace();
             Logger.d(e.getMessage());
@@ -113,7 +113,7 @@ public class SplashActivity extends BaseActivity<ISplashActivity, SplashPresente
     }
 
     private void launchApp(String packageName) {
-        ApkLaunch.launchApkByPackageName(SplashActivity.this, packageName);
+        ApkLaunch.launchApkByPackageName(Splash1Activity.this, packageName);
     }
 
     @OnClick(R.id.ibt_pass)

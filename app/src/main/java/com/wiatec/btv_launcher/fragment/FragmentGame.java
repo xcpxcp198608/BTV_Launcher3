@@ -12,7 +12,7 @@ import android.widget.GridView;
 
 import com.wiatec.btv_launcher.Activity.AppSelectActivity;
 import com.wiatec.btv_launcher.Activity.MenuActivity;
-import com.wiatec.btv_launcher.Activity.SplashActivity;
+import com.wiatec.btv_launcher.Activity.Splash1Activity;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.SQL.InstalledAppDao;
 import com.wiatec.btv_launcher.Utils.ApkLaunch;
@@ -75,7 +75,7 @@ public class FragmentGame extends Fragment {
                                     if("com.wiatec.update".equals(packageName)){
                                         ApkLaunch.launchApkByPackageName(getContext() ,packageName);
                                     }else {
-                                        Intent intent = new Intent(activity, SplashActivity.class);
+                                        Intent intent = new Intent(activity, Splash1Activity.class);
                                         intent.putExtra("packageName", packageName);
                                         startActivity(intent);
                                     }

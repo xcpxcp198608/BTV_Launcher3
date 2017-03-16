@@ -1,6 +1,5 @@
 package com.wiatec.btv_launcher.presenter;
 
-import com.wiatec.btv_launcher.Activity.BaseActivity;
 import com.wiatec.btv_launcher.Activity.ILoginActivity;
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.bean.DeviceInfo;

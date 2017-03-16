@@ -3,13 +3,12 @@ package com.wiatec.btv_launcher.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
-import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.custom_view.MultiImage;
 import com.wiatec.btv_launcher.presenter.CloudImageFullScreenPresenter;
-import java.io.File;
+
 import java.util.List;
 
 
@@ -17,7 +16,7 @@ import java.util.List;
  * Created by patrick on 2017/2/22.
  */
 
-public class CloudImageFullScreenActivity extends BaseActivity<ICloudImageFullScreenActivity , CloudImageFullScreenPresenter> implements ICloudImageFullScreenActivity {
+public class CloudImageFullScreen1Activity extends Base1Activity<ICloudImageFullScreenActivity , CloudImageFullScreenPresenter> implements ICloudImageFullScreenActivity {
 
     private MultiImage multiImage;
     private List<String> mList;
@@ -54,7 +53,7 @@ public class CloudImageFullScreenActivity extends BaseActivity<ICloudImageFullSc
                 return;
             }
             String path = mList.get(position);
-            Glide.with(CloudImageFullScreenActivity.this)
+            Glide.with(CloudImageFullScreen1Activity.this)
                     .load(path)
                     .placeholder(R.drawable.ld_cloud_icon_3)
                     .error(R.drawable.ld_cloud_icon_3)

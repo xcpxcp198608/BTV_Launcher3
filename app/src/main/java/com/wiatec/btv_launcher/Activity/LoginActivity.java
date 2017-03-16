@@ -54,6 +54,7 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
         ButterKnife.bind(this);
         userName = (String) SPUtils.get(LoginActivity.this , "userName" ,"");
         etUserName.setText(userName);
+        etUserName.setSelection(userName.length());
     }
 
     @OnClick({R.id.bt_login, R.id.bt_create_account})

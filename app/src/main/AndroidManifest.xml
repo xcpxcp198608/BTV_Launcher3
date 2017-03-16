@@ -31,27 +31,27 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Activity.MainActivity"
+        <activity android:name=".Activity.Main1Activity"
             android:launchMode="singleInstance"/>
         <activity android:name=".Activity.MenuActivity"/>
         <activity android:name=".Activity.UpdateActivity"/>
         <activity android:name=".Activity.PlayActivity"/>
-        <activity android:name=".Activity.SplashActivity"/>
-        <activity android:name=".Activity.MessageActivity"/>
-        <activity android:name=".Activity.WeatherActivity"/>
+        <activity android:name=".Activity.Splash1Activity"/>
+        <activity android:name=".Activity.Message1Activity"/>
+        <activity android:name=".Activity.Weather1Activity"/>
         <activity android:name=".Activity.AppSelectActivity"/>
         <activity android:name=".Activity.PlayAdActivity"/>
-        <activity android:name=".Activity.OpportunityActivity"/>
-        <activity android:name=".Activity.UserManualActivity"/>
+        <activity android:name=".Activity.Opportunity1Activity"/>
+        <activity android:name=".Activity.UserManual1Activity"/>
         <activity android:name=".Activity.LoginActivity"
             android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".Activity.RegisterActivity"
             android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".Activity.PinentryActivity"/>
+        <activity android:name=".Activity.Pinentry1Activity"/>
         <activity android:name=".Activity.FMPlayActivity"/>
-        <activity android:name=".Activity.CloudImageFullScreenActivity"/>
+        <activity android:name=".Activity.CloudImageFullScreen1Activity"/>
         <activity android:name=".Activity.WakeUpAdActivity"/>
-        <activity android:name=".Activity.MemberChannelActivity"/>
+        <activity android:name=".Activity.MemberChannel1Activity"/>
 
         <receiver android:name=".receiver.AppInstallReceiver">
             <intent-filter>
