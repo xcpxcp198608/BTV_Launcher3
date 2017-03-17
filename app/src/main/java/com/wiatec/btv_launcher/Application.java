@@ -16,6 +16,7 @@ import com.android.volley.toolbox.Volley;
 import com.wiatec.btv_launcher.Activity.LoginActivity;
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.RxBus;
+import com.wiatec.btv_launcher.exception.CrashHandler;
 import com.wiatec.btv_launcher.rxevent.CheckLoginEvent;
 import com.wiatec.btv_launcher.service.CheckLoginService;
 import com.wiatec.btv_launcher.service.LoadCloudService;
@@ -38,6 +39,7 @@ public class Application extends android.app.Application {
     private static Context context;
     private static boolean isFirstBoot;
     private static ExecutorService executorService;
+    private CrashHandler crashHandler;
 
     @Override
     public void onCreate() {
@@ -48,6 +50,9 @@ public class Application extends android.app.Application {
         isFirstBoot = true;
         executorService = Executors.newCachedThreadPool();
         startLoginCheckService();
+
+        crashHandler = CrashHandler.getInstance();
+        crashHandler.init(getApplicationContext());
     }
 
     public static Context getContext (){

@@ -8,6 +8,7 @@ import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.Utils.FileCheck;
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
+import com.wiatec.btv_launcher.Utils.SystemConfig;
 import com.wiatec.btv_launcher.bean.ImageInfo;
 import com.wiatec.btv_launcher.bean.VideoInfo;
 import java.io.IOException;
@@ -24,6 +25,9 @@ public class LoadKodiData implements Runnable {
 
     @Override
     public void run() {
+        if(!SystemConfig.isNetworkConnected(Application.getContext())){
+            return;
+        }
         loadImageData();
         loadVideoData();
     }

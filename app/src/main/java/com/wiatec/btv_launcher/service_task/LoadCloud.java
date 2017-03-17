@@ -110,8 +110,8 @@ public class LoadCloud implements Runnable {
                         if (jsonArray != null && jsonArray.length() > 0) {
                             List<String> list = new ArrayList<>();
                             int length = 0;
-                            if (jsonArray.length() > 10) {
-                                length = 10;
+                            if (jsonArray.length() > 20) {
+                                length = 20;
                             } else {
                                 length = jsonArray.length();
                             }

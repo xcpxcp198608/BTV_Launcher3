@@ -31,8 +31,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Activity.Main1Activity"
-            android:launchMode="singleInstance"/>
+        <activity android:name=".Activity.MainActivity"/>
         <activity android:name=".Activity.MenuActivity"/>
         <activity android:name=".Activity.UpdateActivity"/>
         <activity android:name=".Activity.PlayActivity"/>

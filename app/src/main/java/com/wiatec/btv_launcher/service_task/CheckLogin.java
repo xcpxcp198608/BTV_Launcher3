@@ -12,6 +12,7 @@ import com.wiatec.btv_launcher.Utils.OkHttp.Listener.StringListener;
 import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
 import com.wiatec.btv_launcher.Utils.RxBus;
 import com.wiatec.btv_launcher.Utils.SPUtils;
+import com.wiatec.btv_launcher.Utils.SystemConfig;
 import com.wiatec.btv_launcher.bean.Result;
 import com.wiatec.btv_launcher.bean.UserInfo;
 import com.wiatec.btv_launcher.rxevent.CheckLoginEvent;
@@ -39,6 +40,9 @@ public class CheckLogin implements Runnable {
     }
 
     public void check(){
+        if(!SystemConfig.isNetworkConnected(Application.getContext())){
+            return;
+        }
         currentLoginCount = (int) SPUtils.get(Application.getContext() , "currentLoginCount" , 0);
         userName = (String) SPUtils.get(Application.getContext(),"userName" , "");
         if(TextUtils.isEmpty(userName)){

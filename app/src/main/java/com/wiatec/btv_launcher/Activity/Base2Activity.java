@@ -44,7 +44,7 @@ public abstract class Base2Activity <V ,T extends BasePresenter> extends AppComp
         userInfo = new UserInfo();
         deviceInfo = new DeviceInfo();
         String mac = SystemConfig.getWifiMac1(this);
-        SPUtils.put(this ,"mac",mac);
+        SPUtils.put(this, "mac", mac);
         deviceInfo.setMac(mac);
     }
 

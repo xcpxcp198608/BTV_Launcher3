@@ -157,7 +157,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
             if (messageSubscription != null) {
                 messageSubscription.unsubscribe();
             }
-            if(userDataInfo != null){
+            if(userDataInfo != null && SystemConfig.isNetworkConnected(Application.getContext())){
                 exitTime = System.currentTimeMillis();
                 holdTime = exitTime - entryTime;
                 String eTime = new SimpleDateFormat("yy-MM-dd HH:mm:ss").format(new Date(exitTime));
@@ -371,7 +371,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
 
     @Override
     public void loadRollOverImage(final List<ImageInfo> list) {
-        if (list.size() <= 0) {
+        if(list == null || list.size() <1){
             return;
         }
         RollOverViewAdapter rollOverViewAdapter = new RollOverViewAdapter(list);
@@ -386,7 +386,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
 
     @Override
     public void loadCloudImage(List<String> list) {
-        if (list == null || list.size() <=0 ){
+        if(list == null || list.size() <1){
             return;
         }
         isCloudImagePlaying = true;
@@ -419,34 +419,34 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
 
     @Override
     public void loadVideo(final List<VideoInfo> list) {
-        if (list.size() > 0) {
-            isVideoPlaying = true;
-            videoSubscription = Observable.interval(0,list.get(0).getPlayInterval(),TimeUnit.MILLISECONDS)
-                    .take(list.size())
-                    .subscribeOn(Schedulers.io())
-                    .repeat()
-                    .map(new Func1<Long, String>() {
-                        @Override
-                        public String call(Long aLong) {
-                            int i = aLong.intValue();
-                            return list.get(i).getUrl();
-                        }
-                    })
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<String>() {
-                        @Override
-                        public void call(String s) {
-                            if(vv_Main != null ){
-                                if(currentVideoInfo == null){
-                                    currentVideoInfo = new VideoInfo();
-                                }
-                                currentVideoInfo.setUrl(s);
-                                playVideo(s);
-                            }
-                        }
-                    });
+        if(list == null || list.size() <1){
+            return;
         }
-
+        isVideoPlaying = true;
+        videoSubscription = Observable.interval(0,list.get(0).getPlayInterval(),TimeUnit.MILLISECONDS)
+                .take(list.size())
+                .subscribeOn(Schedulers.io())
+                .repeat()
+                .map(new Func1<Long, String>() {
+                    @Override
+                    public String call(Long aLong) {
+                        int i = aLong.intValue();
+                        return list.get(i).getUrl();
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<String>() {
+                    @Override
+                    public void call(String s) {
+                        if(vv_Main != null ){
+                            if(currentVideoInfo == null){
+                                currentVideoInfo = new VideoInfo();
+                            }
+                            currentVideoInfo.setUrl(s);
+                            playVideo(s);
+                        }
+                    }
+                });
     }
 
     private void playVideo(final String url) {
@@ -504,7 +504,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     @Override
     public void onDisconnect(boolean disConnected) {
         if (disConnected) {
-            Toast.makeText(getContext(), getString(R.string.network_disconnect), Toast.LENGTH_LONG).show();
+            Toast.makeText(Application.getContext(), getString(R.string.network_disconnect), Toast.LENGTH_LONG).show();
         }
     }
 

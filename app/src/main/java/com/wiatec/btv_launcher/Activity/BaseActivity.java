@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 
+import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.Utils.RxBus;
 import com.wiatec.btv_launcher.Utils.SPUtils;
@@ -39,9 +40,9 @@ public class BaseActivity extends AppCompatActivity {
         userInfo = new UserInfo();
         deviceInfo = new DeviceInfo();
         String mac = SystemConfig.getWifiMac1(this);
-        SPUtils.put(this ,"mac",mac);
+        SPUtils.put(this, "mac", mac);
         deviceInfo.setMac(mac);
-        if(!isLoginChecking) {
+        if(!isLoginChecking && SystemConfig.isNetworkConnected(Application.getContext())) {
             checkLoginResult();
         }
     }
@@ -58,7 +59,7 @@ public class BaseActivity extends AppCompatActivity {
         deviceInfo.setCountryCode((String) SPUtils.get(this , "countryCode" , "1"));
         deviceInfo.setRegionName((String) SPUtils.get(this , "regionName" , "1"));
         deviceInfo.setTimeZone((String) SPUtils.get(this , "timezone" , "1"));
-        if(!isLoginChecking) {
+        if(!isLoginChecking && SystemConfig.isNetworkConnected(Application.getContext())) {
             checkLoginResult();
         }
     }

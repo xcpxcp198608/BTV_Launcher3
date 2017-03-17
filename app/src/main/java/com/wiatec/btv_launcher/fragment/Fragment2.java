@@ -23,7 +23,7 @@ import com.jude.rollviewpager.RollPagerView;
 import com.wiatec.btv_launcher.Activity.AppSelectActivity;
 import com.wiatec.btv_launcher.Activity.FMPlayActivity;
 import com.wiatec.btv_launcher.Activity.LoginActivity;
-import com.wiatec.btv_launcher.Activity.Main1Activity;
+import com.wiatec.btv_launcher.Activity.MainActivity;
 import com.wiatec.btv_launcher.Activity.PlayActivity;
 import com.wiatec.btv_launcher.Activity.Splash1Activity;
 import com.wiatec.btv_launcher.Application;
@@ -97,7 +97,7 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
     private boolean isShow = true;
     private RollOverViewAdapter1 rollOverViewAdapter1;
     private boolean rollOverStart = false;
-    private Main1Activity activity;
+    private MainActivity activity;
     private boolean isF2VisibleToUser = false;
 
     @Override
@@ -123,7 +123,7 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        activity = (Main1Activity) context;
+        activity = (MainActivity) context;
     }
 
     @Override
@@ -215,6 +215,9 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
 
     @Override
     public void loadImage(final List<ImageInfo> list) {
+        if(list == null || list.size() <1){
+            return;
+        }
         isLoaded = true;
         Glide.with(Application.getContext()).load(list.get(7).getUrl()).placeholder(R.drawable.ld_store_icon).into(ibtLdStore);
         ibtLdStore.setOnClickListener(new View.OnClickListener() {
@@ -236,13 +239,16 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
 
     @Override
     public void loadRollImage(List<ImageInfo> list) {
+        if(list == null || list.size() <1){
+            return;
+        }
         RollImageAdapter rollImageAdapter = new RollImageAdapter(list);
         rpvMain.setAdapter(rollImageAdapter);
     }
 
     @Override
     public void loadRollOverImage(final List<ImageInfo> list) {
-        if (list.size() <= 0) {
+        if(list == null || list.size() <1){
             return;
         }
         rollOverViewAdapter1 = new RollOverViewAdapter1(list);
@@ -257,7 +263,7 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
 
     @Override
     public void loadChannelType(final List<ChannelTypeInfo> list) {
-        if (list == null) {
+        if(list == null || list.size() <1){
             return;
         }
         lvCountry.setBackground(null);
@@ -304,6 +310,9 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
 
     @Override
     public void showChannel(final List<ChannelInfo> list) {
+        if(list == null || list.size() <1){
+            return;
+        }
         grideAdapter = new ChannelGrideAdapter(Application.getContext(), list);
         gridView.setAdapter(grideAdapter);
 

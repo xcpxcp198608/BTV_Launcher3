@@ -64,6 +64,13 @@ public class BootAdActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if(Application.getBootStatus()){
+            File file = new File(F.path.boot_ad_video);
+            if(!file.exists()){
+                Application.setBootStatus(false);
+                startActivity(new Intent(BootAdActivity.this , MainActivity.class));
+                finish();
+                return;
+            }
             vvBoot.setVideoPath(F.path.boot_ad_video);
             vvBoot.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
@@ -75,7 +82,7 @@ public class BootAdActivity extends AppCompatActivity {
                 @Override
                 public boolean onError(MediaPlayer mp, int what, int extra) {
                     Application.setBootStatus(false);
-                    startActivity(new Intent(BootAdActivity.this , Main1Activity.class));
+                    startActivity(new Intent(BootAdActivity.this , MainActivity.class));
                     finish();
                     return true;
                 }
@@ -84,19 +91,15 @@ public class BootAdActivity extends AppCompatActivity {
                 @Override
                 public void onCompletion(MediaPlayer mp) {
                     Application.setBootStatus(false);
-                    startActivity(new Intent(BootAdActivity.this , Main1Activity.class));
+                    startActivity(new Intent(BootAdActivity.this , MainActivity.class));
                     finish();
                 }
             });
         }else{
             Application.setBootStatus(false);
-            startActivity(new Intent(BootAdActivity.this , Main1Activity.class));
+            startActivity(new Intent(BootAdActivity.this , MainActivity.class));
             finish();
         }
-    }
-
-    private void showDelayTime(){
-
     }
 
     @Override

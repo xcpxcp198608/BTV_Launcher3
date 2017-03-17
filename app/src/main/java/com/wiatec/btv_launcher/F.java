@@ -42,6 +42,8 @@ public final class F {
         public static final String video= download+"btvi3.mp4";
         public static final String ad_video= download+"btvad.mp4";
         public static final String boot_ad_video= download+"btvbootad.mp4";
+        public static final String logcat= Environment.getExternalStorageDirectory().getAbsolutePath()
+                +"/Android/data/com.wiatec.btv_launcher/files/logcat/";
         public static final String kodi_image_path = Environment.getExternalStorageDirectory().getAbsolutePath()
                 +"/Android/data/org.xbmc.kodi/files/.kodi/addons/skin.beyondtv/backgrounds/";
         public static final String kodi_video_path = Environment.getExternalStorageDirectory().getAbsolutePath()

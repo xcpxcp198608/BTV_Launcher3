@@ -2,6 +2,7 @@ package com.wiatec.btv_launcher.Utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 
 import java.util.Map;
 
@@ -16,6 +17,9 @@ public class SPUtils {
     public static void put (Context context , String key , Object object){
         SharedPreferences sharedPreferences = context.getSharedPreferences(NAME , Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
+        if(key ==null || object==null){
+            return;
+        }
         if(object instanceof String){
             editor.putString(key , (String) object);
         }else if(object instanceof Integer){
