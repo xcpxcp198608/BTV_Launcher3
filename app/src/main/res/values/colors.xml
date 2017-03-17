@@ -58,5 +58,6 @@
     <color name="colorItemTransparentWD">#dbffffff</color>
     <color name="colorOrange">#ec7513</color>
     <color name="colorDialogBG">#0E2038</color>
+    <color name="colorOrange1">#FCA425</color>
 
 </resources>

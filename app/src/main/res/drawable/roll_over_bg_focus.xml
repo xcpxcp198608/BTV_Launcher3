@@ -5,6 +5,6 @@
         android:startColor="@color/colorTranslucent"
         android:centerColor="@color/colorTranslucent"
         android:endColor="@color/colorTranslucent" />
-    <stroke android:color="@color/colorRed" android:width="3dp" />
+    <stroke android:color="@color/colorOrange1" android:width="3dp" />
 
 </shape>

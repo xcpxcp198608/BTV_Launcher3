@@ -38,7 +38,7 @@ public class RollOverViewAdapter1 extends RollOverAdapter {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);
         imageButton.setLayoutParams(layoutParams);
-        imageButton.setPadding(3,3,3,3);
+        imageButton.setPadding(4,4,4,4);
         imageButton.setBackgroundResource(R.drawable.roll_over_bg);
         imageButton.setScaleType(ImageButton.ScaleType.CENTER_CROP);
         Glide.with(container.getContext()).load(list.get(position).getUrl())
