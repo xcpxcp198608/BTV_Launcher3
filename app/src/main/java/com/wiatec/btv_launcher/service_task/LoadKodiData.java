@@ -11,6 +11,8 @@ import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
 import com.wiatec.btv_launcher.Utils.SystemConfig;
 import com.wiatec.btv_launcher.bean.ImageInfo;
 import com.wiatec.btv_launcher.bean.VideoInfo;
+import com.wiatec.btv_launcher.exception.CrashHandler;
+
 import java.io.IOException;
 import java.util.List;
 import okhttp3.Call;
@@ -28,8 +30,12 @@ public class LoadKodiData implements Runnable {
         if(!SystemConfig.isNetworkConnected(Application.getContext())){
             return;
         }
-        loadImageData();
-        loadVideoData();
+        try {
+            loadImageData();
+            loadVideoData();
+        }catch (Exception e){
+            Logger.d(e.getMessage());
+        }
     }
 
     private void loadImageData() {
@@ -45,7 +51,13 @@ public class LoadKodiData implements Runnable {
                     return;
                 }
                 String jsonString = response.body().string();
-                List<ImageInfo> list = new Gson().fromJson(jsonString ,new TypeToken<List<ImageInfo>>(){}.getType());
+                List<ImageInfo> list = null;
+                try {
+                    list = new Gson().fromJson(jsonString ,new TypeToken<List<ImageInfo>>(){}.getType());
+                }catch (Exception e){
+                   Logger.d(e.getMessage());
+                }
+
                 if(list ==null || list.size() <=0){
                     return;
                 }
@@ -73,7 +85,12 @@ public class LoadKodiData implements Runnable {
                     return;
                 }
                 String jsonString = response.body().string();
-                VideoInfo videoInfo = new Gson().fromJson(jsonString ,new TypeToken<VideoInfo>(){}.getType());
+                VideoInfo videoInfo = null;
+                try {
+                    videoInfo = new Gson().fromJson(jsonString ,new TypeToken<VideoInfo>(){}.getType());
+                }catch (Exception e){
+                    Logger.d(e.getMessage());
+                }
                 if(videoInfo ==null ){
                     return;
                 }
