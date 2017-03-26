@@ -40,7 +40,17 @@ public class AppInstallReceiver extends BroadcastReceiver {
                     .map(new Func1<String, Object>() {
                         @Override
                         public Object call(String s) {
-                            if(!"com.euroandroid.xbox".equals(s) && !"com.explusalpha.Snes9xPlus".equals(s)){
+                            if(!"com.wiatec.btv_launcher".equals(s) &&
+                                    !"com.android.tv.settings".equals(s)&&
+                                    !"com.euroandroid.xbox".equals(s)&&
+                                    !"com.explusalpha.Snes9xPlus".equals(s)&&
+                                    !"com.koushikdutta.superuser".equals(s)&&
+                                    !"com.droidlogic.appinstall".equals(s)&&
+                                    !F.package_name.market.equals(s)&&
+                                    !F.package_name.legacy_antivirus.equals(s)&&
+                                    !F.package_name.legacy_privacy.equals(s)&&
+                                    !F.package_name.tvplus.equals(s)&&
+                                    !F.package_name.spotify.equals(s)){
                                 InstalledApp installedApp = new InstalledApp();
                                 installedApp.setAppPackageName(s);
                                 installedApp.setAppName(ApkCheck.getInstalledApkName(mContext,s));
