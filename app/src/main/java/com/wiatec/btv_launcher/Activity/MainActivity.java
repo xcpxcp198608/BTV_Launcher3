@@ -114,7 +114,7 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         ButterKnife.bind(this);
         initFragment();
-        checkDevice();
+        //checkDevice();
         showTimeAndData();
         registerBroadcastReceiver();
         if(presenter != null){

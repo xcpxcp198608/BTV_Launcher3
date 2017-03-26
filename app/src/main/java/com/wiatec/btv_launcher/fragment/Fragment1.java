@@ -1,11 +1,13 @@
 package com.wiatec.btv_launcher.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,8 @@ import android.widget.VideoView;
 import com.bumptech.glide.Glide;
 import com.jude.rollviewpager.RollPagerView;
 import com.wiatec.btv_launcher.Activity.CloudImageFullScreen1Activity;
+import com.wiatec.btv_launcher.Activity.LoginActivity;
+import com.wiatec.btv_launcher.Activity.MainActivity;
 import com.wiatec.btv_launcher.Activity.MenuActivity;
 import com.wiatec.btv_launcher.Activity.Message1Activity;
 import com.wiatec.btv_launcher.Activity.Opportunity1Activity;
@@ -115,6 +119,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     private long exitTime;
     private long holdTime;
     private UserDataInfo userDataInfo;
+    private MainActivity activity;
 
     @Nullable
     @Override
@@ -127,6 +132,12 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         messageDao = MessageDao.getInstance(getContext());
         userDataInfo = new UserDataInfo();
         return view;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        activity = (MainActivity) context;
     }
 
     @Override
@@ -264,8 +275,13 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ibt_btv:
-                if (ApkCheck.isApkInstalled(getContext(), F.package_name.btv)) {
-                    ApkLaunch.launchApkByPackageName(getContext(), F.package_name.btv);
+                String userName = (String) SPUtils.get(Application.getContext() , "userName" ,"");
+                if(TextUtils.isEmpty(userName)){
+                    startActivity(new Intent(getContext() , LoginActivity.class));
+                }else {
+                    if (ApkCheck.isApkInstalled(getContext(), F.package_name.btv)) {
+                        ApkLaunch.launchApkByPackageName(getContext(), F.package_name.btv);
+                    }
                 }
                 break;
             case R.id.ibt_user_guide:
@@ -280,8 +296,13 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 startActivity(new Intent(getContext(), MenuActivity.class));
                 break;
             case R.id.ibt_market:
-                if (ApkCheck.isApkInstalled(getContext(), F.package_name.market)) {
-                    ApkLaunch.launchApkByPackageName(getContext(), F.package_name.market);
+                userName = (String) SPUtils.get(Application.getContext() , "userName" ,"");
+                if(TextUtils.isEmpty(userName)){
+                    startActivity(new Intent(getContext() , LoginActivity.class));
+                }else {
+                    if (ApkCheck.isApkInstalled(getContext(), F.package_name.market)) {
+                        ApkLaunch.launchApkByPackageName(getContext(), F.package_name.market);
+                    }
                 }
                 break;
             case R.id.ibt_anti_virus:
