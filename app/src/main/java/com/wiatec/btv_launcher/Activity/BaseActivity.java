@@ -58,7 +58,7 @@ public class BaseActivity extends AppCompatActivity {
         deviceInfo.setCountry((String) SPUtils.get(this , "country" , "1"));
         deviceInfo.setCountryCode((String) SPUtils.get(this , "countryCode" , "1"));
         deviceInfo.setRegionName((String) SPUtils.get(this , "regionName" , "1"));
-        deviceInfo.setTimeZone((String) SPUtils.get(this , "timezone" , "1"));
+        deviceInfo.setTimeZone((String) SPUtils.get(this , "timeZone" , "1"));
         if(!isLoginChecking && SystemConfig.isNetworkConnected(Application.getContext())) {
             checkLoginResult();
         }

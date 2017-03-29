@@ -28,6 +28,7 @@ public class AdVideoData implements IAdVideoData {
     public void loadData(final OnLoadListener onLoadListener) {
         OkMaster.get(F.url.ad_video)
                 .parames("deviceInfo.countryCode", SPUtils.get(Application.getContext() , "countryCode" , ""))
+                .parames("deviceInfo.timeZone", SPUtils.get(Application.getContext() , "timeZone" , ""))
                 .enqueue(new StringListener() {
                     @Override
                     public void onSuccess(String s) throws IOException {

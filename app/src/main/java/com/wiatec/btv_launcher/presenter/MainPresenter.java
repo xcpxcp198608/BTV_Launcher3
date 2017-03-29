@@ -216,7 +216,7 @@ public class MainPresenter extends BasePresenter<IMainActivity> {
                             SPUtils.put(Application.getContext() , "countryCode",countryCode);
                             SPUtils.put(Application.getContext() , "country",country);
                             SPUtils.put(Application.getContext() , "regionName",regionName);
-                            SPUtils.put(Application.getContext() , "timezone",timeZone);
+                            SPUtils.put(Application.getContext() , "timeZone",timeZone);
                             SPUtils.put(Application.getContext() , "city",city);
                         } catch (JSONException e) {
                             e.printStackTrace();

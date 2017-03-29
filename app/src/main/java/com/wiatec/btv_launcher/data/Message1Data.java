@@ -30,6 +30,7 @@ public class Message1Data implements IMessage1Data{
     public void loadData(final OnLoadListener onLoadListener) {
         OkMaster.get(F.url.message1)
                 .parames("deviceInfo.countryCode", SPUtils.get(Application.getContext() , "countryCode" , ""))
+                .parames("deviceInfo.timeZone", SPUtils.get(Application.getContext() , "timeZone" , ""))
                 .enqueue(new StringListener() {
                     @Override
                     public void onSuccess(String s) throws IOException {
