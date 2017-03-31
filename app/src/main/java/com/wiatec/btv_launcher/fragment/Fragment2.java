@@ -194,7 +194,7 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
         showCustomShortCut(ibtC4, "c4");
         showCustomShortCut(ibtC5, "c5");
         showCustomShortCut(ibtC6, "c6");
-        //showCustomShortCut(ibtC7, "c7");
+        showCustomShortCut(ibtC7, "c7");
     }
 
     @Override
@@ -431,16 +431,13 @@ public class Fragment2 extends BaseFragment<IFragment2, Fragment2Presenter> impl
         ibtC7.setOnFocusChangeListener(this);
     }
 
-    @OnClick({R.id.ibt_c1, R.id.ibt_c7})
+    @OnClick({R.id.ibt_c1})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ibt_c1:
                 Intent intent = new Intent(getActivity(), FMPlayActivity.class);
                 intent.putExtra("url", "http://142.4.216.91:8280/");
                 getContext().startActivity(intent);
-                break;
-            case R.id.ibt_c7:
-                startActivity(new Intent(getContext() , LoginActivity.class));
                 break;
         }
     }

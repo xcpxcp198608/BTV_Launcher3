@@ -44,6 +44,7 @@
         <activity android:name=".Activity.UserManual1Activity"/>
         <activity android:name=".Activity.LoginActivity"
             android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".Activity.LoginSplashActivity"/>
         <activity android:name=".Activity.RegisterActivity"
             android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".Activity.Pinentry1Activity"/>
