@@ -30,7 +30,7 @@ import okio.BufferedSink;
 public class UploadTimeData {
 
     public void upload(UserDataInfo userDataInfo){
-        OkMaster.get(F.url.upload_data)
+        OkMaster.post(F.url.upload_data)
                 .parames("userData.userName",userDataInfo.getUserName())
                 .parames("userData.country",userDataInfo.getCountry())
                 .parames("userData.city",userDataInfo.getCity())

@@ -48,6 +48,7 @@ public class Result {
     private int code;
     private String status;
     private int count;
+    private String token;
 
     public int getCode() {
         return code;
@@ -73,12 +74,21 @@ public class Result {
         this.count = count;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     @Override
     public String toString() {
         return "Result{" +
                 "code=" + code +
                 ", status='" + status + '\'' +
                 ", count=" + count +
+                ", token='" + token + '\'' +
                 '}';
     }
 }

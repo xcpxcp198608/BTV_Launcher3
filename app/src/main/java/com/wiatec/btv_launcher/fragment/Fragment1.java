@@ -276,7 +276,8 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         switch (view.getId()) {
             case R.id.ibt_btv:
                 String userName = (String) SPUtils.get(Application.getContext() , "userName" ,"");
-                if(TextUtils.isEmpty(userName)){
+                String token = (String) SPUtils.get(Application.getContext() , "token" ,"");
+                if(TextUtils.isEmpty(userName) || TextUtils.isEmpty(token)){
                     startActivity(new Intent(getContext() , LoginActivity.class));
                 }else {
                     if (ApkCheck.isApkInstalled(getContext(), F.package_name.btv)) {
@@ -297,7 +298,8 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 break;
             case R.id.ibt_market:
                 userName = (String) SPUtils.get(Application.getContext() , "userName" ,"");
-                if(TextUtils.isEmpty(userName)){
+                token = (String) SPUtils.get(Application.getContext() , "token" ,"");
+                if(TextUtils.isEmpty(userName) || TextUtils.isEmpty(token)){
                     startActivity(new Intent(getContext() , LoginActivity.class));
                 }else {
                     if (ApkCheck.isApkInstalled(getContext(), F.package_name.market)) {
