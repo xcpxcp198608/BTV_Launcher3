@@ -23,6 +23,17 @@
             android:textSize="22sp"
             android:layout_marginTop="10dp"
             android:textColorHint="@color/colorItemGrayBlue"
+            android:id="@+id/et_email"
+            android:hint="@string/email"
+            android:textColor="@color/colorWhite"
+            android:background="@color/colorBTV"
+            android:layout_width="350dp"
+            android:layout_height="50dp" />
+
+        <EditText
+            android:textSize="22sp"
+            android:layout_marginTop="10dp"
+            android:textColorHint="@color/colorItemGrayBlue"
             android:id="@+id/et_password"
             android:inputType="textPassword"
             android:hint="@string/input_password"
@@ -39,17 +50,6 @@
             android:inputType="textPassword"
             android:textColor="@color/colorWhite"
             android:hint="@string/input_password"
-            android:background="@color/colorBTV"
-            android:layout_width="350dp"
-            android:layout_height="50dp" />
-
-        <EditText
-            android:textSize="22sp"
-            android:layout_marginTop="10dp"
-            android:textColorHint="@color/colorItemGrayBlue"
-            android:id="@+id/et_email"
-            android:hint="@string/email"
-            android:textColor="@color/colorWhite"
             android:background="@color/colorBTV"
             android:layout_width="350dp"
             android:layout_height="50dp" />
