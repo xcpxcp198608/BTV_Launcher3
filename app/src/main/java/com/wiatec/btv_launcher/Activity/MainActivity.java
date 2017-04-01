@@ -29,6 +29,7 @@ import android.widget.TextView;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.bean.DeviceInfo;
+import com.wiatec.btv_launcher.custom_view.RollTextView;
 import com.wiatec.btv_launcher.receiver.OnNetworkStatusListener;
 import com.wiatec.btv_launcher.receiver.OnWifiStatusListener;
 import com.wiatec.btv_launcher.R;
@@ -77,7 +78,7 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
     @BindView(R.id.tv_date)
     TextView tv_Date;
     @BindView(R.id.tv_message)
-    TextView tv_Message;
+    RollTextView tv_Message;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
     @BindView(R.id.iv_weather)
@@ -149,6 +150,9 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
         isStartLoadRss = false;
         if(rssSubscription != null){
             rssSubscription.unsubscribe();
+        }
+        if(tv_Message != null){
+            tv_Message.stop();
         }
     }
 
@@ -241,33 +245,36 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
         if(list ==null){
             return;
         }
-        if(isStartLoadRss){
+        tv_Message.setData(list);
+        tv_Message.setVisibility(View.VISIBLE);
+//        if(isStartLoadRss){
+//
+//        }else {
+//            isStartLoadRss = true;
+//            rssSubscription = Observable.interval(6, TimeUnit.SECONDS)
+//                    .subscribeOn(Schedulers.io())
+//                    .take(list.size())
+//                    .repeat()
+//                    .map(new Func1<Long, Message1Info>() {
+//                        @Override
+//                        public Message1Info call(Long l) {
+//                            return list.get(l.intValue());
+//                        }
+//                    })
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe(new Action1<Message1Info>() {
+//                        @Override
+//                        public void call(Message1Info message1Info) {
+//                            if (message1Info == null) {
+//                                return;
+//                            }
+//                            tv_Message.setVisibility(View.VISIBLE);
+//                            //tv_Message.setTextColor(Color.rgb(message1Info.getColorR(), message1Info.getColorG(), message1Info.getColorB()));
+//                            tv_Message.setText("  " + message1Info.getContent());
+//                        }
+//                    });
+//        }
 
-        }else {
-            isStartLoadRss = true;
-            rssSubscription = Observable.interval(6, TimeUnit.SECONDS)
-                    .subscribeOn(Schedulers.io())
-                    .take(list.size())
-                    .repeat()
-                    .map(new Func1<Long, Message1Info>() {
-                        @Override
-                        public Message1Info call(Long l) {
-                            return list.get(l.intValue());
-                        }
-                    })
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<Message1Info>() {
-                        @Override
-                        public void call(Message1Info message1Info) {
-                            if (message1Info == null) {
-                                return;
-                            }
-                            tv_Message.setVisibility(View.VISIBLE);
-                            //tv_Message.setTextColor(Color.rgb(message1Info.getColorR(), message1Info.getColorG(), message1Info.getColorB()));
-                            tv_Message.setText("  " + message1Info.getContent());
-                        }
-                    });
-        }
     }
 
     @Override

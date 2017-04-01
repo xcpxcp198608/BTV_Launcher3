@@ -5,10 +5,8 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
-import android.widget.TextView;
 
 import com.wiatec.btv_launcher.bean.Message1Info;
 
@@ -45,7 +43,6 @@ public class RollTextView extends AppCompatTextView {
         start();
     }
 
-    private RollHandler rollHandler = new RollHandler(this);
     private final static class RollHandler extends Handler{
         private WeakReference<RollTextView> weakReference;
 
@@ -57,17 +54,19 @@ public class RollTextView extends AppCompatTextView {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             RollTextView rollTextView = weakReference.get();
-            int current = rollTextView.currentItem ++;
-            if(current >= rollTextView.list.size()){
-                current = 0;
+            rollTextView.currentItem ++;
+            if(rollTextView.currentItem >= rollTextView.list.size()){
+                rollTextView.currentItem = 0;
             }
             if(rollTextView.list != null && rollTextView.list.size() >0){
-                Message1Info message1Info = rollTextView.list.get(current);
-                rollTextView.setText(message1Info.getContent());
+                Message1Info message1Info = rollTextView.list.get(rollTextView.currentItem);
+                //Logger.d(message1Info.toString());
+                rollTextView.setText(" "+message1Info.getContent());
                 rollTextView.setTextColor(Color.rgb(message1Info.getColorR(),message1Info.getColorR() , message1Info.getColorB()));
             }
         }
     }
+    private RollHandler rollHandler = new RollHandler(this);
 
     private static class RollTask extends TimerTask {
         private WeakReference<RollTextView> weakReference;
@@ -92,9 +91,10 @@ public class RollTextView extends AppCompatTextView {
         }
         if(mTimer != null){
             mTimer.cancel();
+            mTimer = null;
         }
         mTimer = new Timer();
-        mTimer.schedule(new RollTask(this) ,interval,interval);
+        mTimer.schedule(new RollTask(this) ,0,interval);
     }
 
     public void stop() {

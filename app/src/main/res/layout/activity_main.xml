@@ -87,10 +87,9 @@
         android:id="@+id/rl_message"
         android:layout_width="match_parent"
         android:layout_height="35dp">
-        <TextView
+        <com.wiatec.btv_launcher.custom_view.RollTextView
             android:id="@+id/tv_message"
             android:drawableLeft="@drawable/message1_sp_icon"
-            android:text="  www.legacy.direct"
             android:textSize="26sp"
             android:singleLine="true"
             android:ellipsize="marquee"
