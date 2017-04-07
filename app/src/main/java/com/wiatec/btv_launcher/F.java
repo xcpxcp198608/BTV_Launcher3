@@ -33,6 +33,7 @@ public final class F {
         public static final String login="http://appota.gobeyondtv.co:8080/launcher/user/login";
         public static final String register="http://appota.gobeyondtv.co:8080/launcher/user/register";
         public static final String login_repeat_check="http://appota.gobeyondtv.co:8080/launcher/user/check";
+        public static final String level_check="http://appota.gobeyondtv.co:8080/launcher/user/check_level";
         public static final String upload_data="http://appota.gobeyondtv.co:8080/launcher/userdata/upload";
     }
 

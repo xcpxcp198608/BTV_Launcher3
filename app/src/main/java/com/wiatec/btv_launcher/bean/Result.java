@@ -45,6 +45,9 @@ public class Result {
     public static final int CODE_EMAIL_CONFIRM_ERROR = 112;
     public static final String STATUS_EMAIL_CONFIRM_ERROR = "Email confirm failure";
 
+    public static final int CODE_LEVEL_ERROR = 113;
+    public static final String STATUS_LEVEL_ERROR = "user level error";
+
     private int code;
     private String status;
     private int count;

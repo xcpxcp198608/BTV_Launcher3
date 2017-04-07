@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.jude.rollviewpager.RollPagerView;
 import com.wiatec.btv_launcher.Activity.CloudImageFullScreen1Activity;
 import com.wiatec.btv_launcher.Activity.LoginActivity;
+import com.wiatec.btv_launcher.Activity.LoginSplashActivity;
 import com.wiatec.btv_launcher.Activity.MainActivity;
 import com.wiatec.btv_launcher.Activity.MenuActivity;
 import com.wiatec.btv_launcher.Activity.Message1Activity;
@@ -276,21 +277,12 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ibt_btv:
-                String userName = (String) SPUtils.get(Application.getContext() , "userName" ,"");
-                String token = (String) SPUtils.get(Application.getContext() , "token" ,"");
-                if(TextUtils.isEmpty(userName) || TextUtils.isEmpty(token)){
-                    startActivity(new Intent(getContext() , LoginActivity.class));
-                }else {
-//                    if (ApkCheck.isApkInstalled(getContext(), F.package_name.btv)) {
-//                        ApkLaunch.launchApkByPackageName(getContext(), F.package_name.btv);
-//                    }
-                    Intent intent = new Intent(getContext() , PlayAdActivity.class);
-                    intent.putExtra("packageName" , F.package_name.btv);
-                    startActivity(intent);
-                }
+                Intent intent = new Intent(getContext() , LoginSplashActivity.class);
+                intent.putExtra("packageName" , F.package_name.btv);
+                startActivity(intent);
                 break;
             case R.id.ibt_user_guide:
-                startActivity(new Intent(getContext(), UserManual1Activity.class));
+                startActivity(new Intent(getContext() , UserManual1Activity.class));
                 break;
             case R.id.ibt_setting:
                 if (ApkCheck.isApkInstalled(getContext(), F.package_name.setting)) {
@@ -301,15 +293,9 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 startActivity(new Intent(getContext(), MenuActivity.class));
                 break;
             case R.id.ibt_market:
-                userName = (String) SPUtils.get(Application.getContext() , "userName" ,"");
-                token = (String) SPUtils.get(Application.getContext() , "token" ,"");
-                if(TextUtils.isEmpty(userName) || TextUtils.isEmpty(token)){
-                    startActivity(new Intent(getContext() , LoginActivity.class));
-                }else {
-                    if (ApkCheck.isApkInstalled(getContext(), F.package_name.market)) {
-                        ApkLaunch.launchApkByPackageName(getContext(), F.package_name.market);
-                    }
-                }
+                Intent intent1 = new Intent(getContext() , LoginSplashActivity.class);
+                intent1.putExtra("packageName" , F.package_name.market);
+                startActivity(intent1);
                 break;
             case R.id.ibt_anti_virus:
                 startActivity(new Intent(getContext(), Opportunity1Activity.class));
@@ -324,16 +310,16 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 break;
             case R.id.fl_video:
                 if(currentVideoInfo != null){
-                    Intent intent1 = new Intent(getContext() , PlayActivity.class);
-                    intent1.putExtra("url" , currentVideoInfo.getUrl());
-                    startActivity(intent1);
+                    Intent intent2 = new Intent(getContext() , PlayActivity.class);
+                    intent2.putExtra("url" , currentVideoInfo.getUrl());
+                    startActivity(intent2);
                 }
                 break;
             case R.id.ibt_full_screen:
                 if(isCloudImagePlaying){
-                    Intent intent1 = new Intent(getContext() , CloudImageFullScreen1Activity.class);
-                    intent1.putExtra("cloudImagePosition",ibt_LdCloud.getCurrentPosition());
-                    startActivity(intent1);
+                    Intent intent3 = new Intent(getContext() , CloudImageFullScreen1Activity.class);
+                    intent3.putExtra("cloudImagePosition",ibt_LdCloud.getCurrentPosition());
+                    startActivity(intent3);
                 }
                 break;
             case R.id.ibt_7:
