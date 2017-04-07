@@ -28,6 +28,7 @@ import android.widget.TextView;
 
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.bean.DeviceInfo;
 import com.wiatec.btv_launcher.custom_view.RollTextView;
 import com.wiatec.btv_launcher.receiver.OnNetworkStatusListener;
@@ -233,7 +234,9 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
     public void loadAdVideo(VideoInfo videoInfo) {
         if (!FileCheck.isFileExists(F.path.download, "btvad.mp4")) {
             presenter.downloadAdVideo("btvad.mp4" ,videoInfo.getUrl());
+//            Logger.d("video not exists start download");
         } else if (!FileCheck.isFileIntact(F.path.download, "btvad.mp4", videoInfo.getMd5())) {
+//            Logger.d("video not intact start download");
             presenter.downloadAdVideo("btvad.mp4" ,videoInfo.getUrl());
         } else {
             //Logger.d("video no need update");

@@ -26,6 +26,7 @@ import com.wiatec.btv_launcher.Activity.MenuActivity;
 import com.wiatec.btv_launcher.Activity.Message1Activity;
 import com.wiatec.btv_launcher.Activity.Opportunity1Activity;
 import com.wiatec.btv_launcher.Activity.PlayActivity;
+import com.wiatec.btv_launcher.Activity.PlayAdActivity;
 import com.wiatec.btv_launcher.Activity.UserManual1Activity;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
@@ -280,9 +281,12 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 if(TextUtils.isEmpty(userName) || TextUtils.isEmpty(token)){
                     startActivity(new Intent(getContext() , LoginActivity.class));
                 }else {
-                    if (ApkCheck.isApkInstalled(getContext(), F.package_name.btv)) {
-                        ApkLaunch.launchApkByPackageName(getContext(), F.package_name.btv);
-                    }
+//                    if (ApkCheck.isApkInstalled(getContext(), F.package_name.btv)) {
+//                        ApkLaunch.launchApkByPackageName(getContext(), F.package_name.btv);
+//                    }
+                    Intent intent = new Intent(getContext() , PlayAdActivity.class);
+                    intent.putExtra("packageName" , F.package_name.btv);
+                    startActivity(intent);
                 }
                 break;
             case R.id.ibt_user_guide:
