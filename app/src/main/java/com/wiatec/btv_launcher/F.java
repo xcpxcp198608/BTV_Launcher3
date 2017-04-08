@@ -63,5 +63,6 @@ public final class F {
         public static final String joinme = "com.logmein.joinme";
         public static final String spotify = "com.spotify.tv.android";
         public static final String happy_chick = "com.xiaoji.tvbox";
+        public static final String bplay = "com.wiatec.bplay";
     }
 }

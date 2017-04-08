@@ -69,6 +69,7 @@ public class AppSelectActivity extends BaseActivity {
                                 }else {
                                     checkBox.setChecked(true);
                                     installedAppDao.updateData(installedApp ,type);
+                                    finish();
                                 }
 
                             }

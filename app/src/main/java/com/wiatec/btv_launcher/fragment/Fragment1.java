@@ -19,7 +19,9 @@ import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.jude.rollviewpager.RollPagerView;
+import com.wiatec.btv_launcher.Activity.AppSelectActivity;
 import com.wiatec.btv_launcher.Activity.CloudImageFullScreen1Activity;
+import com.wiatec.btv_launcher.Activity.FMPlayActivity;
 import com.wiatec.btv_launcher.Activity.LoginActivity;
 import com.wiatec.btv_launcher.Activity.LoginSplashActivity;
 import com.wiatec.btv_launcher.Activity.MainActivity;
@@ -28,10 +30,13 @@ import com.wiatec.btv_launcher.Activity.Message1Activity;
 import com.wiatec.btv_launcher.Activity.Opportunity1Activity;
 import com.wiatec.btv_launcher.Activity.PlayActivity;
 import com.wiatec.btv_launcher.Activity.PlayAdActivity;
+import com.wiatec.btv_launcher.Activity.Splash1Activity;
 import com.wiatec.btv_launcher.Activity.UserManual1Activity;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.SQL.InstalledAppDao;
 import com.wiatec.btv_launcher.Utils.SPUtils;
+import com.wiatec.btv_launcher.bean.InstalledApp;
 import com.wiatec.btv_launcher.bean.UserDataInfo;
 import com.wiatec.btv_launcher.custom_view.MultiImage;
 import com.wiatec.btv_launcher.custom_view.RollOverView;
@@ -94,9 +99,11 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     @BindView(R.id.ibt_7)
     FrameLayout ibt7;
     @BindView(R.id.ibt_8)
-    FrameLayout ibt8;
+    ImageButton ibt8;
     @BindView(R.id.ibt_9)
     ImageButton ibt9;
+    @BindView(R.id.ibt_eufonico)
+    ImageButton ibtEufonico;
     @BindView(R.id.vv_main)
     VideoView vv_Main;
     @BindView(R.id.ibt_ld_cloud)
@@ -122,6 +129,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     private long holdTime;
     private UserDataInfo userDataInfo;
     private MainActivity activity;
+    private InstalledAppDao installedAppDao;
 
     @Nullable
     @Override
@@ -133,6 +141,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         getContext().registerReceiver(networkStatusReceiver, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
         messageDao = MessageDao.getInstance(getContext());
         userDataInfo = new UserDataInfo();
+        installedAppDao = InstalledAppDao.getInstance(Application.getContext());
         return view;
     }
 
@@ -199,6 +208,8 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         super.onStart();
         setZoom();
         ibt_LdCloud.setNextFocusDownId(R.id.ibt_full_screen);
+        showCustomShortCut(ibt8 , "ibt8");
+        showCustomShortCut(ibt9 , "ibt9");
     }
 
     @Override
@@ -273,7 +284,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
 
     @OnClick({R.id.ibt_btv, R.id.ibt_user_guide, R.id.ibt_setting, R.id.ibt_apps, R.id.ibt_market,
             R.id.ibt_anti_virus, R.id.ibt_privacy, R.id.ibt_ld_cloud ,R.id.fl_video ,R.id.ibt_full_screen,
-            R.id.ibt_7,R.id.ibt_8,R.id.ibt_9})
+            R.id.ibt_7 , R.id.ibt_eufonico})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ibt_btv:
@@ -293,9 +304,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 startActivity(new Intent(getContext(), MenuActivity.class));
                 break;
             case R.id.ibt_market:
-                Intent intent1 = new Intent(getContext() , LoginSplashActivity.class);
-                intent1.putExtra("packageName" , F.package_name.market);
-                startActivity(intent1);
+                presenter.launchApp(F.package_name.market);
                 break;
             case R.id.ibt_anti_virus:
                 startActivity(new Intent(getContext(), Opportunity1Activity.class));
@@ -309,11 +318,12 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 }
                 break;
             case R.id.fl_video:
-                if(currentVideoInfo != null){
-                    Intent intent2 = new Intent(getContext() , PlayActivity.class);
-                    intent2.putExtra("url" , currentVideoInfo.getUrl());
-                    startActivity(intent2);
-                }
+//                if(currentVideoInfo != null){
+//                    Intent intent2 = new Intent(getContext() , PlayActivity.class);
+//                    intent2.putExtra("url" , currentVideoInfo.getUrl());
+//                    startActivity(intent2);
+//                }
+                presenter.launchApp(F.package_name.bplay);
                 break;
             case R.id.ibt_full_screen:
                 if(isCloudImagePlaying){
@@ -330,25 +340,66 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                     ApkLaunch.launchApkByPackageName(getContext(), F.package_name.market);
                 }
                 break;
-            case R.id.ibt_8:
-                if (ApkCheck.isApkInstalled(getContext(), F.package_name.happy_chick)) {
-                    ApkLaunch.launchApkByPackageName(getContext(), F.package_name.happy_chick);
-                }else{
-                    Toast.makeText(getContext() , getString(R.string.download_guide)+" HappyChick",Toast.LENGTH_SHORT).show();
-                    ApkLaunch.launchApkByPackageName(getContext(), F.package_name.market);
-                }
-                break;
-            case R.id.ibt_9:
-                if (ApkCheck.isApkInstalled(getContext(), F.package_name.spotify)) {
-                    ApkLaunch.launchApkByPackageName(getContext(), F.package_name.spotify);
-                }else{
-                    Toast.makeText(getContext() , getString(R.string.download_guide)+" Spotify",Toast.LENGTH_SHORT).show();
-                    ApkLaunch.launchApkByPackageName(getContext(), F.package_name.market);
-                }
+            case R.id.ibt_eufonico:
+                Intent intent4 = new Intent(getActivity(), FMPlayActivity.class);
+                intent4.putExtra("url", "http://142.4.216.91:8280/");
+                getContext().startActivity(intent4);
                 break;
             default:
                 break;
         }
+    }
+
+    private void showCustomShortCut(final ImageButton imageButton, final String type) {
+        Observable.just(type)
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<String, InstalledApp>() {
+                    @Override
+                    public InstalledApp call(String s) {
+                        List<InstalledApp> list = installedAppDao.queryDataByType(s);
+                        if (list.size() == 1) {
+                            return installedAppDao.queryDataByType(s).get(0);
+                        } else {
+                            return null;
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<InstalledApp>() {
+                    @Override
+                    public void call(final InstalledApp installedApp) {
+                        if (installedApp != null) {
+                            imageButton.setImageDrawable(ApkCheck.getInstalledApkIcon(getContext(), installedApp.getAppPackageName()));
+                            imageButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(getActivity(), Splash1Activity.class);
+                                    intent.putExtra("packageName", installedApp.getAppPackageName());
+                                    startActivity(intent);
+                                }
+                            });
+                            imageButton.setOnLongClickListener(new View.OnLongClickListener() {
+                                @Override
+                                public boolean onLongClick(View v) {
+                                    Intent intent = new Intent(getContext(), AppSelectActivity.class);
+                                    intent.putExtra("type", type);
+                                    startActivity(intent);
+                                    return true;
+                                }
+                            });
+                        } else {
+                            imageButton.setImageResource(R.drawable.add1);
+                            imageButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(getContext(), AppSelectActivity.class);
+                                    intent.putExtra("type", type);
+                                    startActivity(intent);
+                                }
+                            });
+                        }
+                    }
+                });
     }
 
     @Override
@@ -533,8 +584,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         ibt_LdCloud.setOnFocusChangeListener(this);
         ibt_FullScreen.setOnFocusChangeListener(this);
         ibt7.setOnFocusChangeListener(this);
-        ibt8.setOnFocusChangeListener(this);
-        ibt9.setOnFocusChangeListener(this);
     }
 
     @Override

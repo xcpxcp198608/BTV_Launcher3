@@ -48,5 +48,5 @@
     <string name="email_input_error">Email input error</string>
     <string name="register_success">Congratulations !register success , please go to your email confirm then login you account</string>
     <string name="login_repeat">Sorry, your account login error ,please login again</string>
-    <string name="account_error">Your account have error ,please contact Legacy Direct</string>
+    <string name="account_error">Please contact support@legacy.direct or text to 9499889000 to inquire about this issue.</string>
 </resources>

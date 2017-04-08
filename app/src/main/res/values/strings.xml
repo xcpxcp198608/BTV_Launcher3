@@ -38,7 +38,7 @@
     <string name="no_support">Do not support this device</string>
     <string name="legacy_institute">LEGACY\nINSTITUTE</string>
     <string name="game1">GAME</string>
-    <string name="download_guide">please go to app market download and install </string>
+    <string name="download_guide">Please go to app market download and install </string>
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="create_account">Create an account now</string>
@@ -48,5 +48,5 @@
     <string name="email_input_error">Email input error</string>
     <string name="register_success">Congratulations !register success , please go to your email confirm then login you account</string>
     <string name="login_repeat">Sorry, your account login error ,please login again</string>
-    <string name="account_error">Your account have error ,please contact Legacy Direct</string>
+    <string name="account_error">Please contact support@legacy.direct or text to 9499889000 to inquire about this issue.</string>
 </resources>

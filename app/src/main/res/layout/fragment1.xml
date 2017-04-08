@@ -17,339 +17,366 @@
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_margin="3dp"
-            android:background="@drawable/item_main_bg"
-            android:orientation="vertical"
-            android:layout_weight="4.1"
             android:layout_width="0dp"
-            android:layout_height="match_parent">
-
-            <FrameLayout
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="0dp">
-
-                <ImageButton
-                    android:padding="3dp"
-                    android:id="@+id/ibt_btv"
-                    android:cropToPadding="true"
-                    android:background="@drawable/item_btv_bg"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/btv_icon_1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </FrameLayout>
-
-            <ImageView
-                android:background="@color/colorBlack"
-                android:layout_width="match_parent"
-                android:layout_height="1dp" />
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:layout_weight="4.1"
+            android:background="@drawable/item_main_bg"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:orientation="vertical"
-                android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="0dp">
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_weight="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp">
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                     <ImageButton
-                        android:id="@+id/ibt_user_guide"
-                        android:padding="20dp"
+                        android:id="@+id/ibt_btv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:background="@drawable/item_btv_bg"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/user_guide_icon_4"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent" />
+                        android:cropToPadding="true"
+                        android:padding="3dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/btv_icon_1" />
+
+                </FrameLayout>
+
+                <ImageView
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/black" />
+
+                <ImageButton
+                    android:id="@+id/ibt_ldsupport"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/item_btv_bg"
+                    android:cropToPadding="true"
+                    android:padding="3dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/legacysupport1" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:id="@+id/ibt_anti_virus"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/item_btv_bg"
+                    android:padding="20dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ld_opportunity_12" />
+
+                <ImageView
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/black" />
+
+                <FrameLayout
+                    android:id="@+id/ibt_7"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@drawable/item_btv_bg"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/legacy_institute"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
 
                     <ImageView
-                        android:background="@color/colorBlack"
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent" />
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:layout_gravity="right"
+                        android:background="@color/colorTranslucent"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/joinme_144" />
+
+                </FrameLayout>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:id="@+id/ibt_market"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/item_btv_bg"
+                    android:padding="20dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/market_icon" />
+
+                <ImageView
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/black" />
+
+                <ImageButton
+                    android:id="@+id/ibt_apps"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/item_btv_bg"
+                    android:padding="20dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/apps_icon_3" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.5"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
 
                     <ImageButton
                         android:id="@+id/ibt_setting"
-                        android:padding="20dp"
-                        android:background="@drawable/item_setting_bg"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/setting_icon"
-                        android:layout_weight="1"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/item_btv_bg"
+                        android:padding="20dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/setting_icon" />
 
                     <ImageView
-                        android:background="@color/colorBlack"
                         android:layout_width="1dp"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:background="@android:color/black" />
 
                     <ImageButton
-                        android:padding="20dp"
-                        android:id="@+id/ibt_apps"
-                        android:background="@drawable/item_btv_bg"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/apps_icon_3"
-                        android:layout_weight="1"
+                        android:id="@+id/ibt_user_guide"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/item_btv_bg"
+                        android:padding="20dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/user_guide_icon_4" />
 
                 </LinearLayout>
 
                 <ImageView
-                    android:background="@color/colorBlack"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp" />
+                    android:layout_height="1dp"
+                    android:background="@android:color/black" />
 
                 <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_weight="1"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp">
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
 
                     <ImageButton
-                        android:id="@+id/ibt_market"
-                        android:padding="20dp"
+                        android:scaleType="fitCenter"
+                        android:id="@+id/ibt_eufonico"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:background="@drawable/item_message_bg"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/market_icon"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent" />
+                        android:src="@drawable/euf1" />
 
                     <ImageView
-                        android:background="@color/colorBlack"
                         android:layout_width="1dp"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:background="@android:color/black" />
 
                     <ImageButton
-                        android:id="@+id/ibt_anti_virus"
-                        android:padding="20dp"
-                        android:background="@drawable/item_btv_bg"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/ld_opportunity_12"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent" />
-
-                    <ImageView
-                        android:background="@color/colorBlack"
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent" />
-
-                    <FrameLayout
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent">
-
-                        <ImageButton
-                            android:id="@+id/ibt_privacy"
-                            android:padding="20dp"
-                            android:background="@drawable/item_message_bg"
-                            android:scaleType="centerInside"
-                            android:src="@drawable/message_icon"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
-
-                        <TextView
-                            android:id="@+id/tv_message_count"
-                            android:layout_marginRight="20dp"
-                            android:layout_marginTop="5dp"
-                            android:gravity="right|top"
-                            android:textStyle="bold"
-                            android:textSize="25sp"
-                            android:textColor="@color/colorRed"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
-
-                    </FrameLayout>
-
-                </LinearLayout>
-
-                <ImageView
-                    android:background="@color/colorBlack"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp" />
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_weight="0.5"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp">
-
-                    <FrameLayout
-                        android:id="@+id/ibt_7"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
+                        android:cropToPadding="true"
+                        android:scaleType="fitCenter"
                         android:padding="5dp"
-                        android:background="@drawable/item_dark_blue_bg"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:gravity="left"
-                            android:textSize="17sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/colorWhite"
-                            android:text="@string/legacy_institute"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
-
-                        <ImageView
-                            android:layout_gravity="right"
-                            android:background="@color/colorTranslucent"
-                            android:scaleType="centerInside"
-                            android:src="@drawable/joinme_144"
-                            android:layout_width="33dp"
-                            android:layout_height="33dp" />
-
-                    </FrameLayout>
-
-                    <ImageView
-                        android:background="@color/colorBlack"
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent" />
-
-                    <FrameLayout
-                        android:padding="5dp"
-                        android:background="@drawable/item_dark_blue_bg"
                         android:id="@+id/ibt_8"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:layout_weight="1"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:gravity="center"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/colorWhite"
-                            android:text="@string/game1"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
-
-                        <ImageView
-                            android:layout_gravity="right"
-                            android:scaleType="centerInside"
-                            android:src="@drawable/happychick_144"
-                            android:layout_width="33dp"
-                            android:layout_height="33dp"/>
-
-                    </FrameLayout>
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/item_message_bg"
+                        android:src="@drawable/add4" />
 
                     <ImageView
-                        android:background="@color/colorBlack"
                         android:layout_width="1dp"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:background="@android:color/black" />
 
                     <ImageButton
+                        android:cropToPadding="true"
+                        android:scaleType="fitCenter"
+                        android:padding="5dp"
                         android:id="@+id/ibt_9"
-                        android:padding="10dp"
-                        android:background="@drawable/item_dark_blue_bg"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/spotify_1"
-                        android:layout_weight="1"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/item_message_bg"
+                        android:src="@drawable/add4" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:visibility="gone">
+
+                <ImageButton
+                    android:id="@+id/ibt_privacy"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/item_message_bg"
+                    android:padding="20dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/message_icon" />
+
+                <TextView
+                    android:id="@+id/tv_message_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="right|top"
+                    android:textColor="@color/colorRed"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+            </FrameLayout>
+
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_weight="2.8"
             android:layout_width="0dp"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_weight="2.8"
+            android:orientation="vertical">
 
             <com.jude.rollviewpager.RollPagerView
-                android:layout_gravity="center"
-                app:rollviewpager_play_delay="6000"
                 android:id="@+id/rpv_main"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_weight="2"
+                android:background="@drawable/bg_roll_image"
                 android:clickable="false"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-                android:background="@drawable/bg_roll_image"
-                android:layout_weight="2"
-                android:layout_height="0dp"
-                android:layout_width="match_parent"/>
+                app:rollviewpager_play_delay="6000" />
 
             <FrameLayout
-                android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="0dp">
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:visibility="gone">
+
                 <ImageButton
-                    android:padding="3dp"
                     android:id="@+id/ibt_ld_store"
-                    android:cropToPadding="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:adjustViewBounds="true"
                     android:background="@drawable/item_ldstore_bg"
-                    android:src="@drawable/ld_store_icon"
+                    android:cropToPadding="true"
+                    android:padding="3dp"
                     android:scaleType="fitCenter"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:src="@drawable/ld_store_icon" />
             </FrameLayout>
 
             <com.wiatec.btv_launcher.custom_view.RollOverView
-                android:paddingBottom="3dp"
-                android:background="@drawable/bg_roll_over_image"
                 android:id="@+id/roll_over_view"
-                android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="0dp" />
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:background="@drawable/bg_roll_over_image"
+                android:paddingBottom="3dp" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_weight="4.5"
             android:layout_width="0dp"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_weight="4.5"
+            android:orientation="vertical">
+
             <FrameLayout
                 android:id="@+id/fl_video"
-                android:padding="3dp"
-                android:focusable="true"
-                android:clickable="true"
-                android:focusableInTouchMode="true"
-                android:background="@drawable/item_black_bg"
                 android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:layout_height="0dp">
+                android:background="@drawable/item_black_bg"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:padding="3dp">
+
                 <VideoView
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:layout_gravity="center"
                     android:id="@+id/vv_main"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false" />
 
                 <ImageView
-                    android:scaleType="centerInside"
-                    android:layout_gravity="right"
-                    android:src="@drawable/shuiyin"
                     android:layout_width="100dp"
-                    android:layout_height="50dp" />
+                    android:layout_height="50dp"
+                    android:layout_gravity="right"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/shuiyin" />
 
             </FrameLayout>
 
             <FrameLayout
-                android:background="@drawable/bg_cloud"
-                android:orientation="horizontal"
-                android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="0dp">
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_cloud"
+                android:orientation="horizontal">
 
                 <com.wiatec.btv_launcher.custom_view.MultiImage
                     android:id="@+id/ibt_ld_cloud"
@@ -363,21 +390,21 @@
                     android:src="@drawable/ld_cloud_icon_3" />
 
                 <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="right"
                     android:layout_margin="5dp"
                     android:scaleType="centerCrop"
-                    android:layout_gravity="right"
-                    android:src="@drawable/cloud_shuiyin"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp" />
+                    android:src="@drawable/cloud_shuiyin" />
 
                 <ImageButton
                     android:id="@+id/ibt_full_screen"
-                    android:background="@drawable/full_screen"
-                    android:layout_margin="5dp"
-                    android:scaleType="centerInside"
-                    android:layout_gravity="bottom|right"
                     android:layout_width="50dp"
-                    android:layout_height="50dp" />
+                    android:layout_height="50dp"
+                    android:layout_gravity="bottom|right"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/full_screen"
+                    android:scaleType="centerInside" />
 
             </FrameLayout>
 
