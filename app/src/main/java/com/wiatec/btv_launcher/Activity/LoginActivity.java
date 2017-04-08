@@ -95,7 +95,4 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
             Toast.makeText(Application.getContext(), result.getStatus(), Toast.LENGTH_LONG).show();
         }
     }
-
-
-
 }

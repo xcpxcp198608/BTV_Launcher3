@@ -12,17 +12,8 @@
         android:orientation="horizontal"
         android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="10dp">
 
-        <ImageView
-            android:src="@drawable/point_white_1"
-            android:layout_width="10dp"
-            android:layout_height="10dp" />
-        <ImageView
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/point_gray_1"
-            android:layout_width="10dp"
-            android:layout_height="10dp" />
     </LinearLayout>
 
     <LinearLayout

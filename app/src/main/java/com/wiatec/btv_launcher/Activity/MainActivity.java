@@ -310,14 +310,14 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
         if (fragment1 == null) {
             fragment1 = new Fragment1();
         }
-        if (fragment2 == null) {
-            fragment2 = new Fragment2();
-        }
+//        if (fragment2 == null) {
+//            fragment2 = new Fragment2();
+//        }
         if (list == null) {
             list = new ArrayList<>();
         }
         list.add(fragment1);
-        list.add(fragment2);
+//        list.add(fragment2);
         viewPager.setAdapter(new FragmentAdapter(getSupportFragmentManager(), list));
     }
 
