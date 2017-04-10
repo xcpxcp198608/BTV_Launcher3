@@ -101,6 +101,7 @@
             android:layout_height="match_parent" />
 
         <TextView
+            android:id="@+id/tv_version"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:gravity="bottom"

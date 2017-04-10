@@ -30,6 +30,7 @@ public class FMPlayActivity extends BaseActivity {
     private MediaPlayer mediaPlayer;
     private String url;
     private ImageView ivLogo;
+    private ImageView ivEufonicoList;
     private VoiceSpectrumView vsvRadio;
     private ProgressBar progressBar;
     private Subscription subscription;
@@ -42,12 +43,14 @@ public class FMPlayActivity extends BaseActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON , WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_fm_play);
         ivLogo  = (ImageView) findViewById(R.id.iv_logo);
+        ivEufonicoList  = (ImageView) findViewById(R.id.iv_eufonico_list);
         vsvRadio = (VoiceSpectrumView) findViewById(R.id.vsv_radio);
         rollOverView = (RollOverView) findViewById(R.id.roll_over_view);
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         url = getIntent().getStringExtra("url");
         if("http://142.4.216.91:8280/".equals(url)){
             ivLogo.setImageResource(R.drawable.euf_big);
+            ivEufonicoList.setVisibility(View.VISIBLE);
         }else{
             ivLogo.setImageResource(R.drawable.btv);
         }

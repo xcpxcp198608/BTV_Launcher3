@@ -90,6 +90,8 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
     FrameLayout fl_Message;
     @BindView(R.id.tv_message_count)
     TextView tv_MessageCount;
+    @BindView(R.id.tv_version)
+    TextView tvVersion;
 
     private Fragment1 fragment1;
     private Fragment2 fragment2;
@@ -115,6 +117,7 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
         setContentView(R.layout.activity_main);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         ButterKnife.bind(this);
+        showVersion();
         initFragment();
         checkDevice();
         showTimeAndData();
@@ -396,5 +399,11 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
         AlarmManager alarmManager1 = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         long repeatTime1 = 5*60*1000;
         alarmManager1.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP ,startTime , repeatTime1 ,cloudPendingIntent);
+    }
+
+    private void showVersion() {
+        String s = ApkCheck.getInstalledApkVersionName(this , getPackageName());
+        s = s.substring(1 , s.length());
+        tvVersion.setText(getString(R.string.ui)+" "+s);
     }
 }

@@ -16,10 +16,16 @@
     <ImageView
         android:id="@+id/iv_logo"
         android:layout_marginBottom="10dp"
-        android:layout_weight="0.8"
+        android:layout_weight="0.5"
         android:layout_width="match_parent"
         android:layout_height="0dp" />
 
+    <ImageView
+        android:id="@+id/iv_eufonico_list"
+        android:visibility="gone"
+        android:background="@drawable/eufonico_list1"
+        android:layout_width="match_parent"
+        android:layout_height="160dp" />
 
     <FrameLayout
         android:layout_weight="1"

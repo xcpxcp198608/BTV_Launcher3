@@ -22,6 +22,7 @@ import com.jude.rollviewpager.RollPagerView;
 import com.wiatec.btv_launcher.Activity.AppSelectActivity;
 import com.wiatec.btv_launcher.Activity.CloudImageFullScreen1Activity;
 import com.wiatec.btv_launcher.Activity.FMPlayActivity;
+import com.wiatec.btv_launcher.Activity.LDSupportActivity;
 import com.wiatec.btv_launcher.Activity.LoginActivity;
 import com.wiatec.btv_launcher.Activity.LoginSplashActivity;
 import com.wiatec.btv_launcher.Activity.MainActivity;
@@ -104,6 +105,8 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     ImageButton ibt9;
     @BindView(R.id.ibt_eufonico)
     ImageButton ibtEufonico;
+    @BindView(R.id.ibt_ldsupport)
+    ImageButton ibtLDSupport;
     @BindView(R.id.vv_main)
     VideoView vv_Main;
     @BindView(R.id.ibt_ld_cloud)
@@ -284,7 +287,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
 
     @OnClick({R.id.ibt_btv, R.id.ibt_user_guide, R.id.ibt_setting, R.id.ibt_apps, R.id.ibt_market,
             R.id.ibt_anti_virus, R.id.ibt_privacy, R.id.ibt_ld_cloud ,R.id.fl_video ,R.id.ibt_full_screen,
-            R.id.ibt_7 , R.id.ibt_eufonico})
+            R.id.ibt_7 , R.id.ibt_eufonico , R.id.ibt_ldsupport})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ibt_btv:
@@ -344,6 +347,9 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 Intent intent4 = new Intent(getActivity(), FMPlayActivity.class);
                 intent4.putExtra("url", "http://142.4.216.91:8280/");
                 getContext().startActivity(intent4);
+                break;
+            case R.id.ibt_ldsupport:
+                startActivity(new Intent(getContext() , LDSupportActivity.class));
                 break;
             default:
                 break;
