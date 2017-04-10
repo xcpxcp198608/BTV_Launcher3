@@ -103,6 +103,8 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     ImageButton ibt8;
     @BindView(R.id.ibt_9)
     ImageButton ibt9;
+    @BindView(R.id.ibt_10)
+    ImageButton ibt10;
     @BindView(R.id.ibt_eufonico)
     ImageButton ibtEufonico;
     @BindView(R.id.ibt_ldsupport)
@@ -213,6 +215,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         ibt_LdCloud.setNextFocusDownId(R.id.ibt_full_screen);
         showCustomShortCut(ibt8 , "ibt8");
         showCustomShortCut(ibt9 , "ibt9");
+        showCustomShortCut(ibt10 , "ibt10");
     }
 
     @Override
@@ -590,6 +593,9 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         ibt_LdCloud.setOnFocusChangeListener(this);
         ibt_FullScreen.setOnFocusChangeListener(this);
         ibt7.setOnFocusChangeListener(this);
+        ibt8.setOnFocusChangeListener(this);
+        ibt9.setOnFocusChangeListener(this);
+        ibt10.setOnFocusChangeListener(this);
     }
 
     @Override
