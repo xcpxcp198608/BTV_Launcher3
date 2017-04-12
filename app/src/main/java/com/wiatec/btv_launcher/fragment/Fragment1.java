@@ -597,6 +597,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         ibt_LdCloud.setOnFocusChangeListener(this);
         ibt_FullScreen.setOnFocusChangeListener(this);
         ibtInstitute.setOnFocusChangeListener(this);
+        ibtEufonico.setOnFocusChangeListener(this);
         ibt8.setOnFocusChangeListener(this);
         ibt9.setOnFocusChangeListener(this);
         ibt10.setOnFocusChangeListener(this);
