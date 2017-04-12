@@ -46,7 +46,7 @@ public class CheckLogin implements Runnable {
         currentLoginCount = (int) SPUtils.get(Application.getContext() , "currentLoginCount" , 0);
         userName = (String) SPUtils.get(Application.getContext(),"userName" , "");
         if(TextUtils.isEmpty(userName)){
-            Logger.d("no userName do not execute check");
+            //Logger.d("no userName do not execute check");
             return;
         }
         if(currentLoginCount == 0){

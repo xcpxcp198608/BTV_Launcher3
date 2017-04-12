@@ -133,7 +133,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     private long exitTime;
     private long holdTime;
     private UserDataInfo userDataInfo;
-    private MainActivity activity;
     private InstalledAppDao installedAppDao;
     private Intent intent;
 
@@ -150,64 +149,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         installedAppDao = InstalledAppDao.getInstance(Application.getContext());
         intent = new Intent();
         return view;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        activity = (MainActivity) context;
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            isF1Visible = true;
-            if(!SystemConfig.isNetworkConnected(Application.getContext())){
-                return;
-            }
-            if (vv_Main != null && !vv_Main.isPlaying() && isF1Visible && !isVideoPlaying) {
-                presenter.loadVideo();
-            }
-            if(presenter != null){
-                presenter.loadImageData();
-                presenter.loadCloudData();
-            }
-            entryTime = System.currentTimeMillis();
-        } else {
-            isF1Visible = false;
-            if (vv_Main != null) {
-                vv_Main.stopPlayback();
-            }
-            if (videoSubscription != null) {
-                isVideoPlaying = false;
-                videoSubscription.unsubscribe();
-            }
-            if (messageSubscription != null) {
-                messageSubscription.unsubscribe();
-            }
-            if(userDataInfo != null && SystemConfig.isNetworkConnected(Application.getContext())){
-                exitTime = System.currentTimeMillis();
-                holdTime = exitTime - entryTime;
-                String eTime = new SimpleDateFormat("yy-MM-dd HH:mm:ss").format(new Date(exitTime));
-                userDataInfo.setExitTime(eTime);
-                userDataInfo.setStayTime(holdTime+"");
-                userDataInfo.setUserName((String) SPUtils.get(Application.getContext(),"userName" ,""));
-                userDataInfo.setMac((String) SPUtils.get(Application.getContext(),"mac" ,""));
-                userDataInfo.setCountry((String) SPUtils.get(Application.getContext(),"country" ,""));
-                userDataInfo.setCity((String) SPUtils.get(Application.getContext(),"city" ,""));
-                if(presenter != null && entryTime >0) {
-                    presenter.uploadHoldTime(userDataInfo);
-                }
-            }
-            if(rollOverView != null){
-                rollOverView.stop();
-            }
-            if(ibt_LdCloud!= null){
-                ibt_LdCloud.stop();
-            }
-            isCloudImagePlaying = false;
-        }
     }
 
     @Override
@@ -228,24 +169,26 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     @Override
     public void onResume() {
         super.onResume();
+        entryTime = System.currentTimeMillis();
+        checkMessageCount();
+
         if (!SystemConfig.isNetworkConnected(getContext())){
             return;
         }
-        if (vv_Main != null && !vv_Main.isPlaying() && isF1Visible && !isVideoPlaying) {
+        if (presenter != null && vv_Main != null && !vv_Main.isPlaying() && !isVideoPlaying) {
             presenter.loadVideo();
         }
-        if (presenter != null && isF1Visible) {
+        if (presenter != null) {
             presenter.loadImageData();
             presenter.loadCloudData();
         }
-        checkMessageCount();
-        entryTime = System.currentTimeMillis();
     }
 
     @Override
     public void onPause() {
         super.onPause();
         isVideoPlaying = false;
+        isCloudImagePlaying = false;
         if (vv_Main != null && vv_Main.isPlaying()) {
             vv_Main.stopPlayback();
         }
@@ -275,7 +218,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         if(ibt_LdCloud!= null){
             ibt_LdCloud.stop();
         }
-        isCloudImagePlaying = false;
     }
 
     @Override
@@ -326,11 +268,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 }
                 break;
             case R.id.fl_video:
-//                if(currentVideoInfo != null){
-//                    intent.setClass(getContext() , PlayActivity.class);
-//                    intent.putExtra("url" , currentVideoInfo.getUrl());
-//                    startActivity(intent);
-//                }
                 presenter.launchApp(F.package_name.bplay);
                 break;
             case R.id.ibt_full_screen:
@@ -534,9 +471,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         vv_Main.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
-                if (isF1Visible) {
-                    vv_Main.start();
-                }
+                vv_Main.start();
             }
         });
         vv_Main.setOnErrorListener(new MediaPlayer.OnErrorListener() {
@@ -570,12 +505,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
 
     @Override
     public void onConnected(boolean isConnected) {
-//        if (isConnected) {
-//            presenter.loadImageData();
-//            if(!isVideoPlaying) {
-//                presenter.loadVideo();
-//            }
-//        }
     }
 
     @Override

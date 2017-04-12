@@ -82,7 +82,7 @@ public class ApkCheck {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        Log.d("----px----" , apkVersionName);
+//        Log.d("----px----" , apkVersionName);
         return apkVersionName;
     }
 
