@@ -13,9 +13,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.text.Html;
 import android.view.KeyEvent;
@@ -38,7 +36,6 @@ import com.wiatec.btv_launcher.Utils.ApkCheck;
 import com.wiatec.btv_launcher.Utils.FileCheck;
 import com.wiatec.btv_launcher.Utils.SystemConfig;
 import com.wiatec.btv_launcher.WifiStatusIconSetting;
-import com.wiatec.btv_launcher.adapter.FragmentAdapter;
 import com.wiatec.btv_launcher.bean.Message1Info;
 import com.wiatec.btv_launcher.bean.UpdateInfo;
 import com.wiatec.btv_launcher.bean.VideoInfo;
@@ -54,13 +51,11 @@ import com.wiatec.btv_launcher.service.LoadCloudService;
 import com.wiatec.btv_launcher.service.LoadWeatherService;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.Subscription;
 
 public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> implements IMainActivity, OnNetworkStatusListener, OnWifiStatusListener {
 
@@ -88,7 +83,6 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
     TextView tvVersion;
 
     private Fragment1 fragment1;
-    private List<Fragment> list;
     private NetworkStatusReceiver networkStatusReceiver;
     private WifiStatusReceiver wifiStatusReceiver;
     private WeatherStatusReceiver weatherStatusReceiver;
