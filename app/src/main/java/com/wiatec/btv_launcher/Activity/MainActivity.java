@@ -14,6 +14,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.text.Html;
@@ -28,7 +29,6 @@ import android.widget.TextView;
 
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
-import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.bean.DeviceInfo;
 import com.wiatec.btv_launcher.custom_view.RollTextView;
 import com.wiatec.btv_launcher.receiver.OnNetworkStatusListener;
@@ -44,7 +44,6 @@ import com.wiatec.btv_launcher.bean.UpdateInfo;
 import com.wiatec.btv_launcher.bean.VideoInfo;
 import com.wiatec.btv_launcher.bean.WeatherInfo;
 import com.wiatec.btv_launcher.fragment.Fragment1;
-import com.wiatec.btv_launcher.fragment.Fragment2;
 import com.wiatec.btv_launcher.presenter.MainPresenter;
 import com.wiatec.btv_launcher.receiver.NetworkStatusReceiver;
 import com.wiatec.btv_launcher.receiver.ScreenWeekUpReceiver;
@@ -58,15 +57,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.Observable;
 import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> implements IMainActivity, OnNetworkStatusListener, OnWifiStatusListener {
 
@@ -80,8 +74,8 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
     TextView tv_Date;
     @BindView(R.id.tv_message)
     RollTextView tv_Message;
-    @BindView(R.id.viewPager)
-    ViewPager viewPager;
+    @BindView(R.id.frame_layout)
+    FrameLayout frameLayout;
     @BindView(R.id.iv_weather)
     ImageView iv_Weather;
     @BindView(R.id.iv_message)
@@ -94,7 +88,6 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
     TextView tvVersion;
 
     private Fragment1 fragment1;
-    private Fragment2 fragment2;
     private List<Fragment> list;
     private NetworkStatusReceiver networkStatusReceiver;
     private WifiStatusReceiver wifiStatusReceiver;
@@ -102,8 +95,6 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
     private ScreenWeekUpReceiver screenWeekUpReceiver;
     private boolean isStartLoadNetData = false;
     private boolean isStartAlarmService =false;
-    private boolean isStartLoadRss = false;
-    private Subscription rssSubscription;
     public DeviceInfo mDeviceInfo;
 
     @Override
@@ -151,10 +142,6 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
     @Override
     protected void onPause() {
         super.onPause();
-        isStartLoadRss = false;
-        if(rssSubscription != null){
-            rssSubscription.unsubscribe();
-        }
         if(tv_Message != null){
             tv_Message.stop();
         }
@@ -313,15 +300,9 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
         if (fragment1 == null) {
             fragment1 = new Fragment1();
         }
-//        if (fragment2 == null) {
-//            fragment2 = new Fragment2();
-//        }
-        if (list == null) {
-            list = new ArrayList<>();
-        }
-        list.add(fragment1);
-//        list.add(fragment2);
-        viewPager.setAdapter(new FragmentAdapter(getSupportFragmentManager(), list));
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.frame_layout , fragment1);
+        fragmentTransaction.commit();
     }
 
     private Handler handler = new Handler(Looper.getMainLooper()) {
