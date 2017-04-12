@@ -22,7 +22,6 @@ import com.jude.rollviewpager.RollPagerView;
 import com.wiatec.btv_launcher.Activity.AppSelectActivity;
 import com.wiatec.btv_launcher.Activity.CloudImageFullScreen1Activity;
 import com.wiatec.btv_launcher.Activity.FMPlayActivity;
-import com.wiatec.btv_launcher.Activity.LDSupportActivity;
 import com.wiatec.btv_launcher.Activity.LoginActivity;
 import com.wiatec.btv_launcher.Activity.LoginSplashActivity;
 import com.wiatec.btv_launcher.Activity.MainActivity;
@@ -33,6 +32,7 @@ import com.wiatec.btv_launcher.Activity.PlayActivity;
 import com.wiatec.btv_launcher.Activity.PlayAdActivity;
 import com.wiatec.btv_launcher.Activity.Splash1Activity;
 import com.wiatec.btv_launcher.Activity.UserManual1Activity;
+import com.wiatec.btv_launcher.Activity.WebViewActivity;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.SQL.InstalledAppDao;
@@ -97,8 +97,8 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     ImageButton ibt_LdStore;
     @BindView(R.id.ibt_full_screen)
     ImageButton ibt_FullScreen;
-    @BindView(R.id.ibt_7)
-    FrameLayout ibt7;
+    @BindView(R.id.ibt_institute)
+    ImageButton ibtInstitute;
     @BindView(R.id.ibt_8)
     ImageButton ibt8;
     @BindView(R.id.ibt_9)
@@ -135,6 +135,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     private UserDataInfo userDataInfo;
     private MainActivity activity;
     private InstalledAppDao installedAppDao;
+    private Intent intent;
 
     @Nullable
     @Override
@@ -147,6 +148,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         messageDao = MessageDao.getInstance(getContext());
         userDataInfo = new UserDataInfo();
         installedAppDao = InstalledAppDao.getInstance(Application.getContext());
+        intent = new Intent();
         return view;
     }
 
@@ -290,11 +292,11 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
 
     @OnClick({R.id.ibt_btv, R.id.ibt_user_guide, R.id.ibt_setting, R.id.ibt_apps, R.id.ibt_market,
             R.id.ibt_anti_virus, R.id.ibt_privacy, R.id.ibt_ld_cloud ,R.id.fl_video ,R.id.ibt_full_screen,
-            R.id.ibt_7 , R.id.ibt_eufonico , R.id.ibt_ldsupport})
+            R.id.ibt_institute , R.id.ibt_eufonico , R.id.ibt_ldsupport})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ibt_btv:
-                Intent intent = new Intent(getContext() , LoginSplashActivity.class);
+                intent.setClass(getContext() , LoginSplashActivity.class);
                 intent.putExtra("packageName" , F.package_name.btv);
                 startActivity(intent);
                 break;
@@ -325,20 +327,20 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 break;
             case R.id.fl_video:
 //                if(currentVideoInfo != null){
-//                    Intent intent2 = new Intent(getContext() , PlayActivity.class);
-//                    intent2.putExtra("url" , currentVideoInfo.getUrl());
-//                    startActivity(intent2);
+//                    intent.setClass(getContext() , PlayActivity.class);
+//                    intent.putExtra("url" , currentVideoInfo.getUrl());
+//                    startActivity(intent);
 //                }
                 presenter.launchApp(F.package_name.bplay);
                 break;
             case R.id.ibt_full_screen:
                 if(isCloudImagePlaying){
-                    Intent intent3 = new Intent(getContext() , CloudImageFullScreen1Activity.class);
-                    intent3.putExtra("cloudImagePosition",ibt_LdCloud.getCurrentPosition());
-                    startActivity(intent3);
+                    intent.setClass(getContext() , CloudImageFullScreen1Activity.class);
+                    intent.putExtra("cloudImagePosition",ibt_LdCloud.getCurrentPosition());
+                    startActivity(intent);
                 }
                 break;
-            case R.id.ibt_7:
+            case R.id.ibt_institute:
                 if (ApkCheck.isApkInstalled(getContext(), F.package_name.joinme)) {
                     ApkLaunch.launchApkByPackageName(getContext(), F.package_name.joinme);
                 }else{
@@ -347,12 +349,14 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 }
                 break;
             case R.id.ibt_eufonico:
-                Intent intent4 = new Intent(getActivity(), FMPlayActivity.class);
-                intent4.putExtra("url", "http://142.4.216.91:8280/");
-                getContext().startActivity(intent4);
+                intent.setClass(getActivity(), FMPlayActivity.class);
+                intent.putExtra("url", F.url.eufonico);
+                getContext().startActivity(intent);
                 break;
             case R.id.ibt_ldsupport:
-                startActivity(new Intent(getContext() , LDSupportActivity.class));
+                intent.setClass(getActivity(), WebViewActivity.class);
+                intent.putExtra("url", F.url.ld_support);
+                getContext().startActivity(intent);
                 break;
             default:
                 break;
@@ -416,21 +420,21 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         if(list == null || list.size() <1){
             return;
         }
-        Glide.with(Application.getContext()).load(list.get(0).getUrl()).placeholder(R.drawable.btv_icon_1).dontAnimate().into(ibt_Btv);
-        Glide.with(Application.getContext()).load(list.get(1).getUrl()).placeholder(R.drawable.user_guide_icon_4).dontAnimate().into(ibt_UserGuide);
-        Glide.with(Application.getContext()).load(list.get(2).getUrl()).placeholder(R.drawable.setting_icon).dontAnimate().into(ibt_Setting);
-        Glide.with(Application.getContext()).load(list.get(3).getUrl()).placeholder(R.drawable.apps_icon_3).dontAnimate().into(ibt_Apps);
-        Glide.with(Application.getContext()).load(list.get(4).getUrl()).placeholder(R.drawable.market_icon).dontAnimate().into(ibt_Market);
-        Glide.with(Application.getContext()).load(list.get(5).getUrl()).placeholder(R.drawable.ld_opportunity_12).dontAnimate().into(ibt_AntiVirus);
-        Glide.with(Application.getContext()).load(list.get(6).getUrl()).placeholder(R.drawable.message_icon).dontAnimate().into(ibt_Privacy);
-        Glide.with(Application.getContext()).load(list.get(7).getUrl()).placeholder(R.drawable.ld_store_icon).dontAnimate().into(ibt_LdStore);
-        Glide.with(Application.getContext()).load(list.get(9).getUrl()).placeholder(R.drawable.ld_cloud_icon_3).dontAnimate().into(ibt_LdCloud);
-        ibt_LdStore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showLinkByBrowser(list.get(7).getLink());
-            }
-        });
+//        Glide.with(Application.getContext()).load(list.get(0).getUrl()).placeholder(R.drawable.btv_icon_1).dontAnimate().into(ibt_Btv);
+//        Glide.with(Application.getContext()).load(list.get(1).getUrl()).placeholder(R.drawable.user_guide_icon_4).dontAnimate().into(ibt_UserGuide);
+//        Glide.with(Application.getContext()).load(list.get(2).getUrl()).placeholder(R.drawable.setting_icon).dontAnimate().into(ibt_Setting);
+//        Glide.with(Application.getContext()).load(list.get(3).getUrl()).placeholder(R.drawable.apps_icon_3).dontAnimate().into(ibt_Apps);
+//        Glide.with(Application.getContext()).load(list.get(4).getUrl()).placeholder(R.drawable.market_icon).dontAnimate().into(ibt_Market);
+//        Glide.with(Application.getContext()).load(list.get(5).getUrl()).placeholder(R.drawable.ld_opportunity_12).dontAnimate().into(ibt_AntiVirus);
+//        Glide.with(Application.getContext()).load(list.get(6).getUrl()).placeholder(R.drawable.message_icon).dontAnimate().into(ibt_Privacy);
+//        Glide.with(Application.getContext()).load(list.get(7).getUrl()).placeholder(R.drawable.ld_store_icon).dontAnimate().into(ibt_LdStore);
+//        Glide.with(Application.getContext()).load(list.get(9).getUrl()).placeholder(R.drawable.ld_cloud_icon_3).dontAnimate().into(ibt_LdCloud);
+//        ibt_LdStore.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showLinkByBrowser(list.get(7).getLink());
+//            }
+//        });
     }
 
     @Override
@@ -592,7 +596,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         ibt_LdStore.setOnFocusChangeListener(this);
         ibt_LdCloud.setOnFocusChangeListener(this);
         ibt_FullScreen.setOnFocusChangeListener(this);
-        ibt7.setOnFocusChangeListener(this);
+        ibtInstitute.setOnFocusChangeListener(this);
         ibt8.setOnFocusChangeListener(this);
         ibt9.setOnFocusChangeListener(this);
         ibt10.setOnFocusChangeListener(this);

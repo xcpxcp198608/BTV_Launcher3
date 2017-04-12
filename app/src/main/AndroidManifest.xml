@@ -52,7 +52,7 @@
         <activity android:name=".Activity.CloudImageFullScreen1Activity"/>
         <activity android:name=".Activity.WakeUpAdActivity"/>
         <activity android:name=".Activity.MemberChannel1Activity"/>
-        <activity android:name=".Activity.LDSupportActivity"/>
+        <activity android:name=".Activity.WebViewActivity"/>
 
         <receiver android:name=".receiver.AppInstallReceiver">
             <intent-filter>

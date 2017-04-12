@@ -35,6 +35,10 @@ public final class F {
         public static final String login_repeat_check="http://appota.gobeyondtv.co:8080/launcher/user/check";
         public static final String level_check="http://appota.gobeyondtv.co:8080/launcher/user/check_level";
         public static final String upload_data="http://appota.gobeyondtv.co:8080/launcher/userdata/upload";
+
+        public static final String eufonico = "http://142.4.216.91:8280/";
+        public static final String ld_support="http://appota.gobeyondtv.co:8081/html/ld_support.html";
+        public static final String ld_opportunity="http://appota.gobeyondtv.co:8081/html/ld_opportunity.html";
     }
 
     public static final class path {

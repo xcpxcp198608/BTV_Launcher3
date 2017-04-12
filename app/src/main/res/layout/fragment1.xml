@@ -47,7 +47,7 @@
                         android:cropToPadding="true"
                         android:padding="3dp"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/btv_icon_1" />
+                        android:src="@drawable/icon_btv" />
 
                 </FrameLayout>
 
@@ -65,7 +65,7 @@
                     android:cropToPadding="true"
                     android:padding="3dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/legacysupport1" />
+                    android:src="@drawable/icon_customer_support" />
 
             </LinearLayout>
 
@@ -87,42 +87,23 @@
                     android:background="@drawable/item_btv_bg"
                     android:padding="20dp"
                     android:scaleType="centerInside"
-                    android:src="@drawable/apps_icon_3" />
+                    android:src="@drawable/icon_apps" />
 
                 <ImageView
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:background="@android:color/black" />
 
-                <FrameLayout
-                    android:id="@+id/ibt_7"
+                <ImageButton
+                    android:id="@+id/ibt_institute"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:background="@drawable/item_btv_bg"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:padding="5dp">
+                    android:padding="20dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/icon_institute" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="@string/legacy_institute"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="17sp"
-                        android:textStyle="bold" />
-
-                    <ImageView
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:layout_gravity="right"
-                        android:background="@color/colorTranslucent"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/joinme_144" />
-
-                </FrameLayout>
             </LinearLayout>
 
             <ImageView
@@ -143,7 +124,7 @@
                     android:background="@drawable/item_btv_bg"
                     android:padding="20dp"
                     android:scaleType="centerInside"
-                    android:src="@drawable/market_icon" />
+                    android:src="@drawable/icon_app_mkt" />
 
                 <ImageView
                     android:layout_width="1dp"
@@ -158,7 +139,7 @@
                     android:background="@drawable/item_btv_bg"
                     android:padding="20dp"
                     android:scaleType="centerInside"
-                    android:src="@drawable/ld_opportunity_12" />
+                    android:src="@drawable/icon_opportunity" />
 
             </LinearLayout>
 
@@ -199,7 +180,7 @@
                         android:background="@drawable/item_btv_bg"
                         android:padding="20dp"
                         android:scaleType="centerInside"
-                        android:src="@drawable/setting_icon" />
+                        android:src="@drawable/icon_settings" />
 
                     <ImageView
                         android:layout_width="1dp"
@@ -214,7 +195,7 @@
                         android:background="@drawable/item_btv_bg"
                         android:padding="20dp"
                         android:scaleType="centerInside"
-                        android:src="@drawable/user_guide_icon_4" />
+                        android:src="@drawable/icon_manuals" />
 
                 </LinearLayout>
 

@@ -50,13 +50,6 @@
     <string name="register_success">Congratulations !register success , please go to your email confirm then login you account</string>
     <string name="login_repeat">Sorry, your account login error ,please login again</string>
     <string name="account_error">Please contact support@legacy.direct or text to 9499889000 to inquire about this issue.</string>
-    <string name="ld_support">Legacy Direct cares
-We offer multiple avenues of support to tend to the individual needs of all BTVi3 users. Please choose an option below: \n\n
-*Email: Send a message 24 hours a day to Support and they will respond as soon as possible. Support@Legacy.Direct\n\n
-*Ticket: Submit a ticket to our Support Team as an alternative to email by clicking on Our Help Desk on our Contact Us page or by going to http://legacydirect.supportsystem.com \n\n
-*Text: Send a text message to our Customer Care number at (949) 988-9000 We look forward to helping you \n\n
-*Call: (949) 988-9000 \n\n
-*Premium Support: For users that choose to add this service we offer an option to have an agent operate the device themselves to assist in any and every need via a peer to peer connection.</string>
 
 
 </resources>
