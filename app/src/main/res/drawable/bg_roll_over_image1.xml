@@ -4,5 +4,5 @@
         android:left="3dp"
         android:right="3dp"
         android:bottom="3dp"
-        android:drawable="@drawable/btvi3_roll_image"/>
+        android:drawable="@android:color/black"/>
 </layer-list>

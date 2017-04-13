@@ -22,7 +22,7 @@ import java.util.List;
 
 public class ManualData implements IManualData {
     @Override
-    public void loadData(final OnLoadListener onLoadListener, String product, String language) {
+    public void loadData(final OnLoadListener onLoadListener, final String product, final String language) {
         OkMaster.get(F.url.manual_image)
                 .parames("product",product)
                 .parames("language",language)
@@ -42,6 +42,27 @@ public class ManualData implements IManualData {
                     @Override
                     public void onFailure(String e) {
                         onLoadListener.onFailure(e);
+                        OkMaster.get(F.url_eu.manual_image)
+                                .parames("product",product)
+                                .parames("language",language)
+                                .enqueue(new StringListener() {
+                                    @Override
+                                    public void onSuccess(String s) throws IOException {
+                                        if(s == null){
+                                            return;
+                                        }
+                                        List<ImageInfo> list = new Gson().fromJson(s , new TypeToken<List<ImageInfo>>(){}.getType());
+                                        if(list == null || list.size() <= 0){
+                                            return;
+                                        }
+                                        onLoadListener.onSuccess(list);
+                                    }
+
+                                    @Override
+                                    public void onFailure(String e) {
+                                        onLoadListener.onFailure(e);
+                                    }
+                                });
                     }
                 });
     }

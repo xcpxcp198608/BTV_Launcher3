@@ -396,6 +396,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 showLinkByBrowser(list.get(position).getLink());
             }
         });
+        rollOverView.setBackgroundResource(R.drawable.bg_roll_over_image1);
     }
 
     @Override

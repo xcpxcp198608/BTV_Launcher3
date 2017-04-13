@@ -38,6 +38,21 @@ public class UpdateData implements IUpdateData {
                     @Override
                     public void onFailure(String e) {
                         onLoadListener.onFailure(e);
+                        OkMaster.get(F.url_eu.updater)
+                                .enqueue(new StringListener() {
+                                    @Override
+                                    public void onSuccess(String s) throws IOException {
+                                        if(s!= null){
+                                            UpdateInfo updateInfo = new Gson().fromJson(s , new TypeToken<UpdateInfo>(){}.getType());
+                                            onLoadListener.onSuccess(updateInfo);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(String e) {
+                                        onLoadListener.onFailure(e);
+                                    }
+                                });
                     }
                 });
     }

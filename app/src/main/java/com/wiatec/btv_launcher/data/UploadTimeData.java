@@ -29,7 +29,7 @@ import okio.BufferedSink;
 
 public class UploadTimeData {
 
-    public void upload(UserDataInfo userDataInfo){
+    public void upload(final UserDataInfo userDataInfo){
         OkMaster.post(F.url.upload_data)
                 .parames("userData.userName",userDataInfo.getUserName())
                 .parames("userData.country",userDataInfo.getCountry())
@@ -45,7 +45,24 @@ public class UploadTimeData {
 
                     @Override
                     public void onFailure(String e) {
+                        OkMaster.post(F.url_eu.upload_data)
+                                .parames("userData.userName",userDataInfo.getUserName())
+                                .parames("userData.country",userDataInfo.getCountry())
+                                .parames("userData.city",userDataInfo.getCity())
+                                .parames("userData.mac",userDataInfo.getMac())
+                                .parames("userData.exitTime",userDataInfo.getExitTime())
+                                .parames("userData.stayTime",userDataInfo.getStayTime())
+                                .enqueue(new StringListener() {
+                                    @Override
+                                    public void onSuccess(String s) throws IOException {
 
+                                    }
+
+                                    @Override
+                                    public void onFailure(String e) {
+
+                                    }
+                                });
                     }
                 });
     }

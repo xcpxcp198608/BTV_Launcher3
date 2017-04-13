@@ -44,6 +44,26 @@ public class VideoData implements IVideoData {
                     @Override
                     public void onFailure(String e) {
                         onLoadListener.onFailure(e);
+                        OkMaster.post(F.url_eu.video)
+                                .parames("deviceInfo.countryCode", (String)SPUtils.get(Application.getContext() , "countryCode" , ""))
+                                .parames("deviceInfo.regionName", (String)SPUtils.get(Application.getContext() , "regionName" , ""))
+                                .parames("deviceInfo.timeZone", (String)SPUtils.get(Application.getContext() , "timeZone" , ""))
+                                .enqueue(new StringListener() {
+                                    @Override
+                                    public void onSuccess(String s) throws IOException {
+                                        if(s != null){
+                                            List<VideoInfo> list = new Gson().fromJson(s , new TypeToken<List<VideoInfo>>(){}.getType());
+                                            if(list != null){
+                                                onLoadListener.onSuccess(list);
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(String e) {
+                                        onLoadListener.onFailure(e);
+                                    }
+                                });
                     }
                 });
     }
