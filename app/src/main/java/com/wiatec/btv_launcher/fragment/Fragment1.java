@@ -92,8 +92,8 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     ImageButton ibt_Market;
     @BindView(R.id.ibt_anti_virus)
     ImageButton ibt_AntiVirus;
-    @BindView(R.id.ibt_privacy)
-    ImageButton ibt_Privacy;
+    @BindView(R.id.ibt_message)
+    ImageButton ibtMessage;
     @BindView(R.id.rpv_main)
     RollPagerView rpv_Main;
     @BindView(R.id.ibt_ld_store)
@@ -108,8 +108,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     ImageButton ibt9;
     @BindView(R.id.ibt_10)
     ImageButton ibt10;
-    @BindView(R.id.ibt_eufonico)
-    ImageButton ibtEufonico;
     @BindView(R.id.ibt_ldsupport)
     ImageButton ibtLDSupport;
     @BindView(R.id.vv_main)
@@ -124,8 +122,8 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     RollOverView rollOverView;
     @BindView(R.id.iv_ld_cloud_small)
     ImageView ivLdCloudSmall;
-    @BindView(R.id.ibt_eufonico1)
-    ImageButton ibtEufonico1;
+    @BindView(R.id.ibt_eufonico)
+    ImageButton ibtEufonico;
 
     private boolean isF1Visible = false;
     private NetworkStatusReceiver networkStatusReceiver;
@@ -173,7 +171,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 return true;
             }
         });
-        ibtEufonico1.setOnLongClickListener(new View.OnLongClickListener() {
+        ibtEufonico.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 showChoiceDialog();
@@ -192,7 +190,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         super.onResume();
         entryTime = System.currentTimeMillis();
         checkMessageCount();
-
         if (!SystemConfig.isNetworkConnected(getContext())){
             return;
         }
@@ -254,8 +251,8 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     }
 
     @OnClick({R.id.ibt_btv, R.id.ibt_user_guide, R.id.ibt_setting, R.id.ibt_apps, R.id.ibt_market,
-            R.id.ibt_anti_virus, R.id.ibt_privacy, R.id.ibt_ld_cloud ,R.id.fl_video ,R.id.ibt_full_screen,
-            R.id.ibt_institute , R.id.ibt_eufonico , R.id.ibt_ldsupport,R.id.ibt_eufonico1})
+            R.id.ibt_anti_virus, R.id.ibt_message, R.id.ibt_ld_cloud ,R.id.fl_video ,R.id.ibt_full_screen,
+            R.id.ibt_institute , R.id.ibt_ldsupport,R.id.ibt_eufonico})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ibt_btv:
@@ -280,7 +277,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
             case R.id.ibt_anti_virus:
                 startActivity(new Intent(getContext(), Opportunity1Activity.class));
                 break;
-            case R.id.ibt_privacy:
+            case R.id.ibt_message:
                 startActivity(new Intent(getContext(), Message1Activity.class));
                 break;
             case R.id.ibt_ld_cloud:
@@ -306,17 +303,12 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                     ApkLaunch.launchApkByPackageName(getContext(), F.package_name.market);
                 }
                 break;
-            case R.id.ibt_eufonico:
-                intent.setClass(getActivity(), FMPlayActivity.class);
-                intent.putExtra("url", F.url.eufonico);
-                getContext().startActivity(intent);
-                break;
             case R.id.ibt_ldsupport:
                 intent.setClass(getActivity(), WebViewActivity.class);
                 intent.putExtra("url", F.url.ld_support);
                 getContext().startActivity(intent);
                 break;
-            case R.id.ibt_eufonico1:
+            case R.id.ibt_eufonico:
                 intent.setClass(getActivity(), FMPlayActivity.class);
                 intent.putExtra("url", F.url.eufonico);
                 getContext().startActivity(intent);
@@ -548,12 +540,12 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         ibt_Apps.setOnFocusChangeListener(this);
         ibt_Market.setOnFocusChangeListener(this);
         ibt_AntiVirus.setOnFocusChangeListener(this);
-        ibt_Privacy.setOnFocusChangeListener(this);
+        ibtMessage.setOnFocusChangeListener(this);
         ibt_LdStore.setOnFocusChangeListener(this);
         ibt_LdCloud.setOnFocusChangeListener(this);
         ibt_FullScreen.setOnFocusChangeListener(this);
         ibtInstitute.setOnFocusChangeListener(this);
-        ibtEufonico.setOnFocusChangeListener(this);
+        ibtLDSupport.setOnFocusChangeListener(this);
         ibt8.setOnFocusChangeListener(this);
         ibt9.setOnFocusChangeListener(this);
         ibt10.setOnFocusChangeListener(this);
@@ -562,15 +554,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         if (hasFocus) {
-            if(v.getId() == R.id.ibt_btv || v.getId() == R.id.ibt_ldsupport ) {
-                Zoom.zoomIn10_11(v);
-            }else {
-                Zoom.zoomIn09_10(v);
-            }
-        }else{
-            if(v.getId() == R.id.ibt_btv || v.getId() == R.id.ibt_ldsupport ) {
-                Zoom.zoomIn11_10(v);
-            }
+            Zoom.zoomIn09_10(v);
         }
     }
 
@@ -582,14 +566,14 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
             public void onClick(DialogInterface dialog, int which) {
                 switch (which){
                     case 0:
-                        ibtEufonico1.setVisibility(View.GONE);
+                        ibtEufonico.setVisibility(View.GONE);
                         ibt_LdCloud.setVisibility(View.VISIBLE);
                         ibt_FullScreen.setVisibility(View.VISIBLE);
                         ivLdCloudSmall.setVisibility(View.VISIBLE);
                         dialog.dismiss();
                         break;
                     case 1:
-                        ibtEufonico1.setVisibility(View.VISIBLE);
+                        ibtEufonico.setVisibility(View.VISIBLE);
                         ibt_LdCloud.setVisibility(View.GONE);
                         ibt_FullScreen.setVisibility(View.GONE);
                         ivLdCloudSmall.setVisibility(View.GONE);

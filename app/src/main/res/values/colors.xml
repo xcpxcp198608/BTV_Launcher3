@@ -17,9 +17,9 @@
     <color name="colorBlue">#FF0000ff</color>
     <color name="colorRed">#FFff0000</color>
 
-    <color name="colorBTV">#706e6e</color>
-    <color name="colorBTV1">#b7b5b5</color>
-    <color name="colorBTV2">#202020</color>
+    <color name="colorBTV">#a19f9f</color>
+    <color name="colorBTV1">#eae7e7</color>
+    <color name="colorBTV2">#605f5f</color>
     <color name="colorSettings">#d40465</color>
     <color name="colorSettings1">#de5192</color>
     <color name="colorMarket">#0387d9</color>
