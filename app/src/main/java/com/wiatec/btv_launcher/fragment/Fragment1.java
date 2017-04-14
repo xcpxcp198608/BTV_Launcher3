@@ -144,7 +144,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment1, container, false);
+        View view = inflater.inflate(R.layout.fragment1_1, container, false);
         ButterKnife.bind(this, view);
         networkStatusReceiver = new NetworkStatusReceiver(null);
         networkStatusReceiver.setOnNetworkStatusListener(this);

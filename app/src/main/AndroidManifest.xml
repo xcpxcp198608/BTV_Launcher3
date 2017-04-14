@@ -31,7 +31,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Activity.MainActivity"/>
+        <activity android:name=".Activity.MainActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"/>
         <activity android:name=".Activity.MenuActivity"/>
         <activity android:name=".Activity.UpdateActivity"/>
         <activity android:name=".Activity.PlayActivity"/>
