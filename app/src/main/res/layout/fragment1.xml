@@ -80,14 +80,14 @@
                 android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/ibt_apps"
+                    android:id="@+id/ibt_market"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/item_btv_bg"
                     android:padding="20dp"
                     android:scaleType="centerInside"
-                    android:src="@drawable/icon_apps" />
+                    android:src="@drawable/icon_app_mkt" />
 
                 <ImageView
                     android:layout_width="1dp"
@@ -117,14 +117,14 @@
                 android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/ibt_market"
+                    android:id="@+id/ibt_apps"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/item_btv_bg"
                     android:padding="20dp"
                     android:scaleType="centerInside"
-                    android:src="@drawable/icon_app_mkt" />
+                    android:src="@drawable/icon_apps" />
 
                 <ImageView
                     android:layout_width="1dp"
@@ -151,7 +151,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1.5"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -178,7 +178,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/item_message_bg"
-                        android:padding="20dp"
+                        android:padding="7dp"
                         android:scaleType="centerInside"
                         android:src="@drawable/icon_settings" />
 
@@ -193,7 +193,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/item_message_bg"
-                        android:padding="20dp"
+                        android:padding="7dp"
                         android:scaleType="centerInside"
                         android:src="@drawable/icon_manuals" />
 
@@ -212,7 +212,7 @@
                     <ImageButton
                         android:cropToPadding="true"
                         android:scaleType="fitCenter"
-                        android:padding="5dp"
+                        android:padding="12dp"
                         android:id="@+id/ibt_8"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -228,7 +228,7 @@
                     <ImageButton
                         android:cropToPadding="true"
                         android:scaleType="fitCenter"
-                        android:padding="5dp"
+                        android:padding="12dp"
                         android:id="@+id/ibt_9"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -244,7 +244,7 @@
                     <ImageButton
                         android:cropToPadding="true"
                         android:scaleType="fitCenter"
-                        android:padding="5dp"
+                        android:padding="12dp"
                         android:id="@+id/ibt_10"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"

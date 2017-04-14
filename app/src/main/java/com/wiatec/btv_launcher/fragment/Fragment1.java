@@ -562,10 +562,14 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         if (hasFocus) {
-            if(v.getId() == R.id.ibt_btv || v.getId() == R.id.ibt_ld_store ) {
+            if(v.getId() == R.id.ibt_btv || v.getId() == R.id.ibt_ldsupport ) {
                 Zoom.zoomIn10_11(v);
             }else {
                 Zoom.zoomIn09_10(v);
+            }
+        }else{
+            if(v.getId() == R.id.ibt_btv || v.getId() == R.id.ibt_ldsupport ) {
+                Zoom.zoomIn11_10(v);
             }
         }
     }
