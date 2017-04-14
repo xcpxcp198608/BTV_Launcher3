@@ -5,11 +5,11 @@
         <item>Spanish</item>
     </string-array>
 
-
     <string-array name="products">
         <item>BTVi3</item>
         <item>BKSOUND</item>
         <item>BKEYMO</item>
     </string-array>
+
 
 </resources>

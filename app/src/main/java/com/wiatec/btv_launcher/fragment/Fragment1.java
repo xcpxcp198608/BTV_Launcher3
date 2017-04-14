@@ -1,18 +1,21 @@
 package com.wiatec.btv_launcher.fragment;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -119,6 +122,10 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     TextView tvMessageCount;
     @BindView(R.id.roll_over_view)
     RollOverView rollOverView;
+    @BindView(R.id.iv_ld_cloud_small)
+    ImageView ivLdCloudSmall;
+    @BindView(R.id.ibt_eufonico1)
+    ImageButton ibtEufonico1;
 
     private boolean isF1Visible = false;
     private NetworkStatusReceiver networkStatusReceiver;
@@ -159,6 +166,20 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         showCustomShortCut(ibt8 , "ibt8");
         showCustomShortCut(ibt9 , "ibt9");
         showCustomShortCut(ibt10 , "ibt10");
+        ibt_LdCloud.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                showChoiceDialog();
+                return true;
+            }
+        });
+        ibtEufonico1.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                showChoiceDialog();
+                return true;
+            }
+        });
     }
 
     @Override
@@ -234,7 +255,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
 
     @OnClick({R.id.ibt_btv, R.id.ibt_user_guide, R.id.ibt_setting, R.id.ibt_apps, R.id.ibt_market,
             R.id.ibt_anti_virus, R.id.ibt_privacy, R.id.ibt_ld_cloud ,R.id.fl_video ,R.id.ibt_full_screen,
-            R.id.ibt_institute , R.id.ibt_eufonico , R.id.ibt_ldsupport})
+            R.id.ibt_institute , R.id.ibt_eufonico , R.id.ibt_ldsupport,R.id.ibt_eufonico1})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ibt_btv:
@@ -293,6 +314,11 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
             case R.id.ibt_ldsupport:
                 intent.setClass(getActivity(), WebViewActivity.class);
                 intent.putExtra("url", F.url.ld_support);
+                getContext().startActivity(intent);
+                break;
+            case R.id.ibt_eufonico1:
+                intent.setClass(getActivity(), FMPlayActivity.class);
+                intent.putExtra("url", F.url.eufonico);
                 getContext().startActivity(intent);
                 break;
             default:
@@ -542,5 +568,31 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 Zoom.zoomIn09_10(v);
             }
         }
+    }
+
+    public void showChoiceDialog (){
+        AlertDialog dialog = new AlertDialog.Builder(getContext())
+            .setTitle("SELECT")
+            .setSingleChoiceItems(new String[]{"LDCLOUD", "EUFONICO"}, 0, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case 0:
+                        ibtEufonico1.setVisibility(View.GONE);
+                        ibt_LdCloud.setVisibility(View.VISIBLE);
+                        ibt_FullScreen.setVisibility(View.VISIBLE);
+                        ivLdCloudSmall.setVisibility(View.VISIBLE);
+                        dialog.dismiss();
+                        break;
+                    case 1:
+                        ibtEufonico1.setVisibility(View.VISIBLE);
+                        ibt_LdCloud.setVisibility(View.GONE);
+                        ibt_FullScreen.setVisibility(View.GONE);
+                        ivLdCloudSmall.setVisibility(View.GONE);
+                        dialog.dismiss();
+                        break;
+                }
+            }
+        }).show();
     }
 }

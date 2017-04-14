@@ -385,6 +385,7 @@
                     android:src="@drawable/ld_cloud_icon_3" />
 
                 <ImageView
+                    android:id="@+id/iv_ld_cloud_small"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="right"
@@ -400,6 +401,15 @@
                     android:layout_margin="5dp"
                     android:background="@drawable/full_screen"
                     android:scaleType="centerInside" />
+
+                <ImageButton
+                    android:visibility="gone"
+                    android:background="@drawable/item_ldcloud_bg"
+                    android:scaleType="centerInside"
+                    android:id="@+id/ibt_eufonico1"
+                    android:src="@drawable/euf_big"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
 
             </FrameLayout>
 
