@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.wiatec.btv_launcher.custom_view.ItemView
+        android:id="@+id/ibt_btv"
+        android:layout_width="154dp"
+        android:layout_height="100dp"
+        android:background="@color/colorGray"
+        android:cropToPadding="true"
+        android:padding="3dp"
+        android:layout_margin="8dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/icon_btv"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="72dp" />
+
+    <com.wiatec.btv_launcher.custom_view.ItemView
+        android:layout_margin="8dp"
+        android:id="@+id/ibt_ldsupport"
+        android:layout_width="154dp"
+        android:layout_height="100dp"
+        android:background="@color/colorGray"
+        android:cropToPadding="true"
+        android:padding="3dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/icon_customer_support"
+        app:layout_constraintLeft_toRightOf="@+id/ibt_btv"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp" />
+
+    <com.wiatec.btv_launcher.custom_view.ItemView
+        android:layout_margin="8dp"
+        android:id="@+id/ibt_market"
+        android:layout_width="154dp"
+        android:layout_height="100dp"
+        android:background="@color/colorGray"
+        android:padding="20dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/icon_app_mkt"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/ibt_btv"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="8dp" />
+
+    <com.wiatec.btv_launcher.custom_view.ItemView
+        android:layout_margin="8dp"
+        android:id="@+id/ibt_institute"
+        android:layout_width="154dp"
+        android:layout_height="100dp"
+        android:background="@color/colorGray"
+        android:padding="20dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/icon_institute"
+        app:layout_constraintLeft_toRightOf="@+id/ibt_market"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/ibt_ldsupport"
+        android:layout_marginStart="16dp" />
+
+    <com.wiatec.btv_launcher.custom_view.ItemView
+        android:layout_margin="8dp"
+        android:id="@+id/ibt_apps"
+        android:layout_width="154dp"
+        android:layout_height="100dp"
+        android:background="@color/colorGray"
+        android:padding="20dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/icon_apps"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/ibt_market"
+        android:layout_marginStart="8dp" />
+
+    <com.wiatec.btv_launcher.custom_view.ItemView
+        android:layout_margin="8dp"
+        android:id="@+id/ibt_anti_virus"
+        android:layout_width="154dp"
+        android:layout_height="100dp"
+        android:background="@color/colorGray"
+        android:padding="20dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/icon_opportunity"
+        app:layout_constraintLeft_toRightOf="@+id/ibt_apps"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/ibt_institute"
+        android:layout_marginStart="8dp" />
+
+    <com.wiatec.btv_launcher.custom_view.ItemView
+        android:id="@+id/ibt_message"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@color/colorItemBlue2"
+        android:padding="7dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/message_icon"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="333dp"
+        android:layout_marginStart="8dp" />
+
+    <com.wiatec.btv_launcher.custom_view.ItemView
+        android:id="@+id/ibt_setting"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@color/colorItemBlue2"
+        android:padding="7dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/icon_settings_white"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="333dp"
+        app:layout_constraintLeft_toRightOf="@+id/ibt_message"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp" />
+
+    <com.wiatec.btv_launcher.custom_view.ItemView
+        android:id="@+id/ibt_user_guide"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@color/colorItemBlue2"
+        android:padding="7dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/icon_manuals_white"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="333dp"
+        app:layout_constraintLeft_toRightOf="@+id/ibt_setting"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp" />
+
+    <com.wiatec.btv_launcher.custom_view.ItemView
+        android:layout_margin="8dp"
+        android:cropToPadding="true"
+        android:scaleType="fitCenter"
+        android:padding="7dp"
+        android:id="@+id/ibt_8"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@color/colorItemBlue2"
+        android:src="@drawable/add4"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/ibt_message"
+        android:layout_marginStart="8dp" />
+
+    <com.wiatec.btv_launcher.custom_view.ItemView
+        android:layout_margin="8dp"
+        android:cropToPadding="true"
+        android:scaleType="fitCenter"
+        android:padding="7dp"
+        android:id="@+id/ibt_9"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@color/colorItemBlue2"
+        android:src="@drawable/add4"
+        app:layout_constraintLeft_toRightOf="@+id/ibt_8"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/ibt_setting"
+        android:layout_marginStart="8dp" />
+
+    <com.wiatec.btv_launcher.custom_view.ItemView
+        android:layout_margin="8dp"
+        android:cropToPadding="true"
+        android:scaleType="fitCenter"
+        android:padding="7dp"
+        android:id="@+id/ibt_10"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@color/colorItemBlue2"
+        android:src="@drawable/add4"
+        app:layout_constraintLeft_toRightOf="@+id/ibt_9"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/ibt_user_guide"
+        android:layout_marginStart="8dp" />
+
+    <FrameLayout
+        android:id="@+id/fl_video"
+        android:layout_width="385dp"
+        android:layout_height="220dp"
+        android:background="@drawable/item_black_bg"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:padding="3dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/ibt_institute"
+        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp">
+
+        <VideoView
+            android:id="@+id/vv_main"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp" />
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_gravity="right"
+            android:scaleType="centerInside"
+            android:src="@drawable/shuiyin" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="385dp"
+        android:layout_height="214dp"
+        android:background="@drawable/bg_cloud"
+        android:orientation="horizontal"
+        android:layout_marginTop="7dp"
+        app:layout_constraintTop_toBottomOf="@+id/fl_video"
+        app:layout_constraintLeft_toRightOf="@+id/ibt_user_guide"
+        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp"
+        android:id="@+id/frameLayout">
+
+        <ImageView
+            android:id="@+id/iv_ld_cloud_small"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="right"
+            android:layout_margin="5dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/cloud_shuiyin" />
+
+        <ImageButton
+            android:id="@+id/ibt_full_screen"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="5dp"
+            android:background="@drawable/full_screen"
+            android:scaleType="centerInside" />
+
+        <ImageButton
+            android:visibility="gone"
+            android:background="@drawable/item_ldcloud_bg"
+            android:scaleType="centerInside"
+            android:id="@+id/ibt_eufonico"
+            android:src="@drawable/euf_big"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.wiatec.btv_launcher.custom_view.MultiImage
+            android:id="@+id/ibt_ld_cloud"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:background="@drawable/item_ldcloud_bg"
+            android:cropToPadding="true"
+            android:padding="3dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ld_cloud_icon_3" />
+
+    </FrameLayout>
+
+    <com.jude.rollviewpager.RollPagerView
+        android:id="@+id/rpv_main"
+        android:layout_width="214dp"
+        android:layout_height="219dp"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_roll_image"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        app:rollviewpager_play_delay="6000"
+        app:layout_constraintLeft_toRightOf="@+id/fl_video"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <com.wiatec.btv_launcher.custom_view.RollOverView
+        android:id="@+id/roll_over_view"
+        android:layout_width="216dp"
+        android:layout_height="214dp"
+        android:background="@drawable/bg_roll_over_image"
+        android:paddingBottom="3dp"
+        app:layout_constraintLeft_toRightOf="@+id/frameLayout"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/rpv_main" />
+
+</android.support.constraint.ConstraintLayout>

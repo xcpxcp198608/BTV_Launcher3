@@ -17,9 +17,9 @@
     <color name="colorBlue">#FF0000ff</color>
     <color name="colorRed">#FFff0000</color>
 
-    <color name="colorBTV">#a19f9f</color>
-    <color name="colorBTV1">#eae7e7</color>
-    <color name="colorBTV2">#605f5f</color>
+    <color name="colorBTV">#8f8e8e</color>
+    <color name="colorBTV1">#faf9f9</color>
+    <color name="colorBTV2">#262626</color>
     <color name="colorSettings">#d40465</color>
     <color name="colorSettings1">#de5192</color>
     <color name="colorMarket">#0387d9</color>
@@ -38,9 +38,9 @@
     <color name="colorItemGrayBlue">#445066</color>
     <color name="colorItemGray">#3E3E46</color>
     <color name="colorItemBlue1">#0846c6</color>
-    <color name="colorItemBlue2">#4d8dfc</color>
+    <color name="colorItemBlue2">#3147f1</color>
     <color name="colorItemBlue22">#04255e</color>
-    <color name="colorItemBlue3">#022773</color>
+    <color name="colorItemBlue3">#041231</color>
     <color name="colorItemGreen1">#00ff00</color>
     <color name="colorItemGreen2">#93ef8d</color>
     <color name="colorItemGreen3">#0b970b</color>
