@@ -31,6 +31,7 @@ public class RegisterPresenter extends BasePresenter<IRegisterActivity> {
                     .parames("userInfo.userName",userInfo.getUserName())
                     .parames("userInfo.password",userInfo.getPassword())
                     .parames("userInfo.email",userInfo.getEmail())
+                    .parames("deviceInfo.countryCode",deviceInfo.getCountryCode())
                     .parames("deviceInfo.mac", deviceInfo.getMac())
                     .parames("deviceInfo.city", deviceInfo.getCity())
                     .enqueue(new StringListener() {

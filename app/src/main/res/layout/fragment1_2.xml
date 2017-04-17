@@ -8,8 +8,8 @@
 
     <com.wiatec.btv_launcher.custom_view.ItemView
         android:id="@+id/ibt_btv"
-        android:layout_width="160dp"
-        android:layout_height="90dp"
+        android:layout_width="320dp"
+        android:layout_height="180dp"
         android:layout_margin="8dp"
         android:layout_marginLeft="12dp"
         android:layout_marginStart="16dp"
@@ -24,8 +24,8 @@
 
     <com.wiatec.btv_launcher.custom_view.ItemView
         android:id="@+id/ibt_ldsupport"
-        android:layout_width="160dp"
-        android:layout_height="90dp"
+        android:layout_width="320dp"
+        android:layout_height="180dp"
         android:layout_margin="8dp"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
@@ -40,8 +40,8 @@
 
     <com.wiatec.btv_launcher.custom_view.ItemView
         android:id="@+id/ibt_market"
-        android:layout_width="160dp"
-        android:layout_height="90dp"
+        android:layout_width="320dp"
+        android:layout_height="180dp"
         android:layout_margin="8dp"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="8dp"
@@ -55,8 +55,8 @@
 
     <com.wiatec.btv_launcher.custom_view.ItemView
         android:id="@+id/ibt_institute"
-        android:layout_width="160dp"
-        android:layout_height="90dp"
+        android:layout_width="320dp"
+        android:layout_height="180dp"
         android:layout_margin="8dp"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
@@ -70,8 +70,8 @@
 
     <com.wiatec.btv_launcher.custom_view.ItemView
         android:id="@+id/ibt_apps"
-        android:layout_width="160dp"
-        android:layout_height="90dp"
+        android:layout_width="320dp"
+        android:layout_height="180dp"
         android:layout_margin="8dp"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="8dp"
@@ -85,8 +85,8 @@
 
     <com.wiatec.btv_launcher.custom_view.ItemView
         android:id="@+id/ibt_anti_virus"
-        android:layout_width="160dp"
-        android:layout_height="90dp"
+        android:layout_width="320dp"
+        android:layout_height="180dp"
         android:layout_margin="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
@@ -99,8 +99,8 @@
 
     <FrameLayout
         android:id="@+id/frameLayout2"
-        android:layout_width="104dp"
-        android:layout_height="41dp"
+        android:layout_width="208dp"
+        android:layout_height="82dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:clipChildren="false"
@@ -132,8 +132,8 @@
 
     <com.wiatec.btv_launcher.custom_view.ItemView
         android:id="@+id/ibt_setting"
-        android:layout_width="104dp"
-        android:layout_height="41dp"
+        android:layout_width="208dp"
+        android:layout_height="82dp"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -146,8 +146,8 @@
 
     <com.wiatec.btv_launcher.custom_view.ItemView
         android:id="@+id/ibt_user_guide"
-        android:layout_width="104dp"
-        android:layout_height="41dp"
+        android:layout_width="208dp"
+        android:layout_height="82dp"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -160,8 +160,8 @@
 
     <com.wiatec.btv_launcher.custom_view.ItemView
         android:id="@+id/ibt_8"
-        android:layout_width="104dp"
-        android:layout_height="41dp"
+        android:layout_width="208dp"
+        android:layout_height="82dp"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -175,8 +175,8 @@
 
     <com.wiatec.btv_launcher.custom_view.ItemView
         android:id="@+id/ibt_9"
-        android:layout_width="104dp"
-        android:layout_height="41dp"
+        android:layout_width="208dp"
+        android:layout_height="82dp"
         android:layout_margin="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
@@ -191,8 +191,8 @@
 
     <com.wiatec.btv_launcher.custom_view.ItemView
         android:id="@+id/ibt_10"
-        android:layout_width="104dp"
-        android:layout_height="41dp"
+        android:layout_width="208dp"
+        android:layout_height="82dp"
         android:layout_margin="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
@@ -206,9 +206,43 @@
         app:layout_constraintTop_toBottomOf="@+id/ibt_user_guide" />
 
     <FrameLayout
+        android:id="@+id/fl_video"
+        android:layout_width="736dp"
+        android:layout_height="368dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/item_black_bg"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:padding="3dp"
+        app:layout_constraintLeft_toRightOf="@+id/ibt_institute"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <VideoView
+            android:id="@+id/vv_main"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp" />
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_gravity="right"
+            android:scaleType="centerInside"
+            android:src="@drawable/shuiyin" />
+
+    </FrameLayout>
+
+    <FrameLayout
         android:id="@+id/frameLayout"
-        android:layout_width="368dp"
-        android:layout_height="188dp"
+        android:layout_width="736dp"
+        android:layout_height="368dp"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="14dp"
         android:layout_marginTop="8dp"
@@ -259,9 +293,10 @@
 
     <com.jude.rollviewpager.RollPagerView
         android:id="@+id/rpv_main"
-        android:layout_width="228dp"
-        android:layout_height="188dp"
+        android:layout_width="420dp"
+        android:layout_height="368dp"
         android:layout_gravity="center"
+        android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -269,17 +304,16 @@
         android:clickable="false"
         android:focusable="false"
         android:focusableInTouchMode="false"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toRightOf="@+id/fl_video"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:rollviewpager_play_delay="6000"
-        app:layout_constraintLeft_toRightOf="@+id/fl_video"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintHorizontal_bias="0.0" />
+        app:rollviewpager_play_delay="6000" />
 
     <com.wiatec.btv_launcher.custom_view.RollOverView
         android:id="@+id/roll_over_view"
-        android:layout_width="228dp"
-        android:layout_height="188dp"
+        android:layout_width="420dp"
+        android:layout_height="368dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
@@ -290,39 +324,5 @@
         app:layout_constraintLeft_toRightOf="@+id/frameLayout"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rpv_main" />
-
-    <FrameLayout
-        android:id="@+id/fl_video"
-        android:layout_width="368dp"
-        android:layout_height="188dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/item_black_bg"
-        android:clickable="true"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:padding="3dp"
-        app:layout_constraintLeft_toRightOf="@+id/ibt_institute"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <VideoView
-            android:id="@+id/vv_main"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_gravity="center"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="8dp" />
-
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_gravity="right"
-            android:scaleType="centerInside"
-            android:src="@drawable/shuiyin" />
-
-    </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>
