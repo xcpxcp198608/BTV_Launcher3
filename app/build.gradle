@@ -9,13 +9,13 @@ android {
         minSdkVersion 16
         targetSdkVersion 22
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        versionCode 302
-        versionName "v3.0.2"
+        versionCode 303
+        versionName "v3.0.3"
     }
 
     signingConfigs {
         relealse {
-            storeFile file("F:/KeyStore/234.jks")
+            storeFile file("KeyStore/234.jks")
             storePassword  KEYSTORE_PASSWORD
             keyAlias "234"
             keyPassword KEY_PASSWORD
