@@ -19,14 +19,14 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="4.5"
+            android:layout_weight="4.7"
             android:orientation="vertical">
 
             <FrameLayout
                 android:id="@+id/fl_video"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 android:background="@drawable/item_black_bg"
                 android:clickable="true"
                 android:focusable="true"
@@ -49,6 +49,135 @@
                     android:src="@drawable/shuiyin" />
 
             </FrameLayout>
+
+            <LinearLayout
+                android:background="@drawable/item_main_bg"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp">
+
+                <LinearLayout
+                    android:clipChildren="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/ibt_btv"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/item_btv_bg"
+                        android:cropToPadding="true"
+                        android:padding="3dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/icon_btv" />
+
+                    <ImageView
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/black" />
+
+                    <ImageButton
+                        android:id="@+id/ibt_ldsupport"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/item_btv_bg"
+                        android:cropToPadding="true"
+                        android:padding="3dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/icon_customer_support" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:id="@+id/ibt_market"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/item_btv_bg"
+                        android:padding="20dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/icon_app_mkt" />
+
+                    <ImageView
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/black" />
+
+                    <ImageButton
+                        android:id="@+id/ibt_institute"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/item_btv_bg"
+                        android:padding="20dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/icon_institute" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:id="@+id/ibt_apps"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/item_btv_bg"
+                        android:padding="20dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/icon_apps" />
+
+                    <ImageView
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/black" />
+
+                    <ImageButton
+                        android:id="@+id/ibt_anti_virus"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/item_btv_bg"
+                        android:padding="20dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/icon_opportunity" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:clipChildren="false"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:layout_weight="4.1"
+            android:background="@drawable/item_main_bg"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -101,67 +230,21 @@
                 <TextView
                     android:text="Legacy Direct"
                     android:gravity="center"
+                    android:textSize="22sp"
                     android:textColor="@color/colorWhite"
                     android:background="@color/colorBlue5"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="32dp" />
 
                 <com.wiatec.btv_launcher.custom_view.MessageListView
                     android:id="@+id/lv_message"
                     android:divider="@android:color/darker_gray"
-                    android:dividerHeight="10dp"
+                    android:dividerHeight="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
 
             </LinearLayout>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:clipChildren="false"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="3dp"
-            android:layout_weight="4.1"
-            android:background="@drawable/item_main_bg"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:clipChildren="false"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/ibt_btv"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/item_btv_bg"
-                    android:cropToPadding="true"
-                    android:padding="3dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/icon_btv" />
-
-                <ImageView
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@android:color/black" />
-
-                <ImageButton
-                    android:id="@+id/ibt_ldsupport"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/item_btv_bg"
-                    android:cropToPadding="true"
-                    android:padding="3dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/icon_customer_support" />
-
-            </LinearLayout>
-
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -170,81 +253,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:id="@+id/ibt_market"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/item_btv_bg"
-                    android:padding="20dp"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/icon_app_mkt" />
-
-                <ImageView
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@android:color/black" />
-
-                <ImageButton
-                    android:id="@+id/ibt_institute"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/item_btv_bg"
-                    android:padding="20dp"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/icon_institute" />
-
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/black" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:id="@+id/ibt_apps"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/item_btv_bg"
-                    android:padding="20dp"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/icon_apps" />
-
-                <ImageView
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@android:color/black" />
-
-                <ImageButton
-                    android:id="@+id/ibt_anti_virus"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/item_btv_bg"
-                    android:padding="20dp"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/icon_opportunity" />
-
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/black" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="0.3"
                 android:orientation="vertical">
 
                 <LinearLayout

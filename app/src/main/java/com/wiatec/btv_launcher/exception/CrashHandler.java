@@ -99,7 +99,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             public void run() {
                 Looper.prepare();
                 ex.printStackTrace();
-                Toast.makeText(mContext, "Sorry , app have exception , exiting...", Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, "Unexpected error, system log", Toast.LENGTH_LONG).show();
                 Looper.loop();
             }
         }.start();

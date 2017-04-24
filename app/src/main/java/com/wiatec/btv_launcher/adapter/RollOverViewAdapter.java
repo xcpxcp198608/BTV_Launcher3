@@ -3,6 +3,7 @@ package com.wiatec.btv_launcher.adapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
@@ -20,7 +21,7 @@ import java.util.List;
 public class RollOverViewAdapter extends RollOverAdapter {
 
     private List<ImageInfo> list;
-    private ImageButton imageButton;
+    private ImageView imageView;
     private OnItemClickListener onItemClickListener;
 
     public RollOverViewAdapter(List<ImageInfo> list) {
@@ -34,25 +35,25 @@ public class RollOverViewAdapter extends RollOverAdapter {
 
     @Override
     public View getView(ViewGroup container, final int position) {
-        imageButton = new ImageButton(container.getContext());
+        imageView = new ImageView(container.getContext());
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);
-        imageButton.setLayoutParams(layoutParams);
-        imageButton.setPadding(4,4,4,4);
-        imageButton.setBackgroundResource(R.drawable.roll_over_bg);
-        imageButton.setScaleType(ImageButton.ScaleType.CENTER_CROP);
+        imageView.setLayoutParams(layoutParams);
+        imageView.setPadding(4,4,4,4);
+        imageView.setBackgroundResource(R.drawable.roll_over_bg);
+        imageView.setScaleType(ImageButton.ScaleType.CENTER_CROP);
         Glide.with(container.getContext()).load(list.get(position).getUrl())
                 .placeholder(R.drawable.loading)
                 .error(R.drawable.loading)
                 .dontAnimate()
-                .into(imageButton);
-        imageButton.setOnClickListener(new View.OnClickListener() {
+                .into(imageView);
+        imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onItemClickListener.onItemClick(v,position);
             }
         });
-        imageButton.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        imageView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
@@ -60,7 +61,7 @@ public class RollOverViewAdapter extends RollOverAdapter {
                 }
             }
         });
-        return imageButton;
+        return imageView;
     }
 
     public interface OnItemClickListener{

@@ -31,8 +31,8 @@ public class RollImageAdapter extends StaticPagerAdapter {
     public View getView(final ViewGroup container, final int position) {
         ImageView imageView = new ImageView(container.getContext());
         imageView.setBackgroundResource(R.drawable.white_side);
-        imageView.setFocusable(true);
-        imageView.setClickable(true);
+        imageView.setFocusable(false);
+        imageView.setClickable(false);
         imageView.setPadding(4,4,4,4);
         final ImageInfo imageInfo = list.get(position);
         if(imageInfo == null){

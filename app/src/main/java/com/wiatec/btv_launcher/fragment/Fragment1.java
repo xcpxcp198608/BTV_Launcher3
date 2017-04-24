@@ -40,8 +40,11 @@ import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.SQL.InstalledAppDao;
 import com.wiatec.btv_launcher.Utils.SPUtils;
+import com.wiatec.btv_launcher.adapter.MessageListAdapter;
 import com.wiatec.btv_launcher.bean.InstalledApp;
+import com.wiatec.btv_launcher.bean.MessageListInfo;
 import com.wiatec.btv_launcher.bean.UserDataInfo;
+import com.wiatec.btv_launcher.custom_view.MessageListView;
 import com.wiatec.btv_launcher.custom_view.MultiImage;
 import com.wiatec.btv_launcher.custom_view.RollOverView;
 import com.wiatec.btv_launcher.receiver.OnNetworkStatusListener;
@@ -61,6 +64,7 @@ import com.wiatec.btv_launcher.presenter.Fragment1Presenter;
 import com.wiatec.btv_launcher.receiver.NetworkStatusReceiver;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -122,6 +126,8 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     ImageView ivLdCloudSmall;
     @BindView(R.id.ibt_eufonico)
     ImageButton ibtEufonico;
+    @BindView(R.id.lv_message)
+    MessageListView messageListView;
 
     private boolean isF1Visible = false;
     private NetworkStatusReceiver networkStatusReceiver;
@@ -142,7 +148,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment1, container, false);
+        View view = inflater.inflate(R.layout.fragment1_3, container, false);
         ButterKnife.bind(this, view);
         networkStatusReceiver = new NetworkStatusReceiver(null);
         networkStatusReceiver.setOnNetworkStatusListener(this);
@@ -176,6 +182,10 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 return true;
             }
         });
+
+        MessageListAdapter messageListAdapter = new MessageListAdapter(Application.getContext() , null);
+        messageListView.setAdapter(messageListAdapter);
+        messageListView.start();
     }
 
     @Override
@@ -233,6 +243,9 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         }
         if(ibt_LdCloud!= null){
             ibt_LdCloud.stop();
+        }
+        if(messageListView != null){
+            messageListView.stop();
         }
     }
 

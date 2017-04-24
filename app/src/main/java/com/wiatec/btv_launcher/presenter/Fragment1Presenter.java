@@ -162,7 +162,7 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
         String userName = (String) SPUtils.get(Application.getContext() , "userName" ,"");
         String token = (String) SPUtils.get(Application.getContext() , "token" ,"");
         if(TextUtils.isEmpty(userName) || TextUtils.isEmpty(token)){
-            Application.getContext().startActivity(new Intent( Application.getContext() , LoginActivity.class));
+            Application.getContext().startActivity(new Intent(Application.getContext() , LoginActivity.class));
         }else {
             check(userName , packageName);
         }
