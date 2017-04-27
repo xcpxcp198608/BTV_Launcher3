@@ -46,9 +46,11 @@ public class MessageListView extends ListView {
             super.handleMessage(msg);
             MessageListView messageListView = weakReference.get();
             messageListView.currentPosition = messageListView.currentPosition + 1 ;
-            if(messageListView.currentPosition > messageListView.getChildCount()){
+            Logger.d(messageListView.getChildCount()+"");
+            if(messageListView.currentPosition > messageListView.getCount()){
                 messageListView.currentPosition = 0;
             }
+            Logger.d(messageListView.currentPosition+"");
             messageListView.smoothScrollToPosition(messageListView.currentPosition);
         }
     }

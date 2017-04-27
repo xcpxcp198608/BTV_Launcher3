@@ -1,6 +1,5 @@
 package com.wiatec.btv_launcher.fragment;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -20,19 +19,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import com.bumptech.glide.Glide;
 import com.jude.rollviewpager.RollPagerView;
 import com.wiatec.btv_launcher.Activity.AppSelectActivity;
 import com.wiatec.btv_launcher.Activity.CloudImageFullScreen1Activity;
 import com.wiatec.btv_launcher.Activity.FMPlayActivity;
 import com.wiatec.btv_launcher.Activity.LoginActivity;
-import com.wiatec.btv_launcher.Activity.LoginSplashActivity;
-import com.wiatec.btv_launcher.Activity.MainActivity;
 import com.wiatec.btv_launcher.Activity.MenuActivity;
 import com.wiatec.btv_launcher.Activity.Message1Activity;
 import com.wiatec.btv_launcher.Activity.Opportunity1Activity;
-import com.wiatec.btv_launcher.Activity.PlayActivity;
-import com.wiatec.btv_launcher.Activity.PlayAdActivity;
 import com.wiatec.btv_launcher.Activity.Splash1Activity;
 import com.wiatec.btv_launcher.Activity.UserManual1Activity;
 import com.wiatec.btv_launcher.Activity.WebViewActivity;
@@ -40,9 +34,9 @@ import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.SQL.InstalledAppDao;
 import com.wiatec.btv_launcher.Utils.SPUtils;
-import com.wiatec.btv_launcher.adapter.MessageListAdapter;
+import com.wiatec.btv_launcher.adapter.PushMessageAdapter;
 import com.wiatec.btv_launcher.bean.InstalledApp;
-import com.wiatec.btv_launcher.bean.MessageListInfo;
+import com.wiatec.btv_launcher.bean.PushMessageInfo;
 import com.wiatec.btv_launcher.bean.UserDataInfo;
 import com.wiatec.btv_launcher.custom_view.MessageListView;
 import com.wiatec.btv_launcher.custom_view.MultiImage;
@@ -64,7 +58,6 @@ import com.wiatec.btv_launcher.presenter.Fragment1Presenter;
 import com.wiatec.btv_launcher.receiver.NetworkStatusReceiver;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -182,10 +175,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 return true;
             }
         });
-
-        MessageListAdapter messageListAdapter = new MessageListAdapter(Application.getContext() , null);
-        messageListView.setAdapter(messageListAdapter);
-        messageListView.start();
     }
 
     @Override
@@ -207,6 +196,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         if (presenter != null) {
             presenter.loadImageData();
             presenter.loadCloudData();
+            presenter.loadPushMessage();
         }
     }
 
@@ -267,9 +257,9 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ibt_btv:
-                intent.setClass(getContext() , LoginSplashActivity.class);
-                intent.putExtra("packageName" , F.package_name.btv);
-                startActivity(intent);
+                intent.setClass(getActivity(), FMPlayActivity.class);
+                intent.putExtra("url", F.url.eufonico);
+                getContext().startActivity(intent);
                 break;
             case R.id.ibt_user_guide:
                 startActivity(new Intent(getContext() , UserManual1Activity.class));
@@ -283,7 +273,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 startActivity(new Intent(getContext(), MenuActivity.class));
                 break;
             case R.id.ibt_market:
-                presenter.launchApp(F.package_name.market);
+                launchAppByLogin(F.package_name.market);
                 break;
             case R.id.ibt_anti_virus:
                 startActivity(new Intent(getContext(), Opportunity1Activity.class));
@@ -297,7 +287,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 }
                 break;
             case R.id.fl_video:
-                presenter.launchApp(F.package_name.bplay);
+                launchAppByLogin(F.package_name.btv);
                 break;
             case R.id.ibt_full_screen:
                 if(isCloudImagePlaying){
@@ -326,6 +316,16 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 break;
             default:
                 break;
+        }
+    }
+
+    private void launchAppByLogin(String packageName){
+        String userName = (String) SPUtils.get(Application.getContext() , "userName" ,"");
+        String token = (String) SPUtils.get(Application.getContext() , "token" ,"");
+        if(TextUtils.isEmpty(userName) || TextUtils.isEmpty(token)){
+            getContext().startActivity(new Intent(getContext() , LoginActivity.class));
+        }else {
+            presenter.check(userName , packageName);
         }
     }
 
@@ -522,6 +522,15 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 }
             }
         });
+    }
+
+    @Override
+    public void loadPushMessage(List<PushMessageInfo> list) {
+        if(list != null && list.size() >0){
+            PushMessageAdapter pushMessageAdapter = new PushMessageAdapter(getContext() ,list);
+            messageListView.setAdapter(pushMessageAdapter);
+            messageListView.start();
+        }
     }
 
     public void showLinkByBrowser(String url) {

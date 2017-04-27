@@ -19,15 +19,18 @@ import com.wiatec.btv_launcher.Utils.OkHttp.Listener.StringListener;
 import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
 import com.wiatec.btv_launcher.Utils.SPUtils;
 import com.wiatec.btv_launcher.bean.ImageInfo;
+import com.wiatec.btv_launcher.bean.PushMessageInfo;
 import com.wiatec.btv_launcher.bean.Result;
 import com.wiatec.btv_launcher.bean.UserDataInfo;
 import com.wiatec.btv_launcher.bean.VideoInfo;
 import com.wiatec.btv_launcher.data.CloudImageData;
 import com.wiatec.btv_launcher.data.ICloudImageData;
 import com.wiatec.btv_launcher.data.IImageData;
+import com.wiatec.btv_launcher.data.IPushMessageData;
 import com.wiatec.btv_launcher.data.IRollImageData;
 import com.wiatec.btv_launcher.data.IVideoData;
 import com.wiatec.btv_launcher.data.ImageData;
+import com.wiatec.btv_launcher.data.PushMessageData;
 import com.wiatec.btv_launcher.data.RollImageData;
 import com.wiatec.btv_launcher.data.RollOverImageData;
 import com.wiatec.btv_launcher.data.UploadTimeData;
@@ -49,6 +52,7 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
     private IRollImageData iRollOverImage;
     private ICloudImageData iCloudImageData;
     private IVideoData iVideoData;
+    private IPushMessageData iPushMessageData;
     private UploadTimeData uploadTimeData;
 
     public Fragment1Presenter(IFragment1 iFragment1) {
@@ -59,6 +63,7 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
         iCloudImageData = new CloudImageData();
         iVideoData = new VideoData();
         uploadTimeData = new UploadTimeData();
+        iPushMessageData = new PushMessageData();
     }
 
     public void loadImageData(){
@@ -128,6 +133,22 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
         }
     }
 
+    public void loadPushMessage(){
+        if(iPushMessageData != null){
+            iPushMessageData.loadData(new IPushMessageData.OnLoadListener() {
+                @Override
+                public void onSuccess(List<PushMessageInfo> list) {
+                    iFragment1.loadPushMessage(list);
+                }
+
+                @Override
+                public void onFailure(String e) {
+                    Logger.d(e);
+                }
+            });
+        }
+    }
+
     public void loadVideo (){
         try {
             if(iVideoData != null){
@@ -158,17 +179,7 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
         }
     }
 
-    public void launchApp(String packageName){
-        String userName = (String) SPUtils.get(Application.getContext() , "userName" ,"");
-        String token = (String) SPUtils.get(Application.getContext() , "token" ,"");
-        if(TextUtils.isEmpty(userName) || TextUtils.isEmpty(token)){
-            Application.getContext().startActivity(new Intent(Application.getContext() , LoginActivity.class));
-        }else {
-            check(userName , packageName);
-        }
-    }
-
-    private void check(String userName , final String packageName){
+    public void check(String userName , final String packageName){
         OkMaster.post(F.url.level_check)
                 .parames("userInfo.userName" , userName)
                 .enqueue(new StringListener() {

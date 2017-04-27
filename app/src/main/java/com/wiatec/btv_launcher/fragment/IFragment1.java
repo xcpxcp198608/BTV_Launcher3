@@ -2,6 +2,7 @@ package com.wiatec.btv_launcher.fragment;
 
 import com.wiatec.btv_launcher.bean.CloudImageInfo;
 import com.wiatec.btv_launcher.bean.ImageInfo;
+import com.wiatec.btv_launcher.bean.PushMessageInfo;
 import com.wiatec.btv_launcher.bean.RollImageInfo;
 import com.wiatec.btv_launcher.bean.VideoInfo;
 
@@ -18,4 +19,5 @@ public interface IFragment1 {
     void loadRollOverImage(List<ImageInfo> list);
     void loadCloudImage(List<String> list);
     void loadVideo(List<VideoInfo> list);
+    void loadPushMessage(List<PushMessageInfo> list);
 }

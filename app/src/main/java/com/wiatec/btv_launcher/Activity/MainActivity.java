@@ -16,6 +16,7 @@ import android.os.SystemClock;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -27,6 +28,7 @@ import android.widget.TextView;
 
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.Utils.SPUtils;
 import com.wiatec.btv_launcher.bean.DeviceInfo;
 import com.wiatec.btv_launcher.custom_view.RollTextView;
 import com.wiatec.btv_launcher.receiver.OnNetworkStatusListener;
@@ -81,6 +83,8 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
     TextView tv_MessageCount;
     @BindView(R.id.tv_version)
     TextView tvVersion;
+    @BindView(R.id.tv_welcome)
+    TextView tvWelcome;
 
     private Fragment1 fragment1;
     private NetworkStatusReceiver networkStatusReceiver;
@@ -118,6 +122,10 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
     @Override
     protected void onStart() {
         super.onStart();
+        String userName = (String) SPUtils.get(MainActivity.this , "userName" , "");
+        if(!TextUtils.isEmpty(userName)){
+            tvWelcome.setText(getString(R.string.welcome) + " " + userName);
+        }
         mDeviceInfo = deviceInfo;
         if(presenter != null){
             presenter.loadWeatherInfo();

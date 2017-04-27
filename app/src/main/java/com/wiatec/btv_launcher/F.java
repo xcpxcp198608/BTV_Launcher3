@@ -29,6 +29,7 @@ public final class F {
 
         public static final String message="http://appota.gobeyondtv.co:8080/launcher/message/get";
         public static final String message1="http://appota.gobeyondtv.co:8080/launcher/message1/get";
+        public static final String push_message="http://appota.gobeyondtv.co:8080/push_message/get";
 
         public static final String login="http://appota.gobeyondtv.co:8080/launcher/user/login";
         public static final String register="http://appota.gobeyondtv.co:8080/launcher/user/register";
