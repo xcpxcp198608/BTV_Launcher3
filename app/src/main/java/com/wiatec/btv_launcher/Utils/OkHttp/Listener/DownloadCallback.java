@@ -81,11 +81,9 @@ public class DownloadCallback implements Callback {
     @Override
     public void onFailure(Call call, IOException e) {
         Logger.d(e.getMessage());
-//        if(downloadInfo == null){
-//            downloadInfo = new DownloadInfo();
-//        }
-//        downloadInfo.setMessage(e.getMessage());
-//        handler.obtainMessage(STATUS_ERROR ,downloadInfo).sendToTarget();
+        downloadInfo = new DownloadInfo();
+        downloadInfo.setMessage(e.getMessage()+"");
+        handler.obtainMessage(STATUS_ERROR ,downloadInfo).sendToTarget();
     }
 
     @Override
