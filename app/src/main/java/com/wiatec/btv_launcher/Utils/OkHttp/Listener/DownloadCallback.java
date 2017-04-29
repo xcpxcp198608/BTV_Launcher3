@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
+import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.OkHttp.Bean.DownloadInfo;
 
 import java.io.File;
@@ -71,7 +72,6 @@ public class DownloadCallback implements Callback {
     public DownloadCallback(DownloadInfo downloadInfo ,DownloadListener downloadListener){
         this.downloadInfo = downloadInfo;
         this.downloadListener = downloadListener;
-        //Logger.d(downloadInfo.toString());
         downloadInfo.setStatus(STATUS_PENDING);
         downloadInfo.setProgress(0);
         downloadInfo.setMessage("download is preparing ,please wait");
@@ -80,6 +80,7 @@ public class DownloadCallback implements Callback {
 
     @Override
     public void onFailure(Call call, IOException e) {
+        Logger.d(e.getMessage());
 //        if(downloadInfo == null){
 //            downloadInfo = new DownloadInfo();
 //        }

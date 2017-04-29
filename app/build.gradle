@@ -56,7 +56,7 @@ android {
                 if (variant.buildType.name.equals('release')) {
                     fileName = "${defaultConfig.applicationId}_${defaultConfig.versionName}_${defaultConfig.versionCode}_${releaseTime()}.apk"
                 } else if (variant.buildType.name.equals('debug')) {
-                    fileName = "${defaultConfig.applicationId}_${defaultConfig.versionName}_${defaultConfig.versionCode}_${releaseTime()}_debug.apk"
+                    fileName = "${defaultConfig.applicationId}_${defaultConfig.versionName}_${defaultConfig.versionCode}_debug.apk"
                 }
                 output.outputFile = new File(outputFile.parent, fileName)
             }

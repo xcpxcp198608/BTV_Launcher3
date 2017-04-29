@@ -1,5 +1,6 @@
 package com.wiatec.btv_launcher.fragment;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -143,6 +144,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment1_3, container, false);
         ButterKnife.bind(this, view);
+
         networkStatusReceiver = new NetworkStatusReceiver(null);
         networkStatusReceiver.setOnNetworkStatusListener(this);
         getContext().registerReceiver(networkStatusReceiver, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
@@ -240,6 +242,14 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        if(messageListView != null){
+            messageListView.stop();
+        }
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         getContext().unregisterReceiver(networkStatusReceiver);
@@ -248,6 +258,9 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         }
         if (messageSubscription != null) {
             messageSubscription.unsubscribe();
+        }
+        if(messageListView != null){
+            messageListView.stop();
         }
     }
 
@@ -273,7 +286,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 startActivity(new Intent(getContext(), MenuActivity.class));
                 break;
             case R.id.ibt_market:
-                launchAppByLogin(F.package_name.market);
+                launchAppByLogin(getContext() , F.package_name.market);
                 break;
             case R.id.ibt_anti_virus:
                 startActivity(new Intent(getContext(), Opportunity1Activity.class));
@@ -287,7 +300,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 }
                 break;
             case R.id.fl_video:
-                launchAppByLogin(F.package_name.btv);
+                launchAppByLogin(getContext() , F.package_name.btv);
                 break;
             case R.id.ibt_full_screen:
                 if(isCloudImagePlaying){
@@ -319,13 +332,14 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         }
     }
 
-    private void launchAppByLogin(String packageName){
+    private void launchAppByLogin(Context context , String packageName){
         String userName = (String) SPUtils.get(Application.getContext() , "userName" ,"");
         String token = (String) SPUtils.get(Application.getContext() , "token" ,"");
         if(TextUtils.isEmpty(userName) || TextUtils.isEmpty(token)){
             getContext().startActivity(new Intent(getContext() , LoginActivity.class));
         }else {
-            presenter.check(userName , packageName);
+            Logger.d(""+packageName);
+            presenter.check(userName , packageName , context );
         }
     }
 

@@ -1,5 +1,6 @@
 package com.wiatec.btv_launcher.presenter;
 
+import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.widget.Toast;
@@ -179,7 +180,7 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
         }
     }
 
-    public void check(String userName , final String packageName){
+    public void check(String userName , final String packageName , final Context context){
         OkMaster.post(F.url.level_check)
                 .parames("userInfo.userName" , userName)
                 .enqueue(new StringListener() {
@@ -191,27 +192,30 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
                         Result result = new Gson().fromJson(s , new TypeToken<Result>(){}.getType());
                         if(result.getCode() == Result.CODE_OK){
                             if(result.getCount() > 1){
-                                if (ApkCheck.isApkInstalled(Application.getContext(),packageName)) {
-                                    ApkLaunch.launchApkByPackageName(Application.getContext(), packageName);
+                                if (ApkCheck.isApkInstalled(context,packageName)) {
+                                    ApkLaunch.launchApkByPackageName(context, packageName);
                                 }else{
                                     Toast.makeText(Application.getContext() , Application.getContext().getString(R.string.download_guide),
                                             Toast.LENGTH_LONG).show();
-                                    ApkLaunch.launchApkByPackageName(Application.getContext(), F.package_name.market);
+                                    ApkLaunch.launchApkByPackageName(context, F.package_name.market);
                                 }
-                            }else {
+                            }else if(result.getCount() == 1){
                                 if(packageName.equals(F.package_name.btv)) {
-                                    Intent intent = new Intent(Application.getContext(), PlayAdActivity.class);
+                                    Intent intent = new Intent(context, PlayAdActivity.class);
                                     intent.putExtra("packageName", F.package_name.btv);
-                                    Application.getContext().startActivity(intent);
+                                    context.startActivity(intent);
                                 }else{
                                     if (ApkCheck.isApkInstalled(Application.getContext(),packageName)) {
-                                        ApkLaunch.launchApkByPackageName(Application.getContext(), packageName);
+                                        ApkLaunch.launchApkByPackageName(context, packageName);
                                     }else{
                                         Toast.makeText(Application.getContext() , Application.getContext().getString(R.string.download_guide),
                                                 Toast.LENGTH_LONG).show();
-                                        ApkLaunch.launchApkByPackageName(Application.getContext(), F.package_name.market);
+                                        ApkLaunch.launchApkByPackageName(context, F.package_name.market);
                                     }
                                 }
+                            }else{
+                                Toast.makeText(Application.getContext() , Application.getContext().getString(R.string.account_error) ,
+                                        Toast.LENGTH_LONG).show();
                             }
                         }else{
                             Toast.makeText(Application.getContext() , Application.getContext().getString(R.string.account_error) ,

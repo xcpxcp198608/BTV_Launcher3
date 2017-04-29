@@ -20,6 +20,7 @@ public class MessageListView extends ListView {
     private Timer timer;
     private int interval = 13000;
     private int currentPosition = 0;
+    private ScrollTask mScrollTask;
 
     public MessageListView(Context context) {
         this(context , null);
@@ -46,11 +47,9 @@ public class MessageListView extends ListView {
             super.handleMessage(msg);
             MessageListView messageListView = weakReference.get();
             messageListView.currentPosition = messageListView.currentPosition + 1 ;
-            Logger.d(messageListView.getChildCount()+"");
             if(messageListView.currentPosition > messageListView.getCount()){
                 messageListView.currentPosition = 0;
             }
-            Logger.d(messageListView.currentPosition+"");
             messageListView.smoothScrollToPosition(messageListView.currentPosition);
         }
     }
@@ -81,13 +80,17 @@ public class MessageListView extends ListView {
             timer.cancel();
         }
         timer = new Timer();
-        timer.schedule(new ScrollTask(this) , interval , interval);
+        mScrollTask = new ScrollTask(this);
+        timer.schedule(mScrollTask , interval , interval);
     }
 
     public void stop (){
         if(timer != null){
             timer.cancel();
             timer = null;
+        }
+        if(timerHandler != null){
+            timerHandler.removeCallbacks(mScrollTask);
         }
     }
 
