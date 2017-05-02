@@ -49,6 +49,6 @@
     <string name="register_success">Congratulations! Registration success, please check your email to confirm the activation then login your account.</string>
     <string name="login_repeat">Account login error, please login again</string>
     <string name="account_error">Please contact support@legacy.direct or text to 9499889000 to inquire about this issue.</string>
-    <string name="welcome">welcome ! </string>
+    <string name="welcome">welcome : </string>
 
 </resources>

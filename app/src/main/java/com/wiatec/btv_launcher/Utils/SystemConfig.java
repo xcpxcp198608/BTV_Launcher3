@@ -62,10 +62,27 @@ public class SystemConfig {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if(networkInfo !=null && networkInfo.isAvailable()){
-            return true;
+            return networkInfo.isConnected();
         }else {
             return false;
         }
+    }
+
+    //通过ping ip判断网络是否真正可用
+    public boolean pingNetWork(){
+        String url = "http://www.baidu.com";
+        try {
+            Process process = Runtime.getRuntime().exec("ping -c 3 -w 100 " + url);
+            int status = process.waitFor();
+            if(status == 0 ){
+                return true;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     //判断当前网络连接方式

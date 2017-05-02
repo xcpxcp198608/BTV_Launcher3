@@ -69,7 +69,7 @@ public class LoadCloud implements Runnable {
                 tokenInfo.setToken(cursor.getString(cursor.getColumnIndex("token")));
             }
             String token = tokenInfo.getToken();
-            Logger.d(token);
+//            Logger.d(token);
             if(TextUtils.isEmpty(token)){
                 return null;
             }
@@ -123,7 +123,7 @@ public class LoadCloud implements Runnable {
                                 imageInfo.setUrl(url);
                                 imageInfo.setName(name);
                                 imageInfo.setPath(path);
-                                Logger.d(imageInfo.toString());
+//                                Logger.d(imageInfo.toString());
                                 OkMaster.download(Application.getContext()).path(imageInfo.getPath())
                                         .name(imageInfo.getName())
                                         .url(imageInfo.getUrl())
@@ -151,7 +151,7 @@ public class LoadCloud implements Runnable {
                     Logger.d(file1.getName() +" need delete");
                     file1.delete();
                 }else{
-                    Logger.d(file1.getName() +" keep");
+//                    Logger.d(file1.getName() +" keep");
                 }
             }
 

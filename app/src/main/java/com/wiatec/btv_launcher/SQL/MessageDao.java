@@ -50,7 +50,7 @@ public class MessageDao {
             if(isExists(messageInfo)){
                 flag = false;
             }else {
-                Logger.d("insert");
+//                Logger.d("insert");
                 ContentValues contentValues = new ContentValues();
                 contentValues.put("title", messageInfo.getTitle());
                 contentValues.put("content", messageInfo.getContent());

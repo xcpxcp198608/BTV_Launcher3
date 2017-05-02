@@ -16,6 +16,7 @@ import com.wiatec.btv_launcher.Utils.OkHttp.Listener.DownloadListener;
 import com.wiatec.btv_launcher.Utils.OkHttp.Listener.StringListener;
 import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
 import com.wiatec.btv_launcher.Utils.SPUtils;
+import com.wiatec.btv_launcher.Utils.SystemConfig;
 import com.wiatec.btv_launcher.bean.Message1Info;
 import com.wiatec.btv_launcher.bean.MessageInfo;
 import com.wiatec.btv_launcher.bean.UpdateInfo;
@@ -237,6 +238,9 @@ public class MainPresenter extends BasePresenter<IMainActivity> {
     }
 
     public void downloadAdVideo (String name , String url){
+        if(!SystemConfig.isNetworkConnected(Application.getContext())){
+            return;
+        }
         OkMaster.download(Application.getContext())
                 .path(F.path.download)
                 .name(name)

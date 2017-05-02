@@ -84,7 +84,8 @@ public class DownloadCallback implements Callback {
         if(e != null){
             downloadInfo.setMessage(e.getMessage());
         }
-        downloadListener.onError(downloadInfo);
+        downloadInfo.setStatus(STATUS_ERROR);
+        handler.obtainMessage(STATUS_ERROR ,downloadInfo).sendToTarget();
     }
 
     @Override
