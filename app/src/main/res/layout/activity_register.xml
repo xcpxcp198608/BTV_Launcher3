@@ -14,7 +14,8 @@
             android:textColorHint="@color/colorItemGrayBlue"
             android:id="@+id/et_username"
             android:hint="@string/input_key"
-            android:background="@color/colorBTV"
+            android:padding="4dp"
+            android:background="@drawable/bg_text_view"
             android:textColor="@color/colorWhite"
             android:layout_width="350dp"
             android:layout_height="50dp" />
@@ -25,12 +26,14 @@
             android:textColorHint="@color/colorItemGrayBlue"
             android:id="@+id/et_email"
             android:hint="@string/email"
+            android:padding="4dp"
             android:textColor="@color/colorWhite"
-            android:background="@color/colorBTV"
+            android:background="@drawable/bg_text_view"
             android:layout_width="350dp"
             android:layout_height="50dp" />
 
         <EditText
+            android:padding="4dp"
             android:textSize="22sp"
             android:layout_marginTop="10dp"
             android:textColorHint="@color/colorItemGrayBlue"
@@ -38,11 +41,12 @@
             android:inputType="textPassword"
             android:hint="@string/input_password"
             android:textColor="@color/colorWhite"
-            android:background="@color/colorBTV"
+            android:background="@drawable/bg_text_view"
             android:layout_width="350dp"
             android:layout_height="50dp" />
 
         <EditText
+            android:padding="4dp"
             android:textSize="22sp"
             android:layout_marginTop="10dp"
             android:textColorHint="@color/colorItemGrayBlue"
@@ -50,9 +54,18 @@
             android:inputType="textPassword"
             android:textColor="@color/colorWhite"
             android:hint="@string/input_password"
-            android:background="@color/colorBTV"
+            android:background="@drawable/bg_text_view"
             android:layout_width="350dp"
             android:layout_height="50dp" />
+
+        <Spinner
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_text_view"
+            android:id="@+id/sp_language"
+            android:spinnerMode="dialog"
+            android:prompt="@string/select_language"
+            android:layout_width="350dp"
+            android:layout_height="40dp"/>
 
         <Button
             android:onClick="{(view) -> onEvent.onClick(view)}"

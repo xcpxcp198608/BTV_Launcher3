@@ -9,6 +9,7 @@ import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,10 +18,17 @@ import android.widget.VideoView;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.R;
+import com.wiatec.btv_launcher.Utils.SPUtils;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
+import rx.Observable;
 import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by patrick on 2017/2/15.
@@ -31,6 +39,7 @@ public class BootAdActivity extends AppCompatActivity {
     private LinearLayout llDelay;
     private TextView tvTimeDelay;
     private Subscription subscription;
+    private int time ;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,6 +53,7 @@ public class BootAdActivity extends AppCompatActivity {
         int index = (int) (audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)*0.2);
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC , index , 0);
         deleteOldFolder();
+        time = (int) SPUtils.get(BootAdActivity.this , "bootAdVideoTime" , 0);
     }
 
     private void deleteOldFolder() {
@@ -91,6 +101,7 @@ public class BootAdActivity extends AppCompatActivity {
                 @Override
                 public void onCompletion(MediaPlayer mp) {
                     Application.setBootStatus(false);
+                    llDelay.setVisibility(View.GONE);
                     startActivity(new Intent(BootAdActivity.this , MainActivity.class));
                     finish();
                 }
@@ -99,6 +110,19 @@ public class BootAdActivity extends AppCompatActivity {
             Application.setBootStatus(false);
             startActivity(new Intent(BootAdActivity.this , MainActivity.class));
             finish();
+        }
+        if(time >0){
+            llDelay.setVisibility(View.VISIBLE);
+            Observable.interval(0,1 , TimeUnit.SECONDS).take(time)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Action1<Long>() {
+                        @Override
+                        public void call(Long aLong) {
+                            int i = (int) (time -1 - aLong);
+                            tvTimeDelay.setText(i+" s");
+                        }
+                    });
         }
     }
 

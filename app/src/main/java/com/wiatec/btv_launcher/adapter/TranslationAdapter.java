@@ -1,12 +1,15 @@
 package com.wiatec.btv_launcher.adapter;
 
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.squareup.picasso.Picasso;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.bean.ImageInfo;
 import com.wiatec.btv_launcher.custom_view.TranslationViewAdapter;
@@ -35,7 +38,13 @@ public class TranslationAdapter extends TranslationViewAdapter {
         imageView.setCropToPadding(true);
         imageView.setBackgroundResource(R.color.colorBlue5);
         int index = position % list.size();
-        Glide.with(container.getContext()).load(list.get(index).getUrl()).dontAnimate().into(imageView);
+        if (!TextUtils.isEmpty(list.get(index).getUrl())) {
+            Glide.with(container.getContext())
+                    .load(list.get(index).getUrl())
+                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                    .dontAnimate()
+                    .into(imageView);
+        }
         return imageView;
     }
 

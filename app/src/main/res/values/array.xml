@@ -11,5 +11,13 @@
         <item>BKEYMO</item>
     </string-array>
 
+    <string-array name="languages1">
+        <item>English</item>
+        <item>Spanish</item>
+        <item>中文</item>
+        <item>French</item>
+        <item>Italian</item>
+        <item>German</item>
+    </string-array>
 
 </resources>

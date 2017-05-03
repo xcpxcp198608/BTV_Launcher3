@@ -4,13 +4,17 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.R;
+import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.SPUtils;
 import com.wiatec.btv_launcher.bean.Result;
 import com.wiatec.btv_launcher.bean.UserInfo;
@@ -37,6 +41,8 @@ public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterP
     EditText etEmail;
     @BindView(R.id.bt_register)
     Button btRegister;
+    @BindView(R.id.sp_language)
+    Spinner spLanguage;
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
 
@@ -44,6 +50,7 @@ public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterP
     private String password;
     private String password1;
     private String email;
+    private String language;
 
     @Override
     protected RegisterPresenter createPresenter() {
@@ -55,7 +62,44 @@ public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterP
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this ,
+                android.R.layout.simple_spinner_item , getResources().getStringArray(R.array.languages1));
+        spLanguage.setAdapter(arrayAdapter);
+        spLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position){
+                    case 0:
+                        language = "English";
+                        break;
+                    case 1:
+                        language = "Spanish";
+                        break;
+                    case 2:
+                        language = "Chinese";
+                        break;
+                    case 3:
+                        language = "French";
+                        break;
+                    case 4:
+                        language = "Italian";
+                        break;
+                    case 5:
+                        language = "German";
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     @OnClick(R.id.bt_register)
@@ -88,7 +132,7 @@ public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterP
         userInfo.setUserName(userName);
         userInfo.setPassword(password);
         userInfo.setEmail(email);
-        presenter.register(userInfo, deviceInfo);
+        presenter.register(userInfo, deviceInfo ,language);
         progressBar.setVisibility(View.VISIBLE);
     }
 

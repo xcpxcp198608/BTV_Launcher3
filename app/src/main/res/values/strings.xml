@@ -50,5 +50,6 @@
     <string name="login_repeat">Account login error, please login again</string>
     <string name="account_error">Please contact support@legacy.direct or text to 9499889000 to inquire about this issue.</string>
     <string name="welcome">welcome : </string>
+    <string name="select_language">Select Language</string>
 
 </resources>

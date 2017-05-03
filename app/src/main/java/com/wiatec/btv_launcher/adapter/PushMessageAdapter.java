@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.squareup.picasso.Picasso;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.bean.PushMessageInfo;
 
@@ -74,12 +76,18 @@ public class PushMessageAdapter extends BaseAdapter {
         String time = pushMessageInfo.getTime().substring(0 , pushMessageInfo.getTime().length() -2);
         viewHolder.tvTime.setText(time);
         viewHolder.tvMessage.setText(pushMessageInfo.getMessage());
-        Glide.with(context).load(pushMessageInfo.getImg1())
-                .dontAnimate()
-                .into(viewHolder.ivImg1);
-        Glide.with(context).load(pushMessageInfo.getImg2())
-                .dontAnimate()
-                .into(viewHolder.ivImg2);
+        if(!TextUtils.isEmpty(pushMessageInfo.getImg1())){
+            Glide.with(context).load(pushMessageInfo.getImg1())
+                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                    .dontAnimate()
+                    .into(viewHolder.ivImg1);
+        }
+        if(!TextUtils.isEmpty(pushMessageInfo.getImg2())){
+            Glide.with(context).load(pushMessageInfo.getImg2())
+                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                    .dontAnimate()
+                    .into(viewHolder.ivImg2);
+        }
         return convertView;
     }
 

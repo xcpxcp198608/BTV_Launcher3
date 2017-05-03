@@ -25,7 +25,7 @@ public class RegisterPresenter extends BasePresenter<IRegisterActivity> {
         this.iRegisterActivity = iRegisterActivity;
     }
 
-    public void register (UserInfo userInfo , DeviceInfo deviceInfo){
+    public void register (UserInfo userInfo , DeviceInfo deviceInfo ,String language){
         try {
             OkMaster.get(F.url.register)
                     .parames("userInfo.userName",userInfo.getUserName())
@@ -34,6 +34,7 @@ public class RegisterPresenter extends BasePresenter<IRegisterActivity> {
                     .parames("deviceInfo.countryCode",deviceInfo.getCountryCode())
                     .parames("deviceInfo.mac", deviceInfo.getMac())
                     .parames("deviceInfo.city", deviceInfo.getCity())
+                    .parames("language", language)
                     .enqueue(new StringListener() {
                         @Override
                         public void onSuccess(String s) throws IOException {

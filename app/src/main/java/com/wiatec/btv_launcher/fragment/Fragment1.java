@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -52,8 +54,6 @@ import com.wiatec.btv_launcher.Utils.ApkCheck;
 import com.wiatec.btv_launcher.Utils.ApkLaunch;
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.SystemConfig;
-import com.wiatec.btv_launcher.adapter.RollImageAdapter;
-import com.wiatec.btv_launcher.adapter.RollOverViewAdapter;
 import com.wiatec.btv_launcher.animator.Zoom;
 import com.wiatec.btv_launcher.bean.ImageInfo;
 import com.wiatec.btv_launcher.bean.MessageInfo;
@@ -82,8 +82,8 @@ import rx.schedulers.Schedulers;
  */
 
 public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> implements IFragment1, OnNetworkStatusListener, View.OnFocusChangeListener {
-    @BindView(R.id.ibt_btv)
-    ImageButton ibt_Btv;
+    @BindView(R.id.ibt_eufonico)
+    ImageButton ibtEufonico;
     @BindView(R.id.ibt_user_guide)
     ImageButton ibt_UserGuide;
     @BindView(R.id.ibt_setting)
@@ -96,10 +96,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     ImageButton ibt_AntiVirus;
     @BindView(R.id.ibt_message)
     ImageButton ibtMessage;
-    @BindView(R.id.rpv_main)
-    RollPagerView rpv_Main;
-    @BindView(R.id.ibt_full_screen)
-    ImageButton ibt_FullScreen;
     @BindView(R.id.ibt_institute)
     ImageButton ibtInstitute;
     @BindView(R.id.ibt_8)
@@ -112,34 +108,27 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     ImageButton ibtLDSupport;
     @BindView(R.id.vv_main)
     VideoView vv_Main;
-    @BindView(R.id.ibt_ld_cloud)
-    MultiImage ibt_LdCloud;
     @BindView(R.id.fl_video)
     FrameLayout flVideo;
     @BindView(R.id.tv_message_count)
     TextView tvMessageCount;
-    @BindView(R.id.roll_over_view)
-    RollOverView rollOverView;
-    @BindView(R.id.iv_ld_cloud_small)
-    ImageView ivLdCloudSmall;
-    @BindView(R.id.ibt_eufonico)
-    ImageButton ibtEufonico;
     @BindView(R.id.lv_message)
     MessageListView messageListView;
     @BindView(R.id.iv_ad)
     ImageView ivAd;
     @BindView(R.id.tiv_banner)
     TranslationImageView tivBanner;
+    @BindView(R.id.ll_push_message)
+    LinearLayout llPushMessage;
+    @BindView(R.id.pb_push_message)
+    ProgressBar pbPushMessage;
 
-    private boolean isF1Visible = false;
     private NetworkStatusReceiver networkStatusReceiver;
     private Subscription videoSubscription;
     private Subscription messageSubscription;
     private VideoInfo currentVideoInfo;
     private boolean isVideoPlaying = false;
     private MessageDao messageDao;
-    private boolean isCloudImagePlaying = false;
-
     private long entryTime;
     private long exitTime;
     private long holdTime;
@@ -150,9 +139,9 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment1_4, container, false);
+        View view = inflater.inflate(R.layout.fragment1, container, false);
         ButterKnife.bind(this, view);
-
+        Glide.with(getContext()).load(R.drawable.eufo_gif1).asGif().into(ibtEufonico);
         networkStatusReceiver = new NetworkStatusReceiver(null);
         networkStatusReceiver.setOnNetworkStatusListener(this);
         getContext().registerReceiver(networkStatusReceiver, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
@@ -167,24 +156,9 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     public void onStart() {
         super.onStart();
         setZoom();
-        ibt_LdCloud.setNextFocusDownId(R.id.ibt_full_screen);
         showCustomShortCut(ibt8 , "ibt8");
         showCustomShortCut(ibt9 , "ibt9");
         showCustomShortCut(ibt10 , "ibt10");
-        ibt_LdCloud.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                showChoiceDialog();
-                return true;
-            }
-        });
-        ibtEufonico.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                showChoiceDialog();
-                return true;
-            }
-        });
     }
 
     @Override
@@ -214,7 +188,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     public void onPause() {
         super.onPause();
         isVideoPlaying = false;
-        isCloudImagePlaying = false;
         if (vv_Main != null && vv_Main.isPlaying()) {
             vv_Main.stopPlayback();
         }
@@ -237,12 +210,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
             if(presenter != null && entryTime>0) {
                 presenter.uploadHoldTime(userDataInfo);
             }
-        }
-        if(rollOverView != null){
-            rollOverView.stop();
-        }
-        if(ibt_LdCloud!= null){
-            ibt_LdCloud.stop();
         }
         if(messageListView != null){
             messageListView.stop();
@@ -272,12 +239,12 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         }
     }
 
-    @OnClick({R.id.ibt_btv, R.id.ibt_user_guide, R.id.ibt_setting, R.id.ibt_apps, R.id.ibt_market,
-            R.id.ibt_anti_virus, R.id.ibt_message, R.id.ibt_ld_cloud ,R.id.fl_video ,R.id.ibt_full_screen,
-            R.id.ibt_institute , R.id.ibt_ldsupport,R.id.ibt_eufonico})
+    @OnClick({R.id.ibt_eufonico, R.id.ibt_user_guide, R.id.ibt_setting, R.id.ibt_apps, R.id.ibt_market,
+            R.id.ibt_anti_virus, R.id.ibt_message, R.id.fl_video , R.id.ibt_institute ,
+            R.id.ibt_ldsupport ,R.id.ll_push_message , R.id.ibt_13})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.ibt_btv:
+            case R.id.ibt_eufonico:
                 intent.setClass(getActivity(), FMPlayActivity.class);
                 intent.putExtra("url", F.url.eufonico);
                 getContext().startActivity(intent);
@@ -302,20 +269,8 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
             case R.id.ibt_message:
                 startActivity(new Intent(getContext(), Message1Activity.class));
                 break;
-            case R.id.ibt_ld_cloud:
-                if (ApkCheck.isApkInstalled(getContext(), F.package_name.cloud)) {
-                    ApkLaunch.launchApkByPackageName(getContext(), F.package_name.cloud);
-                }
-                break;
             case R.id.fl_video:
                 launchAppByLogin(getContext() , F.package_name.btv);
-                break;
-            case R.id.ibt_full_screen:
-                if(isCloudImagePlaying){
-                    intent.setClass(getContext() , CloudImageFullScreen1Activity.class);
-                    intent.putExtra("cloudImagePosition",ibt_LdCloud.getCurrentPosition());
-                    startActivity(intent);
-                }
                 break;
             case R.id.ibt_institute:
                 if (ApkCheck.isApkInstalled(getContext(), F.package_name.joinme)) {
@@ -330,10 +285,12 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 intent.putExtra("url", F.url.ld_support);
                 getContext().startActivity(intent);
                 break;
-            case R.id.ibt_eufonico:
-                intent.setClass(getActivity(), FMPlayActivity.class);
-                intent.putExtra("url", F.url.eufonico);
-                getContext().startActivity(intent);
+            case  R.id.ll_push_message:
+                pbPushMessage.setVisibility(View.VISIBLE);
+                presenter.loadPushMessage();
+                break;
+            case R.id.ibt_13:
+                startActivity(new Intent(getContext() , LoginActivity.class));
                 break;
             default:
                 break;
@@ -405,24 +362,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
 
     @Override
     public void loadImage(final List<ImageInfo> list) {
-        if(list == null || list.size() <1){
-            return;
-        }
-//        Glide.with(Application.getContext()).load(list.get(0).getUrl()).placeholder(R.drawable.btv_icon_1).dontAnimate().into(ibt_Btv);
-//        Glide.with(Application.getContext()).load(list.get(1).getUrl()).placeholder(R.drawable.user_guide_icon_4).dontAnimate().into(ibt_UserGuide);
-//        Glide.with(Application.getContext()).load(list.get(2).getUrl()).placeholder(R.drawable.setting_icon).dontAnimate().into(ibt_Setting);
-//        Glide.with(Application.getContext()).load(list.get(3).getUrl()).placeholder(R.drawable.apps_icon_3).dontAnimate().into(ibt_Apps);
-//        Glide.with(Application.getContext()).load(list.get(4).getUrl()).placeholder(R.drawable.market_icon).dontAnimate().into(ibt_Market);
-//        Glide.with(Application.getContext()).load(list.get(5).getUrl()).placeholder(R.drawable.ld_opportunity_12).dontAnimate().into(ibt_AntiVirus);
-//        Glide.with(Application.getContext()).load(list.get(6).getUrl()).placeholder(R.drawable.message_icon).dontAnimate().into(ibt_Privacy);
-//        Glide.with(Application.getContext()).load(list.get(7).getUrl()).placeholder(R.drawable.ld_store_icon).dontAnimate().into(ibt_LdStore);
-//        Glide.with(Application.getContext()).load(list.get(9).getUrl()).placeholder(R.drawable.ld_cloud_icon_3).dontAnimate().into(ibt_LdCloud);
-//        ibt_LdStore.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                showLinkByBrowser(list.get(7).getLink());
-//            }
-//        });
+
     }
 
     @Override
@@ -430,8 +370,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         if(list == null || list.size() <1){
             return;
         }
-//        RollImageAdapter rollImageAdapter = new RollImageAdapter(list);
-//        rpv_Main.setAdapter(rollImageAdapter);
         TranslationAdapter translationAdapter = new TranslationAdapter(list);
         tivBanner.setRollViewAdapter(translationAdapter);
     }
@@ -441,15 +379,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         if(list == null || list.size() <1){
             return;
         }
-//        RollOverViewAdapter rollOverViewAdapter = new RollOverViewAdapter(list);
-//        rollOverView.setRollViewAdapter(rollOverViewAdapter);
-//        rollOverViewAdapter.setOnItemClickListener(new RollOverViewAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(View view, int position) {
-//                showLinkByBrowser(list.get(position).getLink());
-//            }
-//        });
-//        rollOverView.setBackgroundResource(R.drawable.bg_roll_over_image1);
         Random random = new Random();
         int i = random.nextInt(list.size());
         ImageInfo imageInfo = list.get(i);
@@ -461,8 +390,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         if(list == null || list.size() <1){
             return;
         }
-        isCloudImagePlaying = true;
-        ibt_LdCloud.setImages(list);
     }
 
     private void checkMessageCount(){
@@ -555,18 +482,10 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     @Override
     public void loadPushMessage(List<PushMessageInfo> list) {
         if(list != null && list.size() >0){
+            pbPushMessage.setVisibility(View.GONE);
             PushMessageAdapter pushMessageAdapter = new PushMessageAdapter(getContext() ,list);
             messageListView.setAdapter(pushMessageAdapter);
             messageListView.start();
-        }
-    }
-
-    public void showLinkByBrowser(String url) {
-        try {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
-        } catch (Exception e) {
-            e.printStackTrace();
-            Logger.d(e.getMessage());
         }
     }
 
@@ -582,15 +501,13 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     }
 
     private void setZoom() {
-        ibt_Btv.setOnFocusChangeListener(this);
+        ibtEufonico.setOnFocusChangeListener(this);
         ibt_UserGuide.setOnFocusChangeListener(this);
         ibt_Setting.setOnFocusChangeListener(this);
         ibt_Apps.setOnFocusChangeListener(this);
         ibt_Market.setOnFocusChangeListener(this);
         ibt_AntiVirus.setOnFocusChangeListener(this);
         ibtMessage.setOnFocusChangeListener(this);
-        ibt_LdCloud.setOnFocusChangeListener(this);
-        ibt_FullScreen.setOnFocusChangeListener(this);
         ibtInstitute.setOnFocusChangeListener(this);
         ibtLDSupport.setOnFocusChangeListener(this);
         ibt8.setOnFocusChangeListener(this);
@@ -606,28 +523,28 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     }
 
     public void showChoiceDialog (){
-        AlertDialog dialog = new AlertDialog.Builder(getContext())
-            .setTitle("SELECT")
-            .setSingleChoiceItems(new String[]{"LDCLOUD", "EUFONICO"}, 0, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which){
-                    case 0:
-                        ibtEufonico.setVisibility(View.GONE);
-                        ibt_LdCloud.setVisibility(View.VISIBLE);
-                        ibt_FullScreen.setVisibility(View.VISIBLE);
-                        ivLdCloudSmall.setVisibility(View.VISIBLE);
-                        dialog.dismiss();
-                        break;
-                    case 1:
-                        ibtEufonico.setVisibility(View.VISIBLE);
-                        ibt_LdCloud.setVisibility(View.GONE);
-                        ibt_FullScreen.setVisibility(View.GONE);
-                        ivLdCloudSmall.setVisibility(View.GONE);
-                        dialog.dismiss();
-                        break;
-                }
-            }
-        }).show();
+//        AlertDialog dialog = new AlertDialog.Builder(getContext())
+//            .setTitle("SELECT")
+//            .setSingleChoiceItems(new String[]{"LDCLOUD", "EUFONICO"}, 0, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                switch (which){
+//                    case 0:
+//                        ibtEufonico.setVisibility(View.GONE);
+//                        ibt_LdCloud.setVisibility(View.VISIBLE);
+//                        ibt_FullScreen.setVisibility(View.VISIBLE);
+//                        ivLdCloudSmall.setVisibility(View.VISIBLE);
+//                        dialog.dismiss();
+//                        break;
+//                    case 1:
+//                        ibtEufonico.setVisibility(View.VISIBLE);
+//                        ibt_LdCloud.setVisibility(View.GONE);
+//                        ibt_FullScreen.setVisibility(View.GONE);
+//                        ivLdCloudSmall.setVisibility(View.GONE);
+//                        dialog.dismiss();
+//                        break;
+//                }
+//            }
+//        }).show();
     }
 }

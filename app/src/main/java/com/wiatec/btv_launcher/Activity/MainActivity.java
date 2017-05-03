@@ -211,6 +211,7 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
         if (videoInfo == null) {
             return;
         }
+        SPUtils.put(MainActivity.this , "bootAdVideoTime" ,videoInfo.getPlayInterval());
         if (!FileCheck.isFileExists(F.path.download, "btvbootad.mp4")) {
             //Logger.d("video is not exists");
             presenter.downloadAdVideo("btvbootad.mp4" ,videoInfo.getUrl());
@@ -224,6 +225,10 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
 
     @Override
     public void loadAdVideo(VideoInfo videoInfo) {
+        if(videoInfo == null){
+            return;
+        }
+        SPUtils.put(MainActivity.this , "adVideoTime" ,videoInfo.getPlayInterval());
         if (!FileCheck.isFileExists(F.path.download, "btvad.mp4")) {
             presenter.downloadAdVideo("btvad.mp4" ,videoInfo.getUrl());
 //            Logger.d("video not exists start download");
