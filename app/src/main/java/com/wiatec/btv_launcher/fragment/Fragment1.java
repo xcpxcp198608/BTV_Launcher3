@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.bumptech.glide.Glide;
 import com.jude.rollviewpager.RollPagerView;
 import com.wiatec.btv_launcher.Activity.AppSelectActivity;
 import com.wiatec.btv_launcher.Activity.CloudImageFullScreen1Activity;
@@ -36,12 +37,14 @@ import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.SQL.InstalledAppDao;
 import com.wiatec.btv_launcher.Utils.SPUtils;
 import com.wiatec.btv_launcher.adapter.PushMessageAdapter;
+import com.wiatec.btv_launcher.adapter.TranslationAdapter;
 import com.wiatec.btv_launcher.bean.InstalledApp;
 import com.wiatec.btv_launcher.bean.PushMessageInfo;
 import com.wiatec.btv_launcher.bean.UserDataInfo;
 import com.wiatec.btv_launcher.custom_view.MessageListView;
 import com.wiatec.btv_launcher.custom_view.MultiImage;
 import com.wiatec.btv_launcher.custom_view.RollOverView;
+import com.wiatec.btv_launcher.custom_view.TranslationImageView;
 import com.wiatec.btv_launcher.receiver.OnNetworkStatusListener;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.SQL.MessageDao;
@@ -61,6 +64,7 @@ import com.wiatec.btv_launcher.receiver.NetworkStatusReceiver;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -122,6 +126,10 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     ImageButton ibtEufonico;
     @BindView(R.id.lv_message)
     MessageListView messageListView;
+    @BindView(R.id.iv_ad)
+    ImageView ivAd;
+    @BindView(R.id.tiv_banner)
+    TranslationImageView tivBanner;
 
     private boolean isF1Visible = false;
     private NetworkStatusReceiver networkStatusReceiver;
@@ -422,8 +430,10 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         if(list == null || list.size() <1){
             return;
         }
-        RollImageAdapter rollImageAdapter = new RollImageAdapter(list);
-        rpv_Main.setAdapter(rollImageAdapter);
+//        RollImageAdapter rollImageAdapter = new RollImageAdapter(list);
+//        rpv_Main.setAdapter(rollImageAdapter);
+        TranslationAdapter translationAdapter = new TranslationAdapter(list);
+        tivBanner.setRollViewAdapter(translationAdapter);
     }
 
     @Override
@@ -431,15 +441,19 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         if(list == null || list.size() <1){
             return;
         }
-        RollOverViewAdapter rollOverViewAdapter = new RollOverViewAdapter(list);
-        rollOverView.setRollViewAdapter(rollOverViewAdapter);
-        rollOverViewAdapter.setOnItemClickListener(new RollOverViewAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                showLinkByBrowser(list.get(position).getLink());
-            }
-        });
-        rollOverView.setBackgroundResource(R.drawable.bg_roll_over_image1);
+//        RollOverViewAdapter rollOverViewAdapter = new RollOverViewAdapter(list);
+//        rollOverView.setRollViewAdapter(rollOverViewAdapter);
+//        rollOverViewAdapter.setOnItemClickListener(new RollOverViewAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(View view, int position) {
+//                showLinkByBrowser(list.get(position).getLink());
+//            }
+//        });
+//        rollOverView.setBackgroundResource(R.drawable.bg_roll_over_image1);
+        Random random = new Random();
+        int i = random.nextInt(list.size());
+        ImageInfo imageInfo = list.get(i);
+        Glide.with(getContext()).load(imageInfo.getUrl()).dontAnimate().into(ivAd);
     }
 
     @Override
