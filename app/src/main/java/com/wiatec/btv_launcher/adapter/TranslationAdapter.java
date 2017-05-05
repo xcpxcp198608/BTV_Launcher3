@@ -36,12 +36,10 @@ public class TranslationAdapter extends TranslationViewAdapter {
         imageView.setLayoutParams(layoutParams);
         imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         imageView.setCropToPadding(true);
-        imageView.setBackgroundResource(R.color.colorBlue5);
         int index = position % list.size();
         if (!TextUtils.isEmpty(list.get(index).getUrl())) {
             Glide.with(container.getContext())
                     .load(list.get(index).getUrl())
-                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
                     .dontAnimate()
                     .into(imageView);
         }

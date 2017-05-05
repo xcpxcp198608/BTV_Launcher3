@@ -14,7 +14,6 @@ import java.util.List;
  */
 
 public interface IFragment1 {
-    void loadImage(List<ImageInfo> list);
     void loadRollImage(List<ImageInfo> list);
     void loadRollOverImage(List<ImageInfo> list);
     void loadCloudImage(List<String> list);

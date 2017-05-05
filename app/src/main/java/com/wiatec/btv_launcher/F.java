@@ -10,20 +10,18 @@ import android.renderscript.Sampler;
 
 public final class F {
     public static final class url {
-        public static final String updater="http://appota.gobeyondtv.co:8080/launcher/update/get";
-        public static final String channel_type="http://appota.gobeyondtv.co:8080/launcher/channeltype/get";
-        public static final String channel="http://appota.gobeyondtv.co:8080/launcher/channel/get";
+        public static final String updater="http://appota.gobeyondtv.co:8080/control_panel/update/get";
 
-        public static final String video="http://appota.gobeyondtv.co:8080/launcher/video/get";
-        public static final String ad_video="http://appota.gobeyondtv.co:8080/launcher/advideo/get";
-        public static final String boot_ad_video="http://appota.gobeyondtv.co:8080/launcher/bootadvideo/get";
-        public static final String kodi_video="http://appota.gobeyondtv.co:8080/launcher/kodivideo/get";
+        public static final String video="http://appota.gobeyondtv.co:8080/control_panel/video/get";
+        public static final String ad_video="http://appota.gobeyondtv.co:8080/control_panel/advideo/get";
+        public static final String boot_ad_video="http://appota.gobeyondtv.co:8080/control_panel/bootadvideo/get";
+        public static final String kodi_video="http://appota.gobeyondtv.co:8080/control_panel/kodivideo/get";
 
-        public static final String kodi_image="http://appota.gobeyondtv.co:8080/launcher/kodiimage/get";
-        public static final String image="http://appota.gobeyondtv.co:8080/launcher/image/get";
-        public static final String splash_image="http://appota.gobeyondtv.co:8080/launcher/adimage/get";
-        public static final String roll_image="http://appota.gobeyondtv.co:8080/launcher/rollimage/get";
-        public static final String roll_over_image="http://appota.gobeyondtv.co:8080/launcher/rolloverimage/get";
+        public static final String kodi_image="http://appota.gobeyondtv.co:8080/control_panel/kodiimage/get";
+
+        public static final String splash_image="http://appota.gobeyondtv.co:8080/control_panel/adimage/get";
+        public static final String roll_image="http://appota.gobeyondtv.co:8080/control_panel/rollimage/get";
+        public static final String roll_over_image="http://appota.gobeyondtv.co:8080/control_panel/rolloverimage/get";
         public static final String opportunity_image="http://appota.gobeyondtv.co:8080/launcher/opportunityimage/get";
         public static final String manual_image = "http://appota.gobeyondtv.co:8080/launcher/manualimage/get";
 
@@ -101,5 +99,10 @@ public final class F {
         public static final String spotify = "com.spotify.tv.android";
         public static final String happy_chick = "com.xiaoji.tvbox";
         public static final String bplay = "com.wiatec.bplay";
+        public static final String show_box = "com.wiatec.bplay";
+        public static final String youtube = "com.wiatec.bplay";
+        public static final String mx_player = "com.wiatec.bplay";
+        public static final String live_net_tv = "com.wiatec.bplay";
+        public static final String tv_video = "com.wiatec.bplay";
     }
 }

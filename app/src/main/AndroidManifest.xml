@@ -48,11 +48,9 @@
         <activity android:name=".Activity.LoginSplashActivity"/>
         <activity android:name=".Activity.RegisterActivity"
             android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".Activity.Pinentry1Activity"/>
         <activity android:name=".Activity.FMPlayActivity"/>
         <activity android:name=".Activity.CloudImageFullScreen1Activity"/>
         <activity android:name=".Activity.WakeUpAdActivity"/>
-        <activity android:name=".Activity.MemberChannel1Activity"/>
         <activity android:name=".Activity.WebViewActivity"/>
 
         <receiver android:name=".receiver.AppInstallReceiver">

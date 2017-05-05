@@ -75,12 +75,6 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
     FrameLayout frameLayout;
     @BindView(R.id.iv_weather)
     ImageView iv_Weather;
-    @BindView(R.id.iv_message)
-    ImageView iv_Message;
-    @BindView(R.id.fl_message)
-    FrameLayout fl_Message;
-    @BindView(R.id.tv_message_count)
-    TextView tv_MessageCount;
     @BindView(R.id.tv_version)
     TextView tvVersion;
     @BindView(R.id.tv_welcome)
@@ -242,11 +236,6 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
 
     @Override
     public void loadMessage1(final List<Message1Info> list) {
-        if(list ==null){
-            return;
-        }
-        tv_Message.setData(list);
-        tv_Message.setVisibility(View.VISIBLE);
     }
 
     @Override

@@ -73,57 +73,61 @@ public class BootAdActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if(Application.getBootStatus()){
-            File file = new File(F.path.boot_ad_video);
-            if(!file.exists()){
-                Application.setBootStatus(false);
-                startActivity(new Intent(BootAdActivity.this , MainActivity.class));
-                finish();
-                return;
-            }
-            vvBoot.setVideoPath(F.path.boot_ad_video);
-            vvBoot.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                @Override
-                public void onPrepared(MediaPlayer mp) {
-                    mp.start();
-                }
-            });
-            vvBoot.setOnErrorListener(new MediaPlayer.OnErrorListener() {
-                @Override
-                public boolean onError(MediaPlayer mp, int what, int extra) {
-                    Application.setBootStatus(false);
-                    startActivity(new Intent(BootAdActivity.this , MainActivity.class));
-                    finish();
-                    return true;
-                }
-            });
-            vvBoot.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mp) {
-                    Application.setBootStatus(false);
-                    llDelay.setVisibility(View.GONE);
-                    startActivity(new Intent(BootAdActivity.this , MainActivity.class));
-                    finish();
-                }
-            });
-        }else{
-            Application.setBootStatus(false);
-            startActivity(new Intent(BootAdActivity.this , MainActivity.class));
-            finish();
-        }
-        if(time >0){
-            llDelay.setVisibility(View.VISIBLE);
-            Observable.interval(0,1 , TimeUnit.SECONDS).take(time)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<Long>() {
-                        @Override
-                        public void call(Long aLong) {
-                            int i = (int) (time -1 - aLong);
-                            tvTimeDelay.setText(i+" s");
-                        }
-                    });
-        }
+
+        startActivity(new Intent(BootAdActivity.this , MainActivity.class));
+        finish();
+
+//        if(Application.getBootStatus()){
+//            File file = new File(F.path.boot_ad_video);
+//            if(!file.exists()){
+//                Application.setBootStatus(false);
+//                startActivity(new Intent(BootAdActivity.this , MainActivity.class));
+//                finish();
+//                return;
+//            }
+//            vvBoot.setVideoPath(F.path.boot_ad_video);
+//            vvBoot.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//                @Override
+//                public void onPrepared(MediaPlayer mp) {
+//                    mp.start();
+//                }
+//            });
+//            vvBoot.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+//                @Override
+//                public boolean onError(MediaPlayer mp, int what, int extra) {
+//                    Application.setBootStatus(false);
+//                    startActivity(new Intent(BootAdActivity.this , MainActivity.class));
+//                    finish();
+//                    return true;
+//                }
+//            });
+//            vvBoot.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+//                @Override
+//                public void onCompletion(MediaPlayer mp) {
+//                    Application.setBootStatus(false);
+//                    llDelay.setVisibility(View.GONE);
+//                    startActivity(new Intent(BootAdActivity.this , MainActivity.class));
+//                    finish();
+//                }
+//            });
+//        }else{
+//            Application.setBootStatus(false);
+//            startActivity(new Intent(BootAdActivity.this , MainActivity.class));
+//            finish();
+//        }
+//        if(time >0){
+//            llDelay.setVisibility(View.VISIBLE);
+//            Observable.interval(0,1 , TimeUnit.SECONDS).take(time)
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe(new Action1<Long>() {
+//                        @Override
+//                        public void call(Long aLong) {
+//                            int i = (int) (time -1 - aLong);
+//                            tvTimeDelay.setText(i+" s");
+//                        }
+//                    });
+//        }
     }
 
     @Override

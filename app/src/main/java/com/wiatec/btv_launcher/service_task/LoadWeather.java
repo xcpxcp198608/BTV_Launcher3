@@ -104,7 +104,7 @@ public class LoadWeather implements Runnable {
     }
 
     private int celsiusToFahrenheit (float celsius){
-        int f = (int) ((1.8f+celsius)+32);
+        int f = (int) ((1.8f * celsius)+32);
         return f;
     }
 

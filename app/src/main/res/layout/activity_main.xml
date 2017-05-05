@@ -3,13 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:paddingTop="20dp"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp"
     android:clipChildren="false"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
+        android:layout_marginLeft="20dp"
         android:text="13:00"
         android:gravity="center_vertical"
         android:textSize="25sp"
@@ -27,6 +26,7 @@
         android:layout_height="32dp" />
 
     <TextView
+        android:layout_marginRight="20dp"
         android:layout_marginLeft="10dp"
         android:gravity="center_vertical"
         android:text="11-08-2016"
@@ -66,41 +66,26 @@
         android:layout_width="match_parent"
         android:layout_height="32dp" />
 
-    <FrameLayout
-        android:visibility="gone"
-        android:id="@+id/fl_message"
-        android:layout_marginRight="6dp"
-        android:layout_toLeftOf="@id/iv_weather"
-        android:layout_width="32dp"
-        android:layout_height="32dp">
-        <ImageView
-            android:padding="3dp"
-            android:scaleType="centerInside"
-            android:background="@drawable/icon_bg"
-            android:src="@drawable/message_small_icon_5"
-            android:id="@+id/iv_message"
-            android:layout_width="32dp"
-            android:layout_height="32dp" />
-        <TextView
-            android:id="@+id/tv_message_count"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:textSize="19sp"
-            android:textColor="@color/colorRed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </FrameLayout>
-
+    <TextView
+        android:id="@+id/tv_version"
+        android:layout_marginRight="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/tv_time"
+        android:textSize="14sp"
+        android:textColor="@color/colorGray2"
+        tools:text="@string/ui"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <RelativeLayout
+        android:visibility="gone"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="15dp"
         android:layout_alignParentBottom="true"
         android:id="@+id/rl_message"
         android:layout_width="match_parent"
-        android:layout_height="35dp">
+        android:layout_height="100dp">
+
         <com.wiatec.btv_launcher.custom_view.RollTextView
             android:id="@+id/tv_message"
             android:drawableLeft="@drawable/message1_sp_icon"
@@ -114,25 +99,14 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />
 
-        <TextView
-            android:id="@+id/tv_version"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:gravity="bottom"
-            android:textSize="14sp"
-            android:textColor="@color/colorGray1"
-            android:text="@string/ui"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
     </RelativeLayout>
 
     <FrameLayout
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:clipChildren="false"
         android:id="@+id/frame_layout"
         android:layout_above="@id/rl_message"
-        android:layout_below="@id/tv_time"
+        android:layout_below="@id/tv_version"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </FrameLayout>

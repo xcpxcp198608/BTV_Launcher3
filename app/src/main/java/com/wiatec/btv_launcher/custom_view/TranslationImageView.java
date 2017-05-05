@@ -23,8 +23,8 @@ import java.util.TimerTask;
 
 public class TranslationImageView extends ViewPager {
 
-    private long interval = 6000;
-    private int mTransformerDuration = 9000;
+    private long interval = 18000;
+    private int mTransformerDuration = 20000;
     private PagerAdapter mPagerAdapter;
     private Timer mTimer;
 
@@ -52,7 +52,6 @@ public class TranslationImageView extends ViewPager {
             if(currentItem >= translationImageView.mPagerAdapter.getCount()) {
                 currentItem = 0;
             }
-            Log.d("----px----",currentItem+"");
             translationImageView.setCurrentItem(currentItem);
             if(translationImageView.mPagerAdapter.getCount() <= 1){
                 translationImageView.stop();
@@ -131,7 +130,7 @@ public class TranslationImageView extends ViewPager {
     }
 
     public class FixedSpeedScroller extends Scroller {
-        private int mDuration = 9000;
+        private int mDuration = 20000;
 
         public FixedSpeedScroller(Context context) {
             super(context);

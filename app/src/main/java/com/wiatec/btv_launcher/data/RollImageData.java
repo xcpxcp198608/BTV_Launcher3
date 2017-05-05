@@ -4,9 +4,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.OkHttp.Listener.StringListener;
 import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
 import com.wiatec.btv_launcher.Utils.SPUtils;
@@ -14,9 +16,13 @@ import com.wiatec.btv_launcher.bean.ImageInfo;
 import com.wiatec.btv_launcher.bean.RollImageInfo;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
 
 /**
  * Created by PX on 2016-11-14.
@@ -45,6 +51,7 @@ public class RollImageData implements IRollImageData {
                     @Override
                     public void onFailure(String e) {
                         onLoadListener.onFailure(e);
+                        Logger.d(e);
                         OkMaster.post(F.url_eu.roll_image)
                                 .parames("deviceInfo.countryCode", (String)SPUtils.get(Application.getContext() , "countryCode" , ""))
                                 .parames("deviceInfo.regionName", (String)SPUtils.get(Application.getContext() , "regionName" , ""))

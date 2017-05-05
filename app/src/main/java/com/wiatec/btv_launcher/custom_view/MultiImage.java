@@ -88,6 +88,7 @@ public class MultiImage extends AppCompatImageButton {
                     .into(multiImage);
         }
     }
+
     private TimerHandler timerHandler = new TimerHandler(this);
     private final static class MultiTask extends TimerTask{
 

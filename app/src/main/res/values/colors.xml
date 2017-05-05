@@ -14,10 +14,11 @@
     <color name="colorGreen">#00ff00</color>
     <color name="colorGray">#eeeeee</color>
     <color name="colorGray1">#a3a2a2</color>
+    <color name="colorGray2">#4e4d4d</color>
     <color name="colorBlue">#FF0000ff</color>
     <color name="colorRed">#FFff0000</color>
 
-    <color name="colorBTV">#8f8e8e</color>
+    <color name="colorBTV">#9f9e9e</color>
     <color name="colorBTV1">#faf9f9</color>
     <color name="colorBTV2">#262626</color>
     <color name="colorSettings">#d40465</color>
