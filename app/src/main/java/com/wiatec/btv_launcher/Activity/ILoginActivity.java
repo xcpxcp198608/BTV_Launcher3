@@ -8,4 +8,5 @@ import com.wiatec.btv_launcher.bean.Result;
 
 public interface ILoginActivity {
     void login (Result result);
+    void resetp (Result result);
 }

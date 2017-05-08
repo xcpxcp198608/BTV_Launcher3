@@ -103,16 +103,22 @@
                         android:layout_width="match_parent"
                         android:layout_height="4dp" />
 
-                    <ImageButton
-                        android:id="@+id/ibt_games"
+                    <FrameLayout
+                        android:background="@drawable/bg_item"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1.2"
-                        android:background="@drawable/bg_item"
-                        android:cropToPadding="true"
-                        android:padding="3dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/icon_cloud111" />
+                        android:layout_weight="1.2">
+
+                        <com.wiatec.btv_launcher.custom_view.MultiImage
+                            android:id="@+id/ibt_cloud"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:cropToPadding="true"
+                            android:padding="3dp"
+                            android:scaleType="fitCenter"
+                            android:background="@drawable/icon_cloud111"/>
+
+                    </FrameLayout>
 
                     <android.support.v4.widget.Space
                         android:layout_width="match_parent"

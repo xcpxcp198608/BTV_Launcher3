@@ -28,6 +28,7 @@ import android.widget.TextView;
 
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.SPUtils;
 import com.wiatec.btv_launcher.bean.DeviceInfo;
 import com.wiatec.btv_launcher.custom_view.RollTextView;
@@ -116,9 +117,11 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
     @Override
     protected void onStart() {
         super.onStart();
-        String userName = (String) SPUtils.get(MainActivity.this , "userName" , "");
-        if(!TextUtils.isEmpty(userName)){
-            tvWelcome.setText(getString(R.string.welcome) + " " + userName);
+        String userName = (String) SPUtils.get(MainActivity.this , "lastName" , "");
+        if(!TextUtils.isEmpty(userName) && !"null".equals(userName)){
+            tvWelcome.setText(getString(R.string.welcome) + " " + userName + " " + getString(R.string.family));
+        }else{
+            tvWelcome.setText("");
         }
         mDeviceInfo = deviceInfo;
         if(presenter != null){

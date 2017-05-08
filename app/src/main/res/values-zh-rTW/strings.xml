@@ -46,6 +46,7 @@
     <string name="login">登录</string>
     <string name="register">注册</string>
     <string name="create_account">创建账号</string>
+    <string name="forgot_password">忘记密码?</string>
     <string name="username_input_error">UserName input error</string>
     <string name="first_name_input_error">First Name input error</string>
     <string name="last_name_input_error">Last Name input error</string>
@@ -55,7 +56,8 @@
     <string name="register_success">Congratulations !register success , please go to your email confirm then login you account</string>
     <string name="login_repeat">Sorry, your account login error ,please login again</string>
     <string name="account_error">Please contact support@legacy.direct or text to 9499889000 to inquire about this issue.</string>
-    <string name="welcome">Hi ! </string>
+    <string name="welcome">Hello</string>
+    <string name="family">family</string>
     <string name="select_language">Select Language</string>
 
 </resources>

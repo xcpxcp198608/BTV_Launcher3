@@ -1,63 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
-        android:padding="4dp"
-        android:textSize="22sp"
-        android:textColorHint="@color/colorItemGrayBlue"
-        android:id="@+id/et_username"
-        android:hint="@string/input_key"
-        android:background="@drawable/bg_text_view"
-        android:textColor="@color/colorWhite"
-        android:layout_width="350dp"
-        android:layout_height="50dp" />
-
-    <EditText
-        android:padding="4dp"
-        android:textSize="22sp"
-        android:layout_marginTop="10dp"
-        android:textColorHint="@color/colorItemGrayBlue"
-        android:textColor="@color/colorWhite"
-        android:id="@+id/et_password"
-        android:inputType="textPassword"
-        android:hint="@string/input_password"
-        android:background="@drawable/bg_text_view"
-        android:layout_width="350dp"
-        android:layout_height="50dp" />
-
-    <Button
-        android:textAllCaps="false"
-        android:layout_marginTop="20dp"
-        android:id="@+id/bt_login"
-        android:textSize="22sp"
-        android:text="@string/login"
-        android:textColor="@drawable/bg_text_login"
-        android:background="@drawable/bg_btn_login"
-        android:layout_width="350dp"
-        android:layout_height="50dp" />
-
-    <Button
-        android:layout_marginTop="10dp"
-        android:id="@+id/bt_create_account"
-        android:text="@string/create_account"
-        android:textSize="20sp"
-        android:textAllCaps="false"
-        android:textColor="@drawable/text_color_create_account"
-        android:background="@color/colorTranslucent"
-        android:layout_gravity="bottom"
+    <LinearLayout
+        android:id="@+id/ll_login"
+        android:orientation="vertical"
+        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
 
-    <ProgressBar
+        <EditText
+            android:padding="4dp"
+            android:textSize="22sp"
+            android:textColorHint="@color/colorItemGrayBlue"
+            android:id="@+id/et_username"
+            android:hint="@string/input_key"
+            android:background="@drawable/bg_text_view"
+            android:textColor="@color/colorWhite"
+            android:layout_width="350dp"
+            android:layout_height="50dp" />
+
+        <EditText
+            android:padding="4dp"
+            android:textSize="22sp"
+            android:layout_marginTop="10dp"
+            android:textColorHint="@color/colorItemGrayBlue"
+            android:textColor="@color/colorWhite"
+            android:id="@+id/et_password"
+            android:inputType="textPassword"
+            android:hint="@string/input_password"
+            android:background="@drawable/bg_text_view"
+            android:layout_width="350dp"
+            android:layout_height="50dp" />
+
+        <Button
+            android:textAllCaps="false"
+            android:layout_marginTop="20dp"
+            android:id="@+id/bt_login"
+            android:textSize="22sp"
+            android:text="@string/login"
+            android:textColor="@drawable/bg_text_login"
+            android:background="@drawable/bg_btn_login"
+            android:layout_width="350dp"
+            android:layout_height="50dp" />
+
+        <Button
+            android:layout_marginTop="20dp"
+            android:id="@+id/bt_create_account"
+            android:text="@string/create_account"
+            android:textSize="25sp"
+            android:textAllCaps="false"
+            android:textColor="@drawable/text_color_create_account"
+            android:background="@color/colorTranslucent"
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ProgressBar
+            android:visibility="gone"
+            style="@style/progress_blue"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar" />
+
+        <Button
+            android:layout_marginTop="20dp"
+            android:id="@+id/bt_forget_password"
+            android:text="@string/forgot_password"
+            android:textSize="25sp"
+            android:textAllCaps="false"
+            android:textColor="@drawable/text_color_create_account"
+            android:background="@color/colorTranslucent"
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:visibility="gone"
-        style="@style/progress_blue"
-        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:id="@+id/ll_reset_password"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/progressBar" />
+        android:layout_height="match_parent">
 
-</LinearLayout>
+        <EditText
+            android:padding="4dp"
+            android:textSize="22sp"
+            android:textColorHint="@color/colorItemGrayBlue"
+            android:id="@+id/et_username1"
+            android:hint="@string/input_key"
+            android:background="@drawable/bg_text_view"
+            android:textColor="@color/colorWhite"
+            android:layout_width="350dp"
+            android:layout_height="50dp" />
+
+        <EditText
+            android:padding="4dp"
+            android:textSize="22sp"
+            android:layout_marginTop="10dp"
+            android:textColorHint="@color/colorItemGrayBlue"
+            android:textColor="@color/colorWhite"
+            android:id="@+id/et_email1"
+            android:hint="@string/email"
+            android:background="@drawable/bg_text_view"
+            android:layout_width="350dp"
+            android:layout_height="50dp" />
+
+        <Button
+            android:textAllCaps="false"
+            android:layout_marginTop="20dp"
+            android:id="@+id/bt_reset"
+            android:textSize="22sp"
+            android:text="@string/confirm"
+            android:textColor="@drawable/bg_text_login"
+            android:background="@drawable/bg_btn_login"
+            android:layout_width="350dp"
+            android:layout_height="50dp" />
+
+        <ProgressBar
+            android:visibility="gone"
+            style="@style/progress_blue"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar1" />
+
+    </LinearLayout>
+
+</FrameLayout>

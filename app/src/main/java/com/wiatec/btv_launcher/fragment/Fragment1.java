@@ -43,6 +43,7 @@ import com.wiatec.btv_launcher.bean.RollImageInfo;
 import com.wiatec.btv_launcher.bean.UserDataInfo;
 import com.wiatec.btv_launcher.custom_view.AutoScrollRecycleView;
 import com.wiatec.btv_launcher.custom_view.MessageListView;
+import com.wiatec.btv_launcher.custom_view.MultiImage;
 import com.wiatec.btv_launcher.custom_view.TranslationImageView;
 import com.wiatec.btv_launcher.receiver.OnNetworkStatusListener;
 import com.wiatec.btv_launcher.R;
@@ -84,8 +85,8 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     ImageButton ibtEufonico;
     @BindView(R.id.ibt_user_manual)
     ImageButton ibtUserManual;
-    @BindView(R.id.ibt_games)
-    ImageButton ibtGames;
+    @BindView(R.id.ibt_cloud)
+    MultiImage ibtCloud;
     @BindView(R.id.ibt_setting)
     ImageButton ibtSetting;
     @BindView(R.id.ibt_apps)
@@ -129,8 +130,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     @BindView(R.id.pb_push_message)
     ProgressBar pbPushMessage;
 
-
-    private TranslationAdapter translationAdapter;
     private NetworkStatusReceiver networkStatusReceiver;
     private Subscription videoSubscription;
     private Subscription messageSubscription;
@@ -238,6 +237,9 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         if(tivBanner != null){
             tivBanner.stop();
         }
+        if(ibtCloud != null){
+            ibtCloud.stop();
+        }
     }
 
     @Override
@@ -248,6 +250,9 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         }
         if(tivBanner != null){
             tivBanner.stop();
+        }
+        if(ibtCloud != null){
+            ibtCloud.stop();
         }
     }
 
@@ -267,11 +272,14 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         if(tivBanner != null){
             tivBanner.stop();
         }
+        if(ibtCloud != null){
+            ibtCloud.stop();
+        }
     }
 
     @OnClick({R.id.ibt_eufonico, R.id.ibt_user_manual, R.id.ibt_setting, R.id.ibt_apps, R.id.ibt_market,
             R.id.ibt_opportunity, R.id.ibt_message, R.id.fl_video , R.id.ibt_institute ,
-            R.id.ibt_games ,R.id.ibt_customer_service ,R.id.ll_push_message , R.id.ibt_6})
+            R.id.ibt_cloud ,R.id.ibt_customer_service ,R.id.ll_push_message , R.id.ibt_6})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ibt_eufonico:
@@ -287,11 +295,11 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                     ApkLaunch.launchApkByPackageName(getContext(), F.package_name.setting);
                 }
                 break;
-            case R.id.ibt_games:
-                if (ApkCheck.isApkInstalled(getContext(), F.package_name.happy_chick)) {
-                    ApkLaunch.launchApkByPackageName(getContext(), F.package_name.happy_chick);
+            case R.id.ibt_cloud:
+                if (ApkCheck.isApkInstalled(getContext(), F.package_name.cloud)) {
+                    ApkLaunch.launchApkByPackageName(getContext(), F.package_name.cloud);
                 }else{
-                    Toast.makeText(getContext() , getString(R.string.download_guide)+" HappyChick",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext() , getString(R.string.download_guide)+" HappyChick",Toast.LENGTH_SHORT).show();
                     ApkLaunch.launchApkByPackageName(getContext(), F.package_name.market);
                 }
                 break;
@@ -404,13 +412,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         if(list == null || list.size() <1){
             return;
         }
-//        rollImageInfoList.clear();
-//        rollImageInfoList.addAll(list);
-//        if(translationAdapter ==null){
-//            translationAdapter = new TranslationAdapter(rollImageInfoList);
-//        }
-//        translationAdapter.notifyDataSetChanged();
-//        tivBanner.setRollViewAdapter(translationAdapter);
         rollImageInfoList.clear();
         rollImageInfoList.addAll(list);
         if(autoScrollAdapter ==null){
@@ -438,6 +439,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         if(list == null || list.size() <1){
             return;
         }
+        ibtCloud.setImages(list);
     }
 
     private void checkMessageCount(){
@@ -556,7 +558,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     private void setZoom() {
         ibtEufonico.setOnFocusChangeListener(this);
         ibtUserManual.setOnFocusChangeListener(this);
-        ibtGames.setOnFocusChangeListener(this);
+        ibtCloud.setOnFocusChangeListener(this);
         ibtSetting.setOnFocusChangeListener(this);
         ibtApps.setOnFocusChangeListener(this);
         ibtMarket.setOnFocusChangeListener(this);

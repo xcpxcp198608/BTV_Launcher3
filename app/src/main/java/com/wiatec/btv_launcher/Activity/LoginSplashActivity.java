@@ -61,7 +61,7 @@ public class LoginSplashActivity extends AppCompatActivity{
                             return;
                         }
                         Result result = new Gson().fromJson(s , new TypeToken<Result>(){}.getType());
-                        if(result.getCode() == Result.CODE_OK){
+                        if(result.getCode() == Result.CODE_LOGIN_SUCCESS){
                             if(result.getCount() > 1){
                                 if (ApkCheck.isApkInstalled(LoginSplashActivity.this,packageName)) {
                                     ApkLaunch.launchApkByPackageName(LoginSplashActivity.this, packageName);

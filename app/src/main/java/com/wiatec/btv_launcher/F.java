@@ -22,18 +22,19 @@ public final class F {
         public static final String splash_image="http://appota.gobeyondtv.co:8080/control_panel/adimage/get";
         public static final String roll_image="http://appota.gobeyondtv.co:8080/control_panel/rollimage/get";
         public static final String roll_over_image="http://appota.gobeyondtv.co:8080/control_panel/rolloverimage/get";
-        public static final String opportunity_image="http://appota.gobeyondtv.co:8080/launcher/opportunityimage/get";
-        public static final String manual_image = "http://appota.gobeyondtv.co:8080/launcher/manualimage/get";
+        public static final String opportunity_image="http://appota.gobeyondtv.co:8080/control_panel/opportunityimage/get";
+        public static final String manual_image = "http://appota.gobeyondtv.co:8080/control_panel/manualimage/get";
 
-        public static final String message="http://appota.gobeyondtv.co:8080/launcher/message/get";
-        public static final String message1="http://appota.gobeyondtv.co:8080/launcher/message1/get";
+        public static final String message="http://appota.gobeyondtv.co:8080/control_panel/message/get";
+        public static final String message1="http://appota.gobeyondtv.co:8080/control_panel/message1/get";
         public static final String push_message="http://appota.gobeyondtv.co:8080/push_message/get";
 
-        public static final String login="http://appota.gobeyondtv.co:8080/launcher/user/login";
-        public static final String register="http://appota.gobeyondtv.co:8080/launcher/user/register";
-        public static final String login_repeat_check="http://appota.gobeyondtv.co:8080/launcher/user/check";
-        public static final String level_check="http://appota.gobeyondtv.co:8080/launcher/user/check_level";
-        public static final String upload_data="http://appota.gobeyondtv.co:8080/launcher/userdata/upload";
+        public static final String login="http://appota.gobeyondtv.co:8080/control_panel/user/login";
+        public static final String register="http://appota.gobeyondtv.co:8080/control_panel/user/register";
+        public static final String login_repeat_check="http://appota.gobeyondtv.co:8080/control_panel/user/checkRepeat";
+        public static final String level_check="http://appota.gobeyondtv.co:8080/control_panel/user/checkLevel";
+        public static final String reset_p="http://appota.gobeyondtv.co:8080/control_panel/user/requestUpdateP";
+        public static final String upload_data="http://appota.gobeyondtv.co:8080/control_panel/userdata/save";
 
         public static final String eufonico = "http://142.4.216.91:8280/";
         public static final String ld_support="http://appota.gobeyondtv.co:8081/html/ld_support.html";

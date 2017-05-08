@@ -57,7 +57,7 @@
 
     <TextView
         android:id="@+id/tv_welcome"
-        tools:text="sdf"
+        tools:text="Hello family"
         android:textColor="@android:color/white"
         android:textSize="25sp"
         android:gravity="center"
