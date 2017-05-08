@@ -83,12 +83,13 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
     public void login(Result result) {
         Logger.d(result.toString());
         int code = result.getCode();
-        if (code == Result.CODE_OK) {
+        if (code == Result.CODE_LOGIN_SUCCESS) {
             progressBar.setVisibility(View.GONE);
             Toast.makeText(Application.getContext(), "login success", Toast.LENGTH_LONG).show();
             SPUtils.put(LoginActivity.this,"userName", userName);
             SPUtils.put(LoginActivity.this,"currentLoginCount", result.getCount());
             SPUtils.put(LoginActivity.this,"token", result.getToken());
+            SPUtils.put(LoginActivity.this,"lastName", result.getExtra());
             finish();
         } else {
             progressBar.setVisibility(View.GONE);

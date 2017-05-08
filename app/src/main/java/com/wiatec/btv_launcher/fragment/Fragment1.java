@@ -6,6 +6,7 @@ import android.content.IntentFilter;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,12 +34,14 @@ import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.SQL.InstalledAppDao;
 import com.wiatec.btv_launcher.Utils.SPUtils;
+import com.wiatec.btv_launcher.adapter.AutoScrollAdapter;
 import com.wiatec.btv_launcher.adapter.PushMessageAdapter;
 import com.wiatec.btv_launcher.adapter.TranslationAdapter;
 import com.wiatec.btv_launcher.bean.InstalledApp;
 import com.wiatec.btv_launcher.bean.PushMessageInfo;
 import com.wiatec.btv_launcher.bean.RollImageInfo;
 import com.wiatec.btv_launcher.bean.UserDataInfo;
+import com.wiatec.btv_launcher.custom_view.AutoScrollRecycleView;
 import com.wiatec.btv_launcher.custom_view.MessageListView;
 import com.wiatec.btv_launcher.custom_view.TranslationImageView;
 import com.wiatec.btv_launcher.receiver.OnNetworkStatusListener;
@@ -81,6 +84,8 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     ImageButton ibtEufonico;
     @BindView(R.id.ibt_user_manual)
     ImageButton ibtUserManual;
+    @BindView(R.id.ibt_games)
+    ImageButton ibtGames;
     @BindView(R.id.ibt_setting)
     ImageButton ibtSetting;
     @BindView(R.id.ibt_apps)
@@ -118,13 +123,13 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     @BindView(R.id.iv_ad)
     ImageView ivAd;
     @BindView(R.id.tiv_banner)
-    TranslationImageView tivBanner;
+    AutoScrollRecycleView tivBanner;
     @BindView(R.id.ll_push_message)
     LinearLayout llPushMessage;
     @BindView(R.id.pb_push_message)
     ProgressBar pbPushMessage;
 
-    private PushMessageAdapter pushMessageAdapter;
+
     private TranslationAdapter translationAdapter;
     private NetworkStatusReceiver networkStatusReceiver;
     private Subscription videoSubscription;
@@ -140,7 +145,9 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     private Intent intent;
 
     private List<PushMessageInfo> pushMessageInfoList  = new ArrayList<>();
+    private PushMessageAdapter pushMessageAdapter;
     private List<ImageInfo> rollImageInfoList = new ArrayList<>();
+    private AutoScrollAdapter autoScrollAdapter;
 
     @Nullable
     @Override
@@ -160,8 +167,11 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     @Override
     public void onStart() {
         super.onStart();
+        ibtUserManual.setNextFocusRightId(R.id.ll_push_message);
+
         ibtMessage.setNextFocusRightId(R.id.ll_push_message);
         ibt6.setNextFocusRightId(R.id.ll_push_message);
+
         setZoom();
         showCustomShortCut(ibt1 , "ibt1");
         showCustomShortCut(ibt2 , "ibt2");
@@ -225,6 +235,9 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         if(messageListView != null){
             messageListView.stop();
         }
+        if(tivBanner != null){
+            tivBanner.stop();
+        }
     }
 
     @Override
@@ -232,6 +245,9 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         super.onStop();
         if(messageListView != null){
             messageListView.stop();
+        }
+        if(tivBanner != null){
+            tivBanner.stop();
         }
     }
 
@@ -247,6 +263,9 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         }
         if(messageListView != null){
             messageListView.stop();
+        }
+        if(tivBanner != null){
+            tivBanner.stop();
         }
     }
 
@@ -385,13 +404,22 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         if(list == null || list.size() <1){
             return;
         }
+//        rollImageInfoList.clear();
+//        rollImageInfoList.addAll(list);
+//        if(translationAdapter ==null){
+//            translationAdapter = new TranslationAdapter(rollImageInfoList);
+//        }
+//        translationAdapter.notifyDataSetChanged();
+//        tivBanner.setRollViewAdapter(translationAdapter);
         rollImageInfoList.clear();
         rollImageInfoList.addAll(list);
-        if(translationAdapter ==null){
-            translationAdapter = new TranslationAdapter(rollImageInfoList);
+        if(autoScrollAdapter ==null){
+            autoScrollAdapter = new AutoScrollAdapter(getContext() , rollImageInfoList);
         }
-        translationAdapter.notifyDataSetChanged();
-        tivBanner.setRollViewAdapter(translationAdapter);
+        autoScrollAdapter.notifyDataSetChanged();
+        tivBanner.setAdapter(autoScrollAdapter);
+        tivBanner.setLayoutManager(new GridLayoutManager(getContext(), 1 , GridLayoutManager.HORIZONTAL , false ));
+        tivBanner.start();
     }
 
     @Override
@@ -528,6 +556,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     private void setZoom() {
         ibtEufonico.setOnFocusChangeListener(this);
         ibtUserManual.setOnFocusChangeListener(this);
+        ibtGames.setOnFocusChangeListener(this);
         ibtSetting.setOnFocusChangeListener(this);
         ibtApps.setOnFocusChangeListener(this);
         ibtMarket.setOnFocusChangeListener(this);

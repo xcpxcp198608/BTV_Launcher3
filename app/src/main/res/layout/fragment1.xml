@@ -76,11 +76,10 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:background="@drawable/bg_item"
+                            android:background="@drawable/bg_settings"
                             android:cropToPadding="true"
                             android:padding="3dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/icon_settings111" />
+                            android:scaleType="centerCrop" />
 
                         <ImageView
                             android:layout_width="1dp"
@@ -124,15 +123,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1.2"
-                        android:background="@drawable/bg_item"
+                        android:background="@drawable/bg_radio"
                         android:cropToPadding="true"
                         android:padding="3dp"
-                        android:src="@drawable/icon_radio111"
                         android:scaleType="centerCrop"/>
 
                 </LinearLayout>
 
             </LinearLayout>
+
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="8dp" />
 
             <LinearLayout
                 android:layout_weight="2.7"
@@ -157,11 +159,10 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:background="@drawable/bg_item"
+                            android:background="@drawable/bg_market"
                             android:cropToPadding="true"
                             android:padding="3dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/icon_app_mkt111" />
+                            android:scaleType="centerCrop" />
 
                         <ImageButton
                             android:adjustViewBounds="true"
@@ -169,11 +170,10 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:background="@drawable/bg_item"
+                            android:background="@drawable/bg_apps"
                             android:cropToPadding="true"
                             android:padding="3dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/icon_apps111" />
+                            android:scaleType="centerCrop" />
 
                         <ImageButton
                             android:adjustViewBounds="true"
@@ -181,11 +181,10 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:background="@drawable/bg_item"
+                            android:background="@drawable/bg_cc"
                             android:cropToPadding="true"
                             android:padding="3dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/icon_cc111" />
+                            android:scaleType="centerCrop" />
 
                         <ImageButton
                             android:adjustViewBounds="true"
@@ -193,11 +192,10 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:background="@drawable/bg_item"
+                            android:background="@drawable/bg_institute"
                             android:cropToPadding="true"
                             android:padding="3dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/icon_institute111" />
+                            android:scaleType="centerCrop"/>
 
                         <ImageButton
                             android:adjustViewBounds="true"
@@ -205,11 +203,10 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:background="@drawable/bg_item"
+                            android:background="@drawable/bg_opportunity"
                             android:cropToPadding="true"
                             android:padding="3dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/icon_opportunity111" />
+                            android:scaleType="centerCrop"/>
 
                         <FrameLayout
                             android:layout_width="0dp"
@@ -221,11 +218,10 @@
                                 android:id="@+id/ibt_message"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@drawable/bg_item"
+                                android:background="@drawable/bg_message"
                                 android:cropToPadding="true"
                                 android:padding="3dp"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/icon_message111" />
+                                android:scaleType="centerCrop" />
 
                             <TextView
                                 tools:text="3"
@@ -243,10 +239,9 @@
 
                     </LinearLayout>
 
-                    <ImageView
+                    <android.support.v4.widget.Space
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@android:color/black" />
+                        android:layout_height="8dp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -334,6 +329,10 @@
 
         </LinearLayout>
 
+        <android.support.v4.widget.Space
+            android:layout_width="8dp"
+            android:layout_height="match_parent" />
+
         <LinearLayout
             android:padding="3dp"
             android:focusable="true"
@@ -407,10 +406,13 @@
 
     </LinearLayout>
 
-    <com.wiatec.btv_launcher.custom_view.TranslationImageView
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <com.wiatec.btv_launcher.custom_view.AutoScrollRecycleView
         android:id="@+id/tiv_banner"
         android:focusable="false"
-        android:layout_marginTop="8dp"
         android:focusableInTouchMode="false"
         android:layout_width="match_parent"
         android:layout_height="70dp" />

@@ -65,7 +65,7 @@ public class CheckLogin implements Runnable {
                         if(result == null){
                             return;
                         }
-                        if(result.getCode() == Result.CODE_OK){
+                        if(result.getCode() == Result.CODE_LOGIN_SUCCESS){
                             RxBus.getDefault().post(new CheckLoginEvent(CheckLoginEvent.CODE_LOGIN_NORMAL));
                         }else{
                             RxBus.getDefault().post(new CheckLoginEvent(CheckLoginEvent.CODE_LOGIN_REPEAT));

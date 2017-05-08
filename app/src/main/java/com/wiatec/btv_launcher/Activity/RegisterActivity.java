@@ -33,6 +33,10 @@ public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterP
 
     @BindView(R.id.et_username)
     EditText etUsername;
+    @BindView(R.id.et_first_name)
+    EditText etFirstName;
+    @BindView(R.id.et_last_name)
+    EditText etLastName;
     @BindView(R.id.et_password)
     EditText etPassword;
     @BindView(R.id.et_password1)
@@ -47,6 +51,8 @@ public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterP
     ProgressBar progressBar;
 
     private String userName;
+    private String firstName;
+    private String lastName;
     private String password;
     private String password1;
     private String email;
@@ -105,11 +111,21 @@ public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterP
     @OnClick(R.id.bt_register)
     public void onClick() {
         userName = etUsername.getText().toString().trim();
+        firstName = etFirstName.getText().toString().trim();
+        lastName = etLastName.getText().toString().trim();
         password = etPassword.getText().toString().trim();
         password1 = etPassword1.getText().toString().trim();
         email = etEmail.getText().toString().trim();
         if (TextUtils.isEmpty(userName)) {
             Toast.makeText(RegisterActivity.this, getString(R.string.username_input_error), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(firstName)) {
+            Toast.makeText(RegisterActivity.this, getString(R.string.first_name_input_error), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(lastName)) {
+            Toast.makeText(RegisterActivity.this, getString(R.string.last_name_input_error), Toast.LENGTH_SHORT).show();
             return;
         }
         if (TextUtils.isEmpty(password)) {
@@ -130,6 +146,8 @@ public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterP
         }
         UserInfo userInfo = new UserInfo();
         userInfo.setUserName(userName);
+        userInfo.setFirstName(firstName);
+        userInfo.setLastName(lastName);
         userInfo.setPassword(password);
         userInfo.setEmail(email);
         presenter.register(userInfo, deviceInfo ,language);
@@ -139,8 +157,10 @@ public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterP
     @Override
     public void register(Result result) {
         progressBar.setVisibility(View.GONE);
-        if (result.getCode() == Result.CODE_REGISTER_OK) {
+        if (result.getCode() == Result.CODE_REGISTER_SUCCESS) {
             SPUtils.put(RegisterActivity.this, "userName", userName);
+            SPUtils.put(RegisterActivity.this, "firstName", firstName);
+            SPUtils.put(RegisterActivity.this, "lastName", lastName);
             Toast.makeText(Application.getContext(), getString(R.string.register_success), Toast.LENGTH_LONG).show();
             finish();
         } else {

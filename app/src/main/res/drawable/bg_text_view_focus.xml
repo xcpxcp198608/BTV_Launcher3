@@ -6,6 +6,6 @@
         android:angle="270"
         android:startColor="@color/colorBTV"
         android:endColor="@color/colorBTV"/>
-    <stroke android:color="@color/colorGreen" android:width="3dp"/>
+    <stroke android:color="@color/colorWhite" android:width="2dp"/>
 
 </shape>

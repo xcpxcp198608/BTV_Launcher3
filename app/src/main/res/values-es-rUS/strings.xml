@@ -31,7 +31,10 @@
     <string name="error_repeat">Login Repeat</string>
     <string name="input_key">UserName</string>
     <string name="input_password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
     <string name="email">Email</string>
+    <string name="first_name">FirstName</string>
+    <string name="last_name">LastName</string>
     <string name="warning">Warning</string>
     <string name="warning_message">Welcome to BTVi3, By using this service you agree to the Terms of Service (TOS) on Legacy Direct websites. Legacy Direct reserves the right to change the TOS at any time. If you do not agree to any of these terms, please refrain from using the BTVi3 services and products.</string>
     <string name="notice1">The programs shown are from internet and for learning purpose. Please check with Legacy Direct Term Of Service.</string>
@@ -43,6 +46,8 @@
     <string name="register">Register</string>
     <string name="create_account">Create an account now</string>
     <string name="username_input_error">UserName input error</string>
+    <string name="first_name_input_error">First Name input error</string>
+    <string name="last_name_input_error">Last Name input error</string>
     <string name="password_input_error">Password input error</string>
     <string name="password_input_different">Password input different</string>
     <string name="email_input_error">Email input error</string>

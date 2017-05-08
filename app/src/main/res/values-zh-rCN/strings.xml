@@ -32,6 +32,9 @@
     <string name="error_repeat">重复登录</string>
     <string name="input_key">用户名</string>
     <string name="input_password">密码</string>
+    <string name="confirm_password">确认密码</string>
+    <string name="first_name">姓</string>
+    <string name="last_name">名</string>
     <string name="email">邮箱</string>
     <string name="warning">警告</string>
     <string name="warning_message">Welcome to BTVi3, By using this service you agree to the Terms of Service (TOS) on Legacy Direct websites. Legacy Direct reserves the right to change the TOS at any time. If you do not agree to any of these terms, please refrain from using the BTVi3 services and products.</string>
@@ -44,6 +47,8 @@
     <string name="register">注册</string>
     <string name="create_account">创建账号</string>
     <string name="username_input_error">UserName input error</string>
+    <string name="first_name_input_error">First Name input error</string>
+    <string name="last_name_input_error">Last Name input error</string>
     <string name="password_input_error">Password input error</string>
     <string name="password_input_different">Password input different</string>
     <string name="email_input_error">Email input error</string>

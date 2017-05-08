@@ -29,6 +29,8 @@ public class RegisterPresenter extends BasePresenter<IRegisterActivity> {
         try {
             OkMaster.get(F.url.register)
                     .parames("userInfo.userName",userInfo.getUserName())
+                    .parames("userInfo.firstName",userInfo.getFirstName())
+                    .parames("userInfo.lastName",userInfo.getLastName())
                     .parames("userInfo.password",userInfo.getPassword())
                     .parames("userInfo.email",userInfo.getEmail())
                     .parames("deviceInfo.countryCode",deviceInfo.getCountryCode())

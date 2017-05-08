@@ -4,10 +4,10 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-
-import com.wiatec.btv_launcher.Utils.Logger;
+import android.util.Log;
 
 import java.lang.ref.WeakReference;
+import java.util.logging.Logger;
 
 /**
  * Created by xuchengpeng on 05/05/2017.
@@ -15,10 +15,9 @@ import java.lang.ref.WeakReference;
 
 public class AutoScrollRecycleView extends RecyclerView {
 
-    private final long INTERVAL = 6000;
+    private final long INTERVAL = 30;
     private ScrollTask scrollTask;
     private boolean isRunning = false;
-    private int currentPosition = 0;
 
     public AutoScrollRecycleView(Context context) {
         this(context , null);
@@ -33,22 +32,19 @@ public class AutoScrollRecycleView extends RecyclerView {
         scrollTask = new ScrollTask(this);
     }
 
-    private static class ScrollTask implements Runnable{
+    static class ScrollTask implements Runnable{
 
         private final WeakReference<AutoScrollRecycleView> weakReference;
 
-        private ScrollTask(AutoScrollRecycleView autoScrollRecycleView) {
+        public ScrollTask(AutoScrollRecycleView autoScrollRecycleView) {
             weakReference = new WeakReference<>(autoScrollRecycleView);
         }
 
         @Override
         public void run() {
             AutoScrollRecycleView autoScrollRecycleView = weakReference.get();
-            if(autoScrollRecycleView != null && !autoScrollRecycleView.isRunning ){
-                autoScrollRecycleView.isRunning = true;
-                autoScrollRecycleView.currentPosition += 1;
-                Logger.d(autoScrollRecycleView.currentPosition+"");
-                autoScrollRecycleView.smoothScrollToPosition(autoScrollRecycleView.currentPosition);
+            if(autoScrollRecycleView != null && autoScrollRecycleView.isRunning ){
+                autoScrollRecycleView.scrollBy(3,0);
                 autoScrollRecycleView.postDelayed(autoScrollRecycleView.scrollTask , autoScrollRecycleView.INTERVAL);
             }
         }
@@ -58,6 +54,7 @@ public class AutoScrollRecycleView extends RecyclerView {
         if(isRunning){
             stop();
         }
+        isRunning = true;
         postDelayed(scrollTask , INTERVAL);
     }
 
