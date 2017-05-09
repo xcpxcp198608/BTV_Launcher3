@@ -330,7 +330,11 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 }
                 break;
             case R.id.fl_video:
-                launchAppByLogin(getContext() , F.package_name.btv);
+                if(SystemConfig.isNetworkConnected(getContext())) {
+                    launchAppByLogin(getContext(), F.package_name.btv);
+                }else{
+                    ApkLaunch.launchApkByPackageName(getContext(), F.package_name.btv);
+                }
                 break;
             case R.id.ibt_institute:
                 if (ApkCheck.isApkInstalled(getContext(), F.package_name.joinme)) {

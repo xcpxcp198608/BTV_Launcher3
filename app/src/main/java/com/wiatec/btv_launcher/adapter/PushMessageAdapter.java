@@ -68,6 +68,7 @@ public class PushMessageAdapter extends BaseAdapter {
         PushMessageInfo pushMessageInfo = mList.get(position % mList.size());
         if("Sponsor".equals(pushMessageInfo.getUserName())){
             viewHolder.tvUserName.setTextColor(Color.rgb(0,0,255));
+            viewHolder.tvTime.setVisibility(View.GONE);
             viewHolder.tvMessage.setTextColor(Color.rgb(0,0,0));
         }else if("Announcement".equals(pushMessageInfo.getUserName())){
             viewHolder.tvUserName.setTextColor(Color.rgb(255,0,0));
