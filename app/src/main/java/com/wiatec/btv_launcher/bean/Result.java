@@ -79,7 +79,7 @@ public class Result {
 
     private int code;
     private String status;
-    private int count;
+    private int loginCount;
     private String token;
     private int userLevel;
     private String extra;
@@ -100,12 +100,12 @@ public class Result {
         this.status = status;
     }
 
-    public int getCount() {
-        return count;
+    public int getLoginCount() {
+        return loginCount;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setLoginCount(int loginCount) {
+        this.loginCount = loginCount;
     }
 
     public String getToken() {
@@ -137,7 +137,7 @@ public class Result {
         return "Result{" +
                 "code=" + code +
                 ", status='" + status + '\'' +
-                ", count=" + count +
+                ", loginCount=" + loginCount +
                 ", token='" + token + '\'' +
                 ", userLevel=" + userLevel +
                 ", extra='" + extra + '\'' +

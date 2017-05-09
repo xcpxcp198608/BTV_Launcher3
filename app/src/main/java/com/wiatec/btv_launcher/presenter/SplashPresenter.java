@@ -26,8 +26,8 @@ public class SplashPresenter extends BasePresenter<ISplashActivity> {
         if(iSplashImageData != null){
             iSplashImageData.loadData(new ISplashImageData.OnLoadListener() {
                 @Override
-                public void onSuccess(List<ImageInfo> list) {
-                    iSplashActivity.loadImage(list);
+                public void onSuccess(ImageInfo imageInfo) {
+                    iSplashActivity.loadImage(imageInfo);
                 }
 
                 @Override

@@ -37,11 +37,11 @@ public class SplashImageData implements ISplashImageData {
                         if(s == null){
                             return;
                         }
-                        List<ImageInfo> list = new Gson().fromJson(s , new TypeToken<List<ImageInfo>>() {} .getType());
-                        if(list == null || list.size() <= 0){
+                        ImageInfo imageInfo = new Gson().fromJson(s , new TypeToken<ImageInfo>() {} .getType());
+                        if(imageInfo == null){
                             return;
                         }
-                        onLoadListener.onSuccess(list);
+                        onLoadListener.onSuccess(imageInfo);
                     }
 
                     @Override

@@ -11,7 +11,7 @@ import java.util.List;
 public interface ISplashImageData {
     void loadData(OnLoadListener onLoadListener);
     interface OnLoadListener {
-        void onSuccess (List<ImageInfo> list);
+        void onSuccess (ImageInfo imageInfo);
         void onFailure (String e);
     }
 }

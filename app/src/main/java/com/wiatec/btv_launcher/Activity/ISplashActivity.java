@@ -9,5 +9,5 @@ import java.util.List;
  */
 
 public interface ISplashActivity {
-    void loadImage(List<ImageInfo> list);
+    void loadImage(ImageInfo imageInfo);
 }

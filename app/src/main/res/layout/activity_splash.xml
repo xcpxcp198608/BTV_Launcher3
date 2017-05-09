@@ -70,6 +70,7 @@
             android:layout_height="50dp" />
 
         <Button
+            android:visibility="gone"
             android:textColor="@color/colorWhite"
             android:textSize="20sp"
             android:text="@string/pass"

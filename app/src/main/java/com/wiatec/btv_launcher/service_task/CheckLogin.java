@@ -46,7 +46,7 @@ public class CheckLogin implements Runnable {
         currentLoginCount = (int) SPUtils.get(Application.getContext() , "currentLoginCount" , 0);
         userName = (String) SPUtils.get(Application.getContext(),"userName" , "");
         if(TextUtils.isEmpty(userName)){
-            //Logger.d("no userName do not execute check");
+           // Logger.d("no userName do not execute check");
             return;
         }
         if(currentLoginCount == 0){
@@ -65,7 +65,9 @@ public class CheckLogin implements Runnable {
                         if(result == null){
                             return;
                         }
+                        //Logger.d(result.toString());
                         if(result.getCode() == Result.CODE_LOGIN_SUCCESS){
+                            SPUtils.put(Application.getContext() , "userLevel" ,result.getUserLevel());
                             RxBus.getDefault().post(new CheckLoginEvent(CheckLoginEvent.CODE_LOGIN_NORMAL));
                         }else{
                             RxBus.getDefault().post(new CheckLoginEvent(CheckLoginEvent.CODE_LOGIN_REPEAT));

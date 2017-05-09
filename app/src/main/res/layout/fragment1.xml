@@ -91,11 +91,10 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:background="@drawable/bg_item"
+                            android:background="@drawable/bg_manual"
                             android:cropToPadding="true"
                             android:padding="3dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/icon_manuals111" />
+                            android:scaleType="centerCrop" />
 
                     </LinearLayout>
 
@@ -116,7 +115,7 @@
                             android:cropToPadding="true"
                             android:padding="3dp"
                             android:scaleType="fitCenter"
-                            android:background="@drawable/icon_cloud111"/>
+                            android:background="@drawable/bg_cloud"/>
 
                     </FrameLayout>
 
@@ -221,15 +220,16 @@
 
                             <ImageButton
                                 android:adjustViewBounds="true"
-                                android:id="@+id/ibt_message"
+                                android:id="@+id/ibt_game"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@drawable/bg_message"
+                                android:background="@drawable/bg_game"
                                 android:cropToPadding="true"
                                 android:padding="3dp"
                                 android:scaleType="centerCrop" />
 
                             <TextView
+                                android:visibility="gone"
                                 tools:text="3"
                                 android:id="@+id/tv_message_count"
                                 android:layout_width="match_parent"
@@ -387,13 +387,7 @@
             <ImageView
                 android:background="@color/colorBlack"
                 android:layout_width="match_parent"
-                android:layout_height="2dp" />
-
-            <ImageView
-                android:visibility="gone"
-                android:id="@+id/iv_ad"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="1dp" />
 
             <TextView
                 android:text="Powered by LD TECH"

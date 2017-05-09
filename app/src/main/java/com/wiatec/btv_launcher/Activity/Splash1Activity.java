@@ -89,14 +89,15 @@ public class Splash1Activity extends Base1Activity<ISplashActivity, SplashPresen
                         //Logger.d(i + "");
                         ll_Delay.setVisibility(View.VISIBLE);
                         tv_DelayTime.setText(String.valueOf(i) +" s");
+                        if(i<=2){
+                            ibt_Pass.setVisibility(View.VISIBLE);
+                        }
                     }
                 });
     }
 
     @Override
-    public void loadImage(final List<ImageInfo> list) {
-        //Logger.d(list.toString());
-        final ImageInfo imageInfo = list.get(0);
+    public void loadImage(final ImageInfo imageInfo) {
         try {
             Glide.with(Splash1Activity.this).load(imageInfo.getUrl()).placeholder(R.drawable.btv1).into(iv_Splash);
         }catch (Exception e){
@@ -106,8 +107,12 @@ public class Splash1Activity extends Base1Activity<ISplashActivity, SplashPresen
         ibt_Know.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Intent.ACTION_VIEW , Uri.parse(imageInfo.getLink())));
-                subscription.unsubscribe();
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW , Uri.parse(imageInfo.getLink())));
+                    subscription.unsubscribe();
+                }catch (Exception e){
+                    Logger.d(e.getMessage());
+                }
             }
         });
     }

@@ -53,7 +53,7 @@
     <string name="password_input_different">Password input different</string>
     <string name="email_input_error">Email input error</string>
     <string name="register_success">Congratulations !register success , please go to your email confirm then login you account</string>
-    <string name="login_repeat">Sorry, your account login error ,please login again</string>
+    <string name="login_repeat">This account has been used to log in on other BTVi3 device.  Exiting this device. If you did not perform this log in on other device,  please immediately change your password and log in again.</string>
     <string name="account_error">Please contact support@legacy.direct or text to 9499889000 to inquire about this issue.</string>
     <string name="welcome">Hello</string>
     <string name="family">family</string>

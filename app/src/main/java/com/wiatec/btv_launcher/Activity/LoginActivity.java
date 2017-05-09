@@ -121,7 +121,7 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
             progressBar.setVisibility(View.GONE);
             Toast.makeText(Application.getContext(), "login success", Toast.LENGTH_LONG).show();
             SPUtils.put(LoginActivity.this,"userName", userName);
-            SPUtils.put(LoginActivity.this,"currentLoginCount", result.getCount());
+            SPUtils.put(LoginActivity.this,"currentLoginCount", result.getLoginCount());
             SPUtils.put(LoginActivity.this,"token", result.getToken());
             SPUtils.put(LoginActivity.this,"lastName", result.getExtra());
             finish();

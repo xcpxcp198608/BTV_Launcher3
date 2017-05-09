@@ -62,12 +62,12 @@ public class LoginSplashActivity extends AppCompatActivity{
                         }
                         Result result = new Gson().fromJson(s , new TypeToken<Result>(){}.getType());
                         if(result.getCode() == Result.CODE_LOGIN_SUCCESS){
-                            if(result.getCount() > 1){
+                            if(result.getUserLevel() > 1){
                                 if (ApkCheck.isApkInstalled(LoginSplashActivity.this,packageName)) {
                                     ApkLaunch.launchApkByPackageName(LoginSplashActivity.this, packageName);
                                 }
                                 finish();
-                            }else {
+                            }else if(result.getUserLevel() == 1){
                                 if(packageName.equals(F.package_name.btv)) {
                                     Intent intent = new Intent(LoginSplashActivity.this, PlayAdActivity.class);
                                     intent.putExtra("packageName", F.package_name.btv);
@@ -79,6 +79,9 @@ public class LoginSplashActivity extends AppCompatActivity{
                                     }
                                     finish();
                                 }
+                            }else{
+                                Toast.makeText(Application.getContext() , Application.getContext().getString(R.string.account_error) ,
+                                        Toast.LENGTH_LONG).show();
                             }
                         }else{
                             Toast.makeText(Application.getContext() , getString(R.string.account_error) ,
