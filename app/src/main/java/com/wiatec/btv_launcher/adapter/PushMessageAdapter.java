@@ -73,9 +73,11 @@ public class PushMessageAdapter extends BaseAdapter {
         }else if("Announcement".equals(pushMessageInfo.getUserName())){
             viewHolder.tvUserName.setTextColor(Color.rgb(255,0,0));
             viewHolder.tvMessage.setTextColor(Color.rgb(255,0,0));
+            viewHolder.tvTime.setVisibility(View.VISIBLE);
         }else{
             viewHolder.tvUserName.setTextColor(context.getResources().getColor(R.color.colorGray1));
             viewHolder.tvMessage.setTextColor(Color.rgb(0,0,0));
+            viewHolder.tvTime.setVisibility(View.VISIBLE);
         }
         viewHolder.tvUserName.setText(pushMessageInfo.getUserName());
         String time = pushMessageInfo.getTime().substring(0 , pushMessageInfo.getTime().length() -2);

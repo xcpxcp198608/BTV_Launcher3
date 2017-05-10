@@ -61,13 +61,13 @@ public class LoginSplashActivity extends AppCompatActivity{
                             return;
                         }
                         Result result = new Gson().fromJson(s , new TypeToken<Result>(){}.getType());
-                        if(result.getCode() == Result.CODE_LOGIN_SUCCESS){
-                            if(result.getUserLevel() > 1){
+                        if(result.getCode() == Result.CODE_REQUEST_SUCCESS){
+                            if(result.getUserLevel() >= 3){
                                 if (ApkCheck.isApkInstalled(LoginSplashActivity.this,packageName)) {
                                     ApkLaunch.launchApkByPackageName(LoginSplashActivity.this, packageName);
                                 }
                                 finish();
-                            }else if(result.getUserLevel() == 1){
+                            }else if(result.getUserLevel() >= 1){
                                 if(packageName.equals(F.package_name.btv)) {
                                     Intent intent = new Intent(LoginSplashActivity.this, PlayAdActivity.class);
                                     intent.putExtra("packageName", F.package_name.btv);

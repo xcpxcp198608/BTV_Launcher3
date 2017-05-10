@@ -150,6 +150,7 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
                 llLogin.setVisibility(View.VISIBLE);
                 return true;
             }
+            return true;
         }
         return super.onKeyDown(keyCode, event);
     }

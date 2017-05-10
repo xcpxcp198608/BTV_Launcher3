@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_gravity="center"
     android:background="@color/colorBlack"
     android:layout_width="match_parent"
@@ -50,6 +51,54 @@
             android:textColor="@color/colorWhite"
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginBottom="8dp"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_marginLeft="8dp"
+            android:textColor="@color/colorItemYellow1"
+            android:textSize="25sp"
+            android:gravity="left"
+            android:text="@string/skip_ad1"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="50dp" />
+
+        <TextView
+            android:textColor="@color/colorItemYellow1"
+            android:textSize="25sp"
+            android:gravity="right"
+            android:text="@string/skip_ad"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="50dp" />
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_marginRight="20dp"
+            android:textColor="@color/colorItemYellow1"
+            android:textSize="25sp"
+            android:gravity="right"
+            tools:text=" 30s"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp" />
+
+        <Button
+            android:visibility="gone"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp"
+            android:text="@string/skip"
+            android:id="@+id/bt_skip"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/bg_btn_pass_detail"
+            android:layout_width="120dp"
+            android:layout_height="50dp"  />
 
     </LinearLayout>
 

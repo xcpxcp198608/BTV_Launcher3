@@ -152,9 +152,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment1, container, false);
         ButterKnife.bind(this, view);
-        networkStatusReceiver = new NetworkStatusReceiver(null);
-        networkStatusReceiver.setOnNetworkStatusListener(this);
-        getContext().registerReceiver(networkStatusReceiver, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
         messageDao = MessageDao.getInstance(getContext());
         userDataInfo = new UserDataInfo();
         installedAppDao = InstalledAppDao.getInstance(Application.getContext());
@@ -200,6 +197,9 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         entryTime = System.currentTimeMillis();
         //checkMessageCount();
         if (!SystemConfig.isNetworkConnected(getContext())){
+            networkStatusReceiver = new NetworkStatusReceiver(null);
+            networkStatusReceiver.setOnNetworkStatusListener(this);
+            getContext().registerReceiver(networkStatusReceiver, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
             return;
         }
         if (presenter != null && vv_Main != null && !vv_Main.isPlaying() && !isVideoPlaying) {
@@ -561,6 +561,16 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
 
     @Override
     public void onConnected(boolean isConnected) {
+        Logger.d("connect");
+        if (presenter != null && vv_Main != null && !vv_Main.isPlaying() && !isVideoPlaying) {
+            presenter.loadVideo();
+        }
+        if (presenter != null) {
+            presenter.loadRollImageData();
+            presenter.loadRollOverImage();
+            presenter.loadCloudData();
+            presenter.loadPushMessage();
+        }
     }
 
     @Override

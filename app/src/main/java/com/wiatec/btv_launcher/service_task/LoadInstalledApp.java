@@ -68,6 +68,7 @@ public class LoadInstalledApp implements Runnable {
                             !F.package_name.legacy_antivirus.equals(noShowPackageName)&&
                             !F.package_name.legacy_privacy.equals(noShowPackageName)&&
                             !F.package_name.tvplus.equals(noShowPackageName)&&
+                            !F.package_name.btv.equals(noShowPackageName)&&
                             !F.package_name.spotify.equals(noShowPackageName)){
                 // Logger.d(installedAppInfo.toString());
                 if(!installedAppDao.isExists(installedApp)){

@@ -73,9 +73,28 @@ public class BootAdActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        if(Application.getBootStatus()){
+            Observable.interval(0,1 , TimeUnit.SECONDS).take(5)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Action1<Long>() {
+                        @Override
+                        public void call(Long aLong) {
+                            int i = (int) (5 -1 - aLong);
+                            if(i == 0){
+                                Application.setBootStatus(false);
+                                startActivity(new Intent(BootAdActivity.this , MainActivity.class));
+                                finish();
+                            }
+                        }
+                    });
+        }else{
+            Application.setBootStatus(false);
+            startActivity(new Intent(BootAdActivity.this , MainActivity.class));
+            finish();
+        }
 
-        startActivity(new Intent(BootAdActivity.this , MainActivity.class));
-        finish();
+
 
 //        if(Application.getBootStatus()){
 //            File file = new File(F.path.boot_ad_video);

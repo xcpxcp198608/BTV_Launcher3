@@ -73,19 +73,21 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected void checkLoginResult(){
-        isLoginChecking = true;
         checkLoginSubscription = RxBus.getDefault().toObservable(CheckLoginEvent.class)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<CheckLoginEvent>() {
                     @Override
                     public void call(CheckLoginEvent checkLoginEvent) {
+                        if(isLoginChecking){
+                            return;
+                        }
                         if(checkLoginEvent.getCode() == CheckLoginEvent.CODE_LOGIN_NORMAL){
                             //Logger.d("login normal");
                         }else{
                             //Logger.d("login repeat");
                             showLoginAgainDialog();
                             checkLoginSubscription.unsubscribe();
-                            isLoginChecking = false;
+                            isLoginChecking = true;
                         }
                     }
                 });

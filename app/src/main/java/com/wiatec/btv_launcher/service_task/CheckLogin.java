@@ -65,7 +65,7 @@ public class CheckLogin implements Runnable {
                         if(result == null){
                             return;
                         }
-                        //Logger.d(result.toString());
+                        Logger.d(result.toString());
                         if(result.getCode() == Result.CODE_LOGIN_SUCCESS){
                             SPUtils.put(Application.getContext() , "userLevel" ,result.getUserLevel());
                             RxBus.getDefault().post(new CheckLoginEvent(CheckLoginEvent.CODE_LOGIN_NORMAL));
