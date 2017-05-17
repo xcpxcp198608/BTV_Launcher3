@@ -38,7 +38,7 @@ public class PushMessageAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return Integer.MAX_VALUE;
+        return mList.size();
     }
 
     @Override
@@ -65,7 +65,7 @@ public class PushMessageAdapter extends BaseAdapter {
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        PushMessageInfo pushMessageInfo = mList.get(position % mList.size());
+        PushMessageInfo pushMessageInfo = mList.get(position);
         if("Sponsor".equals(pushMessageInfo.getUserName())){
             viewHolder.tvUserName.setTextColor(Color.rgb(0,0,255));
             viewHolder.tvTime.setVisibility(View.GONE);
@@ -80,7 +80,7 @@ public class PushMessageAdapter extends BaseAdapter {
             viewHolder.tvTime.setVisibility(View.VISIBLE);
         }
         viewHolder.tvUserName.setText(pushMessageInfo.getUserName());
-        String time = pushMessageInfo.getTime().substring(0 , pushMessageInfo.getTime().length() -2);
+        String time = pushMessageInfo.getTime().substring(0 , pushMessageInfo.getTime().length() -10);
         viewHolder.tvTime.setText(time);
         viewHolder.tvMessage.setText(pushMessageInfo.getMessage());
         Glide.with(context).load(pushMessageInfo.getImg1())

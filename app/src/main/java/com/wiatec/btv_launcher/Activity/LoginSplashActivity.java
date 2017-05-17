@@ -47,53 +47,37 @@ public class LoginSplashActivity extends AppCompatActivity{
         if(TextUtils.isEmpty(userName) || TextUtils.isEmpty(token)){
             startActivity(new Intent(this , LoginActivity.class));
         }else {
-            check(userName);
+            check();
         }
     }
 
-    private void check(String userName){
-        OkMaster.post(F.url.level_check)
-                .parames("userInfo.userName" , userName)
-                .enqueue(new StringListener() {
-                    @Override
-                    public void onSuccess(String s) throws IOException {
-                        if(s == null){
-                            return;
-                        }
-                        Result result = new Gson().fromJson(s , new TypeToken<Result>(){}.getType());
-                        if(result.getCode() == Result.CODE_REQUEST_SUCCESS){
-                            if(result.getUserLevel() >= 3){
-                                if (ApkCheck.isApkInstalled(LoginSplashActivity.this,packageName)) {
-                                    ApkLaunch.launchApkByPackageName(LoginSplashActivity.this, packageName);
-                                }
-                                finish();
-                            }else if(result.getUserLevel() >= 1){
-                                if(packageName.equals(F.package_name.btv)) {
-                                    Intent intent = new Intent(LoginSplashActivity.this, PlayAdActivity.class);
-                                    intent.putExtra("packageName", F.package_name.btv);
-                                    startActivity(intent);
-                                    finish();
-                                }else{
-                                    if (ApkCheck.isApkInstalled(LoginSplashActivity.this,packageName)) {
-                                        ApkLaunch.launchApkByPackageName(LoginSplashActivity.this, packageName);
-                                    }
-                                    finish();
-                                }
-                            }else{
-                                Toast.makeText(Application.getContext() , Application.getContext().getString(R.string.account_error) ,
-                                        Toast.LENGTH_LONG).show();
-                            }
-                        }else{
-                            Toast.makeText(Application.getContext() , getString(R.string.account_error) ,
-                                    Toast.LENGTH_LONG).show();
-                            finish();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(String e) {
-                        Logger.d(e);
-                    }
-                });
+    private void check(){
+        int level = (int) SPUtils.get(Application.getContext() ,"userLevel" , 1);
+        if(level >=3 ){
+            if (ApkCheck.isApkInstalled(this,packageName)) {
+                ApkLaunch.launchApkByPackageName(this, packageName);
+            }else{
+                Toast.makeText(Application.getContext() , Application.getContext().getString(R.string.download_guide),
+                        Toast.LENGTH_LONG).show();
+                ApkLaunch.launchApkByPackageName(this, F.package_name.market);
+            }
+        }else if(level >= 1){
+            if(packageName.equals(F.package_name.btv)) {
+                Intent intent = new Intent(this, PlayAdActivity.class);
+                intent.putExtra("packageName", F.package_name.btv);
+                startActivity(intent);
+            }else{
+                if (ApkCheck.isApkInstalled(Application.getContext(),packageName)) {
+                    ApkLaunch.launchApkByPackageName(this, packageName);
+                }else{
+                    Toast.makeText(Application.getContext() , Application.getContext().getString(R.string.download_guide),
+                            Toast.LENGTH_LONG).show();
+                    ApkLaunch.launchApkByPackageName(this, F.package_name.market);
+                }
+            }
+        }else{
+            Toast.makeText(Application.getContext() , Application.getContext().getString(R.string.account_error) ,
+                    Toast.LENGTH_LONG).show();
+        }
     }
 }

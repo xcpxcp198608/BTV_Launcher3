@@ -128,6 +128,8 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     LinearLayout llPushMessage;
     @BindView(R.id.pb_push_message)
     ProgressBar pbPushMessage;
+    @BindView(R.id.iv_btv_logo)
+    ImageView ivBTVLogo;
 
     private NetworkStatusReceiver networkStatusReceiver;
     private Subscription videoSubscription;
@@ -146,6 +148,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     private PushMessageAdapter pushMessageAdapter;
     private List<ImageInfo> rollImageInfoList = new ArrayList<>();
     private AutoScrollAdapter autoScrollAdapter;
+    private boolean isNetworkReceiveRegister = false;
 
     @Nullable
     @Override
@@ -156,6 +159,13 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         userDataInfo = new UserDataInfo();
         installedAppDao = InstalledAppDao.getInstance(Application.getContext());
         intent = new Intent();
+
+        if (!SystemConfig.isNetworkConnected(getContext())){
+            networkStatusReceiver = new NetworkStatusReceiver(null);
+            networkStatusReceiver.setOnNetworkStatusListener(this);
+            getContext().registerReceiver(networkStatusReceiver, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
+            isNetworkReceiveRegister = true;
+        }
         return view;
     }
 
@@ -178,6 +188,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         ibtCloud.setNextFocusRightId(R.id.ll_push_message);
         ibtGame.setNextFocusRightId(R.id.ll_push_message);
         ibt6.setNextFocusRightId(R.id.ll_push_message);
+        llPushMessage.setNextFocusDownId(R.id.fl_video);
         ibt1.setNextFocusDownId(R.id.fl_video);
         ibt2.setNextFocusDownId(R.id.fl_video);
         ibt3.setNextFocusDownId(R.id.fl_video);
@@ -195,12 +206,8 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     public void onResume() {
         super.onResume();
         entryTime = System.currentTimeMillis();
-        //checkMessageCount();
-        if (!SystemConfig.isNetworkConnected(getContext())){
-            networkStatusReceiver = new NetworkStatusReceiver(null);
-            networkStatusReceiver.setOnNetworkStatusListener(this);
-            getContext().registerReceiver(networkStatusReceiver, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
-            return;
+        if(!SystemConfig.isNetworkConnected(getContext())){
+           return;
         }
         if (presenter != null && vv_Main != null && !vv_Main.isPlaying() && !isVideoPlaying) {
             presenter.loadVideo();
@@ -268,7 +275,9 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        getContext().unregisterReceiver(networkStatusReceiver);
+        if(networkStatusReceiver != null && isNetworkReceiveRegister){
+            getContext().unregisterReceiver(networkStatusReceiver);
+        }
         if (videoSubscription != null) {
             videoSubscription.unsubscribe();
         }
@@ -457,30 +466,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         ibtCloud.setImages(list);
     }
 
-    private void checkMessageCount(){
-        messageSubscription = Observable.just("")
-                .subscribeOn(Schedulers.io())
-                .map(new Func1<String, List<MessageInfo>>() {
-                    @Override
-                    public List<MessageInfo> call(String s) {
-                        return messageDao.queryUnreadMessage();
-                    }
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<MessageInfo>>() {
-                    @Override
-                    public void call(List<MessageInfo> list) {
-                        if (list.size() > 0) {
-                            int count = list.size();
-                            tvMessageCount.setText(count+"");
-                            tvMessageCount.setVisibility(View.VISIBLE);
-                        } else {
-                            tvMessageCount.setVisibility(View.GONE);
-                        }
-                    }
-                });
-    }
-
     @Override
     public void loadVideo(final List<VideoInfo> list) {
         if(list == null || list.size() <1){
@@ -521,12 +506,14 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         vv_Main.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
+                ivBTVLogo.setVisibility(View.GONE);
                 vv_Main.start();
             }
         });
         vv_Main.setOnErrorListener(new MediaPlayer.OnErrorListener() {
             @Override
             public boolean onError(MediaPlayer mp, int what, int extra) {
+                ivBTVLogo.setVisibility(View.VISIBLE);
                 return true;
             }
         });
@@ -556,6 +543,14 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
             messageListView.setAdapter(pushMessageAdapter);
             pushMessageAdapter.notifyDataSetChanged();
             messageListView.start();
+            messageListView.setOnScrollFinishedListener(new MessageListView.OnScrollFinishedListener() {
+                @Override
+                public void onFinished(boolean isFinished, int position) {
+                    if(presenter != null){
+                        presenter.loadPushMessage();
+                    }
+                }
+            });
         }
     }
 

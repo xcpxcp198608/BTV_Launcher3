@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.Utils.ApkLaunch;
 import com.wiatec.btv_launcher.Utils.Logger;
+import com.wiatec.btv_launcher.Utils.SPUtils;
 import com.wiatec.btv_launcher.bean.ImageInfo;
 import com.wiatec.btv_launcher.presenter.SplashPresenter;
 
@@ -65,6 +66,12 @@ public class Splash1Activity extends Base1Activity<ISplashActivity, SplashPresen
     @Override
     protected void onStart() {
         super.onStart();
+        int level = (int) SPUtils.get(Splash1Activity.this , "userLevel" , 1);
+        if(level >= 3){
+            launchApp(packageName);
+            finish();
+            return;
+        }
         presenter.loadImage();
         subscription = Observable.interval(0,1, TimeUnit.SECONDS).take(delayTime)
                 .observeOn(AndroidSchedulers.mainThread())

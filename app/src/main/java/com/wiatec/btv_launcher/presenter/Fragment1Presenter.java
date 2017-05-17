@@ -15,6 +15,7 @@ import com.wiatec.btv_launcher.Utils.ApkLaunch;
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.OkHttp.Listener.StringListener;
 import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
+import com.wiatec.btv_launcher.Utils.SPUtils;
 import com.wiatec.btv_launcher.bean.ImageInfo;
 import com.wiatec.btv_launcher.bean.PushMessageInfo;
 import com.wiatec.btv_launcher.bean.Result;
@@ -165,52 +166,32 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
     }
 
     public void check(String userName , final String packageName , final Context context){
-        OkMaster.post(F.url.level_check)
-                .parames("userInfo.userName" , userName)
-                .enqueue(new StringListener() {
-                    @Override
-                    public void onSuccess(String s) throws IOException {
-                        if(s == null){
-                            return;
-                        }
-                        Result result = new Gson().fromJson(s , new TypeToken<Result>(){}.getType());
-                        if(result.getCode() == Result.CODE_REQUEST_SUCCESS){
-                            if(result.getUserLevel() >=3 ){
-                                if (ApkCheck.isApkInstalled(context,packageName)) {
-                                    ApkLaunch.launchApkByPackageName(context, packageName);
-                                }else{
-                                    Toast.makeText(Application.getContext() , Application.getContext().getString(R.string.download_guide),
-                                            Toast.LENGTH_LONG).show();
-                                    ApkLaunch.launchApkByPackageName(context, F.package_name.market);
-                                }
-                            }else if(result.getUserLevel() >= 1){
-                                if(packageName.equals(F.package_name.btv)) {
-                                    Intent intent = new Intent(context, PlayAdActivity.class);
-                                    intent.putExtra("packageName", F.package_name.btv);
-                                    context.startActivity(intent);
-                                }else{
-                                    if (ApkCheck.isApkInstalled(Application.getContext(),packageName)) {
-                                        ApkLaunch.launchApkByPackageName(context, packageName);
-                                    }else{
-                                        Toast.makeText(Application.getContext() , Application.getContext().getString(R.string.download_guide),
-                                                Toast.LENGTH_LONG).show();
-                                        ApkLaunch.launchApkByPackageName(context, F.package_name.market);
-                                    }
-                                }
-                            }else{
-                                Toast.makeText(Application.getContext() , Application.getContext().getString(R.string.account_error) ,
-                                        Toast.LENGTH_LONG).show();
-                            }
-                        }else{
-                            Toast.makeText(Application.getContext() , Application.getContext().getString(R.string.account_error) ,
-                                    Toast.LENGTH_LONG).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(String e) {
-                        Logger.d(e);
-                    }
-                });
+        int level = (int) SPUtils.get(Application.getContext() ,"userLevel" , 1);
+        if(level >=3 ){
+            if (ApkCheck.isApkInstalled(context,packageName)) {
+                ApkLaunch.launchApkByPackageName(context, packageName);
+            }else{
+                Toast.makeText(Application.getContext() , Application.getContext().getString(R.string.download_guide),
+                        Toast.LENGTH_LONG).show();
+                ApkLaunch.launchApkByPackageName(context, F.package_name.market);
+            }
+        }else if(level >= 1){
+            if(packageName.equals(F.package_name.btv)) {
+                Intent intent = new Intent(context, PlayAdActivity.class);
+                intent.putExtra("packageName", F.package_name.btv);
+                context.startActivity(intent);
+            }else{
+                if (ApkCheck.isApkInstalled(Application.getContext(),packageName)) {
+                    ApkLaunch.launchApkByPackageName(context, packageName);
+                }else{
+                    Toast.makeText(Application.getContext() , Application.getContext().getString(R.string.download_guide),
+                            Toast.LENGTH_LONG).show();
+                    ApkLaunch.launchApkByPackageName(context, F.package_name.market);
+                }
+            }
+        }else{
+            Toast.makeText(Application.getContext() , Application.getContext().getString(R.string.account_error) ,
+                    Toast.LENGTH_LONG).show();
+        }
     }
 }

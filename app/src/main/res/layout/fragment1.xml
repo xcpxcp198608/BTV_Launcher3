@@ -56,6 +56,13 @@
                         android:scaleType="centerInside"
                         android:src="@drawable/btv_icon_1" />
 
+                    <ImageView
+                        android:id="@+id/iv_btv_logo"
+                        android:src="@drawable/btv_icon_1"
+                        android:background="@color/colorGray1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
                 </FrameLayout>
 
                 <LinearLayout
@@ -375,6 +382,7 @@
             </FrameLayout>
 
             <com.wiatec.btv_launcher.custom_view.MessageListView
+                android:background="@color/colorGray1"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:id="@+id/lv_message"

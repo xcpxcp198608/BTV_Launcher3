@@ -18,9 +18,10 @@ import java.util.TimerTask;
 public class MessageListView extends ListView {
 
     private Timer timer;
-    private int interval = 13000;
+    private int interval = 15000;
     private int currentPosition = -1;
     private ScrollTask mScrollTask;
+    private OnScrollFinishedListener onScrollFinishedListener;
 
     public MessageListView(Context context) {
         this(context , null);
@@ -35,6 +36,8 @@ public class MessageListView extends ListView {
         setItemsCanFocus(false);
     }
 
+    private TimerHandler timerHandler = new TimerHandler(this);
+
     private final static class TimerHandler extends Handler{
 
         private WeakReference<MessageListView> weakReference;
@@ -48,11 +51,25 @@ public class MessageListView extends ListView {
             super.handleMessage(msg);
             MessageListView messageListView = weakReference.get();
             messageListView.currentPosition = messageListView.currentPosition + 1 ;
+            int totalSize = messageListView.getCount();
+            if(messageListView.currentPosition >= totalSize){
+                messageListView.stop();
+                if(messageListView.onScrollFinishedListener != null){
+                    messageListView.onScrollFinishedListener.onFinished(true , totalSize);
+                }
+                return;
+            }
             messageListView.setSelection(messageListView.currentPosition);
         }
     }
 
-    private TimerHandler timerHandler = new TimerHandler(this);
+    public void setOnScrollFinishedListener (OnScrollFinishedListener onScrollFinishedListener){
+        this.onScrollFinishedListener = onScrollFinishedListener;
+    }
+
+    public interface OnScrollFinishedListener{
+        void onFinished(boolean isFinished ,int position);
+    }
 
     private static final class ScrollTask extends TimerTask {
 

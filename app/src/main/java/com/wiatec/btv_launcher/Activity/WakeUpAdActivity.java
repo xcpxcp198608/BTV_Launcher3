@@ -105,6 +105,7 @@ public class WakeUpAdActivity extends AppCompatActivity implements View.OnClickL
                                 tvTime.setText(" "+j + "s");
                                 if(time - i >30){
                                     btSkip.setVisibility(View.VISIBLE);
+                                    btSkip.requestFocus();
                                 }
                             }
                         }
