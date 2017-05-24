@@ -42,9 +42,6 @@ public class BaseActivity extends AppCompatActivity {
         String mac = SystemConfig.getWifiMac1(this);
         SPUtils.put(this, "mac", mac);
         deviceInfo.setMac(mac);
-        if(!isLoginChecking && SystemConfig.isNetworkConnected(Application.getContext())) {
-            checkLoginResult();
-        }
     }
 
     @Override
@@ -94,7 +91,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     private void showLoginAgainDialog(){
-        final AlertDialog alertDialog = new AlertDialog.Builder(this , R.style.dialog).create();
+        final AlertDialog alertDialog = new AlertDialog.Builder(Application.getContext() , R.style.dialog).create();
         alertDialog.setCancelable(false);
         alertDialog.show();
         Window window = alertDialog.getWindow();
@@ -106,6 +103,7 @@ public class BaseActivity extends AppCompatActivity {
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isLoginChecking = false;
                 alertDialog.dismiss();
                 startActivity(new Intent(BaseActivity.this , LoginActivity.class));
             }

@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.wiatec.btv_launcher.bean.ImageInfo;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -23,7 +24,8 @@ import java.util.TimerTask;
 public class MultiImage extends AppCompatImageButton {
 
     private List<String> images;
-    private int mInterval = 6000;
+    private List<ImageInfo> imageInfoList;
+    private int mInterval = 10000;
     private int mCurrentPosition = -1 ;
     private Timer timer;
 
@@ -48,6 +50,14 @@ public class MultiImage extends AppCompatImageButton {
         if(images ==null || images.size()<=0){
             return;
         }
+        start();
+    }
+
+    public void setImageInfoList(List<ImageInfo> list){
+        if(list == null || list.size() <= 0){
+            return;
+        }
+        this.imageInfoList = list;
         start();
     }
 
@@ -79,13 +89,25 @@ public class MultiImage extends AppCompatImageButton {
             MultiImage multiImage = weakReference.get();
             multiImage.mCurrentPosition++;
 
-            if( multiImage.mCurrentPosition >= multiImage.images.size()){
-                multiImage.mCurrentPosition = 0;
+            if(multiImage.images != null && multiImage.images.size() > 0){
+                if( multiImage.mCurrentPosition >= multiImage.images.size()){
+                    multiImage.mCurrentPosition = 0;
+                }
+                Glide.with(multiImage.getContext())
+                        .load(multiImage.images.get(multiImage.mCurrentPosition))
+                        .dontAnimate()
+                        .into(multiImage);
             }
-            Glide.with(multiImage.getContext())
-                    .load(multiImage.images.get(multiImage.mCurrentPosition))
-                    .dontAnimate()
-                    .into(multiImage);
+            if(multiImage.imageInfoList != null && multiImage.imageInfoList.size() > 0){
+                if( multiImage.mCurrentPosition >= multiImage.imageInfoList.size()){
+                    multiImage.mCurrentPosition = 0;
+                }
+                Glide.with(multiImage.getContext())
+                        .load(multiImage.imageInfoList.get(multiImage.mCurrentPosition).getUrl())
+                        .dontAnimate()
+                        .into(multiImage);
+            }
+
         }
     }
 

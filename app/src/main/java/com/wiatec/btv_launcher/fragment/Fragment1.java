@@ -8,6 +8,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,7 @@ import android.widget.VideoView;
 import com.bumptech.glide.Glide;
 import com.wiatec.btv_launcher.Activity.AppSelectActivity;
 import com.wiatec.btv_launcher.Activity.FMPlayActivity;
+import com.wiatec.btv_launcher.Activity.InstituteActivity;
 import com.wiatec.btv_launcher.Activity.LoginActivity;
 import com.wiatec.btv_launcher.Activity.MenuActivity;
 import com.wiatec.btv_launcher.Activity.Message1Activity;
@@ -123,7 +125,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     @BindView(R.id.lv_message)
     MessageListView messageListView;
     @BindView(R.id.tiv_banner)
-    AutoScrollRecycleView tivBanner;
+    MultiImage tivBanner;
     @BindView(R.id.ll_push_message)
     LinearLayout llPushMessage;
     @BindView(R.id.pb_push_message)
@@ -346,12 +348,8 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 }
                 break;
             case R.id.ibt_institute:
-                if (ApkCheck.isApkInstalled(getContext(), F.package_name.joinme)) {
-                    ApkLaunch.launchApkByPackageName(getContext(), F.package_name.joinme);
-                }else{
-                    Toast.makeText(getContext() , getString(R.string.download_guide)+" Joinme",Toast.LENGTH_SHORT).show();
-                    ApkLaunch.launchApkByPackageName(getContext(), F.package_name.market);
-                }
+                intent.setClass(getActivity(), InstituteActivity.class);
+                getContext().startActivity(intent);
                 break;
             case R.id.ibt_customer_service:
                 intent.setClass(getActivity(), WebViewActivity.class);
@@ -439,15 +437,28 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         if(list == null || list.size() <1){
             return;
         }
-        rollImageInfoList.clear();
-        rollImageInfoList.addAll(list);
-        if(autoScrollAdapter ==null){
-            autoScrollAdapter = new AutoScrollAdapter(getContext() , rollImageInfoList);
-        }
-        autoScrollAdapter.notifyDataSetChanged();
-        tivBanner.setAdapter(autoScrollAdapter);
-        tivBanner.setLayoutManager(new GridLayoutManager(getContext(), 1 , GridLayoutManager.HORIZONTAL , false ));
-        tivBanner.start();
+//        if(autoScrollAdapter == null){
+//            autoScrollAdapter = new AutoScrollAdapter(getContext() , list);
+//        }
+//        tivBanner.setAdapter(autoScrollAdapter);
+//        tivBanner.setLayoutManager(new GridLayoutManager(getContext(), 1 , GridLayoutManager.HORIZONTAL , false ));
+//        tivBanner.start();
+//        tivBanner.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//
+//            @Override
+//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//                super.onScrollStateChanged(recyclerView, newState);
+//            }
+//
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//                if(tivBanner.isScrollToBottom()){
+//                    presenter.loadRollImageData();
+//                }
+//            }
+//        });
+        tivBanner.setImageInfoList(list);
     }
 
     @Override

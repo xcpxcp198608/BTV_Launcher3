@@ -418,7 +418,7 @@
         android:layout_width="match_parent"
         android:layout_height="10dp" />
 
-    <com.wiatec.btv_launcher.custom_view.AutoScrollRecycleView
+    <com.wiatec.btv_launcher.custom_view.MultiImage
         android:id="@+id/tiv_banner"
         android:focusable="false"
         android:focusableInTouchMode="false"

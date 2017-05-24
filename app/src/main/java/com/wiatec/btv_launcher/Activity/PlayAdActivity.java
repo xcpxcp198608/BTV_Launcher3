@@ -3,6 +3,7 @@ package com.wiatec.btv_launcher.Activity;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -142,6 +143,14 @@ public class PlayAdActivity extends BaseActivity implements View.OnClickListener
             ApkLaunch.launchApkByPackageName(PlayAdActivity.this, F.package_name.market);
         }
         finish();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(event.getKeyCode() == KeyEvent.KEYCODE_BACK){
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override

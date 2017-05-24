@@ -6,12 +6,10 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.Log;
 
 import java.lang.ref.WeakReference;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Logger;
 
 /**
  * Created by xuchengpeng on 05/05/2017.
@@ -43,7 +41,6 @@ public class AutoScrollRecycleView extends RecyclerView {
 
         public TimerHandler (AutoScrollRecycleView autoScrollRecycleView){
             weakReference = new WeakReference<>(autoScrollRecycleView);
-
         }
 
         @Override
@@ -99,6 +96,14 @@ public class AutoScrollRecycleView extends RecyclerView {
         }
         if(timerHandler != null){
             timerHandler.removeCallbacks(mScrollTask);
+        }
+    }
+
+    public boolean isScrollToBottom(){
+        if(computeHorizontalScrollExtent() + computeHorizontalScrollOffset() >= computeHorizontalScrollRange()){
+            return true;
+        }else{
+            return false;
         }
     }
 }

@@ -15,6 +15,7 @@ import java.util.List;
 
 /**
  * Created by xuchengpeng on 05/05/2017.
+ * auto scroll view adapter
  */
 
 public class AutoScrollAdapter extends RecyclerView.Adapter<AutoScrollViewHolder> {
@@ -30,13 +31,12 @@ public class AutoScrollAdapter extends RecyclerView.Adapter<AutoScrollViewHolder
     @Override
     public AutoScrollViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_auto_scroll_recycle_view , parent ,false);
-        AutoScrollViewHolder viewHolder = new AutoScrollViewHolder(view);
-        return viewHolder;
+        return new AutoScrollViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(AutoScrollViewHolder holder, int position) {
-        ImageInfo imageInfo = list.get(position % list.size());
+        ImageInfo imageInfo = list.get(position);
         Glide.with(context).load(imageInfo.getUrl())
                 .dontAnimate()
                 .into(holder.imageView);
@@ -44,6 +44,6 @@ public class AutoScrollAdapter extends RecyclerView.Adapter<AutoScrollViewHolder
 
     @Override
     public int getItemCount() {
-        return Integer.MAX_VALUE;
+        return list.size();
     }
 }

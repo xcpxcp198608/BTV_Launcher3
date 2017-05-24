@@ -124,6 +124,7 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
             SPUtils.put(LoginActivity.this,"currentLoginCount", result.getLoginCount());
             SPUtils.put(LoginActivity.this,"token", result.getToken());
             SPUtils.put(LoginActivity.this,"lastName", result.getExtra());
+            SPUtils.put(LoginActivity.this,"userLevel", result.getUserLevel());
             finish();
         } else {
             progressBar.setVisibility(View.GONE);
