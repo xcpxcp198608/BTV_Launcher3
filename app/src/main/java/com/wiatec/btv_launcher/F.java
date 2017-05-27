@@ -79,7 +79,6 @@ public final class F {
     public static final class path {
         public static final String download= Environment.getExternalStorageDirectory().getAbsolutePath()
                 +"/Android/data/com.wiatec.btv_launcher/files/download/";
-        public static final String video= download+"btvi3.mp4";
         public static final String ad_video= download+"btvad.mp4";
         public static final String boot_ad_video= download+"btvbootad.mp4";
         public static final String logcat= Environment.getExternalStorageDirectory().getAbsolutePath()

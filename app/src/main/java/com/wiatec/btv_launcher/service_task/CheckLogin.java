@@ -67,7 +67,7 @@ public class CheckLogin implements Runnable {
                         }
 //                        Logger.d(result.toString());
                         if(result.getCode() == Result.CODE_LOGIN_SUCCESS){
-                            SPUtils.put(Application.getContext() , "userLevel" ,result.getUserLevel());
+                            SPUtils.put(Application.getContext() , "userLevel" ,result.getUserLevel()+"");
                             RxBus.getDefault().post(new CheckLoginEvent(CheckLoginEvent.CODE_LOGIN_NORMAL));
                         }else{
                             RxBus.getDefault().post(new CheckLoginEvent(CheckLoginEvent.CODE_LOGIN_REPEAT));
@@ -80,6 +80,5 @@ public class CheckLogin implements Runnable {
                         Logger.d(e);
                     }
                 });
-
     }
 }

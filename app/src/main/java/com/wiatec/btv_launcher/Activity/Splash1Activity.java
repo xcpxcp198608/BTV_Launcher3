@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.Utils.ApkLaunch;
 import com.wiatec.btv_launcher.Utils.Logger;
@@ -66,7 +67,8 @@ public class Splash1Activity extends Base1Activity<ISplashActivity, SplashPresen
     @Override
     protected void onStart() {
         super.onStart();
-        int level = (int) SPUtils.get(Splash1Activity.this , "userLevel" , 1);
+        String l = (String) SPUtils.get(Application.getContext() , "userLevel" , "1");
+        int level = Integer.parseInt(l);
         if(level >= 3){
             launchApp(packageName);
             finish();

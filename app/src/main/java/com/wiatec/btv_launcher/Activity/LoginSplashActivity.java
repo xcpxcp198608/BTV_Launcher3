@@ -52,7 +52,8 @@ public class LoginSplashActivity extends AppCompatActivity{
     }
 
     private void check(){
-        int level = (int) SPUtils.get(Application.getContext() ,"userLevel" , 1);
+        String l = (String) SPUtils.get(Application.getContext() , "userLevel" , "1");
+        int level = Integer.parseInt(l);
         if(level >=3 ){
             if (ApkCheck.isApkInstalled(this,packageName)) {
                 ApkLaunch.launchApkByPackageName(this, packageName);

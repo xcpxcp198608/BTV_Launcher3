@@ -62,7 +62,8 @@ public class WakeUpAdActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onStart() {
         super.onStart();
-        final int userLevel = (int) SPUtils.get(WakeUpAdActivity.this ,"userLevel" ,1);
+        String l = (String) SPUtils.get(Application.getContext() , "userLevel" , "1");
+        final int userLevel = Integer.parseInt(l);
         if(userLevel >= 3){
             skipAds();
         }

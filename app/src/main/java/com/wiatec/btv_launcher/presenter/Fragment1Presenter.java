@@ -166,7 +166,8 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
     }
 
     public void check(String userName , final String packageName , final Context context){
-        int level = (int) SPUtils.get(Application.getContext() ,"userLevel" , 1);
+        String l = (String) SPUtils.get(Application.getContext() , "userLevel" , "1");
+        int level = Integer.parseInt(l);
         if(level >=3 ){
             if (ApkCheck.isApkInstalled(context,packageName)) {
                 ApkLaunch.launchApkByPackageName(context, packageName);

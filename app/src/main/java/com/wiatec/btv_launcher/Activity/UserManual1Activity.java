@@ -1,6 +1,7 @@
 package com.wiatec.btv_launcher.Activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -50,6 +51,7 @@ public class UserManual1Activity extends Base1Activity<IUserManualActivity ,User
         builder.setSingleChoiceItems(getResources().getStringArray(R.array.products), 0, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                boolean dontShowLanguage = false;
                 switch (which){
                     case 0:
                         product = "btvi3";
@@ -60,6 +62,14 @@ public class UserManual1Activity extends Base1Activity<IUserManualActivity ,User
                     case 2:
                         product = "bkeymo";
                         break;
+                    case 3:
+                        dontShowLanguage = true;
+                        startActivity(new Intent(UserManual1Activity.this , GuideRegisterActivity.class));
+                        finish();
+                        break;
+                }
+                if(dontShowLanguage){
+                    return;
                 }
                 if(dialog != null){
                     dialog.dismiss();

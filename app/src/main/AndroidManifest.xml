@@ -52,6 +52,7 @@
         <activity android:name=".Activity.WakeUpAdActivity"/>
         <activity android:name=".Activity.WebViewActivity"/>
         <activity android:name=".Activity.InstituteActivity"/>
+        <activity android:name=".Activity.GuideRegisterActivity"/>
 
         <receiver android:name=".receiver.AppInstallReceiver">
             <intent-filter>
@@ -72,6 +73,11 @@
         <service android:name=".service.LoadWeatherService"/>
         <service android:name=".service.LoadCloudService"/>
         <service android:name=".service.CheckLoginService"/>
+
+        <provider
+            android:authorities="com.wiatec.btv_launcher.provide.UserContentProvider"
+            android:name=".data.UserContentProvider"
+            android:permission="com.wiatec.btv_launcher.provide.Read"/>
     </application>
 
 </manifest>

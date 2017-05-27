@@ -89,7 +89,8 @@ public class PlayAdActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void onStart() {
         super.onStart();
-        final int userLevel = (int) SPUtils.get(PlayAdActivity.this ,"userLevel" ,1);
+        String l = (String) SPUtils.get(Application.getContext() , "userLevel" , "1");
+        final int userLevel = Integer.parseInt(l);
         if(userLevel >= 3){
             skipAds();
         }

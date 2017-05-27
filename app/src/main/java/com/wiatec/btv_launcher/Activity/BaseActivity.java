@@ -62,6 +62,14 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        if(checkLoginSubscription != null){
+            checkLoginSubscription.unsubscribe();
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         if(checkLoginSubscription != null){
@@ -91,7 +99,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     private void showLoginAgainDialog(){
-        final AlertDialog alertDialog = new AlertDialog.Builder(Application.getContext() , R.style.dialog).create();
+        final AlertDialog alertDialog = new AlertDialog.Builder(this , R.style.dialog).create();
         alertDialog.setCancelable(false);
         alertDialog.show();
         Window window = alertDialog.getWindow();
