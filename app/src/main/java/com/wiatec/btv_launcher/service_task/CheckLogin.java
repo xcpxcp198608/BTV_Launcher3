@@ -25,8 +25,6 @@ import java.io.IOException;
 
 public class CheckLogin implements Runnable {
 
-    private  int currentLoginCount;
-    private  String userName;
     @Override
     public void run() {
         while(true) {
@@ -43,8 +41,9 @@ public class CheckLogin implements Runnable {
         if(!SystemConfig.isNetworkConnected(Application.getContext())){
             return;
         }
-        currentLoginCount = (int) SPUtils.get(Application.getContext() , "currentLoginCount" , 0);
-        userName = (String) SPUtils.get(Application.getContext(),"userName" , "");
+        int currentLoginCount = (int) SPUtils.get(Application.getContext() , "currentLoginCount" , 0);
+        String userName = (String) SPUtils.get(Application.getContext(),"userName" , "");
+        String mac = (String) SPUtils.get(Application.getContext() , "mac" , "");
         if(TextUtils.isEmpty(userName)){
            // Logger.d("no userName do not execute check");
             return;
@@ -55,6 +54,7 @@ public class CheckLogin implements Runnable {
         OkMaster.get(F.url.login_repeat_check)
                 .parames("count", currentLoginCount+"")
                 .parames("userInfo.userName",userName)
+                .parames("deviceInfo.mac", mac)
                 .enqueue(new StringListener() {
                     @Override
                     public void onSuccess(String s) throws IOException {
@@ -65,7 +65,7 @@ public class CheckLogin implements Runnable {
                         if(result == null){
                             return;
                         }
-//                        Logger.d(result.toString());
+                        Logger.d(result.toString());
                         if(result.getCode() == Result.CODE_LOGIN_SUCCESS){
                             SPUtils.put(Application.getContext() , "userLevel" ,result.getUserLevel()+"");
                             SPUtils.put(Application.getContext(), "experience", result.getExtra());
@@ -73,7 +73,6 @@ public class CheckLogin implements Runnable {
                         }else{
                             RxBus.getDefault().post(new CheckLoginEvent(CheckLoginEvent.CODE_LOGIN_REPEAT));
                         }
-
                     }
 
                     @Override

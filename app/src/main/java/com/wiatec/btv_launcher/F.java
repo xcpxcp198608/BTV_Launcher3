@@ -102,10 +102,5 @@ public final class F {
         public static final String spotify = "com.spotify.tv.android";
         public static final String happy_chick = "com.xiaoji.tvbox";
         public static final String bplay = "com.wiatec.bplay";
-        public static final String show_box = "com.wiatec.bplay";
-        public static final String youtube = "com.wiatec.bplay";
-        public static final String mx_player = "com.wiatec.bplay";
-        public static final String live_net_tv = "com.wiatec.bplay";
-        public static final String tv_video = "com.wiatec.bplay";
     }
 }

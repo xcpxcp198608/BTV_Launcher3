@@ -35,7 +35,7 @@ public class LoginSplashActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         packageName = getIntent().getStringExtra("packageName");
         if(TextUtils.isEmpty(packageName)){
-            packageName = F.package_name.btv;
+            packageName = F.package_name.bplay;
         }
     }
 
@@ -57,28 +57,34 @@ public class LoginSplashActivity extends AppCompatActivity{
         if(level >=3 ){
             if (ApkCheck.isApkInstalled(this,packageName)) {
                 ApkLaunch.launchApkByPackageName(this, packageName);
+                finish();
             }else{
                 Toast.makeText(Application.getContext() , Application.getContext().getString(R.string.download_guide),
                         Toast.LENGTH_LONG).show();
                 ApkLaunch.launchApkByPackageName(this, F.package_name.market);
+                finish();
             }
         }else if(level >= 1){
-            if(packageName.equals(F.package_name.btv)) {
+            if(packageName.equals(F.package_name.bplay)) {
                 Intent intent = new Intent(this, PlayAdActivity.class);
-                intent.putExtra("packageName", F.package_name.btv);
+                intent.putExtra("packageName", F.package_name.bplay);
                 startActivity(intent);
+                finish();
             }else{
                 if (ApkCheck.isApkInstalled(Application.getContext(),packageName)) {
                     ApkLaunch.launchApkByPackageName(this, packageName);
+                    finish();
                 }else{
                     Toast.makeText(Application.getContext() , Application.getContext().getString(R.string.download_guide),
                             Toast.LENGTH_LONG).show();
                     ApkLaunch.launchApkByPackageName(this, F.package_name.market);
+                    finish();
                 }
             }
         }else{
             Toast.makeText(Application.getContext() , Application.getContext().getString(R.string.account_error) ,
                     Toast.LENGTH_LONG).show();
+            finish();
         }
     }
 }

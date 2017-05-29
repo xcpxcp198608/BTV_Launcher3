@@ -68,12 +68,16 @@ public class PushMessageAdapter extends BaseAdapter {
         PushMessageInfo pushMessageInfo = mList.get(position);
         if("Sponsor".equals(pushMessageInfo.getUserName())){
             viewHolder.tvUserName.setTextColor(Color.rgb(0,0,255));
-            viewHolder.tvTime.setVisibility(View.GONE);
             viewHolder.tvMessage.setTextColor(Color.rgb(0,0,0));
+            viewHolder.tvTime.setVisibility(View.GONE);
         }else if("Announcement".equals(pushMessageInfo.getUserName())){
             viewHolder.tvUserName.setTextColor(Color.rgb(255,0,0));
             viewHolder.tvMessage.setTextColor(Color.rgb(255,0,0));
             viewHolder.tvTime.setVisibility(View.VISIBLE);
+        }else if("Tips & Tricks".equals(pushMessageInfo.getUserName())){
+            viewHolder.tvUserName.setTextColor(Color.rgb(0, 255,0));
+            viewHolder.tvMessage.setTextColor(Color.rgb(0,0,0));
+            viewHolder.tvTime.setVisibility(View.GONE);
         }else{
             viewHolder.tvUserName.setTextColor(context.getResources().getColor(R.color.colorGray1));
             viewHolder.tvMessage.setTextColor(Color.rgb(0,0,0));

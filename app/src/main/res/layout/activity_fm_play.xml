@@ -23,7 +23,7 @@
     <ImageView
         android:id="@+id/iv_eufonico_list"
         android:visibility="gone"
-        android:background="@drawable/eu_list"
+        android:background="@drawable/eufonic_list"
         android:layout_width="match_parent"
         android:layout_height="220dp" />
 
