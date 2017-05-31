@@ -26,7 +26,6 @@ import rx.schedulers.Schedulers;
 
 public class AppSelectActivity extends BaseActivity {
 
-    private List<InstalledApp> list;
     private AppSelectAdapter appSelectAdapter;
     private ListView lv_AppSelect;
     private  String type;
