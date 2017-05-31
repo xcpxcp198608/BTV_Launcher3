@@ -73,6 +73,7 @@ public class PlayAdActivity extends BaseActivity implements View.OnClickListener
             @Override
             public void onCompletion(MediaPlayer mp) {
                 llDelay.setVisibility(View.GONE);
+                release();
                 if(ApkCheck.isApkInstalled(PlayAdActivity.this ,packageName)) {
                     ApkLaunch.launchApkByPackageName(PlayAdActivity.this, packageName);
                 }else{
@@ -130,12 +131,7 @@ public class PlayAdActivity extends BaseActivity implements View.OnClickListener
     }
 
     public void skipAds(){
-        if(vv_PlayAd != null ){
-            vv_PlayAd.stopPlayback();
-        }
-        if(subscription != null){
-            subscription.unsubscribe();
-        }
+        release();
         if(ApkCheck.isApkInstalled(PlayAdActivity.this ,packageName)) {
             ApkLaunch.launchApkByPackageName(PlayAdActivity.this, packageName);
         }else{
@@ -157,28 +153,22 @@ public class PlayAdActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void onPause() {
         super.onPause();
-        if(vv_PlayAd != null ){
-            vv_PlayAd.stopPlayback();
-        }
-        if(subscription != null){
-            subscription.unsubscribe();
-        }
+        release();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        if(vv_PlayAd != null ){
-            vv_PlayAd.stopPlayback();
-        }
-        if(subscription != null){
-            subscription.unsubscribe();
-        }
+        release();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        release();
+    }
+
+    private void release(){
         if(vv_PlayAd != null ){
             vv_PlayAd.stopPlayback();
         }

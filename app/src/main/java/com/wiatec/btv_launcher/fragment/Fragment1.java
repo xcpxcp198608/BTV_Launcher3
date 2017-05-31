@@ -151,6 +151,12 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     private List<ImageInfo> rollImageInfoList = new ArrayList<>();
     private AutoScrollAdapter autoScrollAdapter;
     private boolean isNetworkReceiveRegister = false;
+    private boolean isUserVisible = false;
+
+    @Override
+    protected Fragment1Presenter createPresenter() {
+        return new Fragment1Presenter(this);
+    }
 
     @Nullable
     @Override
@@ -171,6 +177,18 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         return view;
     }
 
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//        Logger.d("isVisibleToUser:" + isVisibleToUser);
+//        if(isVisibleToUser){
+//            isUserVisible = true;
+//            startLoadData();
+//        }else{
+//            isUserVisible = false;
+//        }
+//    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -181,7 +199,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         showCustomShortCut(ibt3 , "ibt3");
         showCustomShortCut(ibt4 , "ibt4");
         showCustomShortCut(ibt5 , "ibt5");
-        //showCustomShortCut(ibt6 , "ibt6");
+        showCustomShortCut(ibt6 , "ibt6");
     }
 
     private void setFocusTransmit() {
@@ -200,16 +218,16 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     }
 
     @Override
-    protected Fragment1Presenter createPresenter() {
-        return new Fragment1Presenter(this);
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
+        isUserVisible = true;
         entryTime = System.currentTimeMillis();
+        startLoadData();
+    }
+
+    private void startLoadData(){
         if(!SystemConfig.isNetworkConnected(getContext())){
-           return;
+            return;
         }
         if (presenter != null && vv_Main != null && !vv_Main.isPlaying() && !isVideoPlaying) {
             presenter.loadVideo();
@@ -225,16 +243,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     @Override
     public void onPause() {
         super.onPause();
-        isVideoPlaying = false;
-        if (vv_Main != null) {
-            vv_Main.stopPlayback();
-        }
-        if (videoSubscription != null) {
-            videoSubscription.unsubscribe();
-        }
-        if (messageSubscription != null) {
-            messageSubscription.unsubscribe();
-        }
         if(userDataInfo != null){
             exitTime = System.currentTimeMillis();
             holdTime = exitTime - entryTime;
@@ -249,32 +257,13 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 presenter.uploadHoldTime(userDataInfo);
             }
         }
-        if(messageListView != null){
-            messageListView.stop();
-        }
-        if(tivBanner != null){
-            tivBanner.stop();
-        }
-        if(ibtCloud != null){
-            ibtCloud.stop();
-        }
+        release();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if(messageListView != null){
-            messageListView.stop();
-        }
-        if(tivBanner != null){
-            tivBanner.stop();
-        }
-        if(ibtCloud != null){
-            ibtCloud.stop();
-        }
-        if(vv_Main != null){
-            vv_Main.stopPlayback();
-        }
+        release();
     }
 
     @Override
@@ -283,11 +272,20 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         if(networkStatusReceiver != null && isNetworkReceiveRegister){
             getContext().unregisterReceiver(networkStatusReceiver);
         }
+        release();
+    }
+
+    private void release(){
+        isUserVisible = false;
+        isVideoPlaying = false;
         if (videoSubscription != null) {
             videoSubscription.unsubscribe();
         }
         if (messageSubscription != null) {
             messageSubscription.unsubscribe();
+        }
+        if (vv_Main != null) {
+            vv_Main.stopPlayback();
         }
         if(messageListView != null){
             messageListView.stop();
@@ -298,14 +296,11 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         if(ibtCloud != null){
             ibtCloud.stop();
         }
-        if(vv_Main != null){
-            vv_Main.stopPlayback();
-        }
     }
 
     @OnClick({R.id.ibt_eufonico, R.id.ibt_user_manual, R.id.ibt_setting, R.id.ibt_apps, R.id.ibt_market,
             R.id.ibt_opportunity, R.id.ibt_game, R.id.fl_video , R.id.ibt_institute ,
-            R.id.ibt_cloud ,R.id.ibt_customer_service ,R.id.ll_push_message , R.id.ibt_6})
+            R.id.ibt_cloud ,R.id.ibt_customer_service ,R.id.ll_push_message})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ibt_eufonico:
@@ -324,9 +319,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
             case R.id.ibt_cloud:
                 if (ApkCheck.isApkInstalled(getContext(), F.package_name.cloud)) {
                     ApkLaunch.launchApkByPackageName(getContext(), F.package_name.cloud);
-                }else{
-                    //Toast.makeText(getContext() , getString(R.string.download_guide)+" HappyChick",Toast.LENGTH_SHORT).show();
-                    ApkLaunch.launchApkByPackageName(getContext(), F.package_name.market);
                 }
                 break;
             case R.id.ibt_apps:
@@ -347,9 +339,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 }
                 break;
             case R.id.fl_video:
-                if(vv_Main != null){
-                    vv_Main.stopPlayback();
-                }
+                release();
                 launchAppByLogin(getContext() , F.package_name.bplay);
                 break;
             case R.id.ibt_institute:
@@ -366,11 +356,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 presenter.loadPushMessage();
                 presenter.loadRollOverImage();
                 break;
-            case R.id.ibt_6:
-                startActivity(new Intent(getContext() , LoginActivity.class));
-                break;
-            default:
-                break;
         }
     }
 
@@ -381,7 +366,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
             getContext().startActivity(new Intent(getContext() , LoginActivity.class));
         }else {
             Logger.d(""+packageName);
-            presenter.check(userName , packageName , context );
+            presenter.check(packageName , context );
         }
     }
 
@@ -468,9 +453,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
 
     @Override
     public void loadRollOverImage(final List<ImageInfo> list) {
-        if(list == null || list.size() <1){
-            return;
-        }
     }
 
     @Override
@@ -487,7 +469,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         if(list == null || list.size() <1){
             return;
         }
-        isVideoPlaying = true;
         videoSubscription = Observable.interval(0,list.get(0).getPlayInterval(),TimeUnit.MILLISECONDS)
                 .take(list.size())
                 .subscribeOn(Schedulers.io())
@@ -515,15 +496,22 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     }
 
     private void playVideo(final String url) {
-        if(vv_Main != null && vv_Main.isPlaying()){
+        if(vv_Main != null){
             vv_Main.stopPlayback();
+        }
+        Logger.d(isUserVisible+"");
+        if(!isUserVisible) {
+            return;
         }
         vv_Main.setVideoPath(url);
         vv_Main.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
+                isVideoPlaying = true;
                 ivBTVLogo.setVisibility(View.GONE);
-                vv_Main.start();
+                if(isUserVisible) {
+                    vv_Main.start();
+                }
             }
         });
         vv_Main.setOnErrorListener(new MediaPlayer.OnErrorListener() {

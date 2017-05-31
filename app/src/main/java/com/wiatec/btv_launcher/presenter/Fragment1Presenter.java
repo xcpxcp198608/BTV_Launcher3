@@ -165,7 +165,7 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
         }
     }
 
-    public void check(String userName , final String packageName , final Context context){
+    public void check(final String packageName , final Context context){
         String l = (String) SPUtils.get(Application.getContext() , "userLevel" , "1");
         int level = Integer.parseInt(l);
         if(level >= 3 ){
