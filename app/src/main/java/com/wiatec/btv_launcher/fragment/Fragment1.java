@@ -499,7 +499,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         if(vv_Main != null){
             vv_Main.stopPlayback();
         }
-        Logger.d(isUserVisible+"");
+//        Logger.d(isUserVisible+"");
         if(!isUserVisible) {
             return;
         }
