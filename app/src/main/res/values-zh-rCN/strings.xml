@@ -30,12 +30,12 @@
     <string name="error_key">密钥错误</string>
     <string name="error_connect">链接错误</string>
     <string name="error_repeat">重复登录</string>
-    <string name="input_key">用户名</string>
-    <string name="input_password">密码</string>
+    <string name="input_key">用户名 (CASE SENSITIVE)</string>
+    <string name="input_password">密码 (CASE SENSITIVE)</string>
     <string name="confirm_password">确认密码</string>
     <string name="first_name">姓</string>
     <string name="last_name">名</string>
-    <string name="email">邮箱</string>
+    <string name="email">邮箱 (CASE SENSITIVE)</string>
     <string name="warning">警告</string>
     <string name="warning_message">Welcome to BTVi3, By using this service you agree to the Terms of Service (TOS) on Legacy Direct websites. Legacy Direct reserves the right to change the TOS at any time. If you do not agree to any of these terms, please refrain from using the BTVi3 services and products.</string>
     <string name="notice1">The programs shown are from internet and for learning purpose. Please check with Legacy Direct Term Of Service.</string>

@@ -29,10 +29,10 @@
     <string name="error_key">Key or Password Error</string>
     <string name="error_connect">Connect Error</string>
     <string name="error_repeat">Login Repeat</string>
-    <string name="input_key">UserName</string>
-    <string name="input_password">Password</string>
+    <string name="input_key">UserName (CASE SENSITIVE)</string>
+    <string name="input_password">Password (CASE SENSITIVE)</string>
     <string name="confirm_password">Confirm Password</string>
-    <string name="email">Email</string>
+    <string name="email">Email (CASE SENSITIVE)</string>
     <string name="first_name">FirstName</string>
     <string name="last_name">LastName</string>
     <string name="warning">Warning</string>

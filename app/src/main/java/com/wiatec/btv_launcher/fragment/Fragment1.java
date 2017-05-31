@@ -226,7 +226,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     public void onPause() {
         super.onPause();
         isVideoPlaying = false;
-        if (vv_Main != null && vv_Main.isPlaying()) {
+        if (vv_Main != null) {
             vv_Main.stopPlayback();
         }
         if (videoSubscription != null) {
@@ -272,6 +272,9 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         if(ibtCloud != null){
             ibtCloud.stop();
         }
+        if(vv_Main != null){
+            vv_Main.stopPlayback();
+        }
     }
 
     @Override
@@ -294,6 +297,9 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         }
         if(ibtCloud != null){
             ibtCloud.stop();
+        }
+        if(vv_Main != null){
+            vv_Main.stopPlayback();
         }
     }
 
@@ -341,11 +347,10 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 }
                 break;
             case R.id.fl_video:
-                if(SystemConfig.isNetworkConnected(getContext())) {
-                    launchAppByLogin(getContext(), F.package_name.bplay);
-                }else{
-                    ApkLaunch.launchApkByPackageName(getContext(), F.package_name.bplay);
+                if(vv_Main != null){
+                    vv_Main.stopPlayback();
                 }
+                launchAppByLogin(getContext() , F.package_name.bplay);
                 break;
             case R.id.ibt_institute:
                 intent.setClass(getActivity(), InstituteActivity.class);

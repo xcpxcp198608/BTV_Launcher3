@@ -29,7 +29,7 @@ public class GuideRegisterActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.btvi3_register));
+//        videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.btvi3_register));
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {

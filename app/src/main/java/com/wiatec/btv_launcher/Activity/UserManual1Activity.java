@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 
 import com.jude.rollviewpager.RollPagerView;
+import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.adapter.UserManualImageAdapter;
 import com.wiatec.btv_launcher.bean.ImageInfo;
@@ -64,7 +65,9 @@ public class UserManual1Activity extends Base1Activity<IUserManualActivity ,User
                         break;
                     case 3:
                         dontShowLanguage = true;
-                        startActivity(new Intent(UserManual1Activity.this , GuideRegisterActivity.class));
+                        Intent intent = new Intent(UserManual1Activity.this , WebViewActivity.class);
+                        intent.putExtra("url", F.url.guide_register);
+                        startActivity(intent);
                         finish();
                         break;
                 }

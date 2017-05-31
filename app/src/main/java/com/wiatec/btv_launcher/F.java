@@ -41,6 +41,7 @@ public final class F {
         public static final String eufonico = "http://142.4.216.91:8280/";
         public static final String ld_support="http://appota.gobeyondtv.co:8081/html/ld_support.html";
         public static final String ld_opportunity="http://appota.gobeyondtv.co:8081/html/ld_opportunity.html";
+        public static final String guide_register="http://appota.gobeyondtv.co:8081/html/guide_register.html";
     }
 
     public static final class url_eu {
@@ -74,6 +75,7 @@ public final class F {
         public static final String eufonico = "http://142.4.216.91:8280/";
         public static final String ld_support="http://appotaeu.gobeyondtv.co:8081/html/ld_support.html";
         public static final String ld_opportunity="http://appotaeu.gobeyondtv.co:8081/html/ld_opportunity.html";
+        public static final String guide_register="http://appotaeu.gobeyondtv.co:8081/html/guide_register.html";
     }
 
     public static final class path {
@@ -102,5 +104,9 @@ public final class F {
         public static final String spotify = "com.spotify.tv.android";
         public static final String happy_chick = "com.xiaoji.tvbox";
         public static final String bplay = "com.wiatec.bplay";
+        public static final String live_net = "com.livenet.iptv";
+        public static final String show_box = "com.tdo.showbox";
+        public static final String tv_house = "com.fanshi.tvvideo";
+        public static final String mx_player = "com.mxtech.videoplayer.ad";
     }
 }

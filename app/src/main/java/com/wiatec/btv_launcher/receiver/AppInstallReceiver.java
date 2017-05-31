@@ -51,6 +51,10 @@ public class AppInstallReceiver extends BroadcastReceiver {
                                     !F.package_name.legacy_privacy.equals(s)&&
                                     !F.package_name.tvplus.equals(s)&&
                                     !F.package_name.bplay.equals(s)&&
+                                    !F.package_name.live_net.equals(s)&&
+                                    !F.package_name.show_box.equals(s)&&
+                                    !F.package_name.tv_house.equals(s)&&
+                                    !F.package_name.mx_player.equals(s)&&
                                     !F.package_name.btv.equals(s)){
                                 InstalledApp installedApp = new InstalledApp();
                                 installedApp.setAppPackageName(s);

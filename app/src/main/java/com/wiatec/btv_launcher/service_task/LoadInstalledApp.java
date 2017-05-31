@@ -69,6 +69,10 @@ public class LoadInstalledApp implements Runnable {
                             !F.package_name.legacy_privacy.equals(noShowPackageName)&&
                             !F.package_name.tvplus.equals(noShowPackageName)&&
                             !F.package_name.bplay.equals(noShowPackageName)&&
+                            !F.package_name.live_net.equals(noShowPackageName)&&
+                            !F.package_name.show_box.equals(noShowPackageName)&&
+                            !F.package_name.tv_house.equals(noShowPackageName)&&
+                            !F.package_name.mx_player.equals(noShowPackageName)&&
                             !F.package_name.btv.equals(noShowPackageName)){
                 // Logger.d(installedAppInfo.toString());
                 if(!installedAppDao.isExists(installedApp)){

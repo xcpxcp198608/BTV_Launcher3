@@ -168,7 +168,7 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
     public void check(String userName , final String packageName , final Context context){
         String l = (String) SPUtils.get(Application.getContext() , "userLevel" , "1");
         int level = Integer.parseInt(l);
-        if(level >=3 ){
+        if(level >= 3 ){
             if (ApkCheck.isApkInstalled(context,packageName)) {
                 ApkLaunch.launchApkByPackageName(context, packageName);
             }else{
@@ -177,9 +177,9 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
                 ApkLaunch.launchApkByPackageName(context, F.package_name.market);
             }
         }else if(level >= 1){
-            if(packageName.equals(F.package_name.btv)) {
+            if(packageName.equals(F.package_name.bplay)) {
                 Intent intent = new Intent(context, PlayAdActivity.class);
-                intent.putExtra("packageName", F.package_name.btv);
+                intent.putExtra("packageName", F.package_name.bplay);
                 context.startActivity(intent);
             }else{
                 if (ApkCheck.isApkInstalled(Application.getContext(),packageName)) {

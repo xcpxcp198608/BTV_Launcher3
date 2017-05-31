@@ -49,7 +49,7 @@ public class FMPlayActivity extends BaseActivity {
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         url = getIntent().getStringExtra("url");
         if("http://142.4.216.91:8280/".equals(url)){
-            ivLogo.setImageResource(R.drawable.euf_big);
+            ivLogo.setImageResource(R.drawable.eufonic_big_logo);
             ivEufonicoList.setVisibility(View.VISIBLE);
         }else{
             ivLogo.setImageResource(R.drawable.btv);
