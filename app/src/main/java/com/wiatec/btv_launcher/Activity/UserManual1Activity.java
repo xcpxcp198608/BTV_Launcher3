@@ -65,8 +65,7 @@ public class UserManual1Activity extends Base1Activity<IUserManualActivity ,User
                         break;
                     case 3:
                         dontShowLanguage = true;
-                        Intent intent = new Intent(UserManual1Activity.this , WebViewActivity.class);
-                        intent.putExtra("url", F.url.guide_register);
+                        Intent intent = new Intent(UserManual1Activity.this , GuideRegisterActivity.class);
                         startActivity(intent);
                         finish();
                         break;
