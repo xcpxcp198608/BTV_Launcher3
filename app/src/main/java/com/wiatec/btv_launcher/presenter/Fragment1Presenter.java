@@ -177,17 +177,17 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
                 ApkLaunch.launchApkByPackageName(context, F.package_name.market);
             }
         }else if(level >= 1){
-            if(packageName.equals(F.package_name.bplay)) {
-                Intent intent = new Intent(context, PlayAdActivity.class);
-                intent.putExtra("packageName", F.package_name.bplay);
-                context.startActivity(intent);
+            if(!ApkCheck.isApkInstalled(Application.getContext(),packageName)){
+                Toast.makeText(Application.getContext() , Application.getContext().getString(R.string.download_guide),
+                        Toast.LENGTH_LONG).show();
+                ApkLaunch.launchApkByPackageName(context, F.package_name.market);
             }else{
-                if (ApkCheck.isApkInstalled(Application.getContext(),packageName)) {
-                    ApkLaunch.launchApkByPackageName(context, packageName);
+                if(packageName.equals(F.package_name.bplay)) {
+                    Intent intent = new Intent(context, PlayAdActivity.class);
+                    intent.putExtra("packageName", F.package_name.bplay);
+                    context.startActivity(intent);
                 }else{
-                    Toast.makeText(Application.getContext() , Application.getContext().getString(R.string.download_guide),
-                            Toast.LENGTH_LONG).show();
-                    ApkLaunch.launchApkByPackageName(context, F.package_name.market);
+                    ApkLaunch.launchApkByPackageName(context, packageName);
                 }
             }
         }else{
