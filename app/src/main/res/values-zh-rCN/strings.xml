@@ -62,5 +62,7 @@
     <string name="skip_ad">ACTIVE LD MEMBER, SKIP ADS </string>
     <string name="skip_ad1">JOIN LD GOLD TO SKIP ALL ADS </string>
     <string name="skip">SKIP</string>
+    <string name="download_add">Downloading Additional Resources</string>
+    <string name="download_wait">please wait download finish , do not exit</string>
 
 </resources>

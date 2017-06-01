@@ -166,22 +166,20 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
     }
 
     public void check(final String packageName , final Context context){
-        String l = (String) SPUtils.get(Application.getContext() , "userLevel" , "1");
-        int level = Integer.parseInt(l);
-        if(level >= 3 ){
-            if (ApkCheck.isApkInstalled(context,packageName)) {
-                ApkLaunch.launchApkByPackageName(context, packageName);
+        if(!ApkCheck.isApkInstalled(context, packageName)){
+            if(F.package_name.bplay.equals(packageName)){
+                iFragment1.showLivePlayDownloadDialog();
             }else{
-                Toast.makeText(Application.getContext() , Application.getContext().getString(R.string.download_guide),
+                Toast.makeText(Application.getContext(), Application.getContext().getString(R.string.download_guide),
                         Toast.LENGTH_LONG).show();
                 ApkLaunch.launchApkByPackageName(context, F.package_name.market);
             }
-        }else if(level >= 1){
-            if(!ApkCheck.isApkInstalled(Application.getContext(),packageName)){
-                Toast.makeText(Application.getContext() , Application.getContext().getString(R.string.download_guide),
-                        Toast.LENGTH_LONG).show();
-                ApkLaunch.launchApkByPackageName(context, F.package_name.market);
-            }else{
+        }else{
+            String l = (String) SPUtils.get(Application.getContext() , "userLevel" , "1");
+            int level = Integer.parseInt(l);
+            if(level >= 3 ){
+                ApkLaunch.launchApkByPackageName(context, packageName);
+            }else if(level >= 1){
                 if(packageName.equals(F.package_name.bplay)) {
                     Intent intent = new Intent(context, PlayAdActivity.class);
                     intent.putExtra("packageName", F.package_name.bplay);
@@ -189,10 +187,10 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
                 }else{
                     ApkLaunch.launchApkByPackageName(context, packageName);
                 }
+            }else{
+                Toast.makeText(Application.getContext() , Application.getContext().getString(R.string.account_error) ,
+                        Toast.LENGTH_LONG).show();
             }
-        }else{
-            Toast.makeText(Application.getContext() , Application.getContext().getString(R.string.account_error) ,
-                    Toast.LENGTH_LONG).show();
         }
     }
 }

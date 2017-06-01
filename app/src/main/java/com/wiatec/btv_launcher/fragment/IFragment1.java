@@ -19,4 +19,5 @@ public interface IFragment1 {
     void loadCloudImage(List<String> list);
     void loadVideo(List<VideoInfo> list);
     void loadPushMessage(List<PushMessageInfo> list);
+    void showLivePlayDownloadDialog();
 }

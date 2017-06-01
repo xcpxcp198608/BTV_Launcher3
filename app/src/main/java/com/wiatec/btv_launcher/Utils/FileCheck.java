@@ -35,4 +35,20 @@ public class FileCheck {
             return false;
         }
     }
+
+    public static boolean delete(String filePath ,String fileFullName ) {
+        try {
+            File file = new File(filePath + fileFullName);
+            if (file.exists()) {
+                //Logger.d("----file is exists");
+                return file.delete();
+            } else {
+                //Logger.d("----file is not exists");
+                return false;
+            }
+        } catch (Exception e) {
+            //Logger.d("----file is not exists");
+            return false;
+        }
+    }
 }

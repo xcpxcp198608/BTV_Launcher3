@@ -42,6 +42,8 @@ public final class F {
         public static final String ld_support="http://appota.gobeyondtv.co:8081/html/ld_support.html";
         public static final String ld_opportunity="http://appota.gobeyondtv.co:8081/html/ld_opportunity.html";
         public static final String guide_register="http://appota.gobeyondtv.co:8081/html/guide_register.html";
+
+        public static final String live_play = "http://appota.gobeyondtv.co:8083/update/com.wiatec.bplay.apk";
     }
 
     public static final class url_eu {
@@ -89,6 +91,8 @@ public final class F {
                 +"/Android/data/org.xbmc.kodi/files/.kodi/addons/skin.beyondtv/backgrounds/";
         public static final String kodi_video_path = Environment.getExternalStorageDirectory().getAbsolutePath()
         +"/Android/data/org.xbmc.kodi/files/.kodi/addons/skin.beyondtv/extras/Intro/";
+
+        public static final String live_play = "http://appota.gobeyondtv.co:8083/update/com.wiatec.bplay.apk";
     }
 
     public static final class package_name {
@@ -108,5 +112,9 @@ public final class F {
         public static final String show_box = "com.tdo.showbox";
         public static final String tv_house = "com.fanshi.tvvideo";
         public static final String mx_player = "com.mxtech.videoplayer.ad";
+    }
+
+    public static final class file_name {
+        public static final String live_play= "com.wiatec.bplay.apk";
     }
 }

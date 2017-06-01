@@ -1,5 +1,6 @@
 package com.wiatec.btv_launcher.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -7,6 +8,7 @@ import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -22,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.wiatec.btv_launcher.Activity.AppSelectActivity;
 import com.wiatec.btv_launcher.Activity.FMPlayActivity;
@@ -36,6 +39,11 @@ import com.wiatec.btv_launcher.Activity.WebViewActivity;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.SQL.InstalledAppDao;
+import com.wiatec.btv_launcher.Utils.ApkInstall;
+import com.wiatec.btv_launcher.Utils.FileCheck;
+import com.wiatec.btv_launcher.Utils.OkHttp.Bean.DownloadInfo;
+import com.wiatec.btv_launcher.Utils.OkHttp.Listener.DownloadListener;
+import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
 import com.wiatec.btv_launcher.Utils.SPUtils;
 import com.wiatec.btv_launcher.adapter.AutoScrollAdapter;
 import com.wiatec.btv_launcher.adapter.PushMessageAdapter;
@@ -368,6 +376,64 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
             Logger.d(""+packageName);
             presenter.check(packageName , context );
         }
+    }
+
+    @Override
+    public void showLivePlayDownloadDialog() {
+        final ProgressDialog progressDialog = new ProgressDialog(getContext());
+        progressDialog.setTitle(getString(R.string.download_add));
+        progressDialog.setMessage(getString(R.string.download_wait));
+        progressDialog.setIndeterminate(false);
+        progressDialog.setMax(100);
+        progressDialog.setCancelable(false);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.show();
+        OkMaster.download(getContext()).url(F.url.live_play).path(F.path.download).name(F.file_name.live_play)
+                .startDownload(new DownloadListener() {
+                    @Override
+                    public void onPending(DownloadInfo downloadInfo) {
+
+                    }
+
+                    @Override
+                    public void onStart(DownloadInfo downloadInfo) {
+                        progressDialog.setProgress(downloadInfo.getProgress());
+                    }
+
+                    @Override
+                    public void onPause(DownloadInfo downloadInfo) {
+
+                    }
+
+                    @Override
+                    public void onProgress(DownloadInfo downloadInfo) {
+                        progressDialog.setProgress(downloadInfo.getProgress());
+                    }
+
+                    @Override
+                    public void onFinished(DownloadInfo downloadInfo) {
+                        progressDialog.setProgress(100);
+                        progressDialog.dismiss();
+                        if(ApkCheck.isApkCanInstalled(getContext(), F.path.download, F.file_name.live_play )){
+                            ApkInstall.installApk(getContext(), F.path.download, F.file_name.live_play);
+                        }else{
+                            if(FileCheck.isFileExists(F.path.download, F.file_name.live_play)){
+                                FileCheck.delete(F.path.download, F.file_name.live_play);
+                            }
+                            Toast.makeText(Application.getContext(),getString(R.string.update_error),Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancel(DownloadInfo downloadInfo) {
+
+                    }
+
+                    @Override
+                    public void onError(DownloadInfo downloadInfo) {
+
+                    }
+                });
     }
 
     private void showCustomShortCut(final ImageButton imageButton, final String type) {
