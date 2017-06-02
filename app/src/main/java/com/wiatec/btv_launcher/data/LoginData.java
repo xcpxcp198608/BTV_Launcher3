@@ -30,10 +30,11 @@ import java.util.Map;
 public class LoginData implements ILoginData {
     @Override
     public void login(final UserInfo userInfo, final DeviceInfo deviceInfo, final OnLoginListener onLoginListener) {
-        OkMaster.get(F.url.login)
+        OkMaster.post(F.url.login)
                 .parames("userInfo.userName" , userInfo.getUserName())
                 .parames("userInfo.password" , userInfo.getPassword())
                 .parames("deviceInfo.mac" ,deviceInfo.getMac())
+                .parames("deviceInfo.ethernetMac",deviceInfo.getEthernetMac())
                 .parames("deviceInfo.country" ,deviceInfo.getCountry())
                 .parames("deviceInfo.countryCode" ,deviceInfo.getCountryCode())
                 .parames("deviceInfo.regionName" ,deviceInfo.getRegionName())
@@ -52,10 +53,11 @@ public class LoginData implements ILoginData {
                     @Override
                     public void onFailure(String e) {
                         onLoginListener.onFailure(e);
-                        OkMaster.get(F.url_eu.login)
+                        OkMaster.post(F.url_eu.login)
                                 .parames("userInfo.userName" , userInfo.getUserName())
                                 .parames("userInfo.password" , userInfo.getPassword())
                                 .parames("deviceInfo.mac" ,deviceInfo.getMac())
+                                .parames("deviceInfo.ethernetMac",deviceInfo.getEthernetMac())
                                 .parames("deviceInfo.country" ,deviceInfo.getCountry())
                                 .parames("deviceInfo.countryCode" ,deviceInfo.getCountryCode())
                                 .parames("deviceInfo.regionName" ,deviceInfo.getRegionName())

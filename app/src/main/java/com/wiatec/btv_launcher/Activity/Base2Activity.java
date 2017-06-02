@@ -44,8 +44,14 @@ public abstract class Base2Activity <V ,T extends BasePresenter> extends AppComp
         userInfo = new UserInfo();
         deviceInfo = new DeviceInfo();
         String mac = SystemConfig.getWifiMac1(this);
+        String ethernetMac = SystemConfig.getEthernetMac();
         SPUtils.put(this, "mac", mac);
+        SPUtils.put(this, "ethernetMac", ethernetMac);
         deviceInfo.setMac(mac);
+        deviceInfo.setEthernetMac(ethernetMac);
+        if(ethernetMac !=null){
+            Toast.makeText(Application.getContext(), ethernetMac ,Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

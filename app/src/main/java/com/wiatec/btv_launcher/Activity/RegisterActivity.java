@@ -157,6 +157,7 @@ public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterP
     @Override
     public void register(Result result) {
         progressBar.setVisibility(View.GONE);
+        Logger.d(result.toString());
         if (result.getCode() == Result.CODE_REGISTER_SUCCESS) {
             SPUtils.put(RegisterActivity.this, "userName", userName);
             SPUtils.put(RegisterActivity.this, "firstName", firstName);

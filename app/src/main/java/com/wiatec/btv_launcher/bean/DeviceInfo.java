@@ -7,6 +7,7 @@ package com.wiatec.btv_launcher.bean;
 public class DeviceInfo {
     private int id;
     private String mac;
+    private String ethernetMac;
     private String userName;
     private String country;
     private String countryCode;
@@ -14,21 +15,6 @@ public class DeviceInfo {
     private String currentLoginTime;
     private String regionName ;
     private String timeZone ;
-
-    @Override
-    public String toString() {
-        return "DeviceInfo{" +
-                "id=" + id +
-                ", mac='" + mac + '\'' +
-                ", userName='" + userName + '\'' +
-                ", country='" + country + '\'' +
-                ", countryCode='" + countryCode + '\'' +
-                ", city='" + city + '\'' +
-                ", currentLoginTime='" + currentLoginTime + '\'' +
-                ", regionName='" + regionName + '\'' +
-                ", timeZone='" + timeZone + '\'' +
-                '}';
-    }
 
     public int getId() {
         return id;
@@ -44,6 +30,14 @@ public class DeviceInfo {
 
     public void setMac(String mac) {
         this.mac = mac;
+    }
+
+    public String getEthernetMac() {
+        return ethernetMac;
+    }
+
+    public void setEthernetMac(String ethernetMac) {
+        this.ethernetMac = ethernetMac;
     }
 
     public String getUserName() {
@@ -100,5 +94,21 @@ public class DeviceInfo {
 
     public void setTimeZone(String timeZone) {
         this.timeZone = timeZone;
+    }
+
+    @Override
+    public String toString() {
+        return "DeviceInfo{" +
+                "id=" + id +
+                ", mac='" + mac + '\'' +
+                ", ethernetMac='" + ethernetMac + '\'' +
+                ", userName='" + userName + '\'' +
+                ", country='" + country + '\'' +
+                ", countryCode='" + countryCode + '\'' +
+                ", city='" + city + '\'' +
+                ", currentLoginTime='" + currentLoginTime + '\'' +
+                ", regionName='" + regionName + '\'' +
+                ", timeZone='" + timeZone + '\'' +
+                '}';
     }
 }

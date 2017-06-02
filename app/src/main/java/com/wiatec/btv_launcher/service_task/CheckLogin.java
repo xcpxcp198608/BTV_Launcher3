@@ -44,6 +44,7 @@ public class CheckLogin implements Runnable {
         int currentLoginCount = (int) SPUtils.get(Application.getContext() , "currentLoginCount" , 0);
         String userName = (String) SPUtils.get(Application.getContext(),"userName" , "");
         String mac = (String) SPUtils.get(Application.getContext() , "mac" , "");
+        String ethernetMac = (String) SPUtils.get(Application.getContext() , "ethernetMac" , "");
         if(TextUtils.isEmpty(userName)){
            // Logger.d("no userName do not execute check");
             return;
@@ -51,16 +52,18 @@ public class CheckLogin implements Runnable {
         if(currentLoginCount == 0){
             return;
         }
-        OkMaster.get(F.url.login_repeat_check)
+        OkMaster.post(F.url.login_repeat_check)
                 .parames("count", currentLoginCount+"")
                 .parames("userInfo.userName",userName)
                 .parames("deviceInfo.mac", mac)
+                .parames("deviceInfo.ethernetMac", ethernetMac)
                 .enqueue(new StringListener() {
                     @Override
                     public void onSuccess(String s) throws IOException {
                         if(s==null){
                             return;
                         }
+//                        Logger.d(s);
                         Result result = new Gson().fromJson(s,new TypeToken<Result>(){}.getType());
                         if(result == null){
                             return;

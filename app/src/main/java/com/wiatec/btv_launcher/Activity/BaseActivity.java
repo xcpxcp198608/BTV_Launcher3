@@ -8,9 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.R;
+import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.RxBus;
 import com.wiatec.btv_launcher.Utils.SPUtils;
 import com.wiatec.btv_launcher.Utils.SystemConfig;
@@ -40,8 +42,14 @@ public class BaseActivity extends AppCompatActivity {
         userInfo = new UserInfo();
         deviceInfo = new DeviceInfo();
         String mac = SystemConfig.getWifiMac1(this);
+        String ethernetMac = SystemConfig.getEthernetMac();
         SPUtils.put(this, "mac", mac);
+        SPUtils.put(this, "ethernetMac", ethernetMac);
         deviceInfo.setMac(mac);
+        deviceInfo.setEthernetMac(ethernetMac);
+        if(ethernetMac !=null){
+            Toast.makeText(Application.getContext(), ethernetMac ,Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

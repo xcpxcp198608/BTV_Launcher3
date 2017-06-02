@@ -24,9 +24,9 @@ public class OkMaster {
      */
     static {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        builder.connectTimeout(30, TimeUnit.SECONDS);
-        builder.writeTimeout(30,TimeUnit.SECONDS);
-        builder.readTimeout(30,TimeUnit.SECONDS);
+        builder.connectTimeout(50, TimeUnit.SECONDS);
+        builder.writeTimeout(50,TimeUnit.SECONDS);
+        builder.readTimeout(50,TimeUnit.SECONDS);
         okHttpClient = builder.build();
     }
 

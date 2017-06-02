@@ -27,7 +27,7 @@ public class RegisterPresenter extends BasePresenter<IRegisterActivity> {
 
     public void register (UserInfo userInfo , DeviceInfo deviceInfo ,String language){
         try {
-            OkMaster.get(F.url.register)
+            OkMaster.post(F.url.register)
                     .parames("userInfo.userName",userInfo.getUserName())
                     .parames("userInfo.firstName",userInfo.getFirstName())
                     .parames("userInfo.lastName",userInfo.getLastName())
@@ -35,6 +35,7 @@ public class RegisterPresenter extends BasePresenter<IRegisterActivity> {
                     .parames("userInfo.email",userInfo.getEmail())
                     .parames("deviceInfo.countryCode",deviceInfo.getCountryCode())
                     .parames("deviceInfo.mac", deviceInfo.getMac())
+                    .parames("deviceInfo.ethernetMac", deviceInfo.getEthernetMac())
                     .parames("deviceInfo.city", deviceInfo.getCity())
                     .parames("language", language)
                     .enqueue(new StringListener() {
