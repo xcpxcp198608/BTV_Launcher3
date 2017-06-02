@@ -49,9 +49,6 @@ public abstract class Base2Activity <V ,T extends BasePresenter> extends AppComp
         SPUtils.put(this, "ethernetMac", ethernetMac);
         deviceInfo.setMac(mac);
         deviceInfo.setEthernetMac(ethernetMac);
-        if(ethernetMac !=null){
-            Toast.makeText(Application.getContext(), ethernetMac ,Toast.LENGTH_LONG).show();
-        }
     }
 
     @Override
