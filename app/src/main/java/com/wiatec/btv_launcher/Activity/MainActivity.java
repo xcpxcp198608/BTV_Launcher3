@@ -129,12 +129,19 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
             if (SystemConfig.isNetworkConnected(MainActivity.this)) {
                 isStartLoadNetData = true;
                 presenter.loadLocation();
-                presenter.loadUpdate();
                 presenter.loadMessage();
                 presenter.loadVideo();
                 presenter.loadMessage1();
                 presenter.loadKodiData();
             }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (SystemConfig.isNetworkConnected(MainActivity.this)) {
+            presenter.loadUpdate();
         }
     }
 
@@ -192,11 +199,10 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
 
     @Override
     public void loadUpdate(UpdateInfo updateInfo) {
-        if(updateInfo ==null){
+        if(updateInfo == null){
             return;
         }
-        String info = updateInfo.getInfo();
-        String info2 = info.replaceAll("\\n" ,"\n");
+        Logger.d(updateInfo.toString());
         int localVersion = ApkCheck.getInstalledApkVersionCode(MainActivity.this, getPackageName());
         if (localVersion < updateInfo.getCode()) {
             showUpdateDialog(updateInfo);
