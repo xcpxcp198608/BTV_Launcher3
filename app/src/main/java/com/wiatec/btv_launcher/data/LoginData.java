@@ -53,31 +53,6 @@ public class LoginData implements ILoginData {
                     @Override
                     public void onFailure(String e) {
                         onLoginListener.onFailure(e);
-                        OkMaster.post(F.url_eu.login)
-                                .parames("userInfo.userName" , userInfo.getUserName())
-                                .parames("userInfo.password" , userInfo.getPassword())
-                                .parames("deviceInfo.mac" ,deviceInfo.getMac())
-                                .parames("deviceInfo.ethernetMac",deviceInfo.getEthernetMac())
-                                .parames("deviceInfo.country" ,deviceInfo.getCountry())
-                                .parames("deviceInfo.countryCode" ,deviceInfo.getCountryCode())
-                                .parames("deviceInfo.regionName" ,deviceInfo.getRegionName())
-                                .parames("deviceInfo.timeZone" ,deviceInfo.getTimeZone())
-                                .parames("deviceInfo.city" ,deviceInfo.getCity())
-                                .enqueue(new StringListener() {
-                                    @Override
-                                    public void onSuccess(String s) throws IOException {
-                                        if(s == null){
-                                            return;
-                                        }
-                                        Result result = new Gson().fromJson(s , new TypeToken<Result>(){}.getType());
-                                        onLoginListener.onSuccess(result);
-                                    }
-
-                                    @Override
-                                    public void onFailure(String e) {
-                                        onLoginListener.onFailure(e);
-                                    }
-                                });
                     }
                 });
     }
