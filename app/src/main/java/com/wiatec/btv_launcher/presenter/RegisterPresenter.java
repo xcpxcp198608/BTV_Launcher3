@@ -7,9 +7,8 @@ import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.OkHttp.Listener.StringListener;
 import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
-import com.wiatec.btv_launcher.bean.DeviceInfo;
 import com.wiatec.btv_launcher.bean.Result;
-import com.wiatec.btv_launcher.bean.UserInfo;
+import com.wiatec.btv_launcher.bean.User1Info;
 
 import java.io.IOException;
 
@@ -25,18 +24,22 @@ public class RegisterPresenter extends BasePresenter<IRegisterActivity> {
         this.iRegisterActivity = iRegisterActivity;
     }
 
-    public void register (UserInfo userInfo , DeviceInfo deviceInfo ,String language){
+    public void register (User1Info user1Info , String language){
         try {
+            Logger.d(user1Info.toString());
             OkMaster.post(F.url.register)
-                    .parames("userInfo.userName",userInfo.getUserName())
-                    .parames("userInfo.firstName",userInfo.getFirstName())
-                    .parames("userInfo.lastName",userInfo.getLastName())
-                    .parames("userInfo.password",userInfo.getPassword())
-                    .parames("userInfo.email",userInfo.getEmail())
-                    .parames("deviceInfo.countryCode",deviceInfo.getCountryCode())
-                    .parames("deviceInfo.mac", deviceInfo.getMac())
-                    .parames("deviceInfo.ethernetMac", deviceInfo.getEthernetMac())
-                    .parames("deviceInfo.city", deviceInfo.getCity())
+                    .parames("user1Info.userName",user1Info.getUserName())
+                    .parames("user1Info.firstName",user1Info.getFirstName())
+                    .parames("user1Info.lastName",user1Info.getLastName())
+                    .parames("user1Info.password",user1Info.getPassword())
+                    .parames("user1Info.email",user1Info.getEmail())
+                    .parames("user1Info.phone",user1Info.getPhone())
+                    .parames("user1Info.mac",user1Info.getMac())
+                    .parames("user1Info.ethernetMac", user1Info.getEthernetMac())
+                    .parames("user1Info.country", user1Info.getCountry())
+                    .parames("user1Info.region", user1Info.getRegion())
+                    .parames("user1Info.city", user1Info.getCity())
+                    .parames("user1Info.timeZone", user1Info.getTimeZone())
                     .parames("language", language)
                     .enqueue(new StringListener() {
                         @Override
@@ -50,7 +53,12 @@ public class RegisterPresenter extends BasePresenter<IRegisterActivity> {
 
                         @Override
                         public void onFailure(String e) {
+                            Result result = new Result();
+                            result.setCode(Result.CODE_REGISTER_FAILURE);
+                            result.setStatus(Result.STATUS_REGISTER_FAILURE);
+                            iRegisterActivity.register(result);
                             Logger.d(e);
+
                         }
                     });
         }catch (Exception e){

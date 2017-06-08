@@ -40,6 +40,7 @@
         tools:text="234324324"
         android:textColor="@android:color/black"
         android:textSize="20sp"
+        android:autoLink="web|email|phone"
         android:id="@+id/tv_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

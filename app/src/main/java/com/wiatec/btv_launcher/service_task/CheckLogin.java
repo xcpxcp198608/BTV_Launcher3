@@ -1,7 +1,6 @@
 package com.wiatec.btv_launcher.service_task;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -14,7 +13,6 @@ import com.wiatec.btv_launcher.Utils.RxBus;
 import com.wiatec.btv_launcher.Utils.SPUtils;
 import com.wiatec.btv_launcher.Utils.SystemConfig;
 import com.wiatec.btv_launcher.bean.Result;
-import com.wiatec.btv_launcher.bean.UserInfo;
 import com.wiatec.btv_launcher.rxevent.CheckLoginEvent;
 
 import java.io.IOException;
@@ -54,9 +52,13 @@ public class CheckLogin implements Runnable {
         }
         OkMaster.post(F.url.login_repeat_check)
                 .parames("count", currentLoginCount+"")
-                .parames("userInfo.userName",userName)
-                .parames("deviceInfo.mac", mac)
-                .parames("deviceInfo.ethernetMac", ethernetMac)
+                .parames("user1Info.userName",userName)
+                .parames("user1Info.mac", mac)
+                .parames("user1Info.ethernetMac", ethernetMac)
+                .parames("user1Info.country", (String) SPUtils.get(Application.getContext(), "country",""))
+                .parames("user1Info.region", (String) SPUtils.get(Application.getContext(), "regionName",""))
+                .parames("user1Info.city", (String) SPUtils.get(Application.getContext(), "city",""))
+                .parames("user1Info.timeZone", (String) SPUtils.get(Application.getContext(), "timeZone",""))
                 .enqueue(new StringListener() {
                     @Override
                     public void onSuccess(String s) throws IOException {
@@ -73,6 +75,9 @@ public class CheckLogin implements Runnable {
                             SPUtils.put(Application.getContext() , "userLevel" ,result.getUserLevel()+"");
                             SPUtils.put(Application.getContext(), "experience", result.getExtra());
                             RxBus.getDefault().post(new CheckLoginEvent(CheckLoginEvent.CODE_LOGIN_NORMAL));
+                            if(result.getUserLevel() == 0){
+                                RxBus.getDefault().post(new CheckLoginEvent(CheckLoginEvent.CODE_LOGIN_REPEAT));
+                            }
                         }else{
                             RxBus.getDefault().post(new CheckLoginEvent(CheckLoginEvent.CODE_LOGIN_REPEAT));
                         }

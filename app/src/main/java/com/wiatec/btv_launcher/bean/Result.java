@@ -50,6 +50,8 @@ public class Result {
 
     public static final int CODE_REQUEST_SUCCESS = 11;
     public static final String STATUS_REQUEST_SUCCESS = "request success";
+    public static final int CODE_REQUEST_FAILURE = 12;
+    public static final String STATUS_REQUEST_FAILURE = "request failure";
 
     public static final int CODE_INPUT_INFO_ERROR = 100;
     public static final String STATUS_INPUT_INFO_ERROR = "input info error";

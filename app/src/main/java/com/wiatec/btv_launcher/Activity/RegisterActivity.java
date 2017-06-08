@@ -17,7 +17,7 @@ import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.SPUtils;
 import com.wiatec.btv_launcher.bean.Result;
-import com.wiatec.btv_launcher.bean.UserInfo;
+import com.wiatec.btv_launcher.bean.User1Info;
 import com.wiatec.btv_launcher.presenter.RegisterPresenter;
 
 import butterknife.BindView;
@@ -43,6 +43,8 @@ public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterP
     EditText etPassword1;
     @BindView(R.id.et_email)
     EditText etEmail;
+    @BindView(R.id.et_phone)
+    EditText etPhone;
     @BindView(R.id.bt_register)
     Button btRegister;
     @BindView(R.id.sp_language)
@@ -56,6 +58,7 @@ public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterP
     private String password;
     private String password1;
     private String email;
+    private String phone;
     private String language;
 
     @Override
@@ -116,6 +119,7 @@ public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterP
         password = etPassword.getText().toString().trim();
         password1 = etPassword1.getText().toString().trim();
         email = etEmail.getText().toString().trim();
+        phone = etPhone.getText().toString().trim();
         if (TextUtils.isEmpty(userName)) {
             Toast.makeText(RegisterActivity.this, getString(R.string.username_input_error), Toast.LENGTH_SHORT).show();
             return;
@@ -140,17 +144,28 @@ public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterP
             Toast.makeText(RegisterActivity.this, getString(R.string.password_input_error), Toast.LENGTH_SHORT).show();
             return;
         }
+        if (TextUtils.isEmpty(phone)) {
+            Toast.makeText(RegisterActivity.this, getString(R.string.phone_input_error), Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (!password.equals(password1)) {
             Toast.makeText(RegisterActivity.this, getString(R.string.password_input_different), Toast.LENGTH_SHORT).show();
             return;
         }
-        UserInfo userInfo = new UserInfo();
-        userInfo.setUserName(userName);
-        userInfo.setFirstName(firstName);
-        userInfo.setLastName(lastName);
-        userInfo.setPassword(password);
-        userInfo.setEmail(email);
-        presenter.register(userInfo, deviceInfo ,language);
+        User1Info user1Info = new User1Info();
+        user1Info.setUserName(userName);
+        user1Info.setFirstName(firstName);
+        user1Info.setLastName(lastName);
+        user1Info.setPassword(password);
+        user1Info.setEmail(email);
+        user1Info.setPhone(phone);
+        user1Info.setMac((String) SPUtils.get(RegisterActivity.this,"mac",""));
+        user1Info.setEthernetMac((String) SPUtils.get(RegisterActivity.this,"ethernetMac",""));
+        user1Info.setCountry((String) SPUtils.get(RegisterActivity.this,"country",""));
+        user1Info.setRegion((String) SPUtils.get(RegisterActivity.this,"regionName",""));
+        user1Info.setCity((String) SPUtils.get(RegisterActivity.this,"city",""));
+        user1Info.setTimeZone((String) SPUtils.get(RegisterActivity.this,"timeZone",""));
+        presenter.register(user1Info ,language);
         progressBar.setVisibility(View.VISIBLE);
     }
 

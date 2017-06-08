@@ -11,7 +11,7 @@ import android.renderscript.Sampler;
 public final class F {
     public static final class url {
         public static final String base_url = "http://www.ldlegacy.com:8080/";
-//        public static final String base_url = "http://172.27.0.108:8080/";
+//        public static final String base_url = "http://172.27.0.102:8080/";
 
         public static final String updater = base_url+"control_panel/update/get";
 
@@ -32,11 +32,10 @@ public final class F {
         public static final String message1 = base_url+"control_panel/message1/get";
         public static final String push_message = base_url+"LDFAM/get";
 
-        public static final String login = base_url+"control_panel/user/login";
-        public static final String register = base_url+"control_panel/user/register";
-        public static final String login_repeat_check = base_url+"control_panel/user/checkRepeat";
-        public static final String level_check = base_url+"control_panel/user/checkLevel";
-        public static final String reset_p = base_url+"control_panel/user/requestUpdateP";
+        public static final String login = base_url+"control_panel/user1/login";
+        public static final String register = base_url+"control_panel/user1/register";
+        public static final String login_repeat_check = base_url+"control_panel/user1/checkRepeat";
+        public static final String reset_p = base_url+"control_panel/user1/requestUpdateP";
         public static final String upload_data = base_url+"control_panel/userdata/save";
 
         public static final String eufonico = "http://142.4.216.91:8280/";

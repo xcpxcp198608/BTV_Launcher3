@@ -7,9 +7,8 @@ import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.OkHttp.Listener.StringListener;
 import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
-import com.wiatec.btv_launcher.bean.DeviceInfo;
 import com.wiatec.btv_launcher.bean.Result;
-import com.wiatec.btv_launcher.bean.UserInfo;
+import com.wiatec.btv_launcher.bean.User1Info;
 import com.wiatec.btv_launcher.data.ILoginData;
 import com.wiatec.btv_launcher.data.LoginData;
 
@@ -29,10 +28,10 @@ public class LoginPresenter extends BasePresenter<ILoginActivity> {
         iLoginData = new LoginData();
     }
 
-    public void login(UserInfo userInfo , DeviceInfo deviceInfo){
+    public void login(User1Info user1Info){
         try {
             if(iLoginData != null){
-                iLoginData.login(userInfo, deviceInfo, new ILoginData.OnLoginListener() {
+                iLoginData.login(user1Info, new ILoginData.OnLoginListener() {
                     @Override
                     public void onSuccess(Result result) {
                         iLoginActivity.login(result);
@@ -49,10 +48,10 @@ public class LoginPresenter extends BasePresenter<ILoginActivity> {
         }
     }
 
-    public void resetPassword (UserInfo userInfo){
+    public void resetPassword (User1Info user1Info){
         OkMaster.post(F.url.reset_p)
-                .parames("userInfo.userName" , userInfo.getUserName())
-                .parames("userInfo.email" , userInfo.getEmail())
+                .parames("user1Info.userName" , user1Info.getUserName())
+                .parames("user1Info.email" , user1Info.getEmail())
                 .enqueue(new StringListener() {
                     @Override
                     public void onSuccess(String s) throws IOException {
@@ -65,6 +64,10 @@ public class LoginPresenter extends BasePresenter<ILoginActivity> {
 
                     @Override
                     public void onFailure(String e) {
+                        Result result = new Result();
+                        result.setCode(Result.CODE_REQUEST_FAILURE);
+                        result.setStatus(Result.STATUS_REQUEST_FAILURE);
+                        iLoginActivity.resetp(result);
                         Logger.d(e);
                     }
                 });

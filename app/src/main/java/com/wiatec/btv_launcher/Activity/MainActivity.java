@@ -30,7 +30,6 @@ import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.SPUtils;
-import com.wiatec.btv_launcher.bean.DeviceInfo;
 import com.wiatec.btv_launcher.custom_view.RollTextView;
 import com.wiatec.btv_launcher.receiver.OnNetworkStatusListener;
 import com.wiatec.btv_launcher.receiver.OnWifiStatusListener;
@@ -88,7 +87,7 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
     private ScreenWeekUpReceiver screenWeekUpReceiver;
     private boolean isStartLoadNetData = false;
     private boolean isStartAlarmService =false;
-    public DeviceInfo mDeviceInfo;
+
 
     @Override
     protected MainPresenter createPresenter() {
@@ -123,7 +122,6 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
         }else{
             tvWelcome.setText("");
         }
-        mDeviceInfo = deviceInfo;
         if(presenter != null){
             presenter.loadWeatherInfo();
             if (SystemConfig.isNetworkConnected(MainActivity.this)) {

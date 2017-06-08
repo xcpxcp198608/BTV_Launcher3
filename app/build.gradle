@@ -10,7 +10,7 @@ android {
         targetSdkVersion 22
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         versionCode 301
-        versionName "v3.0.1"
+        versionName "v3.0.2-beta"
     }
 
     signingConfigs {

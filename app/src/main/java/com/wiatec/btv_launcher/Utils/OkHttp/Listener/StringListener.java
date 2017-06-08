@@ -8,6 +8,7 @@ import okhttp3.Response;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.functions.Func1;
 
 /**
@@ -21,7 +22,15 @@ public abstract class StringListener implements Callback {
 
     @Override
     public void onFailure(Call call, IOException e) {
-        onFailure(e.getMessage());
+        Observable.just(e.getMessage())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<String>() {
+                    @Override
+                    public void call(String s) {
+                        onFailure(s);
+                    }
+                });
+
     }
 
     @Override

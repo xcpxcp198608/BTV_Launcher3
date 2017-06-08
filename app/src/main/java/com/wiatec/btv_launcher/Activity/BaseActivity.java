@@ -8,16 +8,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.R;
-import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.RxBus;
 import com.wiatec.btv_launcher.Utils.SPUtils;
 import com.wiatec.btv_launcher.Utils.SystemConfig;
-import com.wiatec.btv_launcher.bean.DeviceInfo;
-import com.wiatec.btv_launcher.bean.UserInfo;
+import com.wiatec.btv_launcher.bean.User1Info;
 import com.wiatec.btv_launcher.rxevent.CheckLoginEvent;
 
 import rx.Subscription;
@@ -32,35 +29,31 @@ public class BaseActivity extends AppCompatActivity {
 
     protected Subscription checkLoginSubscription;
     protected boolean isLoginChecking = false;
-    protected UserInfo userInfo;
-    protected DeviceInfo deviceInfo;
+    protected User1Info user1Info;
     protected int currentLoginCount;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        userInfo = new UserInfo();
-        deviceInfo = new DeviceInfo();
-        String mac = SystemConfig.getWifiMac1(this);
+        user1Info = new User1Info();
+        String mac = SystemConfig.getWifiMac();
         String ethernetMac = SystemConfig.getEthernetMac();
         SPUtils.put(this, "mac", mac);
         SPUtils.put(this, "ethernetMac", ethernetMac);
-        deviceInfo.setMac(mac);
-        deviceInfo.setEthernetMac(ethernetMac);
+        user1Info.setMac(mac);
+        user1Info.setEthernetMac(ethernetMac);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         currentLoginCount = (int) SPUtils.get(this , "currentLoginCount" , 1);
-        userInfo.setUserName((String) SPUtils.get(this , "userName" , " "));
-        userInfo.setToken((String) SPUtils.get(this , "token" , " "));
-        deviceInfo.setUserName((String) SPUtils.get(this , "userName" , " "));
-        deviceInfo.setCity((String) SPUtils.get(this , "city" , "1"));
-        deviceInfo.setCountry((String) SPUtils.get(this , "country" , "1"));
-        deviceInfo.setCountryCode((String) SPUtils.get(this , "countryCode" , "1"));
-        deviceInfo.setRegionName((String) SPUtils.get(this , "regionName" , "1"));
-        deviceInfo.setTimeZone((String) SPUtils.get(this , "timeZone" , "1"));
+        user1Info.setUserName((String) SPUtils.get(this , "userName" , " "));
+        user1Info.setToken((String) SPUtils.get(this , "token" , " "));
+        user1Info.setCity((String) SPUtils.get(this , "city" , "1"));
+        user1Info.setCountry((String) SPUtils.get(this , "country" , "1"));
+        user1Info.setRegion((String) SPUtils.get(this , "regionName" , "1"));
+        user1Info.setTimeZone((String) SPUtils.get(this , "timeZone" , "1"));
         if(!isLoginChecking && SystemConfig.isNetworkConnected(Application.getContext())) {
             checkLoginResult();
         }

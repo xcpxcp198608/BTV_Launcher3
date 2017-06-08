@@ -17,7 +17,7 @@ import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.SPUtils;
 import com.wiatec.btv_launcher.bean.Result;
-import com.wiatec.btv_launcher.bean.UserInfo;
+import com.wiatec.btv_launcher.bean.User1Info;
 import com.wiatec.btv_launcher.presenter.LoginPresenter;
 
 import butterknife.BindView;
@@ -69,6 +69,11 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         userName = (String) SPUtils.get(LoginActivity.this , "userName" ,"");
         etUserName.setText(userName);
         etUserName.setSelection(userName.length());
@@ -81,10 +86,16 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
                 userName = etUserName.getText().toString().trim();
                 password = etPassword.getText().toString().trim();
                 if(!TextUtils.isEmpty(userName) && ! TextUtils.isEmpty(password)){
-                    UserInfo userInfo = new UserInfo();
-                    userInfo.setUserName(userName);
-                    userInfo.setPassword(password);
-                    presenter.login(userInfo , deviceInfo);
+                    User1Info user1Info = new User1Info();
+                    user1Info.setUserName(userName);
+                    user1Info.setPassword(password);
+                    user1Info.setMac((String) SPUtils.get(LoginActivity.this,"mac",""));
+                    user1Info.setEthernetMac((String) SPUtils.get(LoginActivity.this,"ethernetMac",""));
+                    user1Info.setCountry((String) SPUtils.get(LoginActivity.this,"country",""));
+                    user1Info.setRegion((String) SPUtils.get(LoginActivity.this,"region",""));
+                    user1Info.setCity((String) SPUtils.get(LoginActivity.this,"city",""));
+                    user1Info.setTimeZone((String) SPUtils.get(LoginActivity.this,"timeZone",""));
+                    presenter.login(user1Info);
                     progressBar.setVisibility(View.VISIBLE);
                 }else{
                     Toast.makeText(LoginActivity.this , getString(R.string.error_input) , Toast.LENGTH_LONG).show();
@@ -101,10 +112,10 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
                 userName1 = etUserName1.getText().toString().trim();
                 email1 = etEmail1.getText().toString().trim();
                 if(!TextUtils.isEmpty(userName1) && ! TextUtils.isEmpty(email1)){
-                    UserInfo userInfo = new UserInfo();
-                    userInfo.setUserName(userName);
-                    userInfo.setEmail(email1);
-                    presenter.resetPassword(userInfo);
+                    User1Info user1Info = new User1Info();
+                    user1Info.setUserName(userName1);
+                    user1Info.setEmail(email1);
+                    presenter.resetPassword(user1Info);
                     progressBar1.setVisibility(View.VISIBLE);
                 }else{
                     Toast.makeText(LoginActivity.this , getString(R.string.error_input) , Toast.LENGTH_LONG).show();
@@ -151,7 +162,6 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
                 llLogin.setVisibility(View.VISIBLE);
                 return true;
             }
-            return true;
         }
         return super.onKeyDown(keyCode, event);
     }
