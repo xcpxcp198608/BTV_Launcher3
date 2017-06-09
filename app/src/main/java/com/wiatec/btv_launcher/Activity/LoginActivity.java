@@ -160,8 +160,8 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
             if(llResetPassword.getVisibility() == View.VISIBLE){
                 llResetPassword.setVisibility(View.GONE);
                 llLogin.setVisibility(View.VISIBLE);
-                return true;
             }
+            return true;
         }
         return super.onKeyDown(keyCode, event);
     }

@@ -50,7 +50,7 @@ public class NetworkStatusReceiver extends BroadcastReceiver {
                 imageView.setImageResource(R.drawable.wifi4);
                 break;
             case 3:
-                imageView.setImageResource(R.drawable.ethernet);
+                imageView.setImageResource(R.drawable.ethernet1);
                 break;
         }
     }
