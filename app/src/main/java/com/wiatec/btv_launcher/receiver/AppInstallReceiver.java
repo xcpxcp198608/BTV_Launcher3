@@ -56,6 +56,7 @@ public class AppInstallReceiver extends BroadcastReceiver {
                                     !F.package_name.tv_house.equals(s)&&
                                     !F.package_name.mx_player.equals(s)&&
                                     !F.package_name.terrarium_tv.equals(s)&&
+                                    !F.package_name.popcom.equals(s)&&
                                     !F.package_name.btv.equals(s)){
                                 InstalledApp installedApp = new InstalledApp();
                                 installedApp.setAppPackageName(s);

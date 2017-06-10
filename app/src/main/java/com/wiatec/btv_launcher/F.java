@@ -113,6 +113,7 @@ public final class F {
         public static final String tv_house = "com.fanshi.tvvideo";
         public static final String mx_player = "com.mxtech.videoplayer.ad";
         public static final String terrarium_tv = "com.nitroxenon.terrarium";
+        public static final String popcom = "pct.droid";
     }
 
     public static final class file_name {
