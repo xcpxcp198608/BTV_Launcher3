@@ -116,6 +116,7 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
     @Override
     protected void onStart() {
         super.onStart();
+//        Logger.d("onStart");
         String userName = (String) SPUtils.get(MainActivity.this , "lastName" , "");
         if(!TextUtils.isEmpty(userName) && !"null".equals(userName)){
             tvWelcome.setText(getString(R.string.welcome) + " " + userName + " " + getString(R.string.family));
@@ -126,6 +127,7 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
             presenter.loadWeatherInfo();
             if (SystemConfig.isNetworkConnected(MainActivity.this)) {
                 isStartLoadNetData = true;
+                presenter.loadUpdate();
                 presenter.loadLocation();
                 presenter.loadMessage();
                 presenter.loadVideo();
@@ -138,9 +140,6 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
     @Override
     protected void onResume() {
         super.onResume();
-        if (SystemConfig.isNetworkConnected(MainActivity.this)) {
-            presenter.loadUpdate();
-        }
     }
 
     @Override
