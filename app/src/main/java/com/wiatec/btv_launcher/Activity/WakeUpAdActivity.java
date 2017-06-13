@@ -42,6 +42,7 @@ public class WakeUpAdActivity extends AppCompatActivity implements View.OnClickL
     private int time ;
     private Button btSkip;
     private Subscription subscription;
+    private static final int SKIP_TIME = 15;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -99,12 +100,12 @@ public class WakeUpAdActivity extends AppCompatActivity implements View.OnClickL
                             int i = (int) (time -1 - aLong);
                             tvTimeDelay.setText(i+" s");
                             if(userLevel == 2){
-                                int j = (int) (30 -aLong);
+                                int j = (int) (SKIP_TIME -aLong);
                                 if(j <0){
                                     j = 0;
                                 }
                                 tvTime.setText(" "+j + "s");
-                                if(time - i >30){
+                                if(time - i >SKIP_TIME){
                                     btSkip.setVisibility(View.VISIBLE);
                                     btSkip.requestFocus();
                                 }

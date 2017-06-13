@@ -67,5 +67,6 @@
     <string name="skip">SKIP</string>
     <string name="download_add">Downloading Additional Resources</string>
     <string name="download_wait">please wait download finish , do not exit</string>
+    <string name="clicktoenter">CLICK TO ENTER</string>
 
 </resources>

@@ -49,12 +49,21 @@
                         android:focusable="false"
                         android:focusableInTouchMode="false" />
 
+                    <TextView
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:textSize="22sp"
+                        android:textColor="@android:color/white"
+                        android:text="@string/clicktoenter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp" />
+
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_gravity="right"
                         android:scaleType="centerInside"
-                        android:src="@drawable/btv_icon_1" />
+                        android:src="@drawable/ic_btv_white" />
 
                     <ImageView
                         android:id="@+id/iv_btv_logo"

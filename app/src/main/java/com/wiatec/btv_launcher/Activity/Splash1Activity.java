@@ -48,7 +48,7 @@ public class Splash1Activity extends Base1Activity<ISplashActivity, SplashPresen
 
 
     private String packageName;
-    private int delayTime = 6;
+    private int delayTime = 11;
     private Subscription subscription;
 
     @Override
@@ -98,7 +98,7 @@ public class Splash1Activity extends Base1Activity<ISplashActivity, SplashPresen
                         //Logger.d(i + "");
                         ll_Delay.setVisibility(View.VISIBLE);
                         tv_DelayTime.setText(String.valueOf(i) +" s");
-                        if(i<=2){
+                        if(i<=5){
                             ibt_Pass.setVisibility(View.VISIBLE);
                         }
                     }

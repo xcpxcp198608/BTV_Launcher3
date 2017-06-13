@@ -84,13 +84,12 @@ public class BaseActivity extends AppCompatActivity {
                         if(isLoginChecking){
                             return;
                         }
-                        if(checkLoginEvent.getCode() == CheckLoginEvent.CODE_LOGIN_NORMAL){
-                            //Logger.d("login normal");
-                        }else{
-                            //Logger.d("login repeat");
+                        if(checkLoginEvent.getCode() == CheckLoginEvent.CODE_LOGIN_REPEAT){
                             showLoginAgainDialog();
                             checkLoginSubscription.unsubscribe();
                             isLoginChecking = true;
+                        }else{
+                            //Logger.d("login NORMAL");
                         }
                     }
                 });
