@@ -14,6 +14,7 @@ public class User1Info {
     private String phone;
     private String firstName;
     private String lastName;
+    private String nickName;
     private int level;
     private int emailStatus;
     private String mac;
@@ -83,6 +84,14 @@ public class User1Info {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     public int getLevel() {
@@ -207,6 +216,7 @@ public class User1Info {
                 ", phone='" + phone + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", nickName='" + nickName + '\'' +
                 ", level=" + level +
                 ", emailStatus=" + emailStatus +
                 ", mac='" + mac + '\'' +

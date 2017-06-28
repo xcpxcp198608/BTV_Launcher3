@@ -31,6 +31,7 @@ public class RegisterPresenter extends BasePresenter<IRegisterActivity> {
                     .parames("user1Info.userName",user1Info.getUserName())
                     .parames("user1Info.firstName",user1Info.getFirstName())
                     .parames("user1Info.lastName",user1Info.getLastName())
+                    .parames("user1Info.nickName",user1Info.getNickName())
                     .parames("user1Info.password",user1Info.getPassword())
                     .parames("user1Info.email",user1Info.getEmail())
                     .parames("user1Info.phone",user1Info.getPhone())

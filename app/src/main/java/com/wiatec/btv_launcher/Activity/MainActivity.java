@@ -228,7 +228,7 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
         if(videoInfo == null){
             return;
         }
-        SPUtils.put(MainActivity.this , "adVideoTime" ,videoInfo.getPlayInterval());
+        SPUtils.put(MainActivity.this , "adTime" ,videoInfo.getPlayInterval()+"");
         if (!FileCheck.isFileExists(F.path.download, "btvad.mp4")) {
             presenter.downloadAdVideo("btvad.mp4" ,videoInfo.getUrl());
 //            Logger.d("video not exists start download");

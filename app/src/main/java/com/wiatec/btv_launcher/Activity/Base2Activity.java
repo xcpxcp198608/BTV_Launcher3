@@ -24,7 +24,7 @@ public abstract class Base2Activity <V ,T extends BasePresenter> extends AppComp
         presenter.attachView(this);
 
         user1Info = new User1Info();
-        String mac = SystemConfig.getWifiMac1(this);
+        String mac = SystemConfig.getWifiMac();
         String ethernetMac = SystemConfig.getEthernetMac();
         SPUtils.put(this, "mac", mac);
         SPUtils.put(this, "ethernetMac", ethernetMac);

@@ -3,6 +3,7 @@ package com.wiatec.btv_launcher.data;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.OkHttp.Listener.StringListener;
 import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
 import com.wiatec.btv_launcher.bean.Result;
@@ -17,6 +18,7 @@ import java.io.IOException;
 public class LoginData implements ILoginData {
     @Override
     public void login(final User1Info user1Info, final OnLoginListener onLoginListener) {
+//        Logger.d(user1Info.toString());
         OkMaster.post(F.url.login)
                 .parames("user1Info.userName" , user1Info.getUserName())
                 .parames("user1Info.password" , user1Info.getPassword())

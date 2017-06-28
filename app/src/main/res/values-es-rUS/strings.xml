@@ -32,10 +32,16 @@
     <string name="input_key">UserName (CASE SENSITIVE)</string>
     <string name="input_password">Password (CASE SENSITIVE)</string>
     <string name="phone_input_error">Phone input error</string>
+    <string name="password_format_error">Password format error(length >= 6)</string>
+    <string name="phone_format_error">Phone format error(length >= 7)</string>
+    <string name="nick_name_input_error">Nick Name input error</string>
+    <string name="email_different_error">Email input different</string>
+    <string name="email_format_error">Email format error</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="email">Email (CASE SENSITIVE)</string>
     <string name="first_name">FirstName</string>
     <string name="last_name">LastName</string>
+    <string name="nick_name">NickName</string>
     <string name="phone">Phone</string>
     <string name="warning">Warning</string>
     <string name="warning_message">Welcome to BTVi3, By using this service you agree to the Terms of Service (TOS) on Legacy Direct websites. Legacy Direct reserves the right to change the TOS at any time. If you do not agree to any of these terms, please refrain from using the BTVi3 services and products.</string>
@@ -66,6 +72,6 @@
     <string name="skip">SKIP</string>
     <string name="download_add">Downloading Additional Resources</string>
     <string name="download_wait">please wait download finish , do not exit</string>
-    <string name="clicktoenter">CLICK TO ENTER</string>
+    <string name="clicktoenter">CLICK THE VIDEO TO ENTER LivePlay</string>
 
 </resources>

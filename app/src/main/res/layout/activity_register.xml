@@ -46,12 +46,26 @@
             android:layout_height="50dp" />
 
         <EditText
+            android:visibility="gone"
+            android:textSize="22sp"
+            android:layout_marginTop="10dp"
+            android:textColorHint="@color/colorItemGrayBlue"
+            android:id="@+id/et_nick_name"
+            android:hint="@string/nick_name"
+            android:padding="4dp"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/bg_text_view"
+            android:layout_width="350dp"
+            android:layout_height="50dp" />
+
+        <EditText
             android:textSize="22sp"
             android:layout_marginTop="10dp"
             android:textColorHint="@color/colorItemGrayBlue"
             android:id="@+id/et_phone"
             android:hint="@string/phone"
             android:padding="4dp"
+            android:inputType="number"
             android:textColor="@color/colorWhite"
             android:background="@drawable/bg_text_view"
             android:layout_width="350dp"
@@ -64,6 +78,20 @@
             android:id="@+id/et_email"
             android:hint="@string/email"
             android:padding="4dp"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/bg_text_view"
+            android:layout_width="350dp"
+            android:layout_height="50dp" />
+
+        <EditText
+            android:textSize="22sp"
+            android:layout_marginTop="10dp"
+            android:textColorHint="@color/colorItemGrayBlue"
+            android:id="@+id/et_email1"
+            android:hint="@string/email"
+            android:padding="4dp"
+            android:inputType="textEmailAddress"
             android:textColor="@color/colorWhite"
             android:background="@drawable/bg_text_view"
             android:layout_width="350dp"

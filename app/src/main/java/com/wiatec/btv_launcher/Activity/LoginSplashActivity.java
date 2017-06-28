@@ -69,20 +69,10 @@ public class LoginSplashActivity extends AppCompatActivity{
         }else{
             String l = (String) SPUtils.get(Application.getContext() , "userLevel" , "1");
             int level = Integer.parseInt(l);
-            if(level >= 3 ){
+            if(level >= 1) {
                 ApkLaunch.launchApkByPackageName(this, packageName);
                 finish();
-            }else if(level >= 1){
-                if(packageName.equals(F.package_name.bplay)) {
-                    Intent intent = new Intent(this, PlayAdActivity.class);
-                    intent.putExtra("packageName", F.package_name.bplay);
-                    startActivity(intent);
-                    finish();
-                }else{
-                    ApkLaunch.launchApkByPackageName(this, packageName);
-                    finish();
-                }
-            }else{
+            } else{
                 Toast.makeText(Application.getContext() , Application.getContext().getString(R.string.account_error) ,
                         Toast.LENGTH_LONG).show();
                 finish();

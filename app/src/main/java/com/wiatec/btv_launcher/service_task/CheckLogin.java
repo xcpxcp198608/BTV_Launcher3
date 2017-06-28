@@ -70,16 +70,18 @@ public class CheckLogin implements Runnable {
                         if(result == null){
                             return;
                         }
-//                        Logger.d(result.toString());
-                        if(result.getCode() == Result.CODE_LOGIN_SUCCESS){
-                            SPUtils.put(Application.getContext() , "userLevel" ,result.getUserLevel()+"");
-                            SPUtils.put(Application.getContext(), "experience", result.getExtra());
-                            RxBus.getDefault().post(new CheckLoginEvent(CheckLoginEvent.CODE_LOGIN_NORMAL));
-                            if(result.getUserLevel() == 0){
-                                RxBus.getDefault().post(new CheckLoginEvent(CheckLoginEvent.CODE_LOGIN_REPEAT));
-                            }
-                        }else{
+                        Logger.d(result.toString());
+                        if(result.getUserLevel() == 0){
                             RxBus.getDefault().post(new CheckLoginEvent(CheckLoginEvent.CODE_LOGIN_REPEAT));
+                            return;
+                        }
+                        if(result.getCode() == Result.CODE_LOGIN_ERROR){
+                            RxBus.getDefault().post(new CheckLoginEvent(CheckLoginEvent.CODE_LOGIN_REPEAT));
+                            return;
+                        }
+                        if(result.getCode() == Result.CODE_LOGIN_SUCCESS) {
+                            SPUtils.put(Application.getContext(), "userLevel", result.getUserLevel() + "");
+                            SPUtils.put(Application.getContext(), "experience", result.getExtra());
                         }
                     }
 

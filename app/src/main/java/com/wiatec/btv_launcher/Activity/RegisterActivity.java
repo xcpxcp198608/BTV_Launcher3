@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.Utils.Logger;
+import com.wiatec.btv_launcher.Utils.RegularUtil;
 import com.wiatec.btv_launcher.Utils.SPUtils;
 import com.wiatec.btv_launcher.bean.Result;
 import com.wiatec.btv_launcher.bean.User1Info;
@@ -37,12 +38,16 @@ public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterP
     EditText etFirstName;
     @BindView(R.id.et_last_name)
     EditText etLastName;
+    @BindView(R.id.et_nick_name)
+    EditText etNickName;
     @BindView(R.id.et_password)
     EditText etPassword;
     @BindView(R.id.et_password1)
     EditText etPassword1;
     @BindView(R.id.et_email)
     EditText etEmail;
+    @BindView(R.id.et_email1)
+    EditText etEmail1;
     @BindView(R.id.et_phone)
     EditText etPhone;
     @BindView(R.id.bt_register)
@@ -55,9 +60,11 @@ public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterP
     private String userName;
     private String firstName;
     private String lastName;
+    private String nickName;
     private String password;
     private String password1;
     private String email;
+    private String email1;
     private String phone;
     private String language;
 
@@ -116,10 +123,12 @@ public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterP
         userName = etUsername.getText().toString().trim();
         firstName = etFirstName.getText().toString().trim();
         lastName = etLastName.getText().toString().trim();
-        password = etPassword.getText().toString().trim();
-        password1 = etPassword1.getText().toString().trim();
-        email = etEmail.getText().toString().trim();
-        phone = etPhone.getText().toString().trim();
+        nickName = etNickName.getText().toString().trim();
+        password = etPassword.getText().toString();
+        password1 = etPassword1.getText().toString();
+        email = etEmail.getText().toString();
+        email1 = etEmail1.getText().toString();
+        phone = etPhone.getText().toString();
         if (TextUtils.isEmpty(userName)) {
             Toast.makeText(RegisterActivity.this, getString(R.string.username_input_error), Toast.LENGTH_SHORT).show();
             return;
@@ -132,20 +141,40 @@ public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterP
             Toast.makeText(RegisterActivity.this, getString(R.string.last_name_input_error), Toast.LENGTH_SHORT).show();
             return;
         }
+//        if (TextUtils.isEmpty(nickName)) {
+//            Toast.makeText(RegisterActivity.this, getString(R.string.nick_name_input_error), Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+        if (TextUtils.isEmpty(phone)) {
+            Toast.makeText(RegisterActivity.this, getString(R.string.phone_input_error), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(phone.length() < 7){
+            Toast.makeText(RegisterActivity.this, getString(R.string.phone_format_error), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(email)) {
+            Toast.makeText(RegisterActivity.this, getString(R.string.email_input_error), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (!RegularUtil.validateEmail(email)) {
+            Toast.makeText(RegisterActivity.this, getString(R.string.email_format_error), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (!email.equals(email1)) {
+            Toast.makeText(RegisterActivity.this, getString(R.string.email_different_error), Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (TextUtils.isEmpty(password)) {
             Toast.makeText(RegisterActivity.this, getString(R.string.password_input_error), Toast.LENGTH_SHORT).show();
             return;
         }
+        if (password.length() < 6) {
+            Toast.makeText(RegisterActivity.this, getString(R.string.password_format_error), Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (TextUtils.isEmpty(password1)) {
             Toast.makeText(RegisterActivity.this, getString(R.string.password_input_error), Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(email)) {
-            Toast.makeText(RegisterActivity.this, getString(R.string.password_input_error), Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(phone)) {
-            Toast.makeText(RegisterActivity.this, getString(R.string.phone_input_error), Toast.LENGTH_SHORT).show();
             return;
         }
         if (!password.equals(password1)) {
@@ -156,6 +185,7 @@ public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterP
         user1Info.setUserName(userName);
         user1Info.setFirstName(firstName);
         user1Info.setLastName(lastName);
+        user1Info.setNickName(nickName);
         user1Info.setPassword(password);
         user1Info.setEmail(email);
         user1Info.setPhone(phone);
