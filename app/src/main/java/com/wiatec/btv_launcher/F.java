@@ -39,11 +39,11 @@ public final class F {
         public static final String upload_data = base_url+"control_panel/userdata/save";
 
         public static final String eufonico = "http://142.4.216.91:8280/";
-        public static final String ld_support="http://appota.gobeyondtv.co:8081/html/ld_support.html";
-        public static final String ld_opportunity="http://appota.gobeyondtv.co:8081/html/ld_opportunity.html";
-        public static final String guide_register="http://appota.gobeyondtv.co:8081/html/guide_register.html";
+        public static final String ld_support="http://www.ldlegacy.com:8081/html/ld_support.html";
+        public static final String ld_opportunity="http://www.ldlegacy.com:8081/html/ld_opportunity.html";
+        public static final String guide_register="http://www.ldlegacy.com:8081/html/guide_register.html";
 
-        public static final String live_play = "http://appota.gobeyondtv.co:8083/update/com.wiatec.bplay.apk";
+        public static final String live_play = "http://www.ldlegacy.com:8083/update/com.wiatec.bplay.apk";
     }
 
     public static final class url_eu {
