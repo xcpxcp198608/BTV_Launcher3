@@ -22,7 +22,9 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.wiatec.btv_launcher.Application;
+import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.R;
+import com.wiatec.btv_launcher.Utils.Logger;
 
 
 /**
@@ -44,8 +46,9 @@ public class WebViewActivity extends AppCompatActivity {
         pbWebView = (ProgressBar) findViewById(R.id.pb_web_view);
         initWebView();
         url = getIntent().getStringExtra("url");
+        Logger.d(url);
         if(url == null){
-            url = "http://appota.gobeyondtv.co:8083/html/user_settings.html";
+            url = F.url.ld_support;
         }
     }
 

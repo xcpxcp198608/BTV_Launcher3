@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 public class RegExpUtils {
 
     public static boolean validateEmail(String email){
-        String reg = "/(\\w)+@(\\w)*(.(\\w)+)$/";
+        String reg = "/(\\w)+@(\\w)*(.(\\w)+)+$/";
         Pattern pattern = Pattern.compile(reg);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
