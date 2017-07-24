@@ -75,6 +75,8 @@ public class LoadInstalledApp implements Runnable {
                             !F.package_name.mx_player.equals(noShowPackageName)&&
                             !F.package_name.terrarium_tv.equals(noShowPackageName)&&
                             !F.package_name.popcom.equals(noShowPackageName)&&
+                            !F.package_name.lddream.equals(noShowPackageName)&&
+                            !F.package_name.ldservice.equals(noShowPackageName)&&
                             !F.package_name.btv.equals(noShowPackageName)){
                 // Logger.d(installedAppInfo.toString());
                 if(!installedAppDao.isExists(installedApp)){

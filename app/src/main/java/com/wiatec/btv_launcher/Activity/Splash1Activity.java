@@ -69,7 +69,7 @@ public class Splash1Activity extends Base1Activity<ISplashActivity, SplashPresen
         super.onStart();
         String l = (String) SPUtils.get(Application.getContext() , "userLevel" , "1");
         int level = Integer.parseInt(l);
-        if(level >= 3){
+        if(level >= 4){
             launchApp(packageName);
             finish();
             return;
