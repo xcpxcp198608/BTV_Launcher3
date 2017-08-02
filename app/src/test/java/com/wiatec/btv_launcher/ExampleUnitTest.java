@@ -19,6 +19,6 @@ public class ExampleUnitTest {
 
     @Test
     public void regularEmail(){
-        assertEquals(true, RegularUtil.validateEmail("sf_fsd_f@gmail.com.cn"));
+        assertEquals(true, RegularUtil.validateEmail("sff-s.d_f@gmail.com.cn"));
     }
 }

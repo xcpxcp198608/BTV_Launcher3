@@ -157,10 +157,10 @@ public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterP
             Toast.makeText(RegisterActivity.this, getString(R.string.email_input_error), Toast.LENGTH_SHORT).show();
             return;
         }
-        if (!RegularUtil.validateEmail(email)) {
-            Toast.makeText(RegisterActivity.this, getString(R.string.email_format_error), Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        if (!RegularUtil.validateEmail(email)) {
+//            Toast.makeText(RegisterActivity.this, getString(R.string.email_format_error), Toast.LENGTH_SHORT).show();
+//            return;
+//        }
         if (!email.equals(email1)) {
             Toast.makeText(RegisterActivity.this, getString(R.string.email_different_error), Toast.LENGTH_SHORT).show();
             return;

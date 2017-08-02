@@ -9,8 +9,8 @@ android {
         minSdkVersion 16
         targetSdkVersion 22
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        versionCode 304
-        versionName "v3.0.4"
+        versionCode 305
+        versionName "v3.0.5"
     }
 
     signingConfigs {
