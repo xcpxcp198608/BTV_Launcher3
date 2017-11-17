@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.R;
@@ -113,5 +114,15 @@ public class BaseActivity extends AppCompatActivity {
                 startActivity(new Intent(BaseActivity.this , LoginActivity.class));
             }
         });
+    }
+
+    public int getLevel(){
+        String l = (String) SPUtils.get(Application.getContext() , "userLevel" , "1");
+        return Integer.parseInt(l);
+    }
+
+    public void showLimit() {
+        Toast.makeText(Application.getContext(), getString(R.string.account_error),
+                Toast.LENGTH_LONG).show();
     }
 }

@@ -72,6 +72,10 @@ public class FragmentAll extends Fragment {
                         gv_All.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                if(activity.getLevel() <= 0){
+                                    activity.showLimit();
+                                    return;
+                                }
                                 String packageName = installedApps.get(position).getAppPackageName();
                                 if("com.wiatec.update".equals(packageName)){
                                     ApkLaunch.launchApkByPackageName(getContext() ,packageName);

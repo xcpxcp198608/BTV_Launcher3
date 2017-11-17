@@ -30,6 +30,7 @@ import com.wiatec.btv_launcher.Activity.AppSelectActivity;
 import com.wiatec.btv_launcher.Activity.FMPlayActivity;
 import com.wiatec.btv_launcher.Activity.InstituteActivity;
 import com.wiatec.btv_launcher.Activity.LoginActivity;
+import com.wiatec.btv_launcher.Activity.MainActivity;
 import com.wiatec.btv_launcher.Activity.MenuActivity;
 import com.wiatec.btv_launcher.Activity.Message1Activity;
 import com.wiatec.btv_launcher.Activity.Opportunity1Activity;
@@ -153,6 +154,8 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     private boolean isNetworkReceiveRegister = false;
     private boolean isUserVisible = false;
 
+    private MainActivity activity;
+
     @Override
     protected Fragment1Presenter createPresenter() {
         return new Fragment1Presenter(this);
@@ -163,10 +166,10 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment1_1, container, false);
         ButterKnife.bind(this, view);
+        activity = (MainActivity) getContext();
         userDataInfo = new UserDataInfo();
         installedAppDao = InstalledAppDao.getInstance(Application.getContext());
         intent = new Intent();
-
         if (!SystemConfig.isNetworkConnected(getContext())){
             networkStatusReceiver = new NetworkStatusReceiver(null);
             networkStatusReceiver.setOnNetworkStatusListener(this);
@@ -478,27 +481,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         if(list == null || list.size() <1){
             return;
         }
-//        if(autoScrollAdapter == null){
-//            autoScrollAdapter = new AutoScrollAdapter(getContext() , list);
-//        }
-//        tivBanner.setAdapter(autoScrollAdapter);
-//        tivBanner.setLayoutManager(new GridLayoutManager(getContext(), 1 , GridLayoutManager.HORIZONTAL , false ));
-//        tivBanner.start();
-//        tivBanner.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//
-//            @Override
-//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//                super.onScrollStateChanged(recyclerView, newState);
-//            }
-//
-//            @Override
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                super.onScrolled(recyclerView, dx, dy);
-//                if(tivBanner.isScrollToBottom()){
-//                    presenter.loadRollImageData();
-//                }
-//            }
-//        });
         tivBanner.setImageInfoList(list);
     }
 

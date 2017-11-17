@@ -70,6 +70,10 @@ public class FragmentMusic extends Fragment {
                         gv_Music.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                if(activity.getLevel() <= 0){
+                                    activity.showLimit();
+                                    return;
+                                }
                                 if(position <installedApps.size()){
                                     String packageName = installedApps.get(position).getAppPackageName();
                                     if("com.wiatec.update".equals(packageName)){
