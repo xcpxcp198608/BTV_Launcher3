@@ -124,29 +124,25 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     ImageButton ibt5;
     @BindView(R.id.ibt_6)
     ImageButton ibt6;
+    @BindView(R.id.ibt_7)
+    ImageButton ibt7;
+    @BindView(R.id.ibt_8)
+    ImageButton ibt8;
     @BindView(R.id.vv_main)
     VideoView vv_Main;
     @BindView(R.id.fl_video)
     FrameLayout flVideo;
     @BindView(R.id.tv_message_count)
     TextView tvMessageCount;
-    @BindView(R.id.lv_message)
-    MessageListView messageListView;
     @BindView(R.id.tiv_banner)
     MultiImage tivBanner;
-    @BindView(R.id.ll_push_message)
-    LinearLayout llPushMessage;
-    @BindView(R.id.pb_push_message)
-    ProgressBar pbPushMessage;
     @BindView(R.id.iv_btv_logo)
     ImageView ivBTVLogo;
 
     private NetworkStatusReceiver networkStatusReceiver;
     private Subscription videoSubscription;
-    private Subscription messageSubscription;
     private VideoInfo currentVideoInfo;
     private boolean isVideoPlaying = false;
-    private MessageDao messageDao;
     private long entryTime;
     private long exitTime;
     private long holdTime;
@@ -154,10 +150,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     private InstalledAppDao installedAppDao;
     private Intent intent;
 
-    private List<PushMessageInfo> pushMessageInfoList  = new ArrayList<>();
-    private PushMessageAdapter pushMessageAdapter;
-    private List<ImageInfo> rollImageInfoList = new ArrayList<>();
-    private AutoScrollAdapter autoScrollAdapter;
     private boolean isNetworkReceiveRegister = false;
     private boolean isUserVisible = false;
 
@@ -169,9 +161,8 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment1, container, false);
+        View view = inflater.inflate(R.layout.fragment1_1, container, false);
         ButterKnife.bind(this, view);
-        messageDao = MessageDao.getInstance(getContext());
         userDataInfo = new UserDataInfo();
         installedAppDao = InstalledAppDao.getInstance(Application.getContext());
         intent = new Intent();
@@ -185,18 +176,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         return view;
     }
 
-//    @Override
-//    public void setUserVisibleHint(boolean isVisibleToUser) {
-//        super.setUserVisibleHint(isVisibleToUser);
-//        Logger.d("isVisibleToUser:" + isVisibleToUser);
-//        if(isVisibleToUser){
-//            isUserVisible = true;
-//            startLoadData();
-//        }else{
-//            isUserVisible = false;
-//        }
-//    }
-
     @Override
     public void onStart() {
         super.onStart();
@@ -208,21 +187,19 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         showCustomShortCut(ibt4 , "ibt4");
         showCustomShortCut(ibt5 , "ibt5");
         showCustomShortCut(ibt6 , "ibt6");
+        showCustomShortCut(ibt7 , "ibt7");
+        showCustomShortCut(ibt8 , "ibt8");
     }
 
     private void setFocusTransmit() {
-        ibtUserManual.setNextFocusRightId(R.id.ll_push_message);
-        ibtEufonico.setNextFocusRightId(R.id.ll_push_message);
-        ibtCloud.setNextFocusRightId(R.id.ll_push_message);
-        ibtGame.setNextFocusRightId(R.id.ll_push_message);
-        ibt6.setNextFocusRightId(R.id.ll_push_message);
-        llPushMessage.setNextFocusDownId(R.id.fl_video);
         ibt1.setNextFocusDownId(R.id.fl_video);
         ibt2.setNextFocusDownId(R.id.fl_video);
         ibt3.setNextFocusDownId(R.id.fl_video);
         ibt4.setNextFocusDownId(R.id.fl_video);
         ibt5.setNextFocusDownId(R.id.fl_video);
         ibt6.setNextFocusDownId(R.id.fl_video);
+        ibt7.setNextFocusDownId(R.id.fl_video);
+        ibt8.setNextFocusDownId(R.id.fl_video);
     }
 
     @Override
@@ -244,7 +221,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
             presenter.loadRollImageData();
             presenter.loadRollOverImage();
             presenter.loadCloudData();
-            presenter.loadPushMessage();
         }
     }
 
@@ -289,14 +265,8 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         if (videoSubscription != null) {
             videoSubscription.unsubscribe();
         }
-        if (messageSubscription != null) {
-            messageSubscription.unsubscribe();
-        }
         if (vv_Main != null) {
             vv_Main.stopPlayback();
-        }
-        if(messageListView != null){
-            messageListView.stop();
         }
         if(tivBanner != null){
             tivBanner.stop();
@@ -308,8 +278,13 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
 
     @OnClick({R.id.ibt_eufonico, R.id.ibt_user_manual, R.id.ibt_setting, R.id.ibt_apps, R.id.ibt_market,
             R.id.ibt_opportunity, R.id.ibt_game, R.id.fl_video , R.id.ibt_institute ,
-            R.id.ibt_cloud ,R.id.ibt_customer_service ,R.id.ll_push_message})
+            R.id.ibt_cloud ,R.id.ibt_customer_service})
     public void onClick(View view) {
+        if(getLevel() <= 0 ){
+            Toast.makeText(Application.getContext() , Application.getContext().getString(R.string.account_error) ,
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
         switch (view.getId()) {
             case R.id.ibt_eufonico:
                 intent.setClass(getActivity(), FMPlayActivity.class);
@@ -358,11 +333,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 intent.setClass(getActivity(), WebViewActivity.class);
                 intent.putExtra("url", F.url.ld_support);
                 getContext().startActivity(intent);
-                break;
-            case  R.id.ll_push_message:
-                pbPushMessage.setVisibility(View.VISIBLE);
-                presenter.loadPushMessage();
-                presenter.loadRollOverImage();
                 break;
         }
     }
@@ -459,6 +429,11 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                             imageButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
+                                    if(getLevel() <= 0 ){
+                                        Toast.makeText(Application.getContext() , Application.getContext().getString(R.string.account_error) ,
+                                                Toast.LENGTH_LONG).show();
+                                        return;
+                                    }
                                     Intent intent = new Intent(getActivity(), Splash1Activity.class);
                                     intent.putExtra("packageName", installedApp.getAppPackageName());
                                     startActivity(intent);
@@ -467,6 +442,11 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                             imageButton.setOnLongClickListener(new View.OnLongClickListener() {
                                 @Override
                                 public boolean onLongClick(View v) {
+                                    if(getLevel() <= 0 ){
+                                        Toast.makeText(Application.getContext() , Application.getContext().getString(R.string.account_error) ,
+                                                Toast.LENGTH_LONG).show();
+                                        return true;
+                                    }
                                     Intent intent = new Intent(getContext(), AppSelectActivity.class);
                                     intent.putExtra("type", type);
                                     startActivity(intent);
@@ -478,6 +458,11 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                             imageButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
+                                    if(getLevel() <= 0 ){
+                                        Toast.makeText(Application.getContext() , Application.getContext().getString(R.string.account_error) ,
+                                                Toast.LENGTH_LONG).show();
+                                        return;
+                                    }
                                     Intent intent = new Intent(getContext(), AppSelectActivity.class);
                                     intent.putExtra("type", type);
                                     startActivity(intent);
@@ -602,29 +587,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     }
 
     @Override
-    public void loadPushMessage(List<PushMessageInfo> list) {
-        if(list != null && list.size() >0){
-            pushMessageInfoList.clear();
-            pushMessageInfoList.addAll(list);
-            pbPushMessage.setVisibility(View.GONE);
-            if(pushMessageAdapter == null){
-                pushMessageAdapter = new PushMessageAdapter(getContext() , pushMessageInfoList);
-            }
-            messageListView.setAdapter(pushMessageAdapter);
-            pushMessageAdapter.notifyDataSetChanged();
-            messageListView.start();
-            messageListView.setOnScrollFinishedListener(new MessageListView.OnScrollFinishedListener() {
-                @Override
-                public void onFinished(boolean isFinished, int position) {
-                    if(presenter != null){
-                        presenter.loadPushMessage();
-                    }
-                }
-            });
-        }
-    }
-
-    @Override
     public void onConnected(boolean isConnected) {
         Logger.d("connect");
         if (presenter != null && vv_Main != null && !vv_Main.isPlaying() && !isVideoPlaying) {
@@ -634,7 +596,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
             presenter.loadRollImageData();
             presenter.loadRollOverImage();
             presenter.loadCloudData();
-            presenter.loadPushMessage();
         }
     }
 
@@ -662,6 +623,8 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         ibt4.setOnFocusChangeListener(this);
         ibt5.setOnFocusChangeListener(this);
         ibt6.setOnFocusChangeListener(this);
+        ibt7.setOnFocusChangeListener(this);
+        ibt8.setOnFocusChangeListener(this);
     }
 
     @Override
@@ -671,29 +634,8 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         }
     }
 
-    public void showChoiceDialog (){
-//        AlertDialog dialog = new AlertDialog.Builder(getContext())
-//            .setTitle("SELECT")
-//            .setSingleChoiceItems(new String[]{"LDCLOUD", "EUFONICO"}, 0, new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                switch (which){
-//                    case 0:
-//                        ibtEufonico.setVisibility(View.GONE);
-//                        ibt_LdCloud.setVisibility(View.VISIBLE);
-//                        ibt_FullScreen.setVisibility(View.VISIBLE);
-//                        ivLdCloudSmall.setVisibility(View.VISIBLE);
-//                        dialog.dismiss();
-//                        break;
-//                    case 1:
-//                        ibtEufonico.setVisibility(View.VISIBLE);
-//                        ibt_LdCloud.setVisibility(View.GONE);
-//                        ibt_FullScreen.setVisibility(View.GONE);
-//                        ivLdCloudSmall.setVisibility(View.GONE);
-//                        dialog.dismiss();
-//                        break;
-//                }
-//            }
-//        }).show();
+    private int getLevel(){
+        String l = (String) SPUtils.get(Application.getContext() , "userLevel" , "1");
+        return Integer.parseInt(l);
     }
 }

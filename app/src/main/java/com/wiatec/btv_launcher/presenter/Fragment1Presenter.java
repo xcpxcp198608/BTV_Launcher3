@@ -119,21 +119,21 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
         }
     }
 
-    public void loadPushMessage(){
-        if(iPushMessageData != null){
-            iPushMessageData.loadData(new IPushMessageData.OnLoadListener() {
-                @Override
-                public void onSuccess(List<PushMessageInfo> list) {
-                    iFragment1.loadPushMessage(list);
-                }
-
-                @Override
-                public void onFailure(String e) {
-                    Logger.d(e);
-                }
-            });
-        }
-    }
+//    public void loadPushMessage(){
+//        if(iPushMessageData != null){
+//            iPushMessageData.loadData(new IPushMessageData.OnLoadListener() {
+//                @Override
+//                public void onSuccess(List<PushMessageInfo> list) {
+//                    iFragment1.loadPushMessage(list);
+//                }
+//
+//                @Override
+//                public void onFailure(String e) {
+//                    Logger.d(e);
+//                }
+//            });
+//        }
+//    }
 
     public void loadVideo (){
         try {

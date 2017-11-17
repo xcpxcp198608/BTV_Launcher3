@@ -18,6 +18,6 @@ public interface IFragment1 {
     void loadRollOverImage(List<ImageInfo> list);
     void loadCloudImage(List<String> list);
     void loadVideo(List<VideoInfo> list);
-    void loadPushMessage(List<PushMessageInfo> list);
+//    void loadPushMessage(List<PushMessageInfo> list);
     void showLivePlayDownloadDialog();
 }
