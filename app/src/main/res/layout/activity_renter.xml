@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<LinearLayout
+    android:id="@+id/ll_login"
+    android:background="@drawable/bg_main2"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:padding="4dp"
+        android:textSize="22sp"
+        android:textColorHint="@color/colorItemGrayBlue"
+        android:id="@+id/et_key"
+        android:hint="@string/key"
+        android:background="@drawable/bg_text_view"
+        android:textColor="@color/colorWhite"
+        android:maxLength="16"
+        android:layout_width="350dp"
+        android:layout_height="50dp" />
+
+    <Button
+        android:textAllCaps="false"
+        android:layout_marginTop="20dp"
+        android:id="@+id/bt_confirm"
+        android:textSize="22sp"
+        android:text="@string/confirm"
+        android:textColor="@drawable/bg_text_login"
+        android:background="@drawable/bg_btn_login"
+        android:layout_width="350dp"
+        android:layout_height="50dp" />
+
+    <ProgressBar
+        android:visibility="gone"
+        style="@style/progress_blue"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar" />
+
+</LinearLayout>
+</layout>

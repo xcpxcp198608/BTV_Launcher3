@@ -6,6 +6,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.OkHttp.Listener.StringListener;
 import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
 import com.wiatec.btv_launcher.bean.UserDataInfo;
@@ -31,12 +32,12 @@ public class UploadTimeData {
 
     public void upload(final UserDataInfo userDataInfo){
         OkMaster.post(F.url.upload_data)
-                .parames("userData.userName",userDataInfo.getUserName())
-                .parames("userData.country",userDataInfo.getCountry())
-                .parames("userData.city",userDataInfo.getCity())
-                .parames("userData.mac",userDataInfo.getMac())
-                .parames("userData.exitTime",userDataInfo.getExitTime())
-                .parames("userData.stayTime",userDataInfo.getStayTime())
+                .parames("userDataInfo.userName",userDataInfo.getUserName())
+                .parames("userDataInfo.country",userDataInfo.getCountry())
+                .parames("userDataInfo.city",userDataInfo.getCity())
+                .parames("userDataInfo.mac",userDataInfo.getMac())
+                .parames("userDataInfo.exitTime",userDataInfo.getExitTime())
+                .parames("userDataInfo.stayTime",userDataInfo.getStayTime())
                 .enqueue(new StringListener() {
                     @Override
                     public void onSuccess(String s) throws IOException {
@@ -45,7 +46,7 @@ public class UploadTimeData {
 
                     @Override
                     public void onFailure(String e) {
-
+                        Logger.d(e);
                     }
                 });
     }

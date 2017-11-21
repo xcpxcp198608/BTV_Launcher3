@@ -49,6 +49,18 @@
 
         <Button
             android:layout_marginTop="20dp"
+            android:id="@+id/bt_renter"
+            android:text="@string/rent_customer"
+            android:textSize="25sp"
+            android:textAllCaps="false"
+            android:textColor="@drawable/text_color_create_account"
+            android:background="@color/colorTranslucent"
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:layout_marginTop="20dp"
             android:id="@+id/bt_create_account"
             android:text="@string/create_account"
             android:textSize="25sp"

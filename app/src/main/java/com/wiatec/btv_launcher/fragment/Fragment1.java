@@ -97,22 +97,18 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     ImageButton ibtEufonico;
     @BindView(R.id.ibt_user_manual)
     ImageButton ibtUserManual;
-    @BindView(R.id.ibt_cloud)
-    MultiImage ibtCloud;
     @BindView(R.id.ibt_setting)
     ImageButton ibtSetting;
     @BindView(R.id.ibt_apps)
     ImageButton ibtApps;
-    @BindView(R.id.ibt_customer_service)
-    ImageButton ibtCustomerService;
+    @BindView(R.id.ibt_eufonic_bvision)
+    ImageButton ibtEufonicBvision;
     @BindView(R.id.ibt_market)
     ImageButton ibtMarket;
-    @BindView(R.id.ibt_opportunity)
-    ImageButton ibtOpportunity;
     @BindView(R.id.ibt_game)
     ImageButton ibtGame;
-    @BindView(R.id.ibt_institute)
-    ImageButton ibtInstitute;
+    @BindView(R.id.ibt_opportunity)
+    ImageButton ibtOpportunity;
     @BindView(R.id.ibt_1)
     ImageButton ibt1;
     @BindView(R.id.ibt_2)
@@ -133,10 +129,10 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     VideoView vv_Main;
     @BindView(R.id.fl_video)
     FrameLayout flVideo;
-    @BindView(R.id.tv_message_count)
-    TextView tvMessageCount;
     @BindView(R.id.tiv_banner)
     MultiImage tivBanner;
+    @BindView(R.id.tiv_eufonic)
+    MultiImage tivEufonic;
     @BindView(R.id.iv_btv_logo)
     ImageView ivBTVLogo;
 
@@ -274,14 +270,10 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         if(tivBanner != null){
             tivBanner.stop();
         }
-        if(ibtCloud != null){
-            ibtCloud.stop();
-        }
     }
 
     @OnClick({R.id.ibt_eufonico, R.id.ibt_user_manual, R.id.ibt_setting, R.id.ibt_apps, R.id.ibt_market,
-            R.id.ibt_opportunity, R.id.ibt_game, R.id.fl_video , R.id.ibt_institute ,
-            R.id.ibt_cloud ,R.id.ibt_customer_service})
+            R.id.ibt_game, R.id.fl_video, R.id.ibt_opportunity, R.id.ibt_eufonic_bvision})
     public void onClick(View view) {
         if(getLevel() <= 0 ){
             Toast.makeText(Application.getContext() , Application.getContext().getString(R.string.account_error) ,
@@ -300,11 +292,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
             case R.id.ibt_setting:
                 if (ApkCheck.isApkInstalled(getContext(), F.package_name.setting)) {
                     ApkLaunch.launchApkByPackageName(getContext(), F.package_name.setting);
-                }
-                break;
-            case R.id.ibt_cloud:
-                if (ApkCheck.isApkInstalled(getContext(), F.package_name.cloud)) {
-                    ApkLaunch.launchApkByPackageName(getContext(), F.package_name.cloud);
                 }
                 break;
             case R.id.ibt_apps:
@@ -328,14 +315,8 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 release();
                 launchAppByLogin(getContext() , F.package_name.bplay);
                 break;
-            case R.id.ibt_institute:
-                intent.setClass(getActivity(), InstituteActivity.class);
-                getContext().startActivity(intent);
-                break;
-            case R.id.ibt_customer_service:
-                intent.setClass(getActivity(), WebViewActivity.class);
-                intent.putExtra("url", F.url.ld_support);
-                getContext().startActivity(intent);
+            case R.id.ibt_eufonic_bvision:
+
                 break;
         }
     }
@@ -486,6 +467,10 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
 
     @Override
     public void loadRollOverImage(final List<ImageInfo> list) {
+        if(list == null || list.size() <1){
+            return;
+        }
+        tivEufonic.setImageInfoList(list);
     }
 
     @Override
@@ -493,8 +478,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         if(list == null || list.size() <1){
             return;
         }
-        ibtCloud.setBackgroundResource(R.drawable.bg_cloud1);
-        ibtCloud.setImages(list);
     }
 
     @Override
@@ -591,14 +574,12 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     private void setZoom() {
         ibtEufonico.setOnFocusChangeListener(this);
         ibtUserManual.setOnFocusChangeListener(this);
-        ibtCloud.setOnFocusChangeListener(this);
         ibtSetting.setOnFocusChangeListener(this);
         ibtApps.setOnFocusChangeListener(this);
         ibtMarket.setOnFocusChangeListener(this);
-        ibtOpportunity.setOnFocusChangeListener(this);
         ibtGame.setOnFocusChangeListener(this);
-        ibtInstitute.setOnFocusChangeListener(this);
-        ibtCustomerService.setOnFocusChangeListener(this);
+        ibtOpportunity.setOnFocusChangeListener(this);
+        ibtEufonicBvision.setOnFocusChangeListener(this);
         ibt1.setOnFocusChangeListener(this);
         ibt2.setOnFocusChangeListener(this);
         ibt3.setOnFocusChangeListener(this);

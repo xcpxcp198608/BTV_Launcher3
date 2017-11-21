@@ -48,6 +48,8 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
     Button btReset;
     @BindView(R.id.bt_create_account)
     Button btCreateAccount;
+    @BindView(R.id.bt_renter)
+    Button btRenter;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
     @BindView(R.id.progressBar1)
@@ -79,7 +81,7 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
         etUserName.setSelection(userName.length());
     }
 
-    @OnClick({R.id.bt_login, R.id.bt_create_account ,R.id.bt_forget_password , R.id.bt_reset})
+    @OnClick({R.id.bt_login, R.id.bt_renter, R.id.bt_create_account ,R.id.bt_forget_password , R.id.bt_reset})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_login:
@@ -100,6 +102,10 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
                 }else{
                     Toast.makeText(LoginActivity.this , getString(R.string.error_input) , Toast.LENGTH_LONG).show();
                 }
+                break;
+            case R.id.bt_renter:
+                startActivity(new Intent(LoginActivity.this, RenterActivity.class));
+                this.finish();
                 break;
             case R.id.bt_create_account:
                 startActivity(new Intent(this ,RegisterActivity.class));

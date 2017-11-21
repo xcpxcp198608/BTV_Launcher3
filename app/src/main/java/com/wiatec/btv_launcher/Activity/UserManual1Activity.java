@@ -69,6 +69,15 @@ public class UserManual1Activity extends Base1Activity<IUserManualActivity ,User
                         startActivity(intent);
                         finish();
                         break;
+                    case 4:
+                        Intent intent1 = new Intent();
+                        intent1.setClass(UserManual1Activity.this, WebViewActivity.class);
+                        intent1.putExtra("url", F.url.ld_support);
+                        startActivity(intent1);
+                        finish();
+                        break;
+                    default:
+                        break;
                 }
                 if(dontShowLanguage){
                     return;

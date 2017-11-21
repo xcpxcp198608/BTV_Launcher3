@@ -38,6 +38,11 @@ public final class F {
         public static final String reset_p = base_url+"control_panel/user1/requestUpdateP";
         public static final String upload_data = base_url+"control_panel/userdata/save";
 
+
+        public static final String renter_login = "http://panel.protv.company:8080/panel/rent/login/";
+        public static final String renter_validate = "http://panel.protv.company:8080/panel/rent/validate/";
+
+
         public static final String eufonico = "http://142.4.216.91:8280/";
         public static final String ld_support = "http://www.ldlegacy.com:8081/html/ld_support.html";
         public static final String ld_opportunity="http://www.ldlegacy.com:8081/html/ld_opportunity.html";

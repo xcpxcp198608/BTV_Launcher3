@@ -2,82 +2,88 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.wiatec.btv_launcher">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="com.legacydirect.tvphoto.permission.READAUTH"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="com.legacydirect.tvphoto.permission.READAUTH" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
+        android:name=".Application"
         android:allowBackup="true"
-        android:largeHeap="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name=".Application"
+        android:largeHeap="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.MainActivity"
+        <activity
+            android:name=".Activity.MainActivity"
             android:clearTaskOnLaunch="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.HOME"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.MONKEY"/>
+
+                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.MONKEY" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".Activity.BootAdActivity"/>
-        <activity android:name=".Activity.MenuActivity"/>
-        <activity android:name=".Activity.UpdateActivity"/>
-        <activity android:name=".Activity.PlayActivity"/>
-        <activity android:name=".Activity.Splash1Activity"/>
-        <activity android:name=".Activity.Message1Activity"/>
-        <activity android:name=".Activity.Weather1Activity"/>
-        <activity android:name=".Activity.AppSelectActivity"/>
-        <activity android:name=".Activity.PlayAdActivity"/>
-        <activity android:name=".Activity.Opportunity1Activity"/>
-        <activity android:name=".Activity.UserManual1Activity"/>
-        <activity android:name=".Activity.LoginActivity"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".Activity.LoginSplashActivity"/>
-        <activity android:name=".Activity.RegisterActivity"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".Activity.FMPlayActivity"/>
-        <activity android:name=".Activity.CloudImageFullScreen1Activity"/>
-        <activity android:name=".Activity.WakeUpAdActivity"/>
-        <activity android:name=".Activity.WebViewActivity"/>
-        <activity android:name=".Activity.InstituteActivity"/>
-        <activity android:name=".Activity.GuideRegisterActivity"/>
+        <activity android:name=".Activity.BootAdActivity" />
+        <activity android:name=".Activity.MenuActivity" />
+        <activity android:name=".Activity.UpdateActivity" />
+        <activity android:name=".Activity.PlayActivity" />
+        <activity android:name=".Activity.Splash1Activity" />
+        <activity android:name=".Activity.Message1Activity" />
+        <activity android:name=".Activity.Weather1Activity" />
+        <activity android:name=".Activity.AppSelectActivity" />
+        <activity android:name=".Activity.PlayAdActivity" />
+        <activity android:name=".Activity.Opportunity1Activity" />
+        <activity android:name=".Activity.UserManual1Activity" />
+        <activity
+            android:name=".Activity.LoginActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".Activity.LoginSplashActivity" />
+        <activity
+            android:name=".Activity.RegisterActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".Activity.FMPlayActivity" />
+        <activity android:name=".Activity.CloudImageFullScreen1Activity" />
+        <activity android:name=".Activity.WakeUpAdActivity" />
+        <activity android:name=".Activity.WebViewActivity" />
+        <activity android:name=".Activity.InstituteActivity" />
+        <activity android:name=".Activity.GuideRegisterActivity" />
 
         <receiver android:name=".receiver.AppInstallReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED"/>
-                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
-                <action android:name="android.intent.action.PACKAGE_REPLACED"/>
-                <data android:scheme="package"/>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+
+                <data android:scheme="package" />
             </intent-filter>
         </receiver>
-
         <receiver android:name=".receiver.ScreenWeekUpReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.SCREEN_ON"/>
-                <data android:scheme="package"/>
+                <action android:name="android.intent.action.SCREEN_ON" />
+
+                <data android:scheme="package" />
             </intent-filter>
         </receiver>
 
-        <service android:name=".service.LoadWeatherService"/>
-        <service android:name=".service.LoadCloudService"/>
-        <service android:name=".service.CheckLoginService"/>
+        <service android:name=".service.LoadWeatherService" />
+        <service android:name=".service.LoadCloudService" />
+        <service android:name=".service.CheckLoginService" />
 
         <provider
-            android:authorities="com.wiatec.btv_launcher.provide.UserContentProvider"
             android:name=".data.UserContentProvider"
-            android:permission="com.wiatec.btv_launcher.provide.Read"/>
+            android:authorities="com.wiatec.btv_launcher.provide.UserContentProvider"
+            android:permission="com.wiatec.btv_launcher.provide.Read" />
+
+        <activity android:name=".Activity.RenterActivity"></activity>
     </application>
 
 </manifest>

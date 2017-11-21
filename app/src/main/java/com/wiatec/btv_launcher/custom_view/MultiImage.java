@@ -21,7 +21,7 @@ import java.util.TimerTask;
  * Created by patrick on 2017/3/13.
  */
 
-public class MultiImage extends AppCompatImageButton {
+public class MultiImage extends AppCompatImageView {
 
     private List<String> images;
     private List<ImageInfo> imageInfoList;
