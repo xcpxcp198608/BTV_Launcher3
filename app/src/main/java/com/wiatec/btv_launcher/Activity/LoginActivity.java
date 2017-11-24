@@ -76,9 +76,12 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
     @Override
     protected void onStart() {
         super.onStart();
-        userName = (String) SPUtils.get(LoginActivity.this , "userName" ,"");
-        etUserName.setText(userName);
-        etUserName.setSelection(userName.length());
+        boolean isRenter = (boolean) SPUtils.get(LoginActivity.this , "isRenter" ,true);
+        if(!isRenter) {
+            userName = (String) SPUtils.get(LoginActivity.this, "userName", "");
+            etUserName.setText(userName);
+            etUserName.setSelection(userName.length());
+        }
     }
 
     @OnClick({R.id.bt_login, R.id.bt_renter, R.id.bt_create_account ,R.id.bt_forget_password , R.id.bt_reset})

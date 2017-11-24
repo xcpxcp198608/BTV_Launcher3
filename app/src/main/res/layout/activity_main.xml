@@ -26,6 +26,17 @@
         android:layout_height="32dp" />
 
     <TextView
+        android:id="@+id/tv_rental"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/iv_net"
+        tools:text="B1"
+        android:textColor="@color/colorGray2"
+        android:textSize="23sp"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"/>
+
+    <TextView
         android:layout_marginRight="20dp"
         android:layout_marginLeft="10dp"
         android:gravity="center_vertical"

@@ -62,8 +62,7 @@
     <string name="password_input_different">Password input different</string>
     <string name="email_input_error">Email input error</string>
     <string name="register_success">Congratulations !register success , please go to your email confirm then login you account</string>
-    <string name="login_repeat">Account login error.  Please type in your username and password to log in again.
-        If you still get this notice after type in the correct username and password, please contact customer service.</string>
+    <string name="login_repeat">Please contact customer service by email support@legacy.direct or by phone 949 988 9000 (Mon-Fri 9AM-5PM PST) to verify your account and payment information.  </string>
     <string name="account_error">Please contact support@legacy.direct or text to 9499889000 to inquire about this issue.</string>
     <string name="welcome">Hello</string>
     <string name="family">family</string>

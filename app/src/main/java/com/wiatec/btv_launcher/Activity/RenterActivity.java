@@ -43,6 +43,17 @@ public class RenterActivity extends Base2Activity<IRenterActivity, RenterPresent
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        boolean isRenter = (boolean) SPUtils.get(RenterActivity.this , "isRenter" ,true);
+        if(isRenter){
+            String key = (String) SPUtils.get(RenterActivity.this, "userName", "");
+            etKey.setText(key);
+            etKey.setSelection(key.length());
+        }
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.bt_confirm:
@@ -69,7 +80,7 @@ public class RenterActivity extends Base2Activity<IRenterActivity, RenterPresent
             Toast.makeText(Application.getContext(), "communication error", Toast.LENGTH_LONG).show();
             return;
         }
-        if(resultInfo.getCode() != ResultInfo.CODE_OK){
+        if(resultInfo.getCode() != 200){
             Toast.makeText(Application.getContext(), resultInfo.getMessage(), Toast.LENGTH_LONG).show();
             return;
         }
@@ -87,6 +98,7 @@ public class RenterActivity extends Base2Activity<IRenterActivity, RenterPresent
         }
         SPUtils.put(RenterActivity.this,"userLevel", level);
         SPUtils.put(RenterActivity.this,"isRenter", true);
+        SPUtils.put(RenterActivity.this,"rentalCategory", authRentUserInfo.getCategory());
         finish();
     }
 

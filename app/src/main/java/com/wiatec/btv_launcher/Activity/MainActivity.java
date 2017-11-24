@@ -79,6 +79,8 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
     TextView tvVersion;
     @BindView(R.id.tv_welcome)
     TextView tvWelcome;
+    @BindView(R.id.tv_rental)
+    TextView tvRental;
 
     private Fragment1 fragment1;
     private NetworkStatusReceiver networkStatusReceiver;
@@ -122,6 +124,12 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
             tvWelcome.setText(getString(R.string.welcome) + " " + userName + " " + getString(R.string.family));
         }else{
             tvWelcome.setText("");
+        }
+        String rentalCategory = (String) SPUtils.get(MainActivity.this , "rentalCategory" , "");
+        if(!TextUtils.isEmpty(rentalCategory) && !"null".equals(userName)){
+            tvRental.setText(rentalCategory);
+        }else{
+            tvRental.setText("");
         }
         if(presenter != null){
             presenter.loadWeatherInfo();

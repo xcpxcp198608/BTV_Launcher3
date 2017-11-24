@@ -68,7 +68,7 @@ public class CheckLogin implements Runnable {
                         if(resultInfo == null){
                             return;
                         }
-                        if(resultInfo.getCode() != ResultInfo.CODE_OK){
+                        if(resultInfo.getCode() != 200){
                             RxBus.getDefault().post(new CheckLoginEvent(CheckLoginEvent.CODE_LOGIN_REPEAT));
                             SPUtils.put(Application.getContext(), "userLevel", "0");
                             return;
