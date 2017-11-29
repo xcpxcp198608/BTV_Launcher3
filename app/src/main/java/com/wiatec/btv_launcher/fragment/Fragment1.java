@@ -126,6 +126,10 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     ImageButton ibt7;
     @BindView(R.id.ibt_8)
     ImageButton ibt8;
+    @BindView(R.id.ibt_9)
+    ImageButton ibt9;
+    @BindView(R.id.ibt_10)
+    ImageButton ibt10;
     @BindView(R.id.vv_main)
     VideoView vv_Main;
     @BindView(R.id.fl_video)
@@ -189,6 +193,8 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         showCustomShortCut(ibt6 , "ibt6");
         showCustomShortCut(ibt7 , "ibt7");
         showCustomShortCut(ibt8 , "ibt8");
+        showCustomShortCut(ibt9 , "ibt9");
+        showCustomShortCut(ibt10 , "ibt10");
     }
 
     private void setFocusTransmit() {
@@ -595,6 +601,8 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         ibt6.setOnFocusChangeListener(this);
         ibt7.setOnFocusChangeListener(this);
         ibt8.setOnFocusChangeListener(this);
+        ibt9.setOnFocusChangeListener(this);
+        ibt10.setOnFocusChangeListener(this);
     }
 
     @Override

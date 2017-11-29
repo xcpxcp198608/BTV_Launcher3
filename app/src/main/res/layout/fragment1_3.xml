@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:orientation="vertical">
+
+    <com.wiatec.btv_launcher.custom_view.MultiImage
+        android:id="@+id/tiv_banner"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/ibt_1"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_margin="3dp"
+        android:background="@drawable/item_message_bg"
+        android:cropToPadding="true"
+        android:padding="3dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/add_shortcut"
+        app:layout_constraintEnd_toEndOf="@+id/guideline3"
+        app:layout_constraintEnd_toStartOf="@+id/ibt_2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+    <ImageButton
+        android:id="@+id/ibt_2"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_margin="3dp"
+        android:background="@drawable/item_message_bg"
+        android:cropToPadding="true"
+        android:padding="3dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/add_shortcut"
+        app:layout_constraintEnd_toEndOf="@id/ibt_1"
+        app:layout_constraintEnd_toStartOf="@+id/ibt_3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ibt_1"
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+    <ImageButton
+        android:id="@+id/ibt_3"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_margin="3dp"
+        android:background="@drawable/item_message_bg"
+        android:cropToPadding="true"
+        android:padding="3dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/add_shortcut"
+        app:layout_constraintEnd_toEndOf="@id/ibt_2"
+        app:layout_constraintEnd_toStartOf="@+id/ibt_4"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ibt_2"
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+    <ImageButton
+        android:id="@+id/ibt_4"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_margin="3dp"
+        android:background="@drawable/item_message_bg"
+        android:cropToPadding="true"
+        android:padding="3dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/add_shortcut"
+        app:layout_constraintEnd_toEndOf="@id/ibt_3"
+        app:layout_constraintEnd_toStartOf="@+id/ibt_5"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ibt_3"
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+    <ImageButton
+        android:id="@+id/ibt_5"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_margin="3dp"
+        android:background="@drawable/item_message_bg"
+        android:cropToPadding="true"
+        android:padding="3dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/add_shortcut"
+        app:layout_constraintEnd_toEndOf="@id/ibt_4"
+        app:layout_constraintEnd_toStartOf="@+id/ibt_6"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ibt_4"
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+    <ImageButton
+        android:id="@+id/ibt_6"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_margin="3dp"
+        android:background="@drawable/item_message_bg"
+        android:cropToPadding="true"
+        android:padding="3dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/add_shortcut"
+        app:layout_constraintEnd_toEndOf="@id/ibt_5"
+        app:layout_constraintEnd_toStartOf="@+id/ibt_7"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ibt_5"
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+    <ImageButton
+        android:id="@+id/ibt_7"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_margin="3dp"
+        android:background="@drawable/item_message_bg"
+        android:cropToPadding="true"
+        android:padding="3dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/add_shortcut"
+        app:layout_constraintEnd_toEndOf="@id/ibt_6"
+        app:layout_constraintEnd_toStartOf="@+id/ibt_8"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ibt_6"
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+    <ImageButton
+        android:id="@+id/ibt_8"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_margin="3dp"
+        android:background="@drawable/item_message_bg"
+        android:cropToPadding="true"
+        android:padding="3dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/add_shortcut"
+        app:layout_constraintEnd_toEndOf="@id/ibt_7"
+        app:layout_constraintEnd_toStartOf="@+id/ibt_9"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ibt_7"
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+    <ImageButton
+        android:id="@+id/ibt_9"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_margin="3dp"
+        android:background="@drawable/item_message_bg"
+        android:cropToPadding="true"
+        android:padding="3dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/add_shortcut"
+        app:layout_constraintEnd_toEndOf="@id/ibt_8"
+        app:layout_constraintEnd_toStartOf="@+id/ibt_10"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ibt_8"
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+    <ImageButton
+        android:id="@+id/ibt_10"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_margin="3dp"
+        android:background="@drawable/item_message_bg"
+        android:cropToPadding="true"
+        android:padding="3dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/add_shortcut"
+        app:layout_constraintEnd_toEndOf="@id/ibt_9"
+        app:layout_constraintEnd_toStartOf="@+id/ibt_11"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ibt_9"
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+    <ImageButton
+        android:id="@+id/ibt_11"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_margin="3dp"
+        android:background="@drawable/item_message_bg"
+        android:cropToPadding="true"
+        android:padding="3dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/add_shortcut"
+        app:layout_constraintEnd_toEndOf="@id/ibt_10"
+        app:layout_constraintEnd_toStartOf="@+id/ibt_12"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ibt_10"
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+    <ImageButton
+        android:id="@+id/ibt_12"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_margin="3dp"
+        android:background="@drawable/item_message_bg"
+        android:cropToPadding="true"
+        android:padding="3dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/add_shortcut"
+        app:layout_constraintEnd_toEndOf="@+id/ibt_11"
+        app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ibt_11"
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="378dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.6" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="20dp" />
+
+    <FrameLayout
+        android:id="@+id/fl_video"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/item_black_bg"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:padding="3dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toStartOf="@+id/guideline4"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <VideoView
+            android:id="@+id/vv_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:text="@string/clicktoenter"
+            android:textColor="@android:color/white"
+            android:textSize="22sp" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="right"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_btv_white" />
+
+        <ImageView
+            android:id="@+id/iv_btv_logo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorGray1"
+            android:src="@drawable/btv_icon_1" />
+
+    </FrameLayout>
+
+
+    <ImageButton
+        android:id="@+id/ibt_apps"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
+        android:background="@drawable/bg_apps"
+        android:cropToPadding="true"
+        android:padding="3dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/ibt_apps1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
+        android:background="@drawable/bg_apps"
+        android:cropToPadding="true"
+        android:padding="3dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/ibt_apps"
+        app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/ibt_apps" />
+
+    <ImageButton
+        android:id="@+id/ibt_apps2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
+        android:background="@drawable/bg_apps"
+        android:cropToPadding="true"
+        android:padding="3dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/ibt_apps"
+        app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/ibt_apps" />
+
+    <ImageButton
+        android:id="@+id/ibt_apps3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
+        android:background="@drawable/bg_apps"
+        android:cropToPadding="true"
+        android:padding="3dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/ibt_apps"
+        app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/ibt_apps" />
+
+    <ImageButton
+        android:id="@+id/ibt_apps4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
+        android:background="@drawable/bg_apps"
+        android:cropToPadding="true"
+        android:padding="3dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/ibt_apps" />
+
+</android.support.constraint.ConstraintLayout>
