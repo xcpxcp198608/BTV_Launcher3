@@ -74,7 +74,7 @@
     <string name="download_wait">please wait download finish , do not exit</string>
     <string name="clicktoenter">CLICK THE VIDEO TO ENTER LivePlay</string>
 
-    <string name="rent_customer">Renter click here to enjoy</string>
-    <string name="key">Type in Key</string>
+    <string name="rent_customer">Preferred Customer Program Activation</string>
+    <string name="key">Enter PCP Activation Code</string>
 
 </resources>

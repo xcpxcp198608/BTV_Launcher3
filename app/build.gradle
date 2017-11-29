@@ -10,7 +10,7 @@ android {
         targetSdkVersion 22
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         versionCode 305
-        versionName "v3.0.6beta"
+        versionName "v4.0.0beta"
     }
 
     signingConfigs {

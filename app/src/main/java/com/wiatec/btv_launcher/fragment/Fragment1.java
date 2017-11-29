@@ -50,6 +50,7 @@ import com.wiatec.btv_launcher.adapter.AutoScrollAdapter;
 import com.wiatec.btv_launcher.adapter.PushMessageAdapter;
 import com.wiatec.btv_launcher.adapter.TranslationAdapter;
 import com.wiatec.btv_launcher.bean.InstalledApp;
+import com.wiatec.btv_launcher.bean.LiveChannelInfo;
 import com.wiatec.btv_launcher.bean.PushMessageInfo;
 import com.wiatec.btv_launcher.bean.RollImageInfo;
 import com.wiatec.btv_launcher.bean.UserDataInfo;
@@ -316,7 +317,13 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 launchAppByLogin(getContext() , F.package_name.bplay);
                 break;
             case R.id.ibt_eufonic_bvision:
-
+                Intent intent = new Intent("com.wiatec.bplay.view.activity.PlayLiveActivity");
+                intent.putExtra("id", 20+"");
+                intent.putExtra("userId", 26+"");
+                intent.putExtra("title", "LDE");
+                intent.putExtra("message", "");
+                intent.putExtra("playUrl", "http://ldlive.protv.company:8080/hls/OGUyMDIwMW.m3u8");
+                startActivity(intent);
                 break;
         }
     }
