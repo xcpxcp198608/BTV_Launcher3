@@ -11,7 +11,6 @@ import android.renderscript.Sampler;
 public final class F {
     public static final class url {
         public static final String base_url = "http://www.ldlegacy.com:8080/";
-//        public static final String base_url = "http://172.27.0.102:8080/";
 
         public static final String updater = base_url+"control_panel/update/get";
 
@@ -44,46 +43,11 @@ public final class F {
 
 
         public static final String eufonico = "http://142.4.216.91:8280/";
-        public static final String ld_support = "http://www.ldlegacy.com:8081/html/ld_support.html";
-        public static final String ld_opportunity="http://www.ldlegacy.com:8081/html/ld_opportunity.html";
-        public static final String guide_register="http://www.ldlegacy.com:8081/html/guide_register.html";
+        public static final String ld_support = "http://www.ldlegacy.com:8899/static/launcher/html/ld_support.html";
 
-        public static final String live_play = "http://www.ldlegacy.com:8083/update/com.wiatec.bplay.apk";
+        public static final String live_play = "http://www.ldlegacy.com:8899/static/launcher/liveplay/com.wiatec.bplay.apk";
     }
 
-    public static final class url_eu {
-        public static final String base_url = "http://appotaeu.gobeyondtv.co:8080/";
-        public static final String updater="http://appotaeu.gobeyondtv.co:8080/launcher/update/get";
-        public static final String channel_type="http://appotaeu.gobeyondtv.co:8080/launcher/channeltype/get";
-        public static final String channel="http://appotaeu.gobeyondtv.co:8080/launcher/channel/get";
-
-        public static final String video="http://appotaeu.gobeyondtv.co:8080/launcher/video/get";
-        public static final String ad_video="http://appotaeu.gobeyondtv.co:8080/launcher/advideo/get";
-        public static final String boot_ad_video="http://appotaeu.gobeyondtv.co:8080/launcher/bootadvideo/get";
-        public static final String kodi_video="http://appotaeu.gobeyondtv.co:8080/launcher/kodivideo/get";
-
-        public static final String kodi_image="http://appotaeu.gobeyondtv.co:8080/launcher/kodiimage/get";
-        public static final String image="http://appotaeu.gobeyondtv.co:8080/launcher/image/get";
-        public static final String splash_image="http://appotaeu.gobeyondtv.co:8080/launcher/adimage/get";
-        public static final String roll_image="http://appotaeu.gobeyondtv.co:8080/launcher/rollimage/get";
-        public static final String roll_over_image="http://appotaeu.gobeyondtv.co:8080/launcher/rolloverimage/get";
-        public static final String opportunity_image="http://appotaeu.gobeyondtv.co:8080/launcher/opportunityimage/get";
-        public static final String manual_image = "http://appotaeu.gobeyondtv.co:8080/launcher/manualimage/get";
-
-        public static final String message="http://appotaeu.gobeyondtv.co:8080/launcher/message/get";
-        public static final String message1="http://appotaeu.gobeyondtv.co:8080/launcher/message1/get";
-
-        public static final String login="http://appotaeu.gobeyondtv.co:8080/launcher/user/login";
-        public static final String register="http://appotaeu.gobeyondtv.co:8080/launcher/user/register";
-        public static final String login_repeat_check="http://appotaeu.gobeyondtv.co:8080/launcher/user/check";
-        public static final String level_check="http://appotaeu.gobeyondtv.co:8080/launcher/user/check_level";
-        public static final String upload_data="http://appotaeu.gobeyondtv.co:8080/launcher/userdata/upload";
-
-        public static final String eufonico = "http://142.4.216.91:8280/";
-        public static final String ld_support="http://appotaeu.gobeyondtv.co:8081/html/ld_support.html";
-        public static final String ld_opportunity="http://appotaeu.gobeyondtv.co:8081/html/ld_opportunity.html";
-        public static final String guide_register="http://appotaeu.gobeyondtv.co:8081/html/guide_register.html";
-    }
 
     public static final class path {
         public static final String download= Environment.getExternalStorageDirectory().getAbsolutePath()

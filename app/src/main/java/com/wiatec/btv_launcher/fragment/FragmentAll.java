@@ -12,9 +12,11 @@ import android.widget.GridView;
 
 import com.wiatec.btv_launcher.Activity.MenuActivity;
 import com.wiatec.btv_launcher.Activity.Splash1Activity;
+import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.SQL.InstalledAppDao;
 import com.wiatec.btv_launcher.Utils.ApkLaunch;
+import com.wiatec.btv_launcher.Utils.SPUtils;
 import com.wiatec.btv_launcher.adapter.MenuItemAdapter;
 import com.wiatec.btv_launcher.animator.Zoom;
 import com.wiatec.btv_launcher.bean.InstalledApp;
@@ -80,9 +82,14 @@ public class FragmentAll extends Fragment {
                                 if("com.wiatec.update".equals(packageName)){
                                     ApkLaunch.launchApkByPackageName(getContext() ,packageName);
                                 }else {
-                                    Intent intent = new Intent(activity, Splash1Activity.class);
-                                    intent.putExtra("packageName", packageName);
-                                    startActivity(intent);
+                                    String l  = (String) SPUtils.get(Application.getContext(), "userLevel", "1");
+                                    int level = Integer.parseInt(l);
+                                    if(level >=3){
+                                        ApkLaunch.launchApkByPackageName(getContext() ,packageName);
+                                    }else {Intent intent = new Intent(activity, Splash1Activity.class);
+                                        intent.putExtra("packageName", packageName);
+                                        startActivity(intent);
+                                    }
                                 }
                             }
                         });

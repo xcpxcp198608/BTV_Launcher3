@@ -42,24 +42,6 @@ public class AdVideoData implements IAdVideoData {
                     @Override
                     public void onFailure(String e) {
                         onLoadListener.onFailure(e);
-                        OkMaster.post(F.url_eu.ad_video)
-                                .parames("deviceInfo.countryCode", (String)SPUtils.get(Application.getContext() , "countryCode" , ""))
-                                .parames("deviceInfo.regionName", (String)SPUtils.get(Application.getContext() , "regionName" , ""))
-                                .parames("deviceInfo.timeZone", (String)SPUtils.get(Application.getContext() , "timeZone" , ""))
-                                .enqueue(new StringListener() {
-                                    @Override
-                                    public void onSuccess(String s) throws IOException {
-                                        if(s != null){
-                                            VideoInfo videoInfo = new Gson().fromJson(s , new TypeToken<VideoInfo>(){}.getType());
-                                            onLoadListener.onSuccess(videoInfo);
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFailure(String e) {
-                                        onLoadListener.onFailure(e);
-                                    }
-                                });
                     }
                 });
     }
