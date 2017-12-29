@@ -1,5 +1,10 @@
 package com.wiatec.btv_launcher.Utils.OkHttp.Request;
 
+import android.text.TextUtils;
+
+import com.wiatec.btv_launcher.Utils.Logger;
+import com.wiatec.btv_launcher.Utils.SPUtils;
+
 import java.util.Map;
 
 import okhttp3.Headers;
@@ -19,6 +24,10 @@ public class GetRequest extends RequestMaster {
     @Override
     protected Request createRequest(Header header, Parameters parameters ,Object tag) {
         Request.Builder builder = new Request.Builder();
+        String cookie = (String) SPUtils.get("cookie", "");
+        if(!TextUtils.isEmpty(cookie)){
+            headers("Cookie", cookie);
+        }
         if(header !=null){
             Headers headers = Headers.of(header.stringMap);
             builder.headers(headers);

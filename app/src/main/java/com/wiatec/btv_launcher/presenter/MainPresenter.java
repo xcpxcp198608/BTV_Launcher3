@@ -1,9 +1,5 @@
 package com.wiatec.btv_launcher.presenter;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.wiatec.btv_launcher.Application;
@@ -201,13 +197,13 @@ public class MainPresenter extends BasePresenter<IMainActivity> {
     }
 
     public void loadLocation(){
-        try {
-            String url = "http://ip-api.com/json";
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    if(response != null){
+        String url = "http://ip-api.com/json";
+        OkMaster.get(url)
+                .enqueue(new StringListener() {
+                    @Override
+                    public void onSuccess(String s) throws IOException {
                         try {
+                            JSONObject response = new JSONObject(s);
                             String city = response.getString("city");
                             String country = response.getString("country");
                             String countryCode = response.getString("countryCode");
@@ -223,18 +219,12 @@ public class MainPresenter extends BasePresenter<IMainActivity> {
                             e.printStackTrace();
                         }
                     }
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    //  Logger.d("location load error "+error.getMessage());
-                }
-            });
-            jsonObjectRequest.setTag("location");
-            Application.getRequestQueue().add(jsonObjectRequest);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+
+                    @Override
+                    public void onFailure(String e) {
+                        Logger.d(e);
+                    }
+                });
     }
 
     public void downloadAdVideo (String name , String url){

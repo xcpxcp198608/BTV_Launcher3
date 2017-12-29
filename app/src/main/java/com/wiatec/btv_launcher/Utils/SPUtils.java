@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
+import com.wiatec.btv_launcher.Application;
+
 import java.util.Map;
 
 /**
@@ -13,6 +15,10 @@ import java.util.Map;
 public class SPUtils {
 
     private static final String NAME = "sp";
+
+    public static void put (String key , Object object){
+        put(Application.getContext(), key, object);
+    }
 
     public static void put (Context context , String key , Object object){
         SharedPreferences sharedPreferences = context.getSharedPreferences(NAME , Context.MODE_PRIVATE);
@@ -34,6 +40,10 @@ public class SPUtils {
             editor.putString(key , object.toString());
         }
         editor.apply();
+    }
+
+    public static Object get(String key , Object defaultObject){
+        return get(Application.getContext(), key, defaultObject);
     }
 
     public static Object get(Context context , String key , Object defaultObject){

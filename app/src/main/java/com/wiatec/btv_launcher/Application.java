@@ -2,8 +2,6 @@ package com.wiatec.btv_launcher;
 
 import android.content.Context;
 import android.content.Intent;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.exception.CrashHandler;
 import com.wiatec.btv_launcher.service.CheckLoginService;
@@ -16,7 +14,6 @@ import java.util.concurrent.Executors;
 
 public class Application extends android.app.Application {
 
-    private static RequestQueue requestQueue;
     private static Context context;
     private static boolean isFirstBoot;
     private static ExecutorService executorService;
@@ -27,7 +24,6 @@ public class Application extends android.app.Application {
         super.onCreate();
         Logger.init("----px----");
         context = getApplicationContext();
-        requestQueue = Volley.newRequestQueue(getApplicationContext());
         isFirstBoot = true;
         executorService = Executors.newCachedThreadPool();
         startLoginCheckService();
@@ -38,10 +34,6 @@ public class Application extends android.app.Application {
 
     public static Context getContext (){
         return context;
-    }
-
-    public static RequestQueue getRequestQueue (){
-        return requestQueue;
     }
 
     public static boolean getBootStatus(){

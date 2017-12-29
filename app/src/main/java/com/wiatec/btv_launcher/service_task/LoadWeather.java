@@ -6,19 +6,18 @@ import android.content.SharedPreferences;
 import android.os.Looper;
 import android.text.TextUtils;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.SQL.WeatherDao;
 import com.wiatec.btv_launcher.Utils.Logger;
+import com.wiatec.btv_launcher.Utils.OkHttp.Listener.StringListener;
+import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
 import com.wiatec.btv_launcher.Utils.SPUtils;
 import com.wiatec.btv_launcher.bean.WeatherInfo;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -45,56 +44,53 @@ public class LoadWeather implements Runnable {
         String apiKey = "c0c69463f12ddb77b388fe9fac994407";
         String url = "http://api.openweathermap.org/data/2.5/weather?q="+city+"&APPID="+apiKey;
         String forecastUrl = "http://api.openweathermap.org/data/2.5/forecast?q=shenzhen,cn&APPID=c0c69463f12ddb77b388fe9fac994407";
-        StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                if(response !=null){
-                    try {
-                        WeatherInfo weatherInfo = new WeatherInfo();
-                        JSONObject jsonObject = new JSONObject(response);
-                        JSONObject weather = jsonObject.getJSONArray("weather").getJSONObject(0);
-                        weatherInfo.setWeather(weather.getString("main"));
-                        weatherInfo.setWeatherDescription(weather.getString("description"));
-                        weatherInfo.setIcon(weather.getString("icon"));
-                        JSONObject main = jsonObject.getJSONObject("main");
-                        weatherInfo.setTemperature(showTemperature(main.getString("temp")));
-                        weatherInfo.setMaxTemperature(showTemperature(main.getString("temp_max")));
-                        weatherInfo.setMinTemperature(showTemperature(main.getString("temp_min")));
-                        weatherInfo.setHumidity(main.getString("humidity")+"%");
-                        weatherInfo.setPressure(main.getString("pressure")+"hPa");
-                        JSONObject wind = jsonObject.getJSONObject("wind");
-                        weatherInfo.setDeg(wind.getString("deg"));
-                        weatherInfo.setSpd(wind.getString("speed"));
-                        weatherInfo.setCity(jsonObject.getString("name"));
-                        JSONObject sys = jsonObject.getJSONObject("sys");
-                        weatherInfo.setCountry(sys.getString("country"));
-                        weatherInfo.setSunrise(formatTime(sys.getString("sunrise")));
-                        weatherInfo.setSunset(formatTime(sys.getString("sunset")));
-                        weatherInfo.setDate(formatDate(sys.getString("sunset")));
-                        //Logger.d(weatherInfo.toString());
-                        if(weatherInfo != null){
-                            WeatherDao weatherDao = WeatherDao.getInstance(Application.getContext());
-                            weatherDao.deleteAll();
-                            if(weatherDao.insertWeather(weatherInfo)){
-                                Intent intent = new Intent();
-                                intent.setAction("action.Weather.Change");
-                                intent.putExtra("weatherInfo" , weatherInfo);
-                                Application.getContext().sendBroadcast(intent);
+        OkMaster.get(url)
+                .enqueue(new StringListener() {
+                    @Override
+                    public void onSuccess(String s) throws IOException {
+                        try {
+                            WeatherInfo weatherInfo = new WeatherInfo();
+                            JSONObject jsonObject = new JSONObject(s);
+                            JSONObject weather = jsonObject.getJSONArray("weather").getJSONObject(0);
+                            weatherInfo.setWeather(weather.getString("main"));
+                            weatherInfo.setWeatherDescription(weather.getString("description"));
+                            weatherInfo.setIcon(weather.getString("icon"));
+                            JSONObject main = jsonObject.getJSONObject("main");
+                            weatherInfo.setTemperature(showTemperature(main.getString("temp")));
+                            weatherInfo.setMaxTemperature(showTemperature(main.getString("temp_max")));
+                            weatherInfo.setMinTemperature(showTemperature(main.getString("temp_min")));
+                            weatherInfo.setHumidity(main.getString("humidity")+"%");
+                            weatherInfo.setPressure(main.getString("pressure")+"hPa");
+                            JSONObject wind = jsonObject.getJSONObject("wind");
+                            weatherInfo.setDeg(wind.getString("deg"));
+                            weatherInfo.setSpd(wind.getString("speed"));
+                            weatherInfo.setCity(jsonObject.getString("name"));
+                            JSONObject sys = jsonObject.getJSONObject("sys");
+                            weatherInfo.setCountry(sys.getString("country"));
+                            weatherInfo.setSunrise(formatTime(sys.getString("sunrise")));
+                            weatherInfo.setSunset(formatTime(sys.getString("sunset")));
+                            weatherInfo.setDate(formatDate(sys.getString("sunset")));
+                            //Logger.d(weatherInfo.toString());
+                            if(weatherInfo != null){
+                                WeatherDao weatherDao = WeatherDao.getInstance(Application.getContext());
+                                weatherDao.deleteAll();
+                                if(weatherDao.insertWeather(weatherInfo)){
+                                    Intent intent = new Intent();
+                                    intent.setAction("action.Weather.Change");
+                                    intent.putExtra("weatherInfo" , weatherInfo);
+                                    Application.getContext().sendBroadcast(intent);
+                                }
                             }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
                     }
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Logger.d(error.getMessage());
-            }
-        });
-        stringRequest.setTag("weather");
-        Application.getRequestQueue().add(stringRequest);
+
+                    @Override
+                    public void onFailure(String e) {
+                        Logger.d(e);
+                    }
+                });
     }
 
     private float kelvinToCelsius (float kelvin){

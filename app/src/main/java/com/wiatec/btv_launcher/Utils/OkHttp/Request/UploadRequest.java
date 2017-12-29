@@ -1,5 +1,9 @@
 package com.wiatec.btv_launcher.Utils.OkHttp.Request;
 
+import android.text.TextUtils;
+
+import com.wiatec.btv_launcher.Utils.SPUtils;
+
 import java.io.File;
 import java.util.Map;
 
@@ -42,6 +46,10 @@ public class UploadRequest extends RequestMaster {
         if(header!= null){
             Headers headers = Headers.of(header.stringMap);
             builder.headers(headers);
+        }
+        String cookie = (String) SPUtils.get("cookie", "");
+        if(!TextUtils.isEmpty(cookie)){
+            headers("Cookie", cookie);
         }
         builder.post(bodyBuilder.build()).url(url);
         return builder.build();
