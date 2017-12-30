@@ -8,142 +8,113 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:clipChildren="false"
         android:layout_width="match_parent"
         android:layout_weight="1"
         android:layout_height="0dp"
         android:orientation="horizontal">
 
-        <android.support.v4.widget.Space
-            android:layout_width="20dp"
-            android:layout_height="match_parent" />
+        <FrameLayout
+            android:id="@+id/fl_video"
+            android:layout_weight="3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/item_black_bg"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:padding="3dp">
+
+            <VideoView
+                android:id="@+id/vv_main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:focusable="false"
+                android:focusableInTouchMode="false" />
+
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:textSize="22sp"
+                android:textColor="@android:color/white"
+                android:text="@string/clicktoenter"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="right"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_btv_white" />
+
+            <ImageView
+                android:id="@+id/iv_btv_logo"
+                android:src="@drawable/btv_icon_1"
+                android:background="@color/colorGray1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </FrameLayout>
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_weight="6"
+            android:layout_weight="2"
             android:layout_width="0dp"
             android:layout_height="match_parent">
 
             <LinearLayout
                 android:orientation="horizontal"
-                android:layout_weight="5.4"
+                android:layout_weight="4"
                 android:layout_width="match_parent"
                 android:layout_height="0dp">
-
-                <FrameLayout
-                    android:id="@+id/fl_video"
-                    android:layout_weight="2.7"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/item_black_bg"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:padding="3dp">
-
-                    <VideoView
-                        android:id="@+id/vv_main"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:focusable="false"
-                        android:focusableInTouchMode="false" />
-
-                    <TextView
-                        android:layout_marginLeft="10dp"
-                        android:gravity="center"
-                        android:textSize="22sp"
-                        android:textColor="@android:color/white"
-                        android:text="@string/clicktoenter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="50dp" />
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="right"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/ic_btv_white" />
-
-                    <ImageView
-                        android:id="@+id/iv_btv_logo"
-                        android:src="@drawable/btv_icon_1"
-                        android:background="@color/colorGray1"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                </FrameLayout>
-
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent">
 
-                    <LinearLayout
-                        android:layout_weight="1.1"
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp">
-
-                        <ImageButton
-                            android:adjustViewBounds="true"
-                            android:id="@+id/ibt_setting"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@drawable/bg_settings"
-                            android:cropToPadding="true"
-                            android:padding="3dp"
-                            android:scaleType="centerCrop" />
-
-                        <ImageView
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent" />
-
-                        <ImageButton
-                            android:adjustViewBounds="true"
-                            android:id="@+id/ibt_user_manual"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@drawable/bg_manual"
-                            android:cropToPadding="true"
-                            android:padding="3dp"
-                            android:scaleType="centerCrop" />
-
-                    </LinearLayout>
-
-                    <android.support.v4.widget.Space
-                        android:layout_width="match_parent"
-                        android:layout_height="4dp" />
-
-                    <FrameLayout
-                        android:background="@drawable/bg_item"
+                    <ImageButton
+                        android:adjustViewBounds="true"
+                        android:id="@+id/ibt_setting"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1.2">
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_settings"
+                        android:cropToPadding="true"
+                        android:padding="3dp"
+                        android:scaleType="centerCrop" />
 
-                        <com.wiatec.btv_launcher.custom_view.MultiImage
-                            android:id="@+id/ibt_cloud"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:cropToPadding="true"
-                            android:padding="3dp"
-                            android:scaleType="fitCenter"
-                            android:background="@drawable/bg_cloud"/>
-
-                    </FrameLayout>
-
-                    <android.support.v4.widget.Space
+                    <ImageButton
+                        android:adjustViewBounds="true"
+                        android:id="@+id/ibt_apps"
                         android:layout_width="match_parent"
-                        android:layout_height="4dp" />
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_apps"
+                        android:cropToPadding="true"
+                        android:padding="3dp"
+                        android:scaleType="centerCrop" />
+
+                    <ImageButton
+                        android:adjustViewBounds="true"
+                        android:id="@+id/ibt_game"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_game"
+                        android:cropToPadding="true"
+                        android:padding="3dp"
+                        android:scaleType="centerCrop" />
 
                     <ImageButton
                         android:id="@+id/ibt_eufonico"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1.2"
+                        android:layout_weight="1"
                         android:background="@drawable/bg_radio"
                         android:cropToPadding="true"
                         android:padding="3dp"
@@ -151,275 +122,198 @@
 
                 </LinearLayout>
 
-            </LinearLayout>
-
-            <android.support.v4.widget.Space
-                android:layout_width="match_parent"
-                android:layout_height="8dp" />
-
-            <LinearLayout
-                android:layout_weight="2.7"
-                android:layout_width="match_parent"
-                android:layout_height="0dp">
-
                 <LinearLayout
-                    android:orientation="vertical"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:adjustViewBounds="true"
+                    android:id="@+id/ibt_user_manual"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_manual"
+                    android:cropToPadding="true"
+                    android:padding="3dp"
+                    android:scaleType="centerCrop" />
 
-                    <LinearLayout
-                        android:clipChildren="false"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
+                <ImageButton
+                    android:id="@+id/ibt_market"
+                    android:adjustViewBounds="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_market"
+                    android:cropToPadding="true"
+                    android:padding="3dp"
+                    android:scaleType="centerCrop" />
 
-                        <ImageButton
-                            android:id="@+id/ibt_market"
-                            android:adjustViewBounds="true"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@drawable/bg_market"
-                            android:cropToPadding="true"
-                            android:padding="3dp"
-                            android:scaleType="centerCrop" />
+                <ImageButton
+                    android:adjustViewBounds="true"
+                    android:id="@+id/ibt_opportunity"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_referral"
+                    android:cropToPadding="true"
+                    android:padding="3dp"
+                    android:scaleType="centerCrop"/>
 
-                        <ImageButton
-                            android:adjustViewBounds="true"
-                            android:id="@+id/ibt_apps"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@drawable/bg_apps"
-                            android:cropToPadding="true"
-                            android:padding="3dp"
-                            android:scaleType="centerCrop" />
-
-                        <ImageButton
-                            android:adjustViewBounds="true"
-                            android:id="@+id/ibt_customer_service"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@drawable/bg_cc"
-                            android:cropToPadding="true"
-                            android:padding="3dp"
-                            android:scaleType="centerCrop" />
-
-                        <ImageButton
-                            android:adjustViewBounds="true"
-                            android:id="@+id/ibt_institute"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@drawable/bg_institute"
-                            android:cropToPadding="true"
-                            android:padding="3dp"
-                            android:scaleType="centerCrop"/>
-
-                        <ImageButton
-                            android:adjustViewBounds="true"
-                            android:id="@+id/ibt_opportunity"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@drawable/bg_opportunity"
-                            android:cropToPadding="true"
-                            android:padding="3dp"
-                            android:scaleType="centerCrop"/>
-
-                        <FrameLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
-
-                            <ImageButton
-                                android:adjustViewBounds="true"
-                                android:id="@+id/ibt_game"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/bg_game"
-                                android:cropToPadding="true"
-                                android:padding="3dp"
-                                android:scaleType="centerCrop" />
-
-                            <TextView
-                                android:visibility="gone"
-                                tools:text="3"
-                                android:id="@+id/tv_message_count"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginRight="20dp"
-                                android:layout_marginTop="5dp"
-                                android:gravity="right|top"
-                                android:textColor="@color/colorRed"
-                                android:textSize="25sp"
-                                android:textStyle="bold" />
-
-                        </FrameLayout>
-
-                    </LinearLayout>
-
-                    <android.support.v4.widget.Space
-                        android:layout_width="match_parent"
-                        android:layout_height="8dp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.4"
-                        android:orientation="horizontal">
-
-                        <ImageButton
-                            android:layout_margin="3dp"
-                            android:cropToPadding="true"
-                            android:scaleType="fitCenter"
-                            android:padding="3dp"
-                            android:id="@+id/ibt_1"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@drawable/item_message_bg"
-                            android:src="@drawable/add_shortcut" />
-
-                        <ImageButton
-                            android:layout_margin="3dp"
-                            android:cropToPadding="true"
-                            android:scaleType="fitCenter"
-                            android:padding="3dp"
-                            android:id="@+id/ibt_2"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@drawable/item_message_bg"
-                            android:src="@drawable/add_shortcut" />
-
-                        <ImageButton
-                            android:layout_margin="3dp"
-                            android:cropToPadding="true"
-                            android:scaleType="fitCenter"
-                            android:padding="3dp"
-                            android:id="@+id/ibt_3"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@drawable/item_message_bg"
-                            android:src="@drawable/add_shortcut" />
-
-                        <ImageButton
-                            android:layout_margin="3dp"
-                            android:cropToPadding="true"
-                            android:scaleType="fitCenter"
-                            android:padding="3dp"
-                            android:id="@+id/ibt_4"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@drawable/item_message_bg"
-                            android:src="@drawable/add_shortcut" />
-
-                        <ImageButton
-                            android:layout_margin="3dp"
-                            android:cropToPadding="true"
-                            android:scaleType="fitCenter"
-                            android:padding="3dp"
-                            android:id="@+id/ibt_5"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@drawable/item_message_bg"
-                            android:src="@drawable/add_shortcut" />
-
-                        <ImageButton
-                            android:layout_margin="3dp"
-                            android:cropToPadding="true"
-                            android:scaleType="fitCenter"
-                            android:padding="3dp"
-                            android:id="@+id/ibt_6"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@drawable/item_message_bg"
-                            android:src="@drawable/add_shortcut" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
+                <ImageButton
+                    android:adjustViewBounds="true"
+                    android:id="@+id/ibt_eufonic_bvision"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_radio_watch"
+                    android:cropToPadding="true"
+                    android:padding="3dp"
+                    android:scaleType="centerCrop" />
+            </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
-
-        <android.support.v4.widget.Space
-            android:layout_width="8dp"
-            android:layout_height="match_parent" />
-
-        <LinearLayout
-            android:padding="3dp"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:id="@+id/ll_push_message"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:background="@drawable/bg_item"
-            android:orientation="vertical">
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="30dp">
-
-                <TextView
-                    android:text="LD   FAM"
-                    android:gravity="center"
-                    android:textSize="22sp"
-                    android:layout_gravity="center"
-                    android:textColor="@color/colorWhite"
-                    android:background="@color/colorBlue5"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <ProgressBar
-                    android:visibility="gone"
-                    android:layout_margin="3dp"
-                    android:layout_gravity="right"
-                    android:id="@+id/pb_push_message"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp" />
-
-            </FrameLayout>
-
-            <com.wiatec.btv_launcher.custom_view.MessageListView
-                android:background="@color/colorGray1"
+            <com.wiatec.btv_launcher.custom_view.MultiImage
+                android:id="@+id/tiv_eufonic"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-                android:id="@+id/lv_message"
-                android:divider="@color/colorGray2"
-                android:dividerHeight="8dp"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"/>
-
-            <ImageView
-                android:background="@color/colorBlack"
-                android:layout_width="match_parent"
-                android:layout_height="1dp" />
-
-            <TextView
-                android:text="Powered by LD TECH"
-                android:gravity="center"
-                android:textSize="10sp"
-                android:textColor="@color/colorWhite"
-                android:background="@color/colorBlue5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="0dp" />
 
         </LinearLayout>
 
-        <android.support.v4.widget.Space
-            android:layout_width="20dp"
-            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:layout_margin="3dp"
+            android:cropToPadding="true"
+            android:scaleType="fitCenter"
+            android:padding="3dp"
+            android:id="@+id/ibt_1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/item_message_bg"
+            android:src="@drawable/add_shortcut" />
+
+        <ImageButton
+            android:layout_margin="3dp"
+            android:cropToPadding="true"
+            android:scaleType="fitCenter"
+            android:padding="3dp"
+            android:id="@+id/ibt_2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/item_message_bg"
+            android:src="@drawable/add_shortcut" />
+
+        <ImageButton
+            android:layout_margin="3dp"
+            android:cropToPadding="true"
+            android:scaleType="fitCenter"
+            android:padding="3dp"
+            android:id="@+id/ibt_3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/item_message_bg"
+            android:src="@drawable/add_shortcut" />
+
+        <ImageButton
+            android:layout_margin="3dp"
+            android:cropToPadding="true"
+            android:scaleType="fitCenter"
+            android:padding="3dp"
+            android:id="@+id/ibt_4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/item_message_bg"
+            android:src="@drawable/add_shortcut" />
+
+        <ImageButton
+            android:layout_margin="3dp"
+            android:cropToPadding="true"
+            android:scaleType="fitCenter"
+            android:padding="3dp"
+            android:id="@+id/ibt_5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/item_message_bg"
+            android:src="@drawable/add_shortcut" />
+
+        <ImageButton
+            android:layout_margin="3dp"
+            android:cropToPadding="true"
+            android:scaleType="fitCenter"
+            android:padding="3dp"
+            android:id="@+id/ibt_6"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/item_message_bg"
+            android:src="@drawable/add_shortcut" />
+
+        <ImageButton
+            android:layout_margin="3dp"
+            android:cropToPadding="true"
+            android:scaleType="fitCenter"
+            android:padding="3dp"
+            android:id="@+id/ibt_7"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/item_message_bg"
+            android:src="@drawable/add_shortcut" />
+
+        <ImageButton
+            android:layout_margin="3dp"
+            android:cropToPadding="true"
+            android:scaleType="fitCenter"
+            android:padding="3dp"
+            android:id="@+id/ibt_8"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/item_message_bg"
+            android:src="@drawable/add_shortcut" />
+
+        <ImageButton
+            android:layout_margin="3dp"
+            android:cropToPadding="true"
+            android:scaleType="fitCenter"
+            android:padding="3dp"
+            android:id="@+id/ibt_9"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/item_message_bg"
+            android:src="@drawable/add_shortcut" />
+
+        <ImageButton
+            android:layout_margin="3dp"
+            android:cropToPadding="true"
+            android:scaleType="fitCenter"
+            android:padding="3dp"
+            android:id="@+id/ibt_10"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/item_message_bg"
+            android:src="@drawable/add_shortcut" />
 
     </LinearLayout>
 
