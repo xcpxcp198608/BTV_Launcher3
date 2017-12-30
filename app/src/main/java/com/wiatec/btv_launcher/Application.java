@@ -28,8 +28,8 @@ public class Application extends android.app.Application {
         executorService = Executors.newCachedThreadPool();
         startLoginCheckService();
 
-//        crashHandler = CrashHandler.getInstance();
-//        crashHandler.init(getApplicationContext());
+        crashHandler = CrashHandler.getInstance();
+        crashHandler.init(getApplicationContext());
     }
 
     public static Context getContext (){
