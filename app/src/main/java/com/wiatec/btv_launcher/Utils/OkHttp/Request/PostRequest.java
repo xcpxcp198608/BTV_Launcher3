@@ -19,16 +19,13 @@ public class PostRequest extends RequestMaster {
     private String url;
 
     public PostRequest (String  url){
+        super();
         this.url = url;
     }
 
     @Override
     protected Request createRequest(Header header, Parameters parameters ,Object tag) {
         Request.Builder builder = new Request.Builder();
-        String cookie = (String) SPUtils.get("cookie", "");
-        if(!TextUtils.isEmpty(cookie)){
-            headers("Cookie", cookie);
-        }
         if(header != null){
             Headers headers = Headers.of(header.stringMap);
             builder.headers(headers);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/button_eufonico_listen_roll" android:state_pressed="true"/>
-    <item android:drawable="@drawable/button_eufonico_listen_roll" android:state_focused="true"/>
-    <item android:drawable="@drawable/button_eufonico_listen_roll" android:state_selected="true"/>
-    <item android:drawable="@drawable/button_eufonico_listen"/>
+    <item android:drawable="@drawable/eufonico_radio_live_roll" android:state_pressed="true"/>
+    <item android:drawable="@drawable/eufonico_radio_live_roll" android:state_focused="true"/>
+    <item android:drawable="@drawable/eufonico_radio_live_roll" android:state_selected="true"/>
+    <item android:drawable="@drawable/eufonic0_radio_live"/>
 </selector>

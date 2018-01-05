@@ -22,6 +22,7 @@ public class UploadRequest extends RequestMaster {
     private File mFile;
 
     public UploadRequest (String url){
+        super();
         this.url = url;
     }
 
@@ -46,10 +47,6 @@ public class UploadRequest extends RequestMaster {
         if(header!= null){
             Headers headers = Headers.of(header.stringMap);
             builder.headers(headers);
-        }
-        String cookie = (String) SPUtils.get("cookie", "");
-        if(!TextUtils.isEmpty(cookie)){
-            headers("Cookie", cookie);
         }
         builder.post(bodyBuilder.build()).url(url);
         return builder.build();

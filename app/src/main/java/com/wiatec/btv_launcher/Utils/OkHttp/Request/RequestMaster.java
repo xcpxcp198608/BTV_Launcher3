@@ -1,12 +1,15 @@
 package com.wiatec.btv_launcher.Utils.OkHttp.Request;
 
+import android.text.TextUtils;
 import android.util.Log;
 
+import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.OkHttp.Listener.DownloadCallback;
 import com.wiatec.btv_launcher.Utils.OkHttp.Bean.DownloadInfo;
 import com.wiatec.btv_launcher.Utils.OkHttp.Listener.DownloadListener;
 import com.wiatec.btv_launcher.Utils.OkHttp.Listener.UploadListener;
 import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
+import com.wiatec.btv_launcher.Utils.SPUtils;
 
 import java.io.File;
 import java.util.Map;
@@ -30,6 +33,11 @@ public abstract class RequestMaster {
     public RequestMaster() {
         parameters = new Parameters();
         header = new Header();
+        String cookie = (String) SPUtils.get("cookie", "");
+        if(!TextUtils.isEmpty(cookie)){
+            headers("Cookie", cookie);
+            Logger.d(cookie);
+        }
     }
 
     public RequestMaster tag(Object tag){
