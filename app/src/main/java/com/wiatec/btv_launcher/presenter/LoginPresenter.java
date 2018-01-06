@@ -7,7 +7,9 @@ import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.OkHttp.Listener.StringListener;
 import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
+import com.wiatec.btv_launcher.bean.AuthRegisterUserInfo;
 import com.wiatec.btv_launcher.bean.Result;
+import com.wiatec.btv_launcher.bean.ResultInfo;
 import com.wiatec.btv_launcher.bean.User1Info;
 import com.wiatec.btv_launcher.data.ILoginData;
 import com.wiatec.btv_launcher.data.LoginData;
@@ -28,17 +30,21 @@ public class LoginPresenter extends BasePresenter<ILoginActivity> {
         iLoginData = new LoginData();
     }
 
-    public void login(User1Info user1Info){
+    public void login(AuthRegisterUserInfo authRegisterUserInfo){
         try {
             if(iLoginData != null){
-                iLoginData.login(user1Info, new ILoginData.OnLoginListener() {
+                iLoginData.login(authRegisterUserInfo, new ILoginData.OnLoginListener() {
                     @Override
-                    public void onSuccess(Result result) {
-                        iLoginActivity.login(result);
+                    public void onSuccess(ResultInfo<AuthRegisterUserInfo> resultInfo) {
+                        iLoginActivity.login(resultInfo);
                     }
 
                     @Override
                     public void onFailure(String e) {
+                        ResultInfo<AuthRegisterUserInfo> resultInfo = new ResultInfo<>();
+                        resultInfo.setCode(501);
+                        resultInfo.setMessage("network communication error");
+                        iLoginActivity.login(resultInfo);
                         Logger.d(e);
                     }
                 });
@@ -48,26 +54,26 @@ public class LoginPresenter extends BasePresenter<ILoginActivity> {
         }
     }
 
-    public void resetPassword (User1Info user1Info){
-        OkMaster.post(F.url.reset_p)
-                .parames("user1Info.userName" , user1Info.getUserName())
-                .parames("user1Info.email" , user1Info.getEmail())
+    public void resetPassword (AuthRegisterUserInfo authRegisterUserInfo){
+        OkMaster.post(F.url.user_reset_p)
+                .parames("username" , authRegisterUserInfo.getUsername())
+                .parames("email" , authRegisterUserInfo.getEmail())
                 .enqueue(new StringListener() {
                     @Override
                     public void onSuccess(String s) throws IOException {
                         if(s == null){
                             return;
                         }
-                        Result result = new Gson().fromJson(s , new TypeToken<Result>(){}.getType());
-                        iLoginActivity.resetp(result);
+                        ResultInfo<AuthRegisterUserInfo> resultInfo = new Gson().fromJson(s , new TypeToken<ResultInfo<AuthRegisterUserInfo>>(){}.getType());
+                        iLoginActivity.resetp(resultInfo);
                     }
 
                     @Override
                     public void onFailure(String e) {
-                        Result result = new Result();
-                        result.setCode(Result.CODE_REQUEST_FAILURE);
-                        result.setStatus(Result.STATUS_REQUEST_FAILURE);
-                        iLoginActivity.resetp(result);
+                        ResultInfo<AuthRegisterUserInfo> resultInfo = new ResultInfo<>();
+                        resultInfo.setCode(501);
+                        resultInfo.setMessage("network communication error");
+                        iLoginActivity.login(resultInfo);
                         Logger.d(e);
                     }
                 });

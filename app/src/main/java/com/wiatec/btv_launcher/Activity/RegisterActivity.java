@@ -3,6 +3,7 @@ package com.wiatec.btv_launcher.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,7 +18,9 @@ import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.RegularUtil;
 import com.wiatec.btv_launcher.Utils.SPUtils;
+import com.wiatec.btv_launcher.bean.AuthRegisterUserInfo;
 import com.wiatec.btv_launcher.bean.Result;
+import com.wiatec.btv_launcher.bean.ResultInfo;
 import com.wiatec.btv_launcher.bean.User1Info;
 import com.wiatec.btv_launcher.presenter.RegisterPresenter;
 
@@ -29,7 +32,8 @@ import butterknife.OnClick;
  * Created by patrick on 2017/3/10.
  */
 
-public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterPresenter> implements IRegisterActivity {
+public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterPresenter>
+        implements IRegisterActivity, View.OnKeyListener {
 
 
     @BindView(R.id.et_username)
@@ -118,6 +122,11 @@ public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterP
         });
     }
 
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+        return false;
+    }
+
     @OnClick(R.id.bt_register)
     public void onClick() {
         userName = etUsername.getText().toString().trim();
@@ -181,36 +190,31 @@ public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterP
             Toast.makeText(RegisterActivity.this, getString(R.string.password_input_different), Toast.LENGTH_SHORT).show();
             return;
         }
-        User1Info user1Info = new User1Info();
-        user1Info.setUserName(userName);
-        user1Info.setFirstName(firstName);
-        user1Info.setLastName(lastName);
-        user1Info.setNickName(nickName);
-        user1Info.setPassword(password);
-        user1Info.setEmail(email);
-        user1Info.setPhone(phone);
-        user1Info.setMac((String) SPUtils.get(RegisterActivity.this,"mac",""));
-        user1Info.setEthernetMac((String) SPUtils.get(RegisterActivity.this,"ethernetMac",""));
-        user1Info.setCountry((String) SPUtils.get(RegisterActivity.this,"country",""));
-        user1Info.setRegion((String) SPUtils.get(RegisterActivity.this,"regionName",""));
-        user1Info.setCity((String) SPUtils.get(RegisterActivity.this,"city",""));
-        user1Info.setTimeZone((String) SPUtils.get(RegisterActivity.this,"timeZone",""));
-        presenter.register(user1Info ,language);
+        AuthRegisterUserInfo authRegisterUserInfo = new AuthRegisterUserInfo();
+        authRegisterUserInfo.setUsername(userName);
+        authRegisterUserInfo.setFirstName(firstName);
+        authRegisterUserInfo.setLastName(lastName);
+        authRegisterUserInfo.setPassword(password);
+        authRegisterUserInfo.setEmail(email);
+        authRegisterUserInfo.setPhone(phone);
+        authRegisterUserInfo.setMac((String) SPUtils.get(RegisterActivity.this,"ethernetMac",""));
+        presenter.register(authRegisterUserInfo ,language);
         progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void register(Result result) {
+    public void register(ResultInfo<AuthRegisterUserInfo> resultInfo) {
         progressBar.setVisibility(View.GONE);
-        Logger.d(result.toString());
-        if (result.getCode() == Result.CODE_REGISTER_SUCCESS) {
+        if(resultInfo == null) return;
+        Logger.d(resultInfo.toString());
+        if (resultInfo.getCode() == 200) {
             SPUtils.put(RegisterActivity.this, "userName", userName);
             SPUtils.put(RegisterActivity.this, "firstName", firstName);
             SPUtils.put(RegisterActivity.this, "lastName", lastName);
             Toast.makeText(Application.getContext(), getString(R.string.register_success), Toast.LENGTH_LONG).show();
             finish();
         } else {
-            Toast.makeText(this, result.getStatus(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, resultInfo.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 }

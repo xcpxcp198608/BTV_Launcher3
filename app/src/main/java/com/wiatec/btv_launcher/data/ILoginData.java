@@ -1,6 +1,8 @@
 package com.wiatec.btv_launcher.data;
 
+import com.wiatec.btv_launcher.bean.AuthRegisterUserInfo;
 import com.wiatec.btv_launcher.bean.Result;
+import com.wiatec.btv_launcher.bean.ResultInfo;
 import com.wiatec.btv_launcher.bean.User1Info;
 
 /**
@@ -8,9 +10,9 @@ import com.wiatec.btv_launcher.bean.User1Info;
  */
 
 public interface ILoginData {
-    void login(User1Info user1Info , OnLoginListener onLoginListener );
+    void login(AuthRegisterUserInfo authRegisterUserInfo , OnLoginListener onLoginListener );
     interface OnLoginListener {
-        void onSuccess(Result result);
+        void onSuccess(ResultInfo<AuthRegisterUserInfo> resultInfo);
         void onFailure(String e);
     }
 }

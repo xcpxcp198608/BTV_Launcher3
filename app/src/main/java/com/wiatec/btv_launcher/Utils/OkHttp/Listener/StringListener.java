@@ -40,6 +40,7 @@ public abstract class StringListener implements Callback {
 
     @Override
     public void onResponse(Call call, Response response) throws IOException {
+
         Headers headers = response.headers();
         List<String> cookies = headers.values("Set-Cookie");
         if(cookies != null && cookies.size() > 0 ) {

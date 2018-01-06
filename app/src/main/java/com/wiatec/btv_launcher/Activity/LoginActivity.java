@@ -16,7 +16,9 @@ import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.SPUtils;
+import com.wiatec.btv_launcher.bean.AuthRegisterUserInfo;
 import com.wiatec.btv_launcher.bean.Result;
+import com.wiatec.btv_launcher.bean.ResultInfo;
 import com.wiatec.btv_launcher.bean.User1Info;
 import com.wiatec.btv_launcher.presenter.LoginPresenter;
 
@@ -91,16 +93,11 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
                 userName = etUserName.getText().toString().trim();
                 password = etPassword.getText().toString().trim();
                 if(!TextUtils.isEmpty(userName) && ! TextUtils.isEmpty(password)){
-                    User1Info user1Info = new User1Info();
-                    user1Info.setUserName(userName);
-                    user1Info.setPassword(password);
-                    user1Info.setMac((String) SPUtils.get(LoginActivity.this,"mac",""));
-                    user1Info.setEthernetMac((String) SPUtils.get(LoginActivity.this,"ethernetMac",""));
-                    user1Info.setCountry((String) SPUtils.get(LoginActivity.this,"country",""));
-                    user1Info.setRegion((String) SPUtils.get(LoginActivity.this,"region",""));
-                    user1Info.setCity((String) SPUtils.get(LoginActivity.this,"city",""));
-                    user1Info.setTimeZone((String) SPUtils.get(LoginActivity.this,"timeZone",""));
-                    presenter.login(user1Info);
+                    AuthRegisterUserInfo authRegisterUserInfo = new AuthRegisterUserInfo();
+                    authRegisterUserInfo.setUsername(userName);
+                    authRegisterUserInfo.setPassword(password);
+                    authRegisterUserInfo.setMac((String) SPUtils.get(LoginActivity.this,"ethernetMac",""));
+                    presenter.login(authRegisterUserInfo);
                     progressBar.setVisibility(View.VISIBLE);
                 }else{
                     Toast.makeText(LoginActivity.this , getString(R.string.error_input) , Toast.LENGTH_LONG).show();
@@ -121,10 +118,10 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
                 userName1 = etUserName1.getText().toString().trim();
                 email1 = etEmail1.getText().toString().trim();
                 if(!TextUtils.isEmpty(userName1) && ! TextUtils.isEmpty(email1)){
-                    User1Info user1Info = new User1Info();
-                    user1Info.setUserName(userName1);
-                    user1Info.setEmail(email1);
-                    presenter.resetPassword(user1Info);
+                    AuthRegisterUserInfo authRegisterUserInfo = new AuthRegisterUserInfo();
+                    authRegisterUserInfo.setUsername(userName1);
+                    authRegisterUserInfo.setEmail(email1);
+                    presenter.resetPassword(authRegisterUserInfo);
                     progressBar1.setVisibility(View.VISIBLE);
                 }else{
                     Toast.makeText(LoginActivity.this , getString(R.string.error_input) , Toast.LENGTH_LONG).show();
@@ -134,31 +131,30 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
     }
 
     @Override
-    public void login(Result result) {
-        Logger.d(result.toString());
-        int code = result.getCode();
-        if (code == Result.CODE_LOGIN_SUCCESS) {
+    public void login(ResultInfo<AuthRegisterUserInfo> resultInfo) {
+        if(resultInfo ==null) return;
+        Logger.d(resultInfo.toString());
+        if (resultInfo.getCode() == 200) {
             progressBar.setVisibility(View.GONE);
             Toast.makeText(Application.getContext(), "login success", Toast.LENGTH_LONG).show();
-            SPUtils.put(LoginActivity.this,"userName", userName);
-            SPUtils.put(LoginActivity.this,"currentLoginCount", result.getLoginCount());
-            SPUtils.put(LoginActivity.this,"token", result.getToken());
-            SPUtils.put(LoginActivity.this,"lastName", result.getExtra());
-            SPUtils.put(LoginActivity.this,"userLevel", result.getUserLevel()+"");
+            AuthRegisterUserInfo authRegisterUserInfo = resultInfo.getData();
+            SPUtils.put(LoginActivity.this,"userName", authRegisterUserInfo.getUsername());
+            SPUtils.put(LoginActivity.this,"token", authRegisterUserInfo.getToken());
+            SPUtils.put(LoginActivity.this,"lastName", authRegisterUserInfo.getLastName());
+            SPUtils.put(LoginActivity.this,"userLevel", authRegisterUserInfo.getLevel()+"");
             finish();
         } else {
             progressBar.setVisibility(View.GONE);
-            Toast.makeText(Application.getContext(), result.getStatus(), Toast.LENGTH_LONG).show();
+            Toast.makeText(Application.getContext(), resultInfo.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
     @Override
-    public void resetp(Result result) {
+    public void resetp(ResultInfo<AuthRegisterUserInfo> resultInfo) {
         progressBar1.setVisibility(View.GONE);
-        if(result == null){
-            return;
-        }
-        Toast.makeText(Application.getContext(), result.getStatus(), Toast.LENGTH_LONG).show();
+        if(resultInfo ==null) return;
+        Logger.d(resultInfo.toString());
+        Toast.makeText(Application.getContext(), resultInfo.getMessage(), Toast.LENGTH_LONG).show();
         llResetPassword.setVisibility(View.GONE);
         llLogin.setVisibility(View.VISIBLE);
     }

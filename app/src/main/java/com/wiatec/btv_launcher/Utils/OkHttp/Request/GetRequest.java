@@ -24,6 +24,14 @@ public class GetRequest extends RequestMaster {
 
     @Override
     protected Request createRequest(Header header, Parameters parameters ,Object tag) {
+        String[] urls = url.split("/");
+        String webApp = urls[3];
+        Logger.d(webApp);
+        String cookie = (String) SPUtils.get(webApp + "cookie", "");
+        if(!TextUtils.isEmpty(cookie)){
+            headers("Cookie", cookie);
+            Logger.d(cookie);
+        }
         Request.Builder builder = new Request.Builder();
         if(header !=null){
             Headers headers = Headers.of(header.stringMap);

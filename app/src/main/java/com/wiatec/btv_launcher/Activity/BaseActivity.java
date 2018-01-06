@@ -96,7 +96,7 @@ public class BaseActivity extends AppCompatActivity {
                 });
     }
 
-    private void showLoginAgainDialog(){
+    protected void showLoginAgainDialog(){
         final AlertDialog alertDialog = new AlertDialog.Builder(this , R.style.dialog).create();
         alertDialog.setCancelable(false);
         alertDialog.show();

@@ -118,7 +118,15 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
     @Override
     protected void onStart() {
         super.onStart();
-//        Logger.d("onStart");
+        try {
+            String level = (String) SPUtils.get(MainActivity.this, "userLevel", "0");
+            int l = Integer.parseInt(level);
+            if (l <= 0) {
+                showLoginAgainDialog();
+            }
+        }catch (Exception e){
+            Logger.d(e.getLocalizedMessage());
+        }
         String userName = (String) SPUtils.get(MainActivity.this , "lastName" , "");
         if(!TextUtils.isEmpty(userName) && !"null".equals(userName)){
             tvWelcome.setText(getString(R.string.welcome) + " " + userName + " " + getString(R.string.family));

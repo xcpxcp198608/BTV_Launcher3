@@ -33,11 +33,11 @@ public abstract class RequestMaster {
     public RequestMaster() {
         parameters = new Parameters();
         header = new Header();
-        String cookie = (String) SPUtils.get("cookie", "");
-        if(!TextUtils.isEmpty(cookie)){
-            headers("Cookie", cookie);
-            Logger.d(cookie);
-        }
+//        String cookie = (String) SPUtils.get("cookie", "");
+//        if(!TextUtils.isEmpty(cookie)){
+//            headers("Cookie", cookie);
+//            Logger.d(cookie);
+//        }
     }
 
     public RequestMaster tag(Object tag){

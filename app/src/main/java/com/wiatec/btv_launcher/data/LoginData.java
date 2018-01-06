@@ -6,7 +6,9 @@ import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.OkHttp.Listener.StringListener;
 import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
+import com.wiatec.btv_launcher.bean.AuthRegisterUserInfo;
 import com.wiatec.btv_launcher.bean.Result;
+import com.wiatec.btv_launcher.bean.ResultInfo;
 import com.wiatec.btv_launcher.bean.User1Info;
 
 import java.io.IOException;
@@ -17,25 +19,21 @@ import java.io.IOException;
 
 public class LoginData implements ILoginData {
     @Override
-    public void login(final User1Info user1Info, final OnLoginListener onLoginListener) {
+    public void login(final AuthRegisterUserInfo authRegisterUserInfo, final OnLoginListener onLoginListener) {
 //        Logger.d(user1Info.toString());
-        OkMaster.post(F.url.login)
-                .parames("user1Info.userName" , user1Info.getUserName())
-                .parames("user1Info.password" , user1Info.getPassword())
-                .parames("user1Info.mac" ,user1Info.getMac())
-                .parames("user1Info.ethernetMac",user1Info.getEthernetMac())
-                .parames("user1Info.country" ,user1Info.getCountry())
-                .parames("user1Info.region" ,user1Info.getRegion())
-                .parames("user1Info.timeZone" ,user1Info.getTimeZone())
-                .parames("user1Info.city" ,user1Info.getCity())
+        OkMaster.post(F.url.user_login)
+                .parames("username" , authRegisterUserInfo.getUsername())
+                .parames("password" , authRegisterUserInfo.getPassword())
+                .parames("mac" ,authRegisterUserInfo.getMac())
                 .enqueue(new StringListener() {
                     @Override
                     public void onSuccess(String s) throws IOException {
                         if(s == null){
                             return;
                         }
-                        Result result = new Gson().fromJson(s , new TypeToken<Result>(){}.getType());
-                        onLoginListener.onSuccess(result);
+                        ResultInfo<AuthRegisterUserInfo> resultInfo = new Gson().fromJson(s ,
+                                new TypeToken<ResultInfo<AuthRegisterUserInfo>>(){}.getType());
+                        onLoginListener.onSuccess(resultInfo);
                     }
 
                     @Override

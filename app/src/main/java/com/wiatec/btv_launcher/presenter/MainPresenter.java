@@ -209,12 +209,14 @@ public class MainPresenter extends BasePresenter<IMainActivity> {
                             String countryCode = response.getString("countryCode");
                             String regionName = response.getString("regionName");
                             String timeZone = response.getString("timezone");
+                            String ip = response.getString("query");
                             // Logger.d(country +"---"+ countryCode +"---"+ city);
-                            SPUtils.put(Application.getContext() , "countryCode",countryCode);
-                            SPUtils.put(Application.getContext() , "country",country);
-                            SPUtils.put(Application.getContext() , "regionName",regionName);
-                            SPUtils.put(Application.getContext() , "timeZone",timeZone);
-                            SPUtils.put(Application.getContext() , "city",city);
+                            SPUtils.put("countryCode",countryCode);
+                            SPUtils.put("country",country);
+                            SPUtils.put("regionName",regionName);
+                            SPUtils.put("timeZone",timeZone);
+                            SPUtils.put("city",city);
+                            SPUtils.put("ip",ip);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

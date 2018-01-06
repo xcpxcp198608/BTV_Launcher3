@@ -7,7 +7,9 @@ import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Utils.OkHttp.Listener.StringListener;
 import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
+import com.wiatec.btv_launcher.bean.AuthRegisterUserInfo;
 import com.wiatec.btv_launcher.bean.Result;
+import com.wiatec.btv_launcher.bean.ResultInfo;
 import com.wiatec.btv_launcher.bean.User1Info;
 
 import java.io.IOException;
@@ -24,23 +26,17 @@ public class RegisterPresenter extends BasePresenter<IRegisterActivity> {
         this.iRegisterActivity = iRegisterActivity;
     }
 
-    public void register (User1Info user1Info , String language){
+    public void register (AuthRegisterUserInfo authRegisterUserInfo , String language){
         try {
-            Logger.d(user1Info.toString());
-            OkMaster.post(F.url.register)
-                    .parames("user1Info.userName",user1Info.getUserName())
-                    .parames("user1Info.firstName",user1Info.getFirstName())
-                    .parames("user1Info.lastName",user1Info.getLastName())
-                    .parames("user1Info.nickName",user1Info.getNickName())
-                    .parames("user1Info.password",user1Info.getPassword())
-                    .parames("user1Info.email",user1Info.getEmail())
-                    .parames("user1Info.phone",user1Info.getPhone())
-                    .parames("user1Info.mac",user1Info.getMac())
-                    .parames("user1Info.ethernetMac", user1Info.getEthernetMac())
-                    .parames("user1Info.country", user1Info.getCountry())
-                    .parames("user1Info.region", user1Info.getRegion())
-                    .parames("user1Info.city", user1Info.getCity())
-                    .parames("user1Info.timeZone", user1Info.getTimeZone())
+            Logger.d(authRegisterUserInfo.toString());
+            OkMaster.post(F.url.user_register)
+                    .parames("username",authRegisterUserInfo.getUsername())
+                    .parames("firstName",authRegisterUserInfo.getFirstName())
+                    .parames("lastName",authRegisterUserInfo.getLastName())
+                    .parames("password",authRegisterUserInfo.getPassword())
+                    .parames("email",authRegisterUserInfo.getEmail())
+                    .parames("phone",authRegisterUserInfo.getPhone())
+                    .parames("mac",authRegisterUserInfo.getMac())
                     .parames("language", language)
                     .enqueue(new StringListener() {
                         @Override
@@ -48,16 +44,16 @@ public class RegisterPresenter extends BasePresenter<IRegisterActivity> {
                             if(s == null){
                                 return;
                             }
-                            Result result = new Gson().fromJson(s , new TypeToken<Result>(){}.getType());
-                            iRegisterActivity.register(result);
+                            ResultInfo<AuthRegisterUserInfo> resultInfo = new Gson().fromJson(s , new TypeToken<ResultInfo<AuthRegisterUserInfo>>(){}.getType());
+                            iRegisterActivity.register(resultInfo);
                         }
 
                         @Override
                         public void onFailure(String e) {
-                            Result result = new Result();
-                            result.setCode(Result.CODE_REGISTER_FAILURE);
-                            result.setStatus(Result.STATUS_REGISTER_FAILURE);
-                            iRegisterActivity.register(result);
+                            ResultInfo<AuthRegisterUserInfo> resultInfo = new ResultInfo<>();
+                            resultInfo.setCode(501);
+                            resultInfo.setMessage("network communication error");
+                            iRegisterActivity.register(resultInfo);
                             Logger.d(e);
 
                         }

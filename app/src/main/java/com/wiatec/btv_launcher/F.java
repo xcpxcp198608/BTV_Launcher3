@@ -4,48 +4,45 @@ import android.os.Environment;
 import android.renderscript.Sampler;
 
 /**
- * constants class
+ * constant
  * Created by PX on 2016-10-10.
  */
 
 public final class F {
     public static final class url {
+
         public static final String base_url = "http://www.ldlegacy.com:8080/";
+//        public static final String panel_base_url = "http://panel.ldlegacy.com:8080/";
 //        public static final String base_url = "http://172.27.0.106:8080/";
+        public static final String panel_base_url = "http://172.27.0.106:8080/";
 
         public static final String updater = base_url+"control_panel/update/get";
+
+        public static final String kodi_video = base_url+"control_panel/kodivideo/get";
+        public static final String kodi_image = base_url+"control_panel/kodiimage/get";
 
         public static final String video = base_url+"control_panel/video/get";
         public static final String ad_video = base_url+"control_panel/advideo/get";
         public static final String boot_ad_video = base_url+"control_panel/bootadvideo/get";
-        public static final String kodi_video = base_url+"control_panel/kodivideo/get";
-
-        public static final String kodi_image = base_url+"control_panel/kodiimage/get";
-
         public static final String splash_image = base_url+"control_panel/adimage/get";
         public static final String roll_image = base_url+"control_panel/rollimage/get";
         public static final String roll_over_image = base_url+"control_panel/rolloverimage/get";
         public static final String opportunity_image = base_url+"control_panel/opportunityimage/get";
         public static final String manual_image = base_url+"control_panel/manualimage/get";
-
         public static final String message = base_url+"control_panel/message/get";
         public static final String message1 = base_url+"control_panel/message1/get";
-        public static final String push_message = base_url+"LDFAM/get";
 
-        public static final String login = base_url+"control_panel/user1/login";
-        public static final String register = base_url+"control_panel/user1/register";
-        public static final String login_repeat_check = base_url+"control_panel/user1/checkRepeat";
-        public static final String reset_p = base_url+"control_panel/user1/requestUpdateP";
-        public static final String upload_data = base_url+"control_panel/userdata/save";
+        public static final String user_login = panel_base_url + "panel/user/login";
+        public static final String user_register = panel_base_url + "panel/user/register";
+        public static final String user_validate = panel_base_url + "panel/user/validate";
+        public static final String user_reset_p = panel_base_url + "panel/user/go_reset";
+        public static final String user_log = panel_base_url + "panel/user/log";
 
-
-        public static final String renter_login = "http://panel.protv.company:8080/panel/rent/login/";
-        public static final String renter_validate = "http://panel.protv.company:8080/panel/rent/validate/";
-
+        public static final String renter_login = panel_base_url + "panel/rent/login/";
+        public static final String renter_validate = panel_base_url + "panel/rent/validate/";
 
         public static final String eufonico = "http://142.4.216.91:8280/";
         public static final String ld_support = "http://www.ldlegacy.com:8899/static/launcher/html/ld_support.html";
-
         public static final String live_play = "http://www.ldlegacy.com:8899/static/launcher/liveplay/com.wiatec.bplay.apk";
     }
 
