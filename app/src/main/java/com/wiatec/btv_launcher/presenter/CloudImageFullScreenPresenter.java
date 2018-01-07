@@ -1,11 +1,10 @@
 package com.wiatec.btv_launcher.presenter;
 
+import com.px.common.utils.Logger;
 import com.wiatec.btv_launcher.Activity.ICloudImageFullScreenActivity;
-import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.data.CloudImageData;
 import com.wiatec.btv_launcher.data.ICloudImageData;
 
-import java.io.File;
 import java.util.List;
 
 /**

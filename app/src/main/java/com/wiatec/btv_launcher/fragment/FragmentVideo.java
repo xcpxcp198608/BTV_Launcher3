@@ -15,22 +15,18 @@ import com.wiatec.btv_launcher.Activity.MenuActivity;
 import com.wiatec.btv_launcher.Activity.Splash1Activity;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.SQL.InstalledAppDao;
-import com.wiatec.btv_launcher.Utils.ApkLaunch;
+import com.px.common.utils.AppUtil;
 import com.wiatec.btv_launcher.adapter.MenuCustomAdapter;
 import com.wiatec.btv_launcher.animator.Zoom;
 import com.wiatec.btv_launcher.bean.InstalledApp;
 
 import java.util.List;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
-
-/**
- * Created by PX on 2016-11-19.
- */
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 public class FragmentVideo extends Fragment {
 
@@ -55,16 +51,16 @@ public class FragmentVideo extends Fragment {
         super.onStart();
         Observable.just(TYPE)
                 .subscribeOn(Schedulers.io())
-                .map(new Func1<String, List<InstalledApp>>() {
+                .map(new Function<String, List<InstalledApp>>() {
                     @Override
-                    public List<InstalledApp> call(String s) {
+                    public List<InstalledApp> apply(String s) {
                         return installedAppDao.queryDataByType(TYPE);
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<InstalledApp>>() {
+                .subscribe(new Consumer<List<InstalledApp>>() {
                     @Override
-                    public void call(final List<InstalledApp> installedApps) {
+                    public void accept(final List<InstalledApp> installedApps) {
                         menuCustomAdapter = new MenuCustomAdapter(activity , installedApps);
                         gv_Video.setAdapter(menuCustomAdapter);
                         gv_Video.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -77,7 +73,7 @@ public class FragmentVideo extends Fragment {
                                 if(position <installedApps.size()){
                                     String packageName = installedApps.get(position).getAppPackageName();
                                     if("com.wiatec.update".equals(packageName)){
-                                        ApkLaunch.launchApkByPackageName(getContext() ,packageName);
+                                        AppUtil.launchApp(getContext() ,packageName);
                                     }else {
                                         Intent intent = new Intent(activity, Splash1Activity.class);
                                         intent.putExtra("packageName", packageName);

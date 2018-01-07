@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
+import com.px.common.image.ImageMaster;
 import com.wiatec.btv_launcher.bean.ImageInfo;
 import com.wiatec.btv_launcher.custom_view.TranslationViewAdapter;
 
@@ -35,10 +36,7 @@ public class TranslationAdapter extends TranslationViewAdapter {
         imageView.setCropToPadding(true);
         int index = position % list.size();
         if (!TextUtils.isEmpty(list.get(index).getUrl())) {
-            Glide.with(container.getContext())
-                    .load(list.get(index).getUrl())
-                    .dontAnimate()
-                    .into(imageView);
+            ImageMaster.load(list.get(index).getUrl(), imageView);
         }
         return imageView;
     }

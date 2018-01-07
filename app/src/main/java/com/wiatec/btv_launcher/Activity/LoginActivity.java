@@ -12,14 +12,14 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.px.common.utils.CommonApplication;
+import com.px.common.utils.Logger;
+import com.px.common.utils.SPUtil;
 import com.wiatec.btv_launcher.Application;
+import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.R;
-import com.wiatec.btv_launcher.Utils.Logger;
-import com.wiatec.btv_launcher.Utils.SPUtils;
 import com.wiatec.btv_launcher.bean.AuthRegisterUserInfo;
-import com.wiatec.btv_launcher.bean.Result;
 import com.wiatec.btv_launcher.bean.ResultInfo;
-import com.wiatec.btv_launcher.bean.User1Info;
 import com.wiatec.btv_launcher.presenter.LoginPresenter;
 
 import butterknife.BindView;
@@ -78,9 +78,9 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
     @Override
     protected void onStart() {
         super.onStart();
-        boolean isRenter = (boolean) SPUtils.get(LoginActivity.this , "isRenter" ,true);
+        boolean isRenter = (boolean) SPUtil.get(F.sp.is_renter ,true);
         if(!isRenter) {
-            userName = (String) SPUtils.get(LoginActivity.this, "userName", "");
+            userName = (String) SPUtil.get(F.sp.username, "");
             etUserName.setText(userName);
             etUserName.setSelection(userName.length());
         }
@@ -96,7 +96,7 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
                     AuthRegisterUserInfo authRegisterUserInfo = new AuthRegisterUserInfo();
                     authRegisterUserInfo.setUsername(userName);
                     authRegisterUserInfo.setPassword(password);
-                    authRegisterUserInfo.setMac((String) SPUtils.get(LoginActivity.this,"ethernetMac",""));
+                    authRegisterUserInfo.setMac((String) SPUtil.get(F.sp.ethernet_mac,""));
                     presenter.login(authRegisterUserInfo);
                     progressBar.setVisibility(View.VISIBLE);
                 }else{
@@ -136,16 +136,16 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
         Logger.d(resultInfo.toString());
         if (resultInfo.getCode() == 200) {
             progressBar.setVisibility(View.GONE);
-            Toast.makeText(Application.getContext(), "login success", Toast.LENGTH_LONG).show();
+            Toast.makeText(CommonApplication.context, "login success", Toast.LENGTH_LONG).show();
             AuthRegisterUserInfo authRegisterUserInfo = resultInfo.getData();
-            SPUtils.put(LoginActivity.this,"userName", authRegisterUserInfo.getUsername());
-            SPUtils.put(LoginActivity.this,"token", authRegisterUserInfo.getToken());
-            SPUtils.put(LoginActivity.this,"lastName", authRegisterUserInfo.getLastName());
-            SPUtils.put(LoginActivity.this,"userLevel", authRegisterUserInfo.getLevel()+"");
+            SPUtil.put(F.sp.username, authRegisterUserInfo.getUsername());
+            SPUtil.put(F.sp.token, authRegisterUserInfo.getToken());
+            SPUtil.put(F.sp.last_name, authRegisterUserInfo.getLastName());
+            SPUtil.put(F.sp.level, authRegisterUserInfo.getLevel()+"");
             finish();
         } else {
             progressBar.setVisibility(View.GONE);
-            Toast.makeText(Application.getContext(), resultInfo.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(CommonApplication.context, resultInfo.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -154,7 +154,7 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
         progressBar1.setVisibility(View.GONE);
         if(resultInfo ==null) return;
         Logger.d(resultInfo.toString());
-        Toast.makeText(Application.getContext(), resultInfo.getMessage(), Toast.LENGTH_LONG).show();
+        Toast.makeText(CommonApplication.context, resultInfo.getMessage(), Toast.LENGTH_LONG).show();
         llResetPassword.setVisibility(View.GONE);
         llLogin.setVisibility(View.VISIBLE);
     }

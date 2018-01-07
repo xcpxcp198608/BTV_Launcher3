@@ -1,7 +1,5 @@
 package com.wiatec.btv_launcher;
 
-import com.wiatec.btv_launcher.Utils.RegularUtil;
-
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -19,6 +17,5 @@ public class ExampleUnitTest {
 
     @Test
     public void regularEmail(){
-        assertEquals(true, RegularUtil.validateEmail("sff-s.d_f@gmail.com.cn"));
     }
 }

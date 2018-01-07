@@ -5,8 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.ImageView;
 
+import com.px.common.utils.NetUtil;
 import com.wiatec.btv_launcher.R;
-import com.wiatec.btv_launcher.Utils.SystemConfig;
 
 /**
  * Created by PX on 2016-11-12.
@@ -28,7 +28,7 @@ public class NetworkStatusReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         showNetworkStatus(context);
-        if(SystemConfig.isNetworkConnected(context)){
+        if(NetUtil.isConnected()){
             if(onNetworkStatusListener !=null){
                 onNetworkStatusListener.onConnected(true);
             }
@@ -41,7 +41,7 @@ public class NetworkStatusReceiver extends BroadcastReceiver {
         if(imageView ==null){
             return;
         }
-        int i = SystemConfig.networkConnectType(context);
+        int i = NetUtil.networkConnectType();
         switch (i) {
             case 0:
                 imageView.setImageResource(R.drawable.disconnect);

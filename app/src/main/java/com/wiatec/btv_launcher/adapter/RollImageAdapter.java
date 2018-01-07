@@ -6,13 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.jude.rollviewpager.adapter.StaticPagerAdapter;
+import com.px.common.image.ImageMaster;
 import com.wiatec.btv_launcher.R;
-import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.animator.Zoom;
 import com.wiatec.btv_launcher.bean.ImageInfo;
-import com.wiatec.btv_launcher.bean.RollImageInfo;
 
 import java.util.List;
 
@@ -38,9 +36,7 @@ public class RollImageAdapter extends StaticPagerAdapter {
         if(imageInfo == null){
             return imageView;
         }
-        Glide.with(container.getContext()).load(imageInfo.getUrl())
-                .placeholder(R.drawable.follow)
-                .into(imageView);
+        ImageMaster.load(imageInfo.getUrl(), imageView, R.drawable.follow);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageView.setCropToPadding(true);
         imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT ,ViewGroup.LayoutParams.MATCH_PARENT));

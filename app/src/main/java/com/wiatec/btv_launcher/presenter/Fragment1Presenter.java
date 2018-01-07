@@ -3,15 +3,14 @@ package com.wiatec.btv_launcher.presenter;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.wiatec.btv_launcher.Application;
+import com.px.common.utils.CommonApplication;
+import com.px.common.utils.Logger;
+import com.px.common.utils.SPUtil;
 import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.R;
-import com.wiatec.btv_launcher.Utils.ApkCheck;
-import com.wiatec.btv_launcher.Utils.ApkLaunch;
-import com.wiatec.btv_launcher.Utils.Logger;
-import com.wiatec.btv_launcher.Utils.SPUtils;
+import com.px.common.utils.AppUtil;
 import com.wiatec.btv_launcher.bean.ImageInfo;
-import com.wiatec.btv_launcher.bean.UserDataInfo;
+import com.wiatec.btv_launcher.bean.UserLogInfo;
 import com.wiatec.btv_launcher.bean.VideoInfo;
 import com.wiatec.btv_launcher.data.CloudImageData;
 import com.wiatec.btv_launcher.data.ICloudImageData;
@@ -119,6 +118,7 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
 
                     @Override
                     public void onFailure(String e) {
+                        iFragment1.loadVideo(null);
                         Logger.d(e);
                     }
                 });
@@ -128,7 +128,7 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
         }
     }
 
-    public void uploadHoldTime(UserDataInfo userDataInfo){
+    public void uploadHoldTime(UserLogInfo userDataInfo){
         try {
             if(uploadTimeData!= null) {
                 uploadTimeData.upload(userDataInfo);
@@ -139,21 +139,21 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
     }
 
     public void check(final String packageName , final Context context){
-        if(!ApkCheck.isApkInstalled(context, packageName)){
+        if(!AppUtil.isInstalled(packageName)){
             if(F.package_name.bplay.equals(packageName)){
                 iFragment1.showLivePlayDownloadDialog();
             }else{
-                Toast.makeText(Application.getContext(), Application.getContext().getString(R.string.download_guide),
+                Toast.makeText(CommonApplication.context, CommonApplication.context.getString(R.string.download_guide),
                         Toast.LENGTH_LONG).show();
-                ApkLaunch.launchApkByPackageName(context, F.package_name.market);
+                AppUtil.launchApp(context, F.package_name.market);
             }
         }else{
-            String l = (String) SPUtils.get(Application.getContext() , "userLevel" , "1");
+            String l = (String) SPUtil.get("userLevel" , "1");
             int level = Integer.parseInt(l);
             if(level >= 1 ){
-                ApkLaunch.launchApkByPackageName(context, packageName);
+                AppUtil.launchApp(context, packageName);
             }else{
-                Toast.makeText(Application.getContext() , Application.getContext().getString(R.string.account_error) ,
+                Toast.makeText(CommonApplication.context , CommonApplication.context.getString(R.string.account_error) ,
                         Toast.LENGTH_LONG).show();
             }
         }

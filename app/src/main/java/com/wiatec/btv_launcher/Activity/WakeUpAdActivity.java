@@ -1,34 +1,31 @@
 package com.wiatec.btv_launcher.Activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.px.common.utils.SPUtil;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.R;
-import com.wiatec.btv_launcher.Utils.Logger;
-import com.wiatec.btv_launcher.Utils.SPUtils;
 
 import java.util.concurrent.TimeUnit;
 
-import rx.Observable;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * Created by patrick on 2017/3/3.
@@ -41,7 +38,7 @@ public class WakeUpAdActivity extends AppCompatActivity implements View.OnClickL
     private TextView tvTimeDelay ,tvTime;
     private int time ;
     private Button btSkip;
-    private Subscription subscription;
+    private Disposable disposable;
     private static final int SKIP_TIME = 15;
 
     @Override
@@ -56,14 +53,14 @@ public class WakeUpAdActivity extends AppCompatActivity implements View.OnClickL
         AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         int index = (int) (audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)*0.2);
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC , index , 0);
-        time = (int) SPUtils.get(WakeUpAdActivity.this , "bootAdVideoTime" , 0);
+        time = (int) SPUtil.get(F.sp.ad_boot_video_time , 0);
         btSkip.setOnClickListener(this);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        String l = (String) SPUtils.get(Application.getContext() , "userLevel" , "1");
+        String l = (String) SPUtil.get(F.sp.level , "1");
         final int userLevel = Integer.parseInt(l);
         if(userLevel >= 3){
             skipAds();
@@ -91,12 +88,12 @@ public class WakeUpAdActivity extends AppCompatActivity implements View.OnClickL
         });
         if(time >0){
             llDelay.setVisibility(View.VISIBLE);
-            subscription = Observable.interval(0,1 , TimeUnit.SECONDS).take(time)
+            disposable = Observable.interval(0,1 , TimeUnit.SECONDS).take(time)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<Long>() {
+                    .subscribe(new Consumer<Long>() {
                         @Override
-                        public void call(Long aLong) {
+                        public void accept(Long aLong) {
                             int i = (int) (time -1 - aLong);
                             tvTimeDelay.setText(i+" s");
                             if(userLevel == 2){
@@ -119,8 +116,8 @@ public class WakeUpAdActivity extends AppCompatActivity implements View.OnClickL
         if(vvWake != null ){
             vvWake.stopPlayback();
         }
-        if(subscription != null){
-            subscription.unsubscribe();
+        if(disposable != null){
+            disposable.dispose();
         }
         finish();
     }
@@ -140,8 +137,8 @@ public class WakeUpAdActivity extends AppCompatActivity implements View.OnClickL
         if(vvWake != null ){
             vvWake.stopPlayback();
         }
-        if(subscription != null){
-            subscription.unsubscribe();
+        if(disposable != null){
+            disposable.dispose();
         }
     }
 
@@ -151,8 +148,8 @@ public class WakeUpAdActivity extends AppCompatActivity implements View.OnClickL
         if(vvWake != null ){
             vvWake.stopPlayback();
         }
-        if(subscription != null){
-            subscription.unsubscribe();
+        if(disposable != null){
+            disposable.dispose();
         }
     }
 
@@ -162,8 +159,8 @@ public class WakeUpAdActivity extends AppCompatActivity implements View.OnClickL
         if(vvWake != null ){
             vvWake.stopPlayback();
         }
-        if(subscription != null){
-            subscription.unsubscribe();
+        if(disposable != null){
+            disposable.dispose();
         }
     }
 

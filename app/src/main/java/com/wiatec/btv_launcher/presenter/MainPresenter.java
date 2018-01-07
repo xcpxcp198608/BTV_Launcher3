@@ -2,17 +2,16 @@ package com.wiatec.btv_launcher.presenter;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.px.common.http.HttpMaster;
+import com.px.common.http.Listener.StringListener;
+import com.px.common.utils.CommonApplication;
+import com.px.common.utils.Logger;
+import com.px.common.utils.NetUtil;
+import com.px.common.utils.SPUtil;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.SQL.MessageDao;
-import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.Activity.IMainActivity;
-import com.wiatec.btv_launcher.Utils.OkHttp.Bean.DownloadInfo;
-import com.wiatec.btv_launcher.Utils.OkHttp.Listener.DownloadListener;
-import com.wiatec.btv_launcher.Utils.OkHttp.Listener.StringListener;
-import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
-import com.wiatec.btv_launcher.Utils.SPUtils;
-import com.wiatec.btv_launcher.Utils.SystemConfig;
 import com.wiatec.btv_launcher.bean.Message1Info;
 import com.wiatec.btv_launcher.bean.MessageInfo;
 import com.wiatec.btv_launcher.bean.UpdateInfo;
@@ -31,7 +30,6 @@ import com.wiatec.btv_launcher.data.WeatherData;
 import com.wiatec.btv_launcher.service_task.LoadInstalledApp;
 import com.wiatec.btv_launcher.service_task.LoadKodiData;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -81,7 +79,7 @@ public class MainPresenter extends BasePresenter<IMainActivity> {
         }
     }
 
-    public void loadVideo (){
+    public void loadAdVideo(){
         try {
             if(iBootAdVideoData != null){
                 iBootAdVideoData.loadData(new IBootAdVideoData.OnLoadListener() {
@@ -126,6 +124,7 @@ public class MainPresenter extends BasePresenter<IMainActivity> {
 
                     @Override
                     public void onFailure(String e) {
+                        iMainActivity.loadUpdate(null);
                         Logger.d(e);
                     }
                 });
@@ -168,9 +167,9 @@ public class MainPresenter extends BasePresenter<IMainActivity> {
 
     public void loadMessage(){
         try {
-            final MessageDao messageDao = MessageDao.getInstance(Application.getContext());
-            OkMaster.get(F.url.message)
-                    .parames("deviceInfo.countryCode", SPUtils.get(Application.getContext() , "countryCode" , ""))
+            final MessageDao messageDao = MessageDao.getInstance(CommonApplication.context);
+            HttpMaster.get(F.url.message)
+                    .param("deviceInfo.countryCode", SPUtil.get("countryCode" , ""))
                     .enqueue(new StringListener() {
                         @Override
                         public void onSuccess(String s) throws IOException {
@@ -198,7 +197,7 @@ public class MainPresenter extends BasePresenter<IMainActivity> {
 
     public void loadLocation(){
         String url = "http://ip-api.com/json";
-        OkMaster.get(url)
+        HttpMaster.get(url)
                 .enqueue(new StringListener() {
                     @Override
                     public void onSuccess(String s) throws IOException {
@@ -211,12 +210,12 @@ public class MainPresenter extends BasePresenter<IMainActivity> {
                             String timeZone = response.getString("timezone");
                             String ip = response.getString("query");
                             // Logger.d(country +"---"+ countryCode +"---"+ city);
-                            SPUtils.put("countryCode",countryCode);
-                            SPUtils.put("country",country);
-                            SPUtils.put("regionName",regionName);
-                            SPUtils.put("timeZone",timeZone);
-                            SPUtils.put("city",city);
-                            SPUtils.put("ip",ip);
+                            SPUtil.put("countryCode",countryCode);
+                            SPUtil.put("country",country);
+                            SPUtil.put("regionName",regionName);
+                            SPUtil.put("timeZone",timeZone);
+                            SPUtil.put("city",city);
+                            SPUtil.put("ip",ip);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -230,46 +229,46 @@ public class MainPresenter extends BasePresenter<IMainActivity> {
     }
 
     public void downloadAdVideo (String name , String url){
-        if(!SystemConfig.isNetworkConnected(Application.getContext())){
+        if(!NetUtil.isConnected()){
             return;
         }
-        OkMaster.download(Application.getContext())
+        HttpMaster.download(CommonApplication.context)
                 .path(F.path.download)
                 .name(name)
                 .url(url)
-                .startDownload(new DownloadListener() {
+                .startDownload(new com.px.common.http.Listener.DownloadListener() {
                     @Override
-                    public void onPending(DownloadInfo downloadInfo) {
+                    public void onPending(com.px.common.http.Bean.DownloadInfo downloadInfo) {
 
                     }
 
                     @Override
-                    public void onStart(DownloadInfo downloadInfo) {
+                    public void onStart(com.px.common.http.Bean.DownloadInfo downloadInfo) {
 
                     }
 
                     @Override
-                    public void onPause(DownloadInfo downloadInfo) {
+                    public void onPause(com.px.common.http.Bean.DownloadInfo downloadInfo) {
 
                     }
 
                     @Override
-                    public void onProgress(DownloadInfo downloadInfo) {
+                    public void onProgress(com.px.common.http.Bean.DownloadInfo downloadInfo) {
 
                     }
 
                     @Override
-                    public void onFinished(DownloadInfo downloadInfo) {
+                    public void onFinished(com.px.common.http.Bean.DownloadInfo downloadInfo) {
 
                     }
 
                     @Override
-                    public void onCancel(DownloadInfo downloadInfo) {
+                    public void onCancel(com.px.common.http.Bean.DownloadInfo downloadInfo) {
 
                     }
 
                     @Override
-                    public void onError(DownloadInfo downloadInfo) {
+                    public void onError(com.px.common.http.Bean.DownloadInfo downloadInfo) {
 
                     }
                 });

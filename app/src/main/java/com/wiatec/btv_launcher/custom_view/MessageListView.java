@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
 import android.widget.ListView;
-import com.wiatec.btv_launcher.Utils.Logger;
 
 import java.lang.ref.WeakReference;
 import java.util.Timer;

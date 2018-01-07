@@ -17,8 +17,7 @@ import android.widget.TextView;
 
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.SQL.MessageDao;
-import com.wiatec.btv_launcher.Utils.ApkCheck;
-import com.wiatec.btv_launcher.Utils.ApkLaunch;
+import com.px.common.utils.AppUtil;
 import com.wiatec.btv_launcher.adapter.MessageAdapter;
 import com.wiatec.btv_launcher.bean.MessageInfo;
 import com.wiatec.btv_launcher.presenter.MessagePresenter;
@@ -28,15 +27,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
-
-/**
- * Created by PX on 2016-11-14.
- */
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 public class Message1Activity extends Base1Activity<IMessageActivity, MessagePresenter> implements IMessageActivity {
 
@@ -74,16 +69,16 @@ public class Message1Activity extends Base1Activity<IMessageActivity, MessagePre
         super.onResume();
         Observable.just("")
                 .subscribeOn(Schedulers.io())
-                .map(new Func1<String, List<MessageInfo>>() {
+                .map(new Function<String, List<MessageInfo>>() {
                     @Override
-                    public List<MessageInfo> call(String s) {
+                    public List<MessageInfo> apply(String s) {
                         return messageDao.queryUnreadMessage();
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<MessageInfo>>() {
+                .subscribe(new Consumer<List<MessageInfo>>() {
                     @Override
-                    public void call(final List<MessageInfo> messageInfos) {
+                    public void accept(final List<MessageInfo> messageInfos) {
                         messageAdapter = new MessageAdapter(Message1Activity.this, messageInfos);
                         lv_Message.setAdapter(messageAdapter);
                         lv_Message.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -126,8 +121,8 @@ public class Message1Activity extends Base1Activity<IMessageActivity, MessagePre
             bt_Popup.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(ApkCheck.isApkInstalled(Message1Activity.this ,messageInfo.getLink())){
-                        ApkLaunch.launchApkByPackageName(Message1Activity.this , messageInfo.getLink());
+                    if(AppUtil.isInstalled(messageInfo.getLink())){
+                        AppUtil.launchApp(Message1Activity.this , messageInfo.getLink());
                     }
                     popupWindow.dismiss();
                 }

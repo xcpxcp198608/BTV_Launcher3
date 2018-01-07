@@ -13,15 +13,14 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.px.common.utils.CommonApplication;
+import com.px.common.utils.Logger;
+import com.px.common.utils.SPUtil;
 import com.wiatec.btv_launcher.Application;
+import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.R;
-import com.wiatec.btv_launcher.Utils.Logger;
-import com.wiatec.btv_launcher.Utils.RegularUtil;
-import com.wiatec.btv_launcher.Utils.SPUtils;
 import com.wiatec.btv_launcher.bean.AuthRegisterUserInfo;
-import com.wiatec.btv_launcher.bean.Result;
 import com.wiatec.btv_launcher.bean.ResultInfo;
-import com.wiatec.btv_launcher.bean.User1Info;
 import com.wiatec.btv_launcher.presenter.RegisterPresenter;
 
 import butterknife.BindView;
@@ -197,7 +196,7 @@ public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterP
         authRegisterUserInfo.setPassword(password);
         authRegisterUserInfo.setEmail(email);
         authRegisterUserInfo.setPhone(phone);
-        authRegisterUserInfo.setMac((String) SPUtils.get(RegisterActivity.this,"ethernetMac",""));
+        authRegisterUserInfo.setMac((String) SPUtil.get(F.sp.ethernet_mac,""));
         presenter.register(authRegisterUserInfo ,language);
         progressBar.setVisibility(View.VISIBLE);
     }
@@ -208,10 +207,10 @@ public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterP
         if(resultInfo == null) return;
         Logger.d(resultInfo.toString());
         if (resultInfo.getCode() == 200) {
-            SPUtils.put(RegisterActivity.this, "userName", userName);
-            SPUtils.put(RegisterActivity.this, "firstName", firstName);
-            SPUtils.put(RegisterActivity.this, "lastName", lastName);
-            Toast.makeText(Application.getContext(), getString(R.string.register_success), Toast.LENGTH_LONG).show();
+            SPUtil.put(F.sp.username, userName);
+            SPUtil.put(F.sp.first_name, firstName);
+            SPUtil.put(F.sp.last_name, lastName);
+            Toast.makeText(CommonApplication.context, getString(R.string.register_success), Toast.LENGTH_LONG).show();
             finish();
         } else {
             Toast.makeText(this, resultInfo.getMessage(), Toast.LENGTH_LONG).show();

@@ -14,11 +14,12 @@ import com.wiatec.btv_launcher.bean.InstalledApp;
 
 import java.util.List;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * Created by PX on 2016-11-19.
@@ -45,16 +46,16 @@ public class AppSelectActivity extends BaseActivity {
         super.onStart();
         Observable.just(type)
                 .subscribeOn(Schedulers.io())
-                .map(new Func1<String, List<InstalledApp>>() {
+                .map(new Function<String, List<InstalledApp>>() {
                     @Override
-                    public List<InstalledApp> call(String s) {
+                    public List<InstalledApp> apply(String s) {
                         return installedAppDao.queryData();
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<InstalledApp>>() {
+                .subscribe(new Consumer<List<InstalledApp>>() {
                     @Override
-                    public void call(final List<InstalledApp> installedApps) {
+                    public void accept(final List<InstalledApp> installedApps) {
                         appSelectAdapter = new AppSelectAdapter(AppSelectActivity.this ,installedApps ,type);
                         lv_AppSelect.setAdapter(appSelectAdapter);
                         lv_AppSelect.setOnItemClickListener(new AdapterView.OnItemClickListener() {

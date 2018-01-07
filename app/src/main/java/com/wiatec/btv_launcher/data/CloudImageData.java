@@ -1,5 +1,6 @@
 package com.wiatec.btv_launcher.data;
 
+import com.px.common.utils.CommonApplication;
 import com.wiatec.btv_launcher.Application;
 import java.io.File;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public class CloudImageData implements ICloudImageData {
     @Override
     public void loadData(final OnLoadListener onLoadListener) {
         try{
-            File file = Application.getContext().getExternalFilesDir("images");
+            File file = CommonApplication.context.getExternalFilesDir("images");
             if(!file.exists()){
                 onLoadListener.onFailure("file not exists");
                 return;

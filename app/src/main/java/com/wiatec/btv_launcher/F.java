@@ -58,8 +58,6 @@ public final class F {
                 +"/Android/data/org.xbmc.kodi/files/.kodi/addons/skin.beyondtv/backgrounds/";
         public static final String kodi_video_path = Environment.getExternalStorageDirectory().getAbsolutePath()
         +"/Android/data/org.xbmc.kodi/files/.kodi/addons/skin.beyondtv/extras/Intro/";
-
-        public static final String live_play = "http://appota.gobeyondtv.co:8083/update/com.wiatec.bplay.apk";
     }
 
     public static final class package_name {
@@ -87,5 +85,25 @@ public final class F {
 
     public static final class file_name {
         public static final String live_play= "com.wiatec.bplay.apk";
+    }
+
+    public static final class sp {
+        public static final String username= "userName";
+        public static final String level= "userLevel";
+        public static final String token= "token";
+        public static final String first_name= "firstName";
+        public static final String last_name= "lastName";
+        public static final String mac= "mac";
+        public static final String ethernet_mac= "ethernetMac";
+        public static final String country= "country";
+        public static final String country_code= "countryCode";
+        public static final String region_name= "regionName";
+        public static final String city= "city";
+        public static final String time_zone= "timeZone";
+        public static final String is_renter= "isRenter";
+        public static final String rental_category= "rentalCategory";
+        public static final String ad_time= "adTime";
+        public static final String ad_video_time= "adVideoTime";
+        public static final String ad_boot_video_time= "bootAdVideoTime";
     }
 }

@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 
 import com.bumptech.glide.Glide;
+import com.px.common.image.ImageMaster;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.custom_view.MultiImage;
 import com.wiatec.btv_launcher.presenter.CloudImageFullScreenPresenter;
@@ -31,7 +32,7 @@ public class CloudImageFullScreen1Activity extends Base1Activity<ICloudImageFull
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cloud_image_full_screen);
-        multiImage = (MultiImage) findViewById(R.id.multi_image);
+        multiImage = findViewById(R.id.multi_image);
         cloudImagePosition = getIntent().getIntExtra("cloudImagePosition",0);
     }
 
@@ -53,12 +54,7 @@ public class CloudImageFullScreen1Activity extends Base1Activity<ICloudImageFull
                 return;
             }
             String path = mList.get(position);
-            Glide.with(CloudImageFullScreen1Activity.this)
-                    .load(path)
-                    .placeholder(R.drawable.ld_cloud_icon_3)
-                    .error(R.drawable.ld_cloud_icon_3)
-                    .dontAnimate()
-                    .into(multiImage);
+            ImageMaster.load(path, multiImage, R.drawable.ld_cloud_icon_3);
         }
     }
 

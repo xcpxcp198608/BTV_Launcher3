@@ -5,11 +5,11 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.text.TextUtils;
 
-import com.wiatec.btv_launcher.Application;
+import com.px.common.http.HttpMaster;
+import com.px.common.utils.AppUtil;
+import com.px.common.utils.CommonApplication;
+import com.px.common.utils.Logger;
 import com.wiatec.btv_launcher.F;
-import com.wiatec.btv_launcher.Utils.ApkCheck;
-import com.wiatec.btv_launcher.Utils.Logger;
-import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
 import com.wiatec.btv_launcher.bean.CloudImageInfo;
 import com.wiatec.btv_launcher.bean.CloudInfo;
 import com.wiatec.btv_launcher.bean.TokenInfo;
@@ -22,12 +22,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.Response;
 
 /**
@@ -39,7 +36,7 @@ public class LoadCloud implements Runnable {
     private String path;
 
     public LoadCloud() {
-        path = Application.getContext().getExternalFilesDir("images").getAbsolutePath();
+        path = CommonApplication.context.getExternalFilesDir("images").getAbsolutePath();
     }
 
     @Override
@@ -52,10 +49,10 @@ public class LoadCloud implements Runnable {
     }
 
     private CloudInfo loadCloudToken (){
-        if(!ApkCheck.isApkInstalled(Application.getContext() , F.package_name.cloud)){
+        if(!AppUtil.isInstalled(F.package_name.cloud)){
             return null;
         }
-        ContentResolver contentResolver = Application.getContext().getContentResolver();
+        ContentResolver contentResolver = CommonApplication.context.getContentResolver();
         Uri uri = Uri.parse("content://com.legacydirect.tvphoto.provider.AuthProvider/token");
         Cursor cursor = null;
         CloudInfo cloudInfo = new CloudInfo();
@@ -93,7 +90,7 @@ public class LoadCloud implements Runnable {
             return;
         }
         final String baseUrl = "https://apps.legacydirect.cloud/api/file/get?authcode="+ cloudInfo.getToken()+"&path=";
-        OkMaster.get(cloudInfo.getUrl()).enqueue(new Callback() {
+        HttpMaster.get(cloudInfo.getUrl()).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Logger.d(e.getMessage());
@@ -124,7 +121,7 @@ public class LoadCloud implements Runnable {
                                 imageInfo.setName(name);
                                 imageInfo.setPath(path);
 //                                Logger.d(imageInfo.toString());
-                                OkMaster.download(Application.getContext()).path(imageInfo.getPath())
+                                HttpMaster.download(CommonApplication.context).path(imageInfo.getPath())
                                         .name(imageInfo.getName())
                                         .url(imageInfo.getUrl())
                                         .startDownload(null);

@@ -8,14 +8,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.px.common.http.Bean.DownloadInfo;
+import com.px.common.http.HttpMaster;
+import com.px.common.http.Listener.DownloadListener;
+import com.px.common.utils.AppUtil;
 import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.R;
-import com.wiatec.btv_launcher.Utils.ApkCheck;
-import com.wiatec.btv_launcher.Utils.ApkInstall;
-import com.wiatec.btv_launcher.Utils.FileCheck;
-import com.wiatec.btv_launcher.Utils.OkHttp.Bean.DownloadInfo;
-import com.wiatec.btv_launcher.Utils.OkHttp.Listener.DownloadListener;
-import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
+import com.px.common.utils.FileUtil;
 import com.wiatec.btv_launcher.bean.UpdateInfo;
 
 import java.io.File;
@@ -50,16 +49,16 @@ public class UpdateActivity extends AppCompatActivity {
             return;
         }
         String fileName = updateInfo.getFileName();
-        if(FileCheck.isFileExists(F.path.download ,fileName)){
-            if(ApkCheck.isApkCanInstalled(UpdateActivity.this , F.path.download , fileName)){
-                int localFileCode = ApkCheck.getApkFileVersionCode(UpdateActivity.this , F.path.download , fileName);
+        if(FileUtil.isExists(F.path.download ,fileName)){
+            if(AppUtil.isApkCanInstall(F.path.download , fileName)){
+                int localFileCode = AppUtil.getApkVersionCode(F.path.download , fileName);
                 boolean isNeedDownload = updateInfo.getCode() > localFileCode;
                 if(isNeedDownload){
                     File file = new File(F.path.download , fileName);
                     file.delete();
                     download(updateInfo);
                 }else {
-                    ApkInstall.installApk(UpdateActivity.this, F.path.download, fileName);
+                    AppUtil.installApk(F.path.download, fileName, "");
                 }
             }else{
                 File file = new File(F.path.download , fileName);
@@ -80,7 +79,7 @@ public class UpdateActivity extends AppCompatActivity {
     }
 
     private void download(final UpdateInfo updateInfo){
-        OkMaster.download(UpdateActivity.this)
+        HttpMaster.download(UpdateActivity.this)
                 .url(updateInfo.getUrl())
                 .name(updateInfo.getFileName())
                 .path(F.path.download)
@@ -111,8 +110,8 @@ public class UpdateActivity extends AppCompatActivity {
                     public void onFinished(DownloadInfo downloadInfo) {
                         pb_Update.setProgress(downloadInfo.getProgress());
                         tv_Progress.setText(downloadInfo.getProgress()+"%");
-                        if(ApkCheck.isApkCanInstalled(UpdateActivity.this ,F.path.download , updateInfo.getFileName())) {
-                            ApkInstall.installApk(UpdateActivity.this, F.path.download, updateInfo.getFileName());
+                        if(AppUtil.isApkCanInstall(F.path.download , updateInfo.getFileName())) {
+                            AppUtil.installApk(F.path.download, updateInfo.getFileName(), "");
                         }else{
                             Toast.makeText(UpdateActivity.this ,getString(R.string.update_error) , Toast.LENGTH_LONG).show();
                         }

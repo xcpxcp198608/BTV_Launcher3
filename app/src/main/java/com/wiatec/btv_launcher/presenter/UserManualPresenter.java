@@ -1,7 +1,7 @@
 package com.wiatec.btv_launcher.presenter;
 
+import com.px.common.utils.Logger;
 import com.wiatec.btv_launcher.Activity.IUserManualActivity;
-import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.bean.ImageInfo;
 import com.wiatec.btv_launcher.data.IManualData;
 import com.wiatec.btv_launcher.data.ManualData;

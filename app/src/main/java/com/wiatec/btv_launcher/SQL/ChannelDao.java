@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.px.common.utils.CommonApplication;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.bean.ChannelInfo;
 
@@ -18,7 +19,7 @@ public class ChannelDao {
     private SQLiteDatabase sqLiteDatabase;
 
     private ChannelDao(){
-        sqLiteDatabase = new SQLiteHelper(Application.getContext()).getWritableDatabase();
+        sqLiteDatabase = new SQLiteHelper(CommonApplication.context).getWritableDatabase();
     }
 
     private volatile static ChannelDao instance;

@@ -1,6 +1,6 @@
 package com.wiatec.btv_launcher.presenter;
 
-import com.wiatec.btv_launcher.Utils.Logger;
+import com.px.common.utils.Logger;
 import com.wiatec.btv_launcher.Activity.IWeatherActivity;
 import com.wiatec.btv_launcher.bean.WeatherInfo;
 import com.wiatec.btv_launcher.data.IWeatherData;

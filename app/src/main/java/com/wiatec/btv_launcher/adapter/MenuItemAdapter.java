@@ -1,7 +1,6 @@
 package com.wiatec.btv_launcher.adapter;
 
 import android.content.Context;
-import android.content.pm.ResolveInfo;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.px.common.utils.AppUtil;
 import com.wiatec.btv_launcher.bean.InstalledApp;
 import com.wiatec.btv_launcher.R;
-import com.wiatec.btv_launcher.Utils.ApkCheck;
 
 import java.util.List;
 
@@ -57,7 +56,7 @@ public class MenuItemAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         InstalledApp installedApp = list.get(position);
-        viewHolder.imageView.setImageDrawable(ApkCheck.getInstalledApkIcon(context,installedApp.getAppPackageName()));
+        viewHolder.imageView.setImageDrawable(AppUtil.getIcon(installedApp.getAppPackageName()));
         viewHolder.textView.setText(installedApp.getAppName());
         return convertView;
     }

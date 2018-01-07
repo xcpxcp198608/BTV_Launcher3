@@ -12,24 +12,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import com.wiatec.btv_launcher.Application;
+import com.px.common.utils.CommonApplication;
+import com.px.common.utils.SPUtil;
 import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.R;
-import com.wiatec.btv_launcher.Utils.ApkCheck;
-import com.wiatec.btv_launcher.Utils.ApkLaunch;
-import com.wiatec.btv_launcher.Utils.SPUtils;
+import com.px.common.utils.AppUtil;
 
 import java.util.concurrent.TimeUnit;
 
-import rx.Observable;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
-
-/**
- * Created by PX on 2016-11-25.
- */
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 public class PlayAdActivity extends BaseActivity implements View.OnClickListener{
     private VideoView vv_PlayAd;
@@ -37,7 +32,7 @@ public class PlayAdActivity extends BaseActivity implements View.OnClickListener
     private LinearLayout llDelay;
     private TextView tvDelayTime ,tvTime;
     private Button btSkip;
-    private Subscription subscription;
+    private Disposable disposable;
     private String packageName;
     private static final int SKIP_TIME = 15;
 
@@ -51,7 +46,7 @@ public class PlayAdActivity extends BaseActivity implements View.OnClickListener
         tvDelayTime = (TextView) findViewById(R.id.tv_delay_time);
         btSkip = (Button) findViewById(R.id.bt_skip);
         tvTime = (TextView) findViewById(R.id.tv_time);
-        time = (int) SPUtils.get(PlayAdActivity.this , "adVideoTime" , 0);
+        time = (int) SPUtil.get(F.sp.ad_video_time , 0);
         packageName = getIntent().getStringExtra("packageName");
         vv_PlayAd.setVideoPath(F.path.ad_video);
         vv_PlayAd.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
@@ -63,8 +58,8 @@ public class PlayAdActivity extends BaseActivity implements View.OnClickListener
         vv_PlayAd.setOnErrorListener(new MediaPlayer.OnErrorListener() {
             @Override
             public boolean onError(MediaPlayer mp, int what, int extra) {
-                if(ApkCheck.isApkInstalled(PlayAdActivity.this ,packageName)) {
-                    ApkLaunch.launchApkByPackageName(PlayAdActivity.this, packageName);
+                if(AppUtil.isInstalled(packageName)) {
+                    AppUtil.launchApp(PlayAdActivity.this, packageName);
                 }
                 finish();
                 return true;
@@ -75,12 +70,12 @@ public class PlayAdActivity extends BaseActivity implements View.OnClickListener
             public void onCompletion(MediaPlayer mp) {
                 llDelay.setVisibility(View.GONE);
                 release();
-                if(ApkCheck.isApkInstalled(PlayAdActivity.this ,packageName)) {
-                    ApkLaunch.launchApkByPackageName(PlayAdActivity.this, packageName);
+                if(AppUtil.isInstalled(packageName)) {
+                    AppUtil.launchApp(PlayAdActivity.this, packageName);
                 }else{
-                    Toast.makeText(Application.getContext() , Application.getContext().getString(R.string.download_guide),
+                    Toast.makeText(CommonApplication.context , CommonApplication.context.getString(R.string.download_guide),
                             Toast.LENGTH_LONG).show();
-                    ApkLaunch.launchApkByPackageName(PlayAdActivity.this, F.package_name.market);
+                    AppUtil.launchApp(PlayAdActivity.this, F.package_name.market);
                 }
                 finish();
             }
@@ -91,19 +86,19 @@ public class PlayAdActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void onStart() {
         super.onStart();
-        String l = (String) SPUtils.get(Application.getContext() , "userLevel" , "1");
+        String l = (String) SPUtil.get(F.sp.level , "1");
         final int userLevel = Integer.parseInt(l);
         if(userLevel >= 3){
             skipAds();
         }
         if(time >0){
             llDelay.setVisibility(View.VISIBLE);
-            subscription = Observable.interval(0,1, TimeUnit.SECONDS).take(time)
+            disposable = Observable.interval(0,1, TimeUnit.SECONDS).take(time)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<Long>() {
+                    .subscribe(new Consumer<Long>() {
                         @Override
-                        public void call(Long aLong) {
+                        public void accept(Long aLong) {
                             int i = (int) (time -1 -aLong);
                             tvDelayTime.setText(i +" s");
                             if(userLevel == 2){
@@ -133,12 +128,12 @@ public class PlayAdActivity extends BaseActivity implements View.OnClickListener
 
     public void skipAds(){
         release();
-        if(ApkCheck.isApkInstalled(PlayAdActivity.this ,packageName)) {
-            ApkLaunch.launchApkByPackageName(PlayAdActivity.this, packageName);
+        if(AppUtil.isInstalled(packageName)) {
+            AppUtil.launchApp(PlayAdActivity.this, packageName);
         }else{
-            Toast.makeText(Application.getContext() , Application.getContext().getString(R.string.download_guide),
+            Toast.makeText(CommonApplication.context , CommonApplication.context.getString(R.string.download_guide),
                     Toast.LENGTH_LONG).show();
-            ApkLaunch.launchApkByPackageName(PlayAdActivity.this, F.package_name.market);
+            AppUtil.launchApp(PlayAdActivity.this, F.package_name.market);
         }
         finish();
     }
@@ -173,8 +168,8 @@ public class PlayAdActivity extends BaseActivity implements View.OnClickListener
         if(vv_PlayAd != null ){
             vv_PlayAd.stopPlayback();
         }
-        if(subscription != null){
-            subscription.unsubscribe();
+        if(disposable != null){
+            disposable.dispose();
         }
     }
 }

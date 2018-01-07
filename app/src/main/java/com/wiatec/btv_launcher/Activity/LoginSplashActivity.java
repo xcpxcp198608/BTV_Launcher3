@@ -8,24 +8,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.wiatec.btv_launcher.Application;
+import com.px.common.http.Bean.DownloadInfo;
+import com.px.common.http.HttpMaster;
+import com.px.common.http.Listener.DownloadListener;
+import com.px.common.utils.CommonApplication;
+import com.px.common.utils.SPUtil;
 import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.R;
-import com.wiatec.btv_launcher.Utils.ApkCheck;
-import com.wiatec.btv_launcher.Utils.ApkInstall;
-import com.wiatec.btv_launcher.Utils.ApkLaunch;
-import com.wiatec.btv_launcher.Utils.FileCheck;
-import com.wiatec.btv_launcher.Utils.Logger;
-import com.wiatec.btv_launcher.Utils.OkHttp.Bean.DownloadInfo;
-import com.wiatec.btv_launcher.Utils.OkHttp.Listener.DownloadListener;
-import com.wiatec.btv_launcher.Utils.OkHttp.Listener.StringListener;
-import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
-import com.wiatec.btv_launcher.Utils.SPUtils;
-import com.wiatec.btv_launcher.bean.Result;
-
-import java.io.IOException;
+import com.px.common.utils.AppUtil;
+import com.px.common.utils.FileUtil;
 
 /**
  * Created by patrick on 2017/3/31.
@@ -47,8 +38,8 @@ public class LoginSplashActivity extends AppCompatActivity{
     @Override
     protected void onStart() {
         super.onStart();
-        String userName = (String) SPUtils.get(Application.getContext() , "userName" ,"");
-        String token = (String) SPUtils.get(Application.getContext() , "token" ,"");
+        String userName = (String) SPUtil.get(F.sp.username ,"");
+        String token = (String) SPUtil.get(F.sp.token ,"");
         if(TextUtils.isEmpty(userName) || TextUtils.isEmpty(token)){
             startActivity(new Intent(this , LoginActivity.class));
         }else {
@@ -57,23 +48,23 @@ public class LoginSplashActivity extends AppCompatActivity{
     }
 
     private void check(){
-        if(!ApkCheck.isApkInstalled(this, packageName)){
+        if(!AppUtil.isInstalled(packageName)){
             if(F.package_name.bplay.equals(packageName)){
                 showLivePlayDownloadDialog();
             }else{
-                Toast.makeText(Application.getContext(), Application.getContext().getString(R.string.download_guide),
+                Toast.makeText(CommonApplication.context, CommonApplication.context.getString(R.string.download_guide),
                         Toast.LENGTH_LONG).show();
-                ApkLaunch.launchApkByPackageName(this, F.package_name.market);
+                AppUtil.launchApp(this, F.package_name.market);
                 finish();
             }
         }else{
-            String l = (String) SPUtils.get(Application.getContext() , "userLevel" , "1");
+            String l = (String) SPUtil.get(F.sp.level , "1");
             int level = Integer.parseInt(l);
             if(level >= 1) {
-                ApkLaunch.launchApkByPackageName(this, packageName);
+                AppUtil.launchApp(this, packageName);
                 finish();
             } else{
-                Toast.makeText(Application.getContext() , Application.getContext().getString(R.string.account_error) ,
+                Toast.makeText(CommonApplication.context , CommonApplication.context.getString(R.string.account_error) ,
                         Toast.LENGTH_LONG).show();
                 finish();
             }
@@ -89,7 +80,7 @@ public class LoginSplashActivity extends AppCompatActivity{
         progressDialog.setCancelable(false);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progressDialog.show();
-        OkMaster.download(LoginSplashActivity.this).url(F.url.live_play).path(F.path.download).name(F.file_name.live_play)
+        HttpMaster.download(LoginSplashActivity.this).url(F.url.live_play).path(F.path.download).name(F.file_name.live_play)
                 .startDownload(new DownloadListener() {
                     @Override
                     public void onPending(DownloadInfo downloadInfo) {
@@ -115,13 +106,13 @@ public class LoginSplashActivity extends AppCompatActivity{
                     public void onFinished(DownloadInfo downloadInfo) {
                         progressDialog.setProgress(100);
                         progressDialog.dismiss();
-                        if(ApkCheck.isApkCanInstalled(LoginSplashActivity.this, F.path.download, F.file_name.live_play )){
-                            ApkInstall.installApk(LoginSplashActivity.this, F.path.download, F.file_name.live_play);
+                        if(AppUtil.isApkCanInstall(F.path.download, F.file_name.live_play )){
+                            AppUtil.installApk(F.path.download, F.file_name.live_play, "");
                         }else{
-                            if(FileCheck.isFileExists(F.path.download, F.file_name.live_play)){
-                                FileCheck.delete(F.path.download, F.file_name.live_play);
+                            if(FileUtil.isExists(F.path.download, F.file_name.live_play)){
+                                FileUtil.delete(F.path.download, F.file_name.live_play);
                             }
-                            Toast.makeText(Application.getContext(),getString(R.string.update_error),Toast.LENGTH_LONG).show();
+                            Toast.makeText(CommonApplication.context, getString(R.string.update_error),Toast.LENGTH_LONG).show();
                         }
                     }
 

@@ -10,17 +10,19 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.wiatec.btv_launcher.Application;
+import com.px.common.utils.CommonApplication;
+import com.px.common.utils.NetUtil;
+import com.px.common.utils.RxBus;
+import com.px.common.utils.SPUtil;
+import com.px.common.utils.SysUtil;
+import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.R;
-import com.wiatec.btv_launcher.Utils.RxBus;
-import com.wiatec.btv_launcher.Utils.SPUtils;
-import com.wiatec.btv_launcher.Utils.SystemConfig;
-import com.wiatec.btv_launcher.bean.User1Info;
 import com.wiatec.btv_launcher.rxevent.CheckLoginEvent;
 
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+
 
 /**
  * Created by patrick on 2017/3/16.
@@ -28,34 +30,22 @@ import rx.functions.Action1;
 
 public class BaseActivity extends AppCompatActivity {
 
-    protected Subscription checkLoginSubscription;
+    protected Disposable checkLoginDisposable;
     protected boolean isLoginChecking = false;
-    protected User1Info user1Info;
-    protected int currentLoginCount;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        user1Info = new User1Info();
-        String mac = SystemConfig.getWifiMac();
-        String ethernetMac = SystemConfig.getEthernetMac();
-        SPUtils.put(this, "mac", mac);
-        SPUtils.put(this, "ethernetMac", ethernetMac);
-        user1Info.setMac(mac);
-        user1Info.setEthernetMac(ethernetMac);
+        String mac = SysUtil.getWifiMac();
+        String ethernetMac = SysUtil.getEthernetMac();
+        SPUtil.put(F.sp.mac, mac);
+        SPUtil.put(F.sp.ethernet_mac, ethernetMac);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        currentLoginCount = (int) SPUtils.get(this , "currentLoginCount" , 1);
-        user1Info.setUserName((String) SPUtils.get(this , "userName" , " "));
-        user1Info.setToken((String) SPUtils.get(this , "token" , " "));
-        user1Info.setCity((String) SPUtils.get(this , "city" , "1"));
-        user1Info.setCountry((String) SPUtils.get(this , "country" , "1"));
-        user1Info.setRegion((String) SPUtils.get(this , "regionName" , "1"));
-        user1Info.setTimeZone((String) SPUtils.get(this , "timeZone" , "1"));
-        if(!isLoginChecking && SystemConfig.isNetworkConnected(Application.getContext())) {
+        if(!isLoginChecking && NetUtil.isConnected()) {
             checkLoginResult();
         }
     }
@@ -63,33 +53,33 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if(checkLoginSubscription != null){
-            checkLoginSubscription.unsubscribe();
+        if(checkLoginDisposable != null){
+            checkLoginDisposable.dispose();
         }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(checkLoginSubscription != null){
-            checkLoginSubscription.unsubscribe();
+        if(checkLoginDisposable != null){
+            checkLoginDisposable.dispose();
         }
     }
 
     protected void checkLoginResult(){
-        checkLoginSubscription = RxBus.getDefault().toObservable(CheckLoginEvent.class)
+        checkLoginDisposable = RxBus.getDefault().subscribe(CheckLoginEvent.class)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<CheckLoginEvent>() {
+                .subscribe(new Consumer<CheckLoginEvent>() {
                     @Override
-                    public void call(CheckLoginEvent checkLoginEvent) {
-                        if(isLoginChecking){
+                    public void accept(CheckLoginEvent checkLoginEvent) throws Exception {
+                        if (isLoginChecking) {
                             return;
                         }
-                        if(checkLoginEvent.getCode() == CheckLoginEvent.CODE_LOGIN_REPEAT){
+                        if (checkLoginEvent.getCode() == CheckLoginEvent.CODE_LOGIN_REPEAT) {
                             showLoginAgainDialog();
-                            checkLoginSubscription.unsubscribe();
+                            checkLoginDisposable.dispose();
                             isLoginChecking = true;
-                        }else{
+                        } else {
                             //Logger.d("login NORMAL");
                         }
                     }
@@ -117,12 +107,12 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public int getLevel(){
-        String l = (String) SPUtils.get(Application.getContext() , "userLevel" , "1");
+        String l = (String) SPUtil.get(F.sp.level , "1");
         return Integer.parseInt(l);
     }
 
     public void showLimit() {
-        Toast.makeText(Application.getContext(), getString(R.string.account_error),
+        Toast.makeText(CommonApplication.context, getString(R.string.account_error),
                 Toast.LENGTH_LONG).show();
     }
 }

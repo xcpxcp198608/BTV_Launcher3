@@ -1,46 +1,43 @@
 package com.wiatec.btv_launcher.data;
 
+import com.px.common.utils.CommonApplication;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.SQL.WeatherDao;
-import com.wiatec.btv_launcher.Utils.Logger;
-import com.wiatec.btv_launcher.bean.LocationInfo;
 import com.wiatec.btv_launcher.bean.WeatherInfo;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
-
-/**
- * Created by PX on 2016-11-16.
- */
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 public class WeatherData implements  IWeatherData {
+
     @Override
     public void loadData(final OnLoadListener onLoadListener) {
         Observable.just("")
                 .subscribeOn(Schedulers.io())
-                .map(new Func1<String, WeatherInfo>() {
+                .map(new Function<String, WeatherInfo>() {
                     @Override
-                    public WeatherInfo call(String s) {
-                        WeatherInfo w = WeatherDao.getInstance(Application.getContext()).query();
+                    public WeatherInfo apply(String s) {
+                        WeatherInfo w = WeatherDao.getInstance(CommonApplication.context).query();
                         return w;
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<WeatherInfo>() {
+                .subscribe(new Observer<WeatherInfo>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Disposable d) {
 
+                    }
+
+                    @Override
+                    public void onNext(WeatherInfo weatherInfo) {
+                        onLoadListener.onSuccess(weatherInfo);
                     }
 
                     @Override
@@ -49,11 +46,10 @@ public class WeatherData implements  IWeatherData {
                     }
 
                     @Override
-                    public void onNext(WeatherInfo weatherInfo) {
-                        onLoadListener.onSuccess(weatherInfo);
+                    public void onComplete() {
+
                     }
                 });
-
     }
 
 }

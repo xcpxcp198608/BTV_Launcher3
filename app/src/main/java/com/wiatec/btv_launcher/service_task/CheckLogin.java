@@ -4,18 +4,15 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.wiatec.btv_launcher.Activity.RenterActivity;
-import com.wiatec.btv_launcher.Application;
+import com.px.common.http.HttpMaster;
+import com.px.common.http.Listener.StringListener;
+import com.px.common.utils.Logger;
+import com.px.common.utils.NetUtil;
+import com.px.common.utils.RxBus;
+import com.px.common.utils.SPUtil;
 import com.wiatec.btv_launcher.F;
-import com.wiatec.btv_launcher.Utils.Logger;
-import com.wiatec.btv_launcher.Utils.OkHttp.Listener.StringListener;
-import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
-import com.wiatec.btv_launcher.Utils.RxBus;
-import com.wiatec.btv_launcher.Utils.SPUtils;
-import com.wiatec.btv_launcher.Utils.SystemConfig;
 import com.wiatec.btv_launcher.bean.AuthRegisterUserInfo;
 import com.wiatec.btv_launcher.bean.AuthRentUserInfo;
-import com.wiatec.btv_launcher.bean.Result;
 import com.wiatec.btv_launcher.bean.ResultInfo;
 import com.wiatec.btv_launcher.rxevent.CheckLoginEvent;
 
@@ -35,7 +32,7 @@ public class CheckLogin implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            boolean isRenter = (boolean) SPUtils.get(Application.getContext(),"isRenter", false);
+            boolean isRenter = (boolean) SPUtil.get("isRenter", false);
             if(isRenter){
                 rentValidate();
             }else {
@@ -45,19 +42,19 @@ public class CheckLogin implements Runnable {
     }
 
     private void rentValidate(){
-        if(!SystemConfig.isNetworkConnected(Application.getContext())){
+        if(!NetUtil.isConnected()){
             return;
         }
-        String key = (String) SPUtils.get(Application.getContext(),"userName" , "");
-        String ethernetMac = (String) SPUtils.get(Application.getContext() , "ethernetMac" , "");
+        String key = (String) SPUtil.get("userName" , "");
+        String ethernetMac = (String) SPUtil.get("ethernetMac" , "");
         if(TextUtils.isEmpty(key)){
             return;
         }
-        OkMaster.post(F.url.renter_validate + key + "/" + ethernetMac)
-                .parames("country", (String) SPUtils.get(Application.getContext(), "country",""))
-                .parames("region", (String) SPUtils.get(Application.getContext(), "regionName",""))
-                .parames("city", (String) SPUtils.get(Application.getContext(), "city",""))
-                .parames("timeZone", (String) SPUtils.get(Application.getContext(), "timeZone",""))
+        HttpMaster.post(F.url.renter_validate + key + "/" + ethernetMac)
+                .param("country", (String) SPUtil.get("country",""))
+                .param("region", (String) SPUtil.get("regionName",""))
+                .param("city", (String) SPUtil.get("city",""))
+                .param("timeZone", (String) SPUtil.get("timeZone",""))
                 .enqueue(new StringListener() {
                     @Override
                     public void onSuccess(String s) throws IOException {
@@ -71,7 +68,7 @@ public class CheckLogin implements Runnable {
                         }
                         if(resultInfo.getCode() != 200){
                             RxBus.getDefault().post(new CheckLoginEvent(CheckLoginEvent.CODE_LOGIN_REPEAT));
-                            SPUtils.put(Application.getContext(), "userLevel", "0");
+                            SPUtil.put("userLevel", "0");
                             return;
                         }
                         AuthRentUserInfo authRentUserInfo = resultInfo.getData();
@@ -87,7 +84,7 @@ public class CheckLogin implements Runnable {
                         }else{
                             level = "0";
                         }
-                        SPUtils.put(Application.getContext(), "userLevel", level);
+                        SPUtil.put("userLevel", level);
                         if("0".equals(level)){
                             RxBus.getDefault().post(new CheckLoginEvent(CheckLoginEvent.CODE_LOGIN_REPEAT));
                         }
@@ -102,19 +99,19 @@ public class CheckLogin implements Runnable {
     }
 
     public void check(){
-        if(!SystemConfig.isNetworkConnected(Application.getContext())){
+        if(!NetUtil.isConnected()){
             return;
         }
-        String userName = (String) SPUtils.get(Application.getContext(),"userName" , "");
+        String userName = (String) SPUtil.get("userName" , "");
         if(TextUtils.isEmpty(userName)){
             return;
         }
-        OkMaster.post(F.url.user_validate)
-                .parames("username",userName)
-                .parames("country", (String) SPUtils.get(Application.getContext(), "country",""))
-                .parames("region", (String) SPUtils.get(Application.getContext(), "regionName",""))
-                .parames("city", (String) SPUtils.get(Application.getContext(), "city",""))
-                .parames("timeZone", (String) SPUtils.get(Application.getContext(), "timeZone",""))
+        HttpMaster.post(F.url.user_validate)
+                .param("username",userName)
+                .param("country", (String) SPUtil.get("country",""))
+                .param("region", (String) SPUtil.get("regionName",""))
+                .param("city", (String) SPUtil.get("city",""))
+                .param("timeZone", (String) SPUtil.get("timeZone",""))
                 .enqueue(new StringListener() {
                     @Override
                     public void onSuccess(String s) throws IOException {
@@ -128,12 +125,12 @@ public class CheckLogin implements Runnable {
                         }
                         if(resultInfo.getCode() != 200){
                             RxBus.getDefault().post(new CheckLoginEvent(CheckLoginEvent.CODE_LOGIN_REPEAT));
-                            SPUtils.put(Application.getContext(), "userLevel", "0");
+                            SPUtil.put("userLevel", "0");
                             return;
                         }
                         AuthRegisterUserInfo authRegisterUserInfo = resultInfo.getData();
                         String l = authRegisterUserInfo.getLevel()+"";
-                        SPUtils.put(Application.getContext(), "userLevel", l);
+                        SPUtil.put("userLevel", l);
                         if("0".equals(l)){
                             RxBus.getDefault().post(new CheckLoginEvent(CheckLoginEvent.CODE_LOGIN_REPEAT));
                         }

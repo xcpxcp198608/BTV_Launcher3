@@ -4,21 +4,16 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.wiatec.btv_launcher.Application;
+import com.px.common.utils.AppUtil;
+import com.px.common.utils.CommonApplication;
 import com.wiatec.btv_launcher.bean.InstalledApp;
 import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.SQL.InstalledAppDao;
-import com.wiatec.btv_launcher.Utils.ApkCheck;
-import com.wiatec.btv_launcher.Utils.Logger;
 
-import rx.Observable;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
-
-/**
- * Created by PX on 2016-11-11.
- */
+import io.reactivex.Observable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 public class AppInstallReceiver extends BroadcastReceiver {
 
@@ -26,7 +21,7 @@ public class AppInstallReceiver extends BroadcastReceiver {
     private Context mContext;
 
     public AppInstallReceiver() {
-        mContext = Application.getContext();
+        mContext = CommonApplication.context;
         installedAppDao = InstalledAppDao.getInstance(mContext);
     }
 
@@ -37,9 +32,9 @@ public class AppInstallReceiver extends BroadcastReceiver {
             String packageName = intent.getData().getSchemeSpecificPart();
             Observable.just(packageName)
                     .subscribeOn(Schedulers.io())
-                    .map(new Func1<String, Object>() {
+                    .map(new Function<String, Object>() {
                         @Override
-                        public Object call(String s) {
+                        public Object apply(String s) {
                             if(!"com.wiatec.btv_launcher".equals(s) &&
                                     !"com.android.tv.settings".equals(s)&&
                                     !"com.euroandroid.xbox".equals(s)&&
@@ -62,7 +57,7 @@ public class AppInstallReceiver extends BroadcastReceiver {
                                     !F.package_name.btv.equals(s)){
                                 InstalledApp installedApp = new InstalledApp();
                                 installedApp.setAppPackageName(s);
-                                installedApp.setAppName(ApkCheck.getInstalledApkName(mContext,s));
+                                installedApp.setAppName(AppUtil.getLabelName(s));
                                 if(F.package_name.legacy_antivirus.equals(s)){
                                     installedApp.setSequence(1);
                                 }else if (F.package_name.legacy_privacy.equals(s)){
@@ -74,12 +69,12 @@ public class AppInstallReceiver extends BroadcastReceiver {
                                 }
                                 installedAppDao.insertOrUpdateData(installedApp,null);
                             }
-                            return null;
+                            return "";
                         }
                     })
-                    .subscribe(new Action1<Object>() {
+                    .subscribe(new Consumer<Object>() {
                         @Override
-                        public void call(Object o) {
+                        public void accept(Object o) {
 
                         }
                     });
@@ -88,16 +83,16 @@ public class AppInstallReceiver extends BroadcastReceiver {
             String packageName = intent.getData().getSchemeSpecificPart();
             Observable.just(packageName)
                     .subscribeOn(Schedulers.io())
-                    .map(new Func1<String, Object>() {
+                    .map(new Function<String, Object>() {
                         @Override
-                        public Object call(String s) {
+                        public Object apply(String s) {
                             installedAppDao.deleteByPackageName(s);
                             return null;
                         }
                     })
-                    .subscribe(new Action1<Object>() {
+                    .subscribe(new Consumer<Object>() {
                         @Override
-                        public void call(Object o) {
+                        public void accept(Object o) {
 
                         }
                     });

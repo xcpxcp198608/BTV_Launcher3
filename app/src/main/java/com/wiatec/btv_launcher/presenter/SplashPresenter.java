@@ -1,12 +1,10 @@
 package com.wiatec.btv_launcher.presenter;
 
-import com.wiatec.btv_launcher.Utils.Logger;
+import com.px.common.utils.Logger;
 import com.wiatec.btv_launcher.Activity.ISplashActivity;
 import com.wiatec.btv_launcher.bean.ImageInfo;
 import com.wiatec.btv_launcher.data.ISplashImageData;
 import com.wiatec.btv_launcher.data.SplashImageData;
-
-import java.util.List;
 
 /**
  * Created by PX on 2016-11-14.

@@ -6,6 +6,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.jude.rollviewpager.adapter.StaticPagerAdapter;
+import com.px.common.image.ImageMaster;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.bean.ImageInfo;
 
@@ -33,10 +34,7 @@ public class UserManualImageAdapter extends StaticPagerAdapter {
         if(imageInfo == null){
             return imageView;
         }
-        Glide.with(container.getContext()).load(imageInfo.getUrl())
-                .placeholder(R.drawable.loading)
-                .dontAnimate()
-                .into(imageView);
+        ImageMaster.load(imageInfo.getUrl(), imageView, R.drawable.loading);
         imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT ,ViewGroup.LayoutParams.MATCH_PARENT));
         return imageView;
     }

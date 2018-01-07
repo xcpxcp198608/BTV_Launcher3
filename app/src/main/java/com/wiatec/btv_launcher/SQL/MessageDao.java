@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.bean.MessageInfo;
 
 import java.util.ArrayList;

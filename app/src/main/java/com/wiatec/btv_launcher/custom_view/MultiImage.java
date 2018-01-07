@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.px.common.image.ImageMaster;
 import com.wiatec.btv_launcher.bean.ImageInfo;
 
 import java.lang.ref.WeakReference;
@@ -93,19 +94,13 @@ public class MultiImage extends AppCompatImageView {
                 if( multiImage.mCurrentPosition >= multiImage.images.size()){
                     multiImage.mCurrentPosition = 0;
                 }
-                Glide.with(multiImage.getContext())
-                        .load(multiImage.images.get(multiImage.mCurrentPosition))
-                        .dontAnimate()
-                        .into(multiImage);
+                ImageMaster.load(multiImage.images.get(multiImage.mCurrentPosition), multiImage);
             }
             if(multiImage.imageInfoList != null && multiImage.imageInfoList.size() > 0){
                 if( multiImage.mCurrentPosition >= multiImage.imageInfoList.size()){
                     multiImage.mCurrentPosition = 0;
                 }
-                Glide.with(multiImage.getContext())
-                        .load(multiImage.imageInfoList.get(multiImage.mCurrentPosition).getUrl())
-                        .dontAnimate()
-                        .into(multiImage);
+                ImageMaster.load(multiImage.imageInfoList.get(multiImage.mCurrentPosition).getUrl(), multiImage);
             }
 
         }

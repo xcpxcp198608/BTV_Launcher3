@@ -1,19 +1,12 @@
 package com.wiatec.btv_launcher.Activity;
 
-import android.content.DialogInterface;
-import android.databinding.DataBindingUtil;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.DownloadListener;
-import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -21,10 +14,11 @@ import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.px.common.utils.CommonApplication;
+import com.px.common.utils.Logger;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.R;
-import com.wiatec.btv_launcher.Utils.Logger;
 
 
 /**
@@ -53,7 +47,7 @@ public class WebViewActivity extends AppCompatActivity {
     }
 
     private void initWebView(){
-        webView = new WebView(Application.getContext());
+        webView = new WebView(CommonApplication.context);
         webView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT ,
                 LinearLayout.LayoutParams.MATCH_PARENT));
         llWebView.addView(webView);

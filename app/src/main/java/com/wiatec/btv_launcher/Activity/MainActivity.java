@@ -26,17 +26,17 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.px.common.utils.AppUtil;
+import com.px.common.utils.Logger;
+import com.px.common.utils.NetUtil;
+import com.px.common.utils.SPUtil;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
-import com.wiatec.btv_launcher.Utils.Logger;
-import com.wiatec.btv_launcher.Utils.SPUtils;
 import com.wiatec.btv_launcher.custom_view.RollTextView;
 import com.wiatec.btv_launcher.receiver.OnNetworkStatusListener;
 import com.wiatec.btv_launcher.receiver.OnWifiStatusListener;
 import com.wiatec.btv_launcher.R;
-import com.wiatec.btv_launcher.Utils.ApkCheck;
-import com.wiatec.btv_launcher.Utils.FileCheck;
-import com.wiatec.btv_launcher.Utils.SystemConfig;
+import com.px.common.utils.FileUtil;
 import com.wiatec.btv_launcher.WifiStatusIconSetting;
 import com.wiatec.btv_launcher.bean.Message1Info;
 import com.wiatec.btv_launcher.bean.UpdateInfo;
@@ -110,7 +110,7 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
         if(presenter != null){
             presenter.loadInstalledApp();
         }
-        if(SystemConfig.isNetworkConnected(MainActivity.this) && !isStartAlarmService){
+        if(NetUtil.isConnected() && !isStartAlarmService){
             startAlarmService();
         }
     }
@@ -119,7 +119,7 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
     protected void onStart() {
         super.onStart();
         try {
-            String level = (String) SPUtils.get(MainActivity.this, "userLevel", "0");
+            String level = (String) SPUtil.get(F.sp.level, "1");
             int l = Integer.parseInt(level);
             if (l <= 0) {
                 showLoginAgainDialog();
@@ -127,13 +127,13 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
         }catch (Exception e){
             Logger.d(e.getLocalizedMessage());
         }
-        String userName = (String) SPUtils.get(MainActivity.this , "lastName" , "");
+        String userName = (String) SPUtil.get(F.sp.last_name , "");
         if(!TextUtils.isEmpty(userName) && !"null".equals(userName)){
             tvWelcome.setText(getString(R.string.welcome) + " " + userName + " " + getString(R.string.family));
         }else{
             tvWelcome.setText("");
         }
-        String rentalCategory = (String) SPUtils.get(MainActivity.this , "rentalCategory" , "");
+        String rentalCategory = (String) SPUtil.get(F.sp.rental_category , "");
         if(!TextUtils.isEmpty(rentalCategory) && !"null".equals(userName)){
             tvRental.setText(rentalCategory);
         }else{
@@ -141,14 +141,10 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
         }
         if(presenter != null){
             presenter.loadWeatherInfo();
-            if (SystemConfig.isNetworkConnected(MainActivity.this)) {
+            if (NetUtil.isConnected()) {
                 isStartLoadNetData = true;
-                presenter.loadUpdate();
                 presenter.loadLocation();
-                presenter.loadMessage();
-                presenter.loadVideo();
-                presenter.loadMessage1();
-                presenter.loadKodiData();
+                presenter.loadUpdate();
             }
         }
     }
@@ -193,11 +189,7 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
                 return;
             }
             presenter.loadLocation();
-            presenter.loadVideo();
             presenter.loadUpdate();
-            presenter.loadMessage1();
-            presenter.loadMessage();
-            presenter.loadKodiData();
         }
     }
 
@@ -212,11 +204,17 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
 
     @Override
     public void loadUpdate(UpdateInfo updateInfo) {
+        if(presenter != null) {
+            presenter.loadAdVideo();
+            presenter.loadMessage1();
+            presenter.loadMessage();
+            presenter.loadKodiData();
+        }
         if(updateInfo == null){
             return;
         }
-        Logger.d(updateInfo.toString());
-        int localVersion = ApkCheck.getInstalledApkVersionCode(MainActivity.this, getPackageName());
+//        Logger.d(updateInfo.toString());
+        int localVersion = AppUtil.getVersionCode(getPackageName());
         if (localVersion < updateInfo.getCode()) {
             showUpdateDialog(updateInfo);
         }
@@ -227,11 +225,11 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
         if (videoInfo == null) {
             return;
         }
-        SPUtils.put(MainActivity.this , "bootAdVideoTime" ,videoInfo.getPlayInterval());
-        if (!FileCheck.isFileExists(F.path.download, "btvbootad.mp4")) {
+        SPUtil.put("bootAdVideoTime" ,videoInfo.getPlayInterval());
+        if (!FileUtil.isExists(F.path.download, "btvbootad.mp4")) {
             //Logger.d("video is not exists");
             presenter.downloadAdVideo("btvbootad.mp4" ,videoInfo.getUrl());
-        } else if (!FileCheck.isFileIntact(F.path.download, "btvbootad.mp4", videoInfo.getMd5())) {
+        } else if (!FileUtil.isIntact(F.path.download, "btvbootad.mp4", videoInfo.getMd5())) {
             //Logger.d("video is not intact");
             presenter.downloadAdVideo("btvbootad.mp4" ,videoInfo.getUrl());
         } else {
@@ -244,11 +242,11 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
         if(videoInfo == null){
             return;
         }
-        SPUtils.put(MainActivity.this , "adTime" ,videoInfo.getPlayInterval()+"");
-        if (!FileCheck.isFileExists(F.path.download, "btvad.mp4")) {
+        SPUtil.put(F.sp.ad_time ,videoInfo.getPlayInterval()+"");
+        if (!FileUtil.isExists(F.path.download, "btvad.mp4")) {
             presenter.downloadAdVideo("btvad.mp4" ,videoInfo.getUrl());
 //            Logger.d("video not exists start download");
-        } else if (!FileCheck.isFileIntact(F.path.download, "btvad.mp4", videoInfo.getMd5())) {
+        } else if (!FileUtil.isIntact(F.path.download, "btvad.mp4", videoInfo.getMd5())) {
 //            Logger.d("video not intact start download");
             presenter.downloadAdVideo("btvad.mp4" ,videoInfo.getUrl());
         } else {
@@ -294,7 +292,7 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
 
     private void checkDevice(){
         String device = Build.MODEL;
-        if(!"BTVi3".equals(device) && !"MorphoBT E110".equals(device)&& !"BTV3".equals(device)){
+        if(!"BTVi3".equals(device) && !"BTV3".equals(device)){
             showWarningDialog();
             return ;
         }
@@ -401,7 +399,7 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
     }
 
     private void showVersion() {
-        String s = ApkCheck.getInstalledApkVersionName(this , getPackageName());
+        String s = AppUtil.getVersionName(getPackageName());
         s = s.substring(1 , s.length());
         tvVersion.setText(getString(R.string.ui)+" "+s);
     }

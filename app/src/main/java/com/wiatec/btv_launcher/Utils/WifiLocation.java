@@ -7,6 +7,8 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Process;
 
+import com.px.common.utils.Logger;
+
 import java.util.List;
 
 /**

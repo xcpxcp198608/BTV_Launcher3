@@ -1,7 +1,6 @@
 package com.wiatec.btv_launcher.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +9,10 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.px.common.utils.AppUtil;
 import com.wiatec.btv_launcher.R;
-import com.wiatec.btv_launcher.Utils.ApkCheck;
 import com.wiatec.btv_launcher.bean.InstalledApp;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -63,7 +61,7 @@ public class AppSelectAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         InstalledApp installedApp = list.get(position);
-        viewHolder.imageView.setImageDrawable(ApkCheck.getInstalledApkIcon(context,installedApp.getAppPackageName()));
+        viewHolder.imageView.setImageDrawable(AppUtil.getIcon(installedApp.getAppPackageName()));
         viewHolder.textView.setText(installedApp.getAppName());
         if(type.equals(installedApp.getType())){
             viewHolder.checkBox.setChecked(true);

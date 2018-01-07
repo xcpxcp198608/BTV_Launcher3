@@ -3,15 +3,14 @@ package com.wiatec.btv_launcher.service_task;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.wiatec.btv_launcher.Application;
+import com.px.common.http.HttpMaster;
+import com.px.common.utils.CommonApplication;
+import com.px.common.utils.Logger;
+import com.px.common.utils.NetUtil;
 import com.wiatec.btv_launcher.F;
-import com.wiatec.btv_launcher.Utils.FileCheck;
-import com.wiatec.btv_launcher.Utils.Logger;
-import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
-import com.wiatec.btv_launcher.Utils.SystemConfig;
+import com.px.common.utils.FileUtil;
 import com.wiatec.btv_launcher.bean.ImageInfo;
 import com.wiatec.btv_launcher.bean.VideoInfo;
-import com.wiatec.btv_launcher.exception.CrashHandler;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,15 +18,12 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-/**
- * Created by patrick on 2017/3/2.
- */
 
 public class LoadKodiData implements Runnable {
 
     @Override
     public void run() {
-        if(!SystemConfig.isNetworkConnected(Application.getContext())){
+        if(!NetUtil.isConnected()){
             return;
         }
         try {
@@ -39,7 +35,7 @@ public class LoadKodiData implements Runnable {
     }
 
     private void loadImageData() {
-        OkMaster.get(F.url.kodi_image).enqueue(new Callback() {
+        HttpMaster.get(F.url.kodi_image).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Logger.d(e.getMessage());
@@ -62,7 +58,7 @@ public class LoadKodiData implements Runnable {
                     return;
                 }
                 for(ImageInfo imageInfo : list){
-                    OkMaster.download(Application.getContext())
+                    HttpMaster.download(CommonApplication.context)
                             .name(imageInfo.getName())
                             .path(F.path.kodi_image_path)
                             .url(imageInfo.getUrl())
@@ -73,7 +69,7 @@ public class LoadKodiData implements Runnable {
     }
 
     private void loadVideoData() {
-        OkMaster.get(F.url.kodi_video).enqueue(new Callback() {
+        HttpMaster.get(F.url.kodi_video).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Logger.d(e.getMessage());
@@ -94,14 +90,14 @@ public class LoadKodiData implements Runnable {
                 if(videoInfo ==null ){
                     return;
                 }
-                if(!FileCheck.isFileExists(F.path.kodi_video_path , videoInfo.getName())){
-                    OkMaster.download(Application.getContext())
+                if(!FileUtil.isExists(F.path.kodi_video_path , videoInfo.getName())){
+                    HttpMaster.download(CommonApplication.context)
                             .name(videoInfo.getName())
                             .path(F.path.kodi_video_path)
                             .url(videoInfo.getUrl())
                             .startDownload(null);
-                }else if (!FileCheck.isFileIntact(F.path.kodi_video_path ,videoInfo.getName() ,videoInfo.getMd5())){
-                    OkMaster.download(Application.getContext())
+                }else if (!FileUtil.isIntact(F.path.kodi_video_path ,videoInfo.getName() ,videoInfo.getMd5())){
+                    HttpMaster.download(CommonApplication.context)
                             .name(videoInfo.getName())
                             .path(F.path.kodi_video_path)
                             .url(videoInfo.getUrl())

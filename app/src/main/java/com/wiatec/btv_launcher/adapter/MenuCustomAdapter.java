@@ -8,8 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.px.common.utils.AppUtil;
 import com.wiatec.btv_launcher.R;
-import com.wiatec.btv_launcher.Utils.ApkCheck;
 import com.wiatec.btv_launcher.bean.InstalledApp;
 
 import java.util.List;
@@ -58,7 +58,7 @@ public class MenuCustomAdapter extends BaseAdapter {
         }
         if(list != null && position <list.size()){
             InstalledApp installedApp = list.get(position);
-            viewHolder.imageView.setImageDrawable(ApkCheck.getInstalledApkIcon(context,installedApp.getAppPackageName()));
+            viewHolder.imageView.setImageDrawable(AppUtil.getIcon(installedApp.getAppPackageName()));
             viewHolder.textView.setText(installedApp.getAppName());
 
         }else {

@@ -2,15 +2,13 @@ package com.wiatec.btv_launcher.presenter;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.px.common.http.HttpMaster;
+import com.px.common.http.Listener.StringListener;
+import com.px.common.utils.Logger;
 import com.wiatec.btv_launcher.Activity.IRegisterActivity;
 import com.wiatec.btv_launcher.F;
-import com.wiatec.btv_launcher.Utils.Logger;
-import com.wiatec.btv_launcher.Utils.OkHttp.Listener.StringListener;
-import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
 import com.wiatec.btv_launcher.bean.AuthRegisterUserInfo;
-import com.wiatec.btv_launcher.bean.Result;
 import com.wiatec.btv_launcher.bean.ResultInfo;
-import com.wiatec.btv_launcher.bean.User1Info;
 
 import java.io.IOException;
 
@@ -29,15 +27,15 @@ public class RegisterPresenter extends BasePresenter<IRegisterActivity> {
     public void register (AuthRegisterUserInfo authRegisterUserInfo , String language){
         try {
             Logger.d(authRegisterUserInfo.toString());
-            OkMaster.post(F.url.user_register)
-                    .parames("username",authRegisterUserInfo.getUsername())
-                    .parames("firstName",authRegisterUserInfo.getFirstName())
-                    .parames("lastName",authRegisterUserInfo.getLastName())
-                    .parames("password",authRegisterUserInfo.getPassword())
-                    .parames("email",authRegisterUserInfo.getEmail())
-                    .parames("phone",authRegisterUserInfo.getPhone())
-                    .parames("mac",authRegisterUserInfo.getMac())
-                    .parames("language", language)
+            HttpMaster.post(F.url.user_register)
+                    .param("username",authRegisterUserInfo.getUsername())
+                    .param("firstName",authRegisterUserInfo.getFirstName())
+                    .param("lastName",authRegisterUserInfo.getLastName())
+                    .param("password",authRegisterUserInfo.getPassword())
+                    .param("email",authRegisterUserInfo.getEmail())
+                    .param("phone",authRegisterUserInfo.getPhone())
+                    .param("mac",authRegisterUserInfo.getMac())
+                    .param("language", language)
                     .enqueue(new StringListener() {
                         @Override
                         public void onSuccess(String s) throws IOException {

@@ -2,19 +2,15 @@ package com.wiatec.btv_launcher.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.px.common.image.ImageMaster;
 import com.wiatec.btv_launcher.R;
-import com.wiatec.btv_launcher.Utils.Logger;
 import com.wiatec.btv_launcher.bean.PushMessageInfo;
 
 import java.util.List;
@@ -86,9 +82,7 @@ public class PushMessageAdapter extends BaseAdapter {
         String time = pushMessageInfo.getTime().substring(0 , pushMessageInfo.getTime().length() -10);
         viewHolder.tvTime.setText(time);
         viewHolder.tvMessage.setText(pushMessageInfo.getMessage());
-        Glide.with(context).load(pushMessageInfo.getImg1())
-                    .dontAnimate()
-                    .into(viewHolder.ivImg1);
+        ImageMaster.load(pushMessageInfo.getImg1(),viewHolder.ivImg1);
         return convertView;
     }
 

@@ -2,19 +2,13 @@ package com.wiatec.btv_launcher.data;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.wiatec.btv_launcher.Application;
+import com.px.common.http.HttpMaster;
+import com.px.common.http.Listener.StringListener;
+import com.px.common.utils.SPUtil;
 import com.wiatec.btv_launcher.F;
-import com.wiatec.btv_launcher.Utils.Logger;
-import com.wiatec.btv_launcher.Utils.OkHttp.Listener.StringListener;
-import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
-import com.wiatec.btv_launcher.Utils.SPUtils;
 import com.wiatec.btv_launcher.bean.ImageInfo;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Created by PX on 2016-11-15.
@@ -23,10 +17,10 @@ import java.util.List;
 public class SplashImageData implements ISplashImageData {
     @Override
     public void loadData(final OnLoadListener onLoadListener) {
-        OkMaster.post(F.url.splash_image)
-                .parames("deviceInfo.countryCode", (String)SPUtils.get(Application.getContext() , "countryCode" , ""))
-                .parames("deviceInfo.regionName", (String)SPUtils.get(Application.getContext() , "regionName" , ""))
-                .parames("deviceInfo.timeZone", (String)SPUtils.get(Application.getContext() , "timeZone" , ""))
+        HttpMaster.post(F.url.splash_image)
+                .param("deviceInfo.countryCode", (String)SPUtil.get(F.sp.country_code , ""))
+                .param("deviceInfo.regionName", (String) SPUtil.get(F.sp.region_name , ""))
+                .param("deviceInfo.timeZone", (String)SPUtil.get(F.sp.time_zone , ""))
                 .enqueue(new StringListener() {
                     @Override
                     public void onSuccess(String s) throws IOException {

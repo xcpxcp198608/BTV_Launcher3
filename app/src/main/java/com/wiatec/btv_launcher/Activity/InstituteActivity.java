@@ -8,13 +8,12 @@ import android.widget.Toast;
 
 import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.R;
-import com.wiatec.btv_launcher.Utils.ApkCheck;
-import com.wiatec.btv_launcher.Utils.ApkLaunch;
+import com.px.common.utils.AppUtil;
 
 import java.util.concurrent.TimeUnit;
 
-import rx.Observable;
-import rx.functions.Action1;
+import io.reactivex.Observable;
+import io.reactivex.functions.Consumer;
 
 /**
  * Created by patrick on 23/05/2017.
@@ -32,14 +31,14 @@ public class InstituteActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         Observable.timer(3000, TimeUnit.MILLISECONDS)
-                .subscribe(new Action1<Long>() {
+                .subscribe(new Consumer<Long>() {
                     @Override
-                    public void call(Long aLong) {
-                        if (ApkCheck.isApkInstalled(InstituteActivity.this, F.package_name.joinme)) {
-                            ApkLaunch.launchApkByPackageName(InstituteActivity.this, F.package_name.joinme);
+                    public void accept(Long aLong) {
+                        if (AppUtil.isInstalled(F.package_name.joinme)) {
+                            AppUtil.launchApp(InstituteActivity.this, F.package_name.joinme);
                         }else{
                             Toast.makeText(InstituteActivity.this , getString(R.string.download_guide)+" Joinme",Toast.LENGTH_SHORT).show();
-                            ApkLaunch.launchApkByPackageName(InstituteActivity.this, F.package_name.market);
+                            AppUtil.launchApp(InstituteActivity.this, F.package_name.market);
                         }
                         finish();
                     }

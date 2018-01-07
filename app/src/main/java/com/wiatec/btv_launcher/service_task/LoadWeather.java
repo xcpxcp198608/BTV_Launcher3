@@ -1,17 +1,15 @@
 package com.wiatec.btv_launcher.service_task;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Looper;
 import android.text.TextUtils;
 
+import com.px.common.http.HttpMaster;
+import com.px.common.http.Listener.StringListener;
+import com.px.common.utils.CommonApplication;
+import com.px.common.utils.Logger;
+import com.px.common.utils.SPUtil;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.SQL.WeatherDao;
-import com.wiatec.btv_launcher.Utils.Logger;
-import com.wiatec.btv_launcher.Utils.OkHttp.Listener.StringListener;
-import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
-import com.wiatec.btv_launcher.Utils.SPUtils;
 import com.wiatec.btv_launcher.bean.WeatherInfo;
 
 import org.json.JSONException;
@@ -29,7 +27,7 @@ public class LoadWeather implements Runnable {
 
     @Override
     public void run() {
-        String city = (String) SPUtils.get(Application.getContext() , "city" ,"");
+        String city = (String) SPUtil.get( "city" ,"");
         if(TextUtils.isEmpty(city)){
             return;
         }
@@ -44,7 +42,7 @@ public class LoadWeather implements Runnable {
         String apiKey = "c0c69463f12ddb77b388fe9fac994407";
         String url = "http://api.openweathermap.org/data/2.5/weather?q="+city+"&APPID="+apiKey;
         String forecastUrl = "http://api.openweathermap.org/data/2.5/forecast?q=shenzhen,cn&APPID=c0c69463f12ddb77b388fe9fac994407";
-        OkMaster.get(url)
+        HttpMaster.get(url)
                 .enqueue(new StringListener() {
                     @Override
                     public void onSuccess(String s) throws IOException {
@@ -72,13 +70,13 @@ public class LoadWeather implements Runnable {
                             weatherInfo.setDate(formatDate(sys.getString("sunset")));
                             //Logger.d(weatherInfo.toString());
                             if(weatherInfo != null){
-                                WeatherDao weatherDao = WeatherDao.getInstance(Application.getContext());
+                                WeatherDao weatherDao = WeatherDao.getInstance(CommonApplication.context);
                                 weatherDao.deleteAll();
                                 if(weatherDao.insertWeather(weatherInfo)){
                                     Intent intent = new Intent();
                                     intent.setAction("action.Weather.Change");
                                     intent.putExtra("weatherInfo" , weatherInfo);
-                                    Application.getContext().sendBroadcast(intent);
+                                    CommonApplication.context.sendBroadcast(intent);
                                 }
                             }
                         } catch (JSONException e) {

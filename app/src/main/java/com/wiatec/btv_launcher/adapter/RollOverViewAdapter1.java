@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
+import com.px.common.image.ImageMaster;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.animator.Zoom;
 import com.wiatec.btv_launcher.bean.ImageInfo;
@@ -42,11 +43,7 @@ public class RollOverViewAdapter1 extends RollOverAdapter {
         imageView.setPadding(4,4,4,4);
         imageView.setBackgroundResource(R.drawable.roll_over_bg);
         imageView.setScaleType(ImageButton.ScaleType.CENTER_CROP);
-        Glide.with(container.getContext()).load(list.get(position).getUrl())
-                .placeholder(R.drawable.loading)
-                .error(R.drawable.loading)
-                .dontAnimate()
-                .into(imageView);
+        ImageMaster.load(list.get(position).getUrl(), imageView, R.drawable.loading);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

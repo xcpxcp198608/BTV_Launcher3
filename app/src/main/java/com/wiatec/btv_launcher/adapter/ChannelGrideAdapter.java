@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.px.common.image.ImageMaster;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.bean.ChannelInfo;
 
@@ -56,7 +57,7 @@ public class ChannelGrideAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         ChannelInfo channelInfo = channelInfos.get(position);
-        Glide.with(context).load(channelInfo.getIcon()).dontAnimate().into(viewHolder.iv_Icon);
+        ImageMaster.load(channelInfo.getIcon(), viewHolder.iv_Icon);
         viewHolder.tv_Name.setText(channelInfo.getName());
         return convertView;
     }

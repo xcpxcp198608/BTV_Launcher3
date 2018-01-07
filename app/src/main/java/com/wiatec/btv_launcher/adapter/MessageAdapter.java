@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.px.common.image.ImageMaster;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.bean.MessageInfo;
 
@@ -59,7 +60,7 @@ public class MessageAdapter extends BaseAdapter {
             viewHolder = (MessageViewHolder) convertView.getTag();
         }
         MessageInfo messageInfo = list.get(position);
-        Glide.with(context).load(messageInfo.getIcon()).placeholder(R.drawable.message_icon).into(viewHolder.iv_Message_Icon);
+        ImageMaster.load(messageInfo.getIcon(), viewHolder.iv_Message_Icon, R.drawable.message_icon);
         viewHolder.tv_Message_Title.setText(messageInfo.getTitle());
         viewHolder.tv_Message_Content.setText(messageInfo.getContent());
         return convertView;

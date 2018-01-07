@@ -8,9 +8,8 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.px.common.utils.SPUtil;
 import com.wiatec.btv_launcher.Application;
-import com.wiatec.btv_launcher.Utils.Logger;
-import com.wiatec.btv_launcher.Utils.SPUtils;
 
 /**
  * Created by patrick on 27/05/2017.
@@ -45,7 +44,7 @@ public class UserContentProvider extends ContentProvider {
         if(uriMatcher.match(uri) != MATCH_CODE) return "";
         String[] path = uri.getPath().split("/");
         String key = path[2];
-        return (String) SPUtils.get(Application.getContext(), key, "");
+        return (String) SPUtil.get(key, "");
     }
 
     @Nullable

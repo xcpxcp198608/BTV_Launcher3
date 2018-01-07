@@ -2,13 +2,10 @@ package com.wiatec.btv_launcher.data;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.wiatec.btv_launcher.Application;
+import com.px.common.http.HttpMaster;
+import com.px.common.http.Listener.StringListener;
 import com.wiatec.btv_launcher.F;
-import com.wiatec.btv_launcher.Utils.OkHttp.Listener.StringListener;
-import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
 import com.wiatec.btv_launcher.bean.ImageInfo;
-
-import org.json.JSONArray;
 
 import java.io.IOException;
 import java.util.List;
@@ -20,9 +17,9 @@ import java.util.List;
 public class ManualData implements IManualData {
     @Override
     public void loadData(final OnLoadListener onLoadListener, final String product, final String language) {
-        OkMaster.get(F.url.manual_image)
-                .parames("product",product)
-                .parames("language",language)
+        HttpMaster.get(F.url.manual_image)
+                .param("product",product)
+                .param("language",language)
                 .enqueue(new StringListener() {
                     @Override
                     public void onSuccess(String s) throws IOException {

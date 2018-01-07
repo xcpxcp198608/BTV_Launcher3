@@ -16,14 +16,10 @@ import com.wiatec.btv_launcher.custom_view.VoiceSpectrumView;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import rx.Observable;
-import rx.Subscription;
-import rx.functions.Action1;
-import rx.functions.Func1;
-
-/**
- * Created by patrick on 2017/1/9.
- */
+import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 
 public class FMPlayActivity extends BaseActivity {
 
@@ -33,7 +29,7 @@ public class FMPlayActivity extends BaseActivity {
     private ImageView ivEufonicoList;
     private VoiceSpectrumView vsvRadio;
     private ProgressBar progressBar;
-    private Subscription subscription;
+    private Disposable disposable;
     private RollOverView rollOverView;
     private RollOverView2Adapter rollOverView2Adapter;
 
@@ -92,18 +88,18 @@ public class FMPlayActivity extends BaseActivity {
     }
 
     private void voiceViewStart(){
-        subscription = Observable.interval(0,200 , TimeUnit.MILLISECONDS)
+        disposable = Observable.interval(0,200 , TimeUnit.MILLISECONDS)
                 .repeat()
-                .map(new Func1<Long, Object>() {
+                .map(new Function<Long, Object>() {
                     @Override
-                    public Object call(Long aLong) {
+                    public Object apply(Long aLong) {
                         vsvRadio.start();
-                        return null;
+                        return "";
                     }
                 })
-                .subscribe(new Action1<Object>() {
+                .subscribe(new Consumer<Object>() {
                     @Override
-                    public void call(Object o) {
+                    public void accept(Object o) {
 
                     }
                 });
@@ -117,8 +113,8 @@ public class FMPlayActivity extends BaseActivity {
             mediaPlayer.release();
             mediaPlayer = null;
         }
-        if(subscription != null){
-            subscription.unsubscribe();
+        if(disposable != null){
+            disposable.dispose();
         }
         rollOverView.stop();
     }
@@ -131,8 +127,8 @@ public class FMPlayActivity extends BaseActivity {
             mediaPlayer.release();
             mediaPlayer = null;
         }
-        if(subscription != null){
-            subscription.unsubscribe();
+        if(disposable != null){
+            disposable.dispose();
         }
     }
 }

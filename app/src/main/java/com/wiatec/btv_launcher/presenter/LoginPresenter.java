@@ -2,15 +2,13 @@ package com.wiatec.btv_launcher.presenter;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.px.common.http.HttpMaster;
+import com.px.common.http.Listener.StringListener;
+import com.px.common.utils.Logger;
 import com.wiatec.btv_launcher.Activity.ILoginActivity;
 import com.wiatec.btv_launcher.F;
-import com.wiatec.btv_launcher.Utils.Logger;
-import com.wiatec.btv_launcher.Utils.OkHttp.Listener.StringListener;
-import com.wiatec.btv_launcher.Utils.OkHttp.OkMaster;
 import com.wiatec.btv_launcher.bean.AuthRegisterUserInfo;
-import com.wiatec.btv_launcher.bean.Result;
 import com.wiatec.btv_launcher.bean.ResultInfo;
-import com.wiatec.btv_launcher.bean.User1Info;
 import com.wiatec.btv_launcher.data.ILoginData;
 import com.wiatec.btv_launcher.data.LoginData;
 
@@ -55,9 +53,9 @@ public class LoginPresenter extends BasePresenter<ILoginActivity> {
     }
 
     public void resetPassword (AuthRegisterUserInfo authRegisterUserInfo){
-        OkMaster.post(F.url.user_reset_p)
-                .parames("username" , authRegisterUserInfo.getUsername())
-                .parames("email" , authRegisterUserInfo.getEmail())
+        HttpMaster.post(F.url.user_reset_p)
+                .param("username" , authRegisterUserInfo.getUsername())
+                .param("email" , authRegisterUserInfo.getEmail())
                 .enqueue(new StringListener() {
                     @Override
                     public void onSuccess(String s) throws IOException {

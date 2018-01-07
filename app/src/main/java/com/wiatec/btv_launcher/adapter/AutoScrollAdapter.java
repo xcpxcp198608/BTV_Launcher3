@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.px.common.image.ImageMaster;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.bean.ImageInfo;
 import com.wiatec.btv_launcher.custom_view.AutoScrollViewHolder;
@@ -37,9 +38,7 @@ public class AutoScrollAdapter extends RecyclerView.Adapter<AutoScrollViewHolder
     @Override
     public void onBindViewHolder(AutoScrollViewHolder holder, int position) {
         ImageInfo imageInfo = list.get(position);
-        Glide.with(context).load(imageInfo.getUrl())
-                .dontAnimate()
-                .into(holder.imageView);
+        ImageMaster.load(imageInfo.getUrl(), holder.imageView);
     }
 
     @Override

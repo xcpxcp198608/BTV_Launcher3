@@ -5,6 +5,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 
+import com.px.common.utils.CommonApplication;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.F;
 import com.wiatec.btv_launcher.SQL.InstalledAppDao;
@@ -25,9 +26,9 @@ public class LoadInstalledApp implements Runnable {
     }
 
     private List<InstalledApp> getInstalledApp(){
-        InstalledAppDao installedAppDao = InstalledAppDao.getInstance(Application.getContext());
+        InstalledAppDao installedAppDao = InstalledAppDao.getInstance(CommonApplication.context);
         List<InstalledApp> list = null;
-        PackageManager packageManager = Application.getContext().getPackageManager();
+        PackageManager packageManager = CommonApplication.context.getPackageManager();
         Intent intent = new Intent("android.intent.action.MAIN");
         intent.addCategory("android.intent.category.LAUNCHER");
         List<ResolveInfo> localList = packageManager.queryIntentActivities(intent ,0);
@@ -49,7 +50,7 @@ public class LoadInstalledApp implements Runnable {
             String packageName = resolveInfo.activityInfo.packageName;
             PackageInfo packageInfo;
             try {
-                packageInfo = Application.getContext().getPackageManager().getPackageInfo(packageName,0);
+                packageInfo = CommonApplication.context.getPackageManager().getPackageInfo(packageName,0);
                 if((packageInfo.applicationInfo.flags & packageInfo.applicationInfo.FLAG_SYSTEM)>0){
                     installedApp.setSystemApp(true);
                 }
