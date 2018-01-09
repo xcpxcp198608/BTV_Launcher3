@@ -10,34 +10,32 @@ import com.px.common.utils.Logger;
 import com.px.common.utils.NetUtil;
 import com.px.common.utils.RxBus;
 import com.px.common.utils.SPUtil;
-import com.wiatec.btv_launcher.F;
+import com.px.common.utils.TimeUtil;
+import com.wiatec.btv_launcher.constant.F;
 import com.wiatec.btv_launcher.bean.AuthRegisterUserInfo;
 import com.wiatec.btv_launcher.bean.AuthRentUserInfo;
 import com.wiatec.btv_launcher.bean.ResultInfo;
+import com.wiatec.btv_launcher.constant.EnumLevel;
 import com.wiatec.btv_launcher.rxevent.CheckLoginEvent;
 
 import java.io.IOException;
-
-/**
- * Created by patrick on 2017/3/14.
- */
 
 public class CheckLogin implements Runnable {
 
     @Override
     public void run() {
-        while(true) {
-            try {
+        try {
+            while(true) {
                 Thread.sleep(15000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                boolean isRenter = (boolean) SPUtil.get(F.sp.is_renter, false);
+                if(isRenter){
+                    rentValidate();
+                }else {
+                    check();
+                }
             }
-            boolean isRenter = (boolean) SPUtil.get("isRenter", false);
-            if(isRenter){
-                rentValidate();
-            }else {
-                check();
-            }
+        } catch (Exception e) {
+            Logger.e(e.getMessage());
         }
     }
 
@@ -45,16 +43,16 @@ public class CheckLogin implements Runnable {
         if(!NetUtil.isConnected()){
             return;
         }
-        String key = (String) SPUtil.get("userName" , "");
-        String ethernetMac = (String) SPUtil.get("ethernetMac" , "");
+        String key = (String) SPUtil.get(F.sp.username , "");
+        String ethernetMac = (String) SPUtil.get(F.sp.ethernet_mac , "");
         if(TextUtils.isEmpty(key)){
             return;
         }
         HttpMaster.post(F.url.renter_validate + key + "/" + ethernetMac)
-                .param("country", (String) SPUtil.get("country",""))
-                .param("region", (String) SPUtil.get("regionName",""))
-                .param("city", (String) SPUtil.get("city",""))
-                .param("timeZone", (String) SPUtil.get("timeZone",""))
+                .param("country", (String) SPUtil.get(F.sp.country,""))
+                .param("region", (String) SPUtil.get(F.sp.region_name,""))
+                .param("city", (String) SPUtil.get(F.sp.city,""))
+                .param("timeZone", (String) SPUtil.get(F.sp.time_zone,""))
                 .enqueue(new StringListener() {
                     @Override
                     public void onSuccess(String s) throws IOException {
@@ -68,26 +66,30 @@ public class CheckLogin implements Runnable {
                         }
                         if(resultInfo.getCode() != 200){
                             RxBus.getDefault().post(new CheckLoginEvent(CheckLoginEvent.CODE_LOGIN_REPEAT));
-                            SPUtil.put("userLevel", "0");
+                            SPUtil.put(F.sp.level, EnumLevel.L0.getL());
                             return;
                         }
                         AuthRentUserInfo authRentUserInfo = resultInfo.getData();
+                        if(authRentUserInfo == null) return;
                         String level = "";
-                        if("activate".equals(authRentUserInfo.getStatus())){
-                            if("B1".equals(authRentUserInfo.getCategory())){
-                                level = "2";
-                            }else if("P1".equals(authRentUserInfo.getCategory())){
-                                level = "4";
-                            }else if("P2".equals(authRentUserInfo.getCategory())){
-                                level = "4";
+                        if(AuthRentUserInfo.STATUS_ACTIVATE.equals(authRentUserInfo.getStatus())){
+                            if(AuthRentUserInfo.CATEGORY_B1.equals(authRentUserInfo.getCategory())){
+                                level = EnumLevel.L2.getL();
+                            }else if(AuthRentUserInfo.CATEGORY_P1.equals(authRentUserInfo.getCategory())){
+                                level = EnumLevel.L4.getL();
+                            }else if(AuthRentUserInfo.CATEGORY_P2.equals(authRentUserInfo.getCategory())){
+                                level = EnumLevel.L4.getL();
                             }
                         }else{
-                            level = "0";
+                            level = EnumLevel.L0.getL();
                         }
-                        SPUtil.put("userLevel", level);
-                        if("0".equals(level)){
+                        SPUtil.put(F.sp.level, level);
+                        SPUtil.put(F.sp.rental_category, authRentUserInfo.getCategory());
+                        if(EnumLevel.L0.getL().equals(level)){
                             RxBus.getDefault().post(new CheckLoginEvent(CheckLoginEvent.CODE_LOGIN_REPEAT));
                         }
+                        String leftTime = TimeUtil.getLeftTimeToExpires(authRentUserInfo.getExpiresTime());
+                        SPUtil.put(F.sp.left_time, leftTime);
                     }
 
                     @Override
@@ -95,43 +97,52 @@ public class CheckLogin implements Runnable {
                         Logger.d(e);
                     }
                 });
-
     }
 
-    public void check(){
+    private void check(){
         if(!NetUtil.isConnected()){
             return;
         }
-        String userName = (String) SPUtil.get("userName" , "");
+        String userName = (String) SPUtil.get(F.sp.username , "");
         if(TextUtils.isEmpty(userName)){
+            return;
+        }
+        String token = (String) SPUtil.get(F.sp.token , "");
+        if(TextUtils.isEmpty(token)){
             return;
         }
         HttpMaster.post(F.url.user_validate)
                 .param("username",userName)
-                .param("country", (String) SPUtil.get("country",""))
-                .param("region", (String) SPUtil.get("regionName",""))
-                .param("city", (String) SPUtil.get("city",""))
-                .param("timeZone", (String) SPUtil.get("timeZone",""))
+                .param("country", (String) SPUtil.get(F.sp.country,""))
+                .param("region", (String) SPUtil.get(F.sp.region_name,""))
+                .param("city", (String) SPUtil.get(F.sp.city,""))
+                .param("timeZone", (String) SPUtil.get(F.sp.time_zone,""))
                 .enqueue(new StringListener() {
                     @Override
                     public void onSuccess(String s) throws IOException {
-                        if(s==null){
+                        if (s == null) {
                             return;
                         }
-                        Logger.d(s);
-                        ResultInfo<AuthRegisterUserInfo> resultInfo = new Gson().fromJson(s,new TypeToken<ResultInfo<AuthRegisterUserInfo>>(){}.getType());
+//                        Logger.d(s);
+                        ResultInfo<AuthRegisterUserInfo> resultInfo = null;
+                        try {
+                            resultInfo = new Gson().fromJson(s, new TypeToken<ResultInfo<AuthRegisterUserInfo>>() {}.getType());
+                        }catch (Exception e){
+                            Logger.e(e.getCause().getMessage());
+                        }
                         if(resultInfo == null){
                             return;
                         }
                         if(resultInfo.getCode() != 200){
                             RxBus.getDefault().post(new CheckLoginEvent(CheckLoginEvent.CODE_LOGIN_REPEAT));
-                            SPUtil.put("userLevel", "0");
+                            SPUtil.put(F.sp.level, EnumLevel.L0.getL());
                             return;
                         }
                         AuthRegisterUserInfo authRegisterUserInfo = resultInfo.getData();
-                        String l = authRegisterUserInfo.getLevel()+"";
-                        SPUtil.put("userLevel", l);
-                        if("0".equals(l)){
+                        if(authRegisterUserInfo == null) return;
+                        String l = authRegisterUserInfo.getLevel() + "";
+                        SPUtil.put(F.sp.level, l);
+                        if(EnumLevel.L0.getL().equals(l)){
                             RxBus.getDefault().post(new CheckLoginEvent(CheckLoginEvent.CODE_LOGIN_REPEAT));
                         }
                     }

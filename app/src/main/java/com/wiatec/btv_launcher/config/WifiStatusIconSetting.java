@@ -1,6 +1,8 @@
-package com.wiatec.btv_launcher;
+package com.wiatec.btv_launcher.config;
 
 import android.widget.ImageView;
+
+import com.wiatec.btv_launcher.R;
 
 /**
  * Created by patrick on 2017/3/2.

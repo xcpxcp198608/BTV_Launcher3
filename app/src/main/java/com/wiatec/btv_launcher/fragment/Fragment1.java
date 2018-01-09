@@ -31,7 +31,7 @@ import com.wiatec.btv_launcher.Activity.MenuActivity;
 import com.wiatec.btv_launcher.Activity.Opportunity1Activity;
 import com.wiatec.btv_launcher.Activity.Splash1Activity;
 import com.wiatec.btv_launcher.Activity.UserManual1Activity;
-import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.constant.F;
 import com.wiatec.btv_launcher.SQL.InstalledAppDao;
 import com.px.common.utils.FileUtil;
 import com.wiatec.btv_launcher.bean.InstalledApp;
@@ -299,8 +299,8 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     }
 
     private void launchAppByLogin(Context context , String packageName){
-        String userName = (String) SPUtil.get("userName" ,"");
-        String token = (String) SPUtil.get("token" ,"");
+        String userName = (String) SPUtil.get(F.sp.username ,"");
+        String token = (String) SPUtil.get(F.sp.token ,"");
         if(TextUtils.isEmpty(userName) || TextUtils.isEmpty(token)){
             getContext().startActivity(new Intent(getContext() , LoginActivity.class));
         }else {
@@ -536,7 +536,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
 
     @Override
     public void onConnected(boolean isConnected) {
-        Logger.d("connect");
+//        Logger.d("connect");
         if (presenter != null && vv_Main != null && !vv_Main.isPlaying() && !isVideoPlaying) {
             presenter.loadVideo();
         }

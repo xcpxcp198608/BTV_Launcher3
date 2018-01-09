@@ -9,7 +9,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.constant.F;
 
 import java.io.File;
 import java.io.FileOutputStream;

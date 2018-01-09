@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
-import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.constant.F;
 import com.wiatec.btv_launcher.R;
 import com.px.common.utils.AppUtil;
 

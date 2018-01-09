@@ -14,8 +14,7 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.px.common.utils.SPUtil;
-import com.wiatec.btv_launcher.Application;
-import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.constant.F;
 import com.wiatec.btv_launcher.R;
 
 import java.util.concurrent.TimeUnit;

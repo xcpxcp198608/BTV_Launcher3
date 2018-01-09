@@ -37,6 +37,17 @@
         android:layout_height="32dp"/>
 
     <TextView
+        android:id="@+id/tv_left_time"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/tv_rental"
+        tools:text="12D-11H-10M"
+        android:textColor="@color/colorGray2"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"/>
+
+    <TextView
         android:layout_marginRight="20dp"
         android:layout_marginLeft="10dp"
         android:gravity="center_vertical"

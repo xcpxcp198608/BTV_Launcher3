@@ -8,7 +8,7 @@ import com.px.common.http.Listener.StringListener;
 import com.px.common.utils.CommonApplication;
 import com.px.common.utils.Logger;
 import com.px.common.utils.SPUtil;
-import com.wiatec.btv_launcher.Application;
+import com.wiatec.btv_launcher.constant.F;
 import com.wiatec.btv_launcher.SQL.WeatherDao;
 import com.wiatec.btv_launcher.bean.WeatherInfo;
 
@@ -27,7 +27,7 @@ public class LoadWeather implements Runnable {
 
     @Override
     public void run() {
-        String city = (String) SPUtil.get( "city" ,"");
+        String city = (String) SPUtil.get( F.sp.city ,"");
         if(TextUtils.isEmpty(city)){
             return;
         }

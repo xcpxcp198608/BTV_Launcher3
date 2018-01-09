@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.px.common.http.HttpMaster;
 import com.px.common.http.Listener.StringListener;
-import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.constant.F;
 import com.wiatec.btv_launcher.bean.AuthRentUserInfo;
 import com.wiatec.btv_launcher.bean.ResultInfo;
 

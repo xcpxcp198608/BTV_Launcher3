@@ -12,7 +12,7 @@ import com.px.common.http.Bean.DownloadInfo;
 import com.px.common.http.HttpMaster;
 import com.px.common.http.Listener.DownloadListener;
 import com.px.common.utils.AppUtil;
-import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.constant.F;
 import com.wiatec.btv_launcher.R;
 import com.px.common.utils.FileUtil;
 import com.wiatec.btv_launcher.bean.UpdateInfo;

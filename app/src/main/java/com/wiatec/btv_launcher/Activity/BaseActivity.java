@@ -15,7 +15,7 @@ import com.px.common.utils.NetUtil;
 import com.px.common.utils.RxBus;
 import com.px.common.utils.SPUtil;
 import com.px.common.utils.SysUtil;
-import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.constant.F;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.rxevent.CheckLoginEvent;
 

@@ -31,13 +31,13 @@ import com.px.common.utils.Logger;
 import com.px.common.utils.NetUtil;
 import com.px.common.utils.SPUtil;
 import com.wiatec.btv_launcher.Application;
-import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.constant.F;
 import com.wiatec.btv_launcher.custom_view.RollTextView;
 import com.wiatec.btv_launcher.receiver.OnNetworkStatusListener;
 import com.wiatec.btv_launcher.receiver.OnWifiStatusListener;
 import com.wiatec.btv_launcher.R;
 import com.px.common.utils.FileUtil;
-import com.wiatec.btv_launcher.WifiStatusIconSetting;
+import com.wiatec.btv_launcher.config.WifiStatusIconSetting;
 import com.wiatec.btv_launcher.bean.Message1Info;
 import com.wiatec.btv_launcher.bean.UpdateInfo;
 import com.wiatec.btv_launcher.bean.VideoInfo;
@@ -48,7 +48,7 @@ import com.wiatec.btv_launcher.receiver.NetworkStatusReceiver;
 import com.wiatec.btv_launcher.receiver.ScreenWeekUpReceiver;
 import com.wiatec.btv_launcher.receiver.WeatherStatusReceiver;
 import com.wiatec.btv_launcher.receiver.WifiStatusReceiver;
-import com.wiatec.btv_launcher.WeatherIconSetting;
+import com.wiatec.btv_launcher.config.WeatherIconSetting;
 import com.wiatec.btv_launcher.service.LoadCloudService;
 import com.wiatec.btv_launcher.service.LoadWeatherService;
 
@@ -81,6 +81,8 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
     TextView tvWelcome;
     @BindView(R.id.tv_rental)
     TextView tvRental;
+    @BindView(R.id.tv_left_time)
+    TextView tvLeftTime;
 
     private Fragment1 fragment1;
     private NetworkStatusReceiver networkStatusReceiver;
@@ -332,6 +334,13 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
                 case 2:
                     tv_Date.setText((String) msg.obj);
                     break;
+                case 3:
+                    tv_Date.setText((String) msg.obj);
+                    boolean isRenter = (boolean) SPUtil.get(F.sp.is_renter, false);
+                    if(isRenter){
+                        tvLeftTime.setText((String) msg.obj);
+                    }
+                    break;
             }
         }
     };
@@ -346,8 +355,10 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
                         Date d = new Date(System.currentTimeMillis());
                         String time = new SimpleDateFormat("h:mm a").format(d);
                         String date = new SimpleDateFormat("MM-dd-yyyy").format(d);
+                        String leftTime = (String) SPUtil.get(F.sp.left_time, "");
                         handler.obtainMessage(1, time).sendToTarget();
                         handler.obtainMessage(2, date).sendToTarget();
+                        handler.obtainMessage(3, leftTime).sendToTarget();
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();

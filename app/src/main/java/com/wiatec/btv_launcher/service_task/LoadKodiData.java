@@ -7,7 +7,7 @@ import com.px.common.http.HttpMaster;
 import com.px.common.utils.CommonApplication;
 import com.px.common.utils.Logger;
 import com.px.common.utils.NetUtil;
-import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.constant.F;
 import com.px.common.utils.FileUtil;
 import com.wiatec.btv_launcher.bean.ImageInfo;
 import com.wiatec.btv_launcher.bean.VideoInfo;

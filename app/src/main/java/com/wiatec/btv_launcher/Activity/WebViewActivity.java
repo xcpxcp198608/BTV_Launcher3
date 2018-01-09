@@ -16,8 +16,7 @@ import android.widget.ProgressBar;
 
 import com.px.common.utils.CommonApplication;
 import com.px.common.utils.Logger;
-import com.wiatec.btv_launcher.Application;
-import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.constant.F;
 import com.wiatec.btv_launcher.R;
 
 

@@ -42,7 +42,7 @@ public class SessionInterceptor implements Interceptor {
                 String sessionId = (String) SPUtil.get(web + KEY, "");
                 if (!TextUtils.isEmpty(sessionId)) {
                     requestBuilder.addHeader("Cookie", sessionId);
-                    Logger.d("request:" + sessionId);
+//                    Logger.d("request:" + sessionId);
                 }
 
                 response = chain.proceed(requestBuilder.build());
@@ -52,7 +52,7 @@ public class SessionInterceptor implements Interceptor {
                     String session = cookies.get(0);
                     String sessionId1 = session.substring(0, session.indexOf(";"));
                     SPUtil.put(web + KEY, sessionId1);
-                    Logger.d("response:" + sessionId1);
+//                    Logger.d("response:" + sessionId1);
                 }
                 return response;
             }

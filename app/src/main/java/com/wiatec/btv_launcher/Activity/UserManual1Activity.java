@@ -8,7 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 
 import com.jude.rollviewpager.RollPagerView;
-import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.constant.F;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.adapter.UserManualImageAdapter;
 import com.wiatec.btv_launcher.bean.ImageInfo;

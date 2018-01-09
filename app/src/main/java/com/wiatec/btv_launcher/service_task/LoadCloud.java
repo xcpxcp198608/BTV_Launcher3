@@ -9,7 +9,7 @@ import com.px.common.http.HttpMaster;
 import com.px.common.utils.AppUtil;
 import com.px.common.utils.CommonApplication;
 import com.px.common.utils.Logger;
-import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.constant.F;
 import com.wiatec.btv_launcher.bean.CloudImageInfo;
 import com.wiatec.btv_launcher.bean.CloudInfo;
 import com.wiatec.btv_launcher.bean.TokenInfo;

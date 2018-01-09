@@ -7,7 +7,7 @@ import android.content.Intent;
 import com.px.common.utils.AppUtil;
 import com.px.common.utils.CommonApplication;
 import com.wiatec.btv_launcher.bean.InstalledApp;
-import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.constant.F;
 import com.wiatec.btv_launcher.SQL.InstalledAppDao;
 
 import io.reactivex.Observable;

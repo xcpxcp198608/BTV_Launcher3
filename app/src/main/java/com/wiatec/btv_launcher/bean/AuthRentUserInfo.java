@@ -1,8 +1,25 @@
 package com.wiatec.btv_launcher.bean;
 
 public class AuthRentUserInfo {
+
+    public static final String STATUS_ACTIVATE = "activate";
+    public static final String STATUS_DEACTIVATE = "deactivate";
+    public static final String STATUS_LIMITED = "limited";
+    public static final String STATUS_CANCELED = "canceled";
+
+    public static final String PAYMENT_CASH = "cash";
+    public static final String PAYMENT_CREDIT_CARD = "credit_card";
+    public static final String PAYMENT_PAYPAL = "paypal";
+
+    public static final String CATEGORY_B1 = "B1";
+    public static final String CATEGORY_P1 = "P1";
+    public static final String CATEGORY_P2 = "P2";
+
     private int id;
     private int salesId;
+    private String salesName;
+    private int dealerId;
+    private String dealerName;
     private String clientKey;
     private String category;
     private String mac;
@@ -12,6 +29,7 @@ public class AuthRentUserInfo {
     private String phone;
     private String createTime;
     private String activateTime;
+    private String expiresTime;
     private String status;
     private String country;
     private String region;
@@ -41,6 +59,30 @@ public class AuthRentUserInfo {
 
     public void setSalesId(int salesId) {
         this.salesId = salesId;
+    }
+
+    public String getSalesName() {
+        return salesName;
+    }
+
+    public void setSalesName(String salesName) {
+        this.salesName = salesName;
+    }
+
+    public int getDealerId() {
+        return dealerId;
+    }
+
+    public void setDealerId(int dealerId) {
+        this.dealerId = dealerId;
+    }
+
+    public String getDealerName() {
+        return dealerName;
+    }
+
+    public void setDealerName(String dealerName) {
+        this.dealerName = dealerName;
     }
 
     public String getClientKey() {
@@ -115,6 +157,14 @@ public class AuthRentUserInfo {
         this.activateTime = activateTime;
     }
 
+    public String getExpiresTime() {
+        return expiresTime;
+    }
+
+    public void setExpiresTime(String expiresTime) {
+        this.expiresTime = expiresTime;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -168,6 +218,9 @@ public class AuthRentUserInfo {
         return "AuthRentUserInfo{" +
                 "id=" + id +
                 ", salesId=" + salesId +
+                ", salesName='" + salesName + '\'' +
+                ", dealerId=" + dealerId +
+                ", dealerName='" + dealerName + '\'' +
                 ", clientKey='" + clientKey + '\'' +
                 ", category='" + category + '\'' +
                 ", mac='" + mac + '\'' +
@@ -177,6 +230,7 @@ public class AuthRentUserInfo {
                 ", phone='" + phone + '\'' +
                 ", createTime='" + createTime + '\'' +
                 ", activateTime='" + activateTime + '\'' +
+                ", expiresTime='" + expiresTime + '\'' +
                 ", status='" + status + '\'' +
                 ", country='" + country + '\'' +
                 ", region='" + region + '\'' +

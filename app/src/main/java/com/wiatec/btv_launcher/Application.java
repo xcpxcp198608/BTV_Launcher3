@@ -6,6 +6,9 @@ import android.content.Intent;
 import com.px.common.utils.CommonApplication;
 import com.px.common.utils.Logger;
 import com.wiatec.btv_launcher.service.CheckLoginService;
+import com.wiatec.btv_launcher.ws.SocketService;
+import com.wiatec.btv_launcher.ws.SocketTask;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -40,6 +43,7 @@ public class Application extends CommonApplication {
 
     public void startLoginCheckService(){
         startService(new Intent(context , CheckLoginService.class));
+//        startService(new Intent(context , SocketService.class));
     }
 
 }

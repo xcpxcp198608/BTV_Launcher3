@@ -1,4 +1,4 @@
-package com.wiatec.btv_launcher;
+package com.wiatec.btv_launcher.constant;
 
 import android.os.Environment;
 import android.renderscript.Sampler;
@@ -12,9 +12,9 @@ public final class F {
     public static final class url {
 
         public static final String base_url = "http://www.ldlegacy.com:8080/";
-//        public static final String panel_base_url = "http://panel.ldlegacy.com:8080/";
+        public static final String panel_base_url = "http://panel.ldlegacy.com:8080/";
 //        public static final String base_url = "http://172.27.0.106:8080/";
-        public static final String panel_base_url = "http://172.27.0.106:8080/";
+//        public static final String panel_base_url = "http://172.27.0.106:8080/";
 
         public static final String updater = base_url+"control_panel/update/get";
 
@@ -105,5 +105,6 @@ public final class F {
         public static final String ad_time= "adTime";
         public static final String ad_video_time= "adVideoTime";
         public static final String ad_boot_video_time= "bootAdVideoTime";
+        public static final String left_time= "leftTime";
     }
 }

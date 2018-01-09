@@ -4,7 +4,7 @@ import com.px.common.http.HttpMaster;
 import com.px.common.http.Listener.StringListener;
 import com.px.common.utils.Logger;
 import com.px.common.utils.SPUtil;
-import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.constant.F;
 import com.wiatec.btv_launcher.bean.UserLogInfo;
 
 import java.io.IOException;

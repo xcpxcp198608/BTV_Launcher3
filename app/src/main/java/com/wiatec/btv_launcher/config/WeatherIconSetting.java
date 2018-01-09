@@ -1,4 +1,4 @@
-package com.wiatec.btv_launcher;
+package com.wiatec.btv_launcher.config;
 
 import android.widget.ImageButton;
 import android.widget.ImageView;

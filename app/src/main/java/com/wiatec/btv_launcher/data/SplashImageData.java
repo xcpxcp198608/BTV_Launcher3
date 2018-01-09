@@ -4,8 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.px.common.http.HttpMaster;
 import com.px.common.http.Listener.StringListener;
+import com.px.common.utils.Logger;
 import com.px.common.utils.SPUtil;
-import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.constant.F;
 import com.wiatec.btv_launcher.bean.ImageInfo;
 
 import java.io.IOException;
@@ -27,11 +28,16 @@ public class SplashImageData implements ISplashImageData {
                         if(s == null){
                             return;
                         }
-                        ImageInfo imageInfo = new Gson().fromJson(s , new TypeToken<ImageInfo>() {} .getType());
-                        if(imageInfo == null){
-                            return;
+                        try {
+                            ImageInfo imageInfo = new Gson().fromJson(s, new TypeToken<ImageInfo>() {
+                            }.getType());
+                            if (imageInfo == null) {
+                                return;
+                            }
+                            onLoadListener.onSuccess(imageInfo);
+                        }catch (Exception e){
+                            Logger.d(e.getLocalizedMessage());
                         }
-                        onLoadListener.onSuccess(imageInfo);
                     }
 
                     @Override

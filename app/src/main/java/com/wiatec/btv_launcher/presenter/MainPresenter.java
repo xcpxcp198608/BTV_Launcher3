@@ -9,7 +9,7 @@ import com.px.common.utils.Logger;
 import com.px.common.utils.NetUtil;
 import com.px.common.utils.SPUtil;
 import com.wiatec.btv_launcher.Application;
-import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.constant.F;
 import com.wiatec.btv_launcher.SQL.MessageDao;
 import com.wiatec.btv_launcher.Activity.IMainActivity;
 import com.wiatec.btv_launcher.bean.Message1Info;

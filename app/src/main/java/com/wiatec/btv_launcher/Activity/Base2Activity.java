@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.px.common.utils.SPUtil;
 import com.px.common.utils.SysUtil;
-import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.constant.F;
 import com.wiatec.btv_launcher.presenter.BasePresenter;
 
 /**

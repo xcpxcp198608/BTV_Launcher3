@@ -18,7 +18,7 @@
         android:background="@drawable/bg_text_view"
         android:textColor="@color/colorWhite"
         android:maxLength="16"
-        android:layout_width="350dp"
+        android:layout_width="450dp"
         android:layout_height="50dp" />
 
     <Button

@@ -6,17 +6,18 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.px.common.utils.CommonApplication;
 import com.px.common.utils.Logger;
 import com.px.common.utils.SPUtil;
-import com.wiatec.btv_launcher.Application;
-import com.wiatec.btv_launcher.F;
+import com.wiatec.btv_launcher.constant.F;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.bean.AuthRegisterUserInfo;
 import com.wiatec.btv_launcher.bean.ResultInfo;
@@ -30,7 +31,8 @@ import butterknife.OnClick;
  * Created by patrick on 2016/12/29.
  */
 
-public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter> implements ILoginActivity {
+public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
+        implements ILoginActivity, TextView.OnEditorActionListener {
 
     @BindView(R.id.ll_login)
     LinearLayout llLogin;
@@ -73,6 +75,8 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        etPassword.setOnEditorActionListener(this);
+        etEmail1.setOnEditorActionListener(this);
     }
 
     @Override
@@ -86,22 +90,53 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
         }
     }
 
+    private void doLogin(){
+        userName = etUserName.getText().toString().trim();
+        password = etPassword.getText().toString().trim();
+        if(!TextUtils.isEmpty(userName) && ! TextUtils.isEmpty(password)){
+            AuthRegisterUserInfo authRegisterUserInfo = new AuthRegisterUserInfo();
+            authRegisterUserInfo.setUsername(userName);
+            authRegisterUserInfo.setPassword(password);
+            authRegisterUserInfo.setMac((String) SPUtil.get(F.sp.ethernet_mac,""));
+            presenter.login(authRegisterUserInfo);
+            progressBar.setVisibility(View.VISIBLE);
+        }else{
+            Toast.makeText(LoginActivity.this , getString(R.string.error_input) , Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void doReset(){
+        userName1 = etUserName1.getText().toString().trim();
+        email1 = etEmail1.getText().toString().trim();
+        if(!TextUtils.isEmpty(userName1) && ! TextUtils.isEmpty(email1)){
+            AuthRegisterUserInfo authRegisterUserInfo = new AuthRegisterUserInfo();
+            authRegisterUserInfo.setUsername(userName1);
+            authRegisterUserInfo.setEmail(email1);
+            presenter.resetPassword(authRegisterUserInfo);
+            progressBar1.setVisibility(View.VISIBLE);
+        }else{
+            Toast.makeText(LoginActivity.this , getString(R.string.error_input) , Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if(actionId == EditorInfo.IME_ACTION_DONE){
+            if(v.getId() == R.id.et_password){
+                doLogin();
+            }
+            if(v.getId() == R.id.et_email1){
+                doReset();
+            }
+        }
+        return false;
+    }
+
     @OnClick({R.id.bt_login, R.id.bt_renter, R.id.bt_create_account ,R.id.bt_forget_password , R.id.bt_reset})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_login:
-                userName = etUserName.getText().toString().trim();
-                password = etPassword.getText().toString().trim();
-                if(!TextUtils.isEmpty(userName) && ! TextUtils.isEmpty(password)){
-                    AuthRegisterUserInfo authRegisterUserInfo = new AuthRegisterUserInfo();
-                    authRegisterUserInfo.setUsername(userName);
-                    authRegisterUserInfo.setPassword(password);
-                    authRegisterUserInfo.setMac((String) SPUtil.get(F.sp.ethernet_mac,""));
-                    presenter.login(authRegisterUserInfo);
-                    progressBar.setVisibility(View.VISIBLE);
-                }else{
-                    Toast.makeText(LoginActivity.this , getString(R.string.error_input) , Toast.LENGTH_LONG).show();
-                }
+                doLogin();
                 break;
             case R.id.bt_renter:
                 startActivity(new Intent(LoginActivity.this, RenterActivity.class));
@@ -111,21 +146,17 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
                 startActivity(new Intent(this ,RegisterActivity.class));
                 break;
             case R.id.bt_forget_password:
-                llLogin.setVisibility(View.GONE);
-                llResetPassword.setVisibility(View.VISIBLE);
+                String userName = (String) SPUtil.get(F.sp.username ,"");
+                String token = (String) SPUtil.get(F.sp.token ,"");
+                if(!TextUtils.isEmpty(userName) && !TextUtils.isEmpty(token)) {
+                    llLogin.setVisibility(View.GONE);
+                    llResetPassword.setVisibility(View.VISIBLE);
+                }else{
+                    Toast.makeText(LoginActivity.this , "please login first" , Toast.LENGTH_LONG).show();
+                }
                 break;
             case R.id.bt_reset:
-                userName1 = etUserName1.getText().toString().trim();
-                email1 = etEmail1.getText().toString().trim();
-                if(!TextUtils.isEmpty(userName1) && ! TextUtils.isEmpty(email1)){
-                    AuthRegisterUserInfo authRegisterUserInfo = new AuthRegisterUserInfo();
-                    authRegisterUserInfo.setUsername(userName1);
-                    authRegisterUserInfo.setEmail(email1);
-                    presenter.resetPassword(authRegisterUserInfo);
-                    progressBar1.setVisibility(View.VISIBLE);
-                }else{
-                    Toast.makeText(LoginActivity.this , getString(R.string.error_input) , Toast.LENGTH_LONG).show();
-                }
+                doReset();
                 break;
         }
     }
@@ -141,7 +172,8 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
             SPUtil.put(F.sp.username, authRegisterUserInfo.getUsername());
             SPUtil.put(F.sp.token, authRegisterUserInfo.getToken());
             SPUtil.put(F.sp.last_name, authRegisterUserInfo.getLastName());
-            SPUtil.put(F.sp.level, authRegisterUserInfo.getLevel()+"");
+            SPUtil.put(F.sp.level, authRegisterUserInfo.getLevel() + "");
+            SPUtil.put(F.sp.is_renter, false);
             finish();
         } else {
             progressBar.setVisibility(View.GONE);
