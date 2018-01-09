@@ -106,5 +106,6 @@ public final class F {
         public static final String ad_video_time= "adVideoTime";
         public static final String ad_boot_video_time= "bootAdVideoTime";
         public static final String left_time= "leftTime";
+        public static final String left_mills_second= "leftMillsSeconds";
     }
 }

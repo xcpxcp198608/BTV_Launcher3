@@ -76,5 +76,7 @@
 
     <string name="rent_customer">Preferred Customer Program Activation</string>
     <string name="key">Enter PCP Activation Code</string>
+    <string name="space" />
+    <string name="rent_out_expires">Your rent will be out expires soon, please contact your sales renew your btvi3</string>
 
 </resources>

@@ -169,7 +169,7 @@ public class MainPresenter extends BasePresenter<IMainActivity> {
         try {
             final MessageDao messageDao = MessageDao.getInstance(CommonApplication.context);
             HttpMaster.get(F.url.message)
-                    .param("deviceInfo.countryCode", SPUtil.get("countryCode" , ""))
+                    .param("deviceInfo.countryCode", SPUtil.get(F.sp.country_code , ""))
                     .enqueue(new StringListener() {
                         @Override
                         public void onSuccess(String s) throws IOException {

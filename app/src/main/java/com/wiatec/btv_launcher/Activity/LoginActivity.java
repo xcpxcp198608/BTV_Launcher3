@@ -185,10 +185,12 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
     public void resetp(ResultInfo<AuthRegisterUserInfo> resultInfo) {
         progressBar1.setVisibility(View.GONE);
         if(resultInfo ==null) return;
+        if(resultInfo.getCode() == 200){
+            llResetPassword.setVisibility(View.GONE);
+            llLogin.setVisibility(View.VISIBLE);
+        }
         Logger.d(resultInfo.toString());
         Toast.makeText(CommonApplication.context, resultInfo.getMessage(), Toast.LENGTH_LONG).show();
-        llResetPassword.setVisibility(View.GONE);
-        llLogin.setVisibility(View.VISIBLE);
     }
 
     @Override

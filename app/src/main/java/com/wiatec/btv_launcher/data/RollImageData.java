@@ -20,9 +20,9 @@ public class RollImageData implements IRollImageData {
     @Override
     public void loadData(final OnLoadListener onLoadListener) {
         HttpMaster.post(F.url.roll_image)
-                .param("deviceInfo.countryCode", (String)SPUtil.get("countryCode" , ""))
-                .param("deviceInfo.regionName", (String)SPUtil.get("regionName" , ""))
-                .param("deviceInfo.timeZone", (String) SPUtil.get("timeZone" , ""))
+                .param("deviceInfo.countryCode", (String)SPUtil.get(F.sp.country_code , ""))
+                .param("deviceInfo.regionName", (String)SPUtil.get(F.sp.region_name , ""))
+                .param("deviceInfo.timeZone", (String) SPUtil.get(F.sp.time_zone , ""))
                 .enqueue(new StringListener() {
                     @Override
                     public void onSuccess(String s) throws IOException {

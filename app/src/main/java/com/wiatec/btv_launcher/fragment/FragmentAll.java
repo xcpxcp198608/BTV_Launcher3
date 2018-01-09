@@ -19,6 +19,7 @@ import com.px.common.utils.AppUtil;
 import com.wiatec.btv_launcher.adapter.MenuItemAdapter;
 import com.wiatec.btv_launcher.animator.Zoom;
 import com.wiatec.btv_launcher.bean.InstalledApp;
+import com.wiatec.btv_launcher.constant.F;
 
 import java.util.List;
 
@@ -77,7 +78,7 @@ public class FragmentAll extends Fragment {
                                 if("com.wiatec.update".equals(packageName)){
                                     AppUtil.launchApp(getContext() ,packageName);
                                 }else {
-                                    String l  = (String) SPUtil.get("userLevel", "1");
+                                    String l  = (String) SPUtil.get(F.sp.level, "1");
                                     int level = Integer.parseInt(l);
                                     if(level >=3){
                                         AppUtil.launchApp(getContext() ,packageName);

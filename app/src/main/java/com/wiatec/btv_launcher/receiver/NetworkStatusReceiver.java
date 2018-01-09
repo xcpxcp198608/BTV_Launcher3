@@ -8,9 +8,6 @@ import android.widget.ImageView;
 import com.px.common.utils.NetUtil;
 import com.wiatec.btv_launcher.R;
 
-/**
- * Created by PX on 2016-11-12.
- */
 
 public class NetworkStatusReceiver extends BroadcastReceiver {
 

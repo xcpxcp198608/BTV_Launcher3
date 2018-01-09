@@ -40,7 +40,7 @@ public class FragmentVideo extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_video ,container ,false);
-        gv_Video = (GridView) view.findViewById(R.id.gv_Video);
+        gv_Video = view.findViewById(R.id.gv_Video);
         activity = (MenuActivity) getContext();
         installedAppDao = activity.installedAppDao;
         return view;

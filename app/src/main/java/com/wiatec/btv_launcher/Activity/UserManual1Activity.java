@@ -27,7 +27,7 @@ public class UserManual1Activity extends Base1Activity<IUserManualActivity ,User
     private UserManualImageAdapter adapter;
     private String language;
     private String product;
-    private int [] englishResIds = {R.drawable.m1, R.drawable.m2, R.drawable.m3, R.drawable.m4, R.drawable.m5,
+    private int [] englishResIds = {R.drawable.mm1, R.drawable.m2, R.drawable.m3, R.drawable.m4, R.drawable.m5,
             R.drawable.m6, R.drawable.m7, R.drawable.m8 };
     private int [] spanishResIds = {R.drawable.ms1, R.drawable.ms2, R.drawable.ms3, R.drawable.ms4, R.drawable.ms5,
             R.drawable.ms6, R.drawable.ms7};
@@ -36,7 +36,7 @@ public class UserManual1Activity extends Base1Activity<IUserManualActivity ,User
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_manual);
-        rpvManual = (RollPagerView) findViewById(R.id.rpv_manual);
+        rpvManual = findViewById(R.id.rpv_manual);
         showSelectProduct();
     }
 

@@ -89,7 +89,9 @@ public class CheckLogin implements Runnable {
                             RxBus.getDefault().post(new CheckLoginEvent(CheckLoginEvent.CODE_LOGIN_REPEAT));
                         }
                         String leftTime = TimeUtil.getLeftTimeToExpires(authRentUserInfo.getExpiresTime());
+                        long leftMillsSeconds = TimeUtil.getUnixFromStr(authRentUserInfo.getExpiresTime()) - System.currentTimeMillis();
                         SPUtil.put(F.sp.left_time, leftTime);
+                        SPUtil.put(F.sp.left_mills_second, leftMillsSeconds);
                     }
 
                     @Override

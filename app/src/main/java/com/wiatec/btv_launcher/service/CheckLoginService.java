@@ -10,10 +10,6 @@ import android.support.annotation.Nullable;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.service_task.CheckLogin;
 
-/**
- * Created by patrick on 2017/3/14.
- */
-
 public class CheckLoginService extends IntentService {
 
 

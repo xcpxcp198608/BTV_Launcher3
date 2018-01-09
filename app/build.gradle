@@ -10,7 +10,7 @@ android {
         targetSdkVersion 26
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         versionCode 403
-        versionName "v4.0.3"
+        versionName "v5.0.0"
     }
 
     signingConfigs {

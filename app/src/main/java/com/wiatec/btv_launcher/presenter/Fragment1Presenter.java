@@ -148,7 +148,7 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
                 AppUtil.launchApp(context, F.package_name.market);
             }
         }else{
-            String l = (String) SPUtil.get("userLevel" , "1");
+            String l = (String) SPUtil.get(F.sp.level , "1");
             int level = Integer.parseInt(l);
             if(level >= 1 ){
                 AppUtil.launchApp(context, packageName);

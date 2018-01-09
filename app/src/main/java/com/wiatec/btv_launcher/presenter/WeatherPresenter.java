@@ -6,10 +6,6 @@ import com.wiatec.btv_launcher.bean.WeatherInfo;
 import com.wiatec.btv_launcher.data.IWeatherData;
 import com.wiatec.btv_launcher.data.WeatherData;
 
-/**
- * Created by PX on 2016-11-15.
- */
-
 public class WeatherPresenter extends BasePresenter<IWeatherActivity> {
 
     private IWeatherActivity iWeatherActivity;

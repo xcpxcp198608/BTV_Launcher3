@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.text.Html;
@@ -55,6 +56,7 @@ import com.wiatec.btv_launcher.service.LoadWeatherService;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -120,6 +122,14 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
     @Override
     protected void onStart() {
         super.onStart();
+        if(presenter != null){
+            presenter.loadWeatherInfo();
+            if (NetUtil.isConnected()) {
+                isStartLoadNetData = true;
+                presenter.loadLocation();
+                presenter.loadUpdate();
+            }
+        }
         try {
             String level = (String) SPUtil.get(F.sp.level, "1");
             int l = Integer.parseInt(level);
@@ -129,31 +139,50 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
         }catch (Exception e){
             Logger.d(e.getLocalizedMessage());
         }
-        String userName = (String) SPUtil.get(F.sp.last_name , "");
-        if(!TextUtils.isEmpty(userName) && !"null".equals(userName)){
-            tvWelcome.setText(getString(R.string.welcome) + " " + userName + " " + getString(R.string.family));
-        }else{
-            tvWelcome.setText("");
-        }
-        String rentalCategory = (String) SPUtil.get(F.sp.rental_category , "");
-        if(!TextUtils.isEmpty(rentalCategory) && !"null".equals(userName)){
-            tvRental.setText(rentalCategory);
-        }else{
-            tvRental.setText("");
-        }
-        if(presenter != null){
-            presenter.loadWeatherInfo();
-            if (NetUtil.isConnected()) {
-                isStartLoadNetData = true;
-                presenter.loadLocation();
-                presenter.loadUpdate();
+        showLastName();
+        boolean isRenter = (boolean) SPUtil.get(F.sp.is_renter, false);
+        if(isRenter) {
+            String rentalCategory = (String) SPUtil.get(F.sp.rental_category, "");
+            if (!TextUtils.isEmpty(rentalCategory)) {
+                tvRental.setText(rentalCategory);
+            } else {
+                tvRental.setText("");
+            }
+            long leftMillsSeconds = (long) SPUtil.get(F.sp.left_mills_second, 0L);
+            Logger.d(leftMillsSeconds+"");
+            if(leftMillsSeconds < 604800000 && leftMillsSeconds > 0){
+                showRentRenewNoticeDialog();
             }
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+    private void showLastName() {
+        String lastName = (String) SPUtil.get(F.sp.last_name , "");
+        if(!TextUtils.isEmpty(lastName) && !"null".equals(lastName)){
+            tvWelcome.setText(getString(R.string.welcome) + " " + lastName + " " + getString(R.string.family));
+        }else{
+            tvWelcome.setText("");
+        }
+    }
+
+    private void showRentRenewNoticeDialog() {
+        final AlertDialog alertDialog = new AlertDialog.Builder(this , R.style.dialog).create();
+        alertDialog.setCancelable(false);
+        alertDialog.show();
+        Window window = alertDialog.getWindow();
+        if(window == null){
+            return;
+        }
+        window.setContentView(R.layout.dialog_login_repeat);
+        TextView txMessage = window.findViewById(R.id.tx_message);
+        Button btnConfirm = window.findViewById(R.id.bt_confirm);
+        txMessage.setText(getString(R.string.rent_out_expires));
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
     }
 
     @Override
@@ -172,13 +201,7 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            return true;
-        }
-        if (keyCode == KeyEvent.KEYCODE_HOME) {
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
+        return keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_HOME || super.onKeyDown(keyCode, event);
     }
 
     @Override
@@ -235,7 +258,7 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
             //Logger.d("video is not intact");
             presenter.downloadAdVideo("btvbootad.mp4" ,videoInfo.getUrl());
         } else {
-            // Logger.d("video no need update");
+            Logger.d("boot video no need update");
         }
     }
 
@@ -252,7 +275,7 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
 //            Logger.d("video not intact start download");
             presenter.downloadAdVideo("btvad.mp4" ,videoInfo.getUrl());
         } else {
-            //Logger.d("video no need update");
+            Logger.d("video no need update");
         }
     }
 
@@ -278,8 +301,8 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
             return;
         }
         window.setContentView(R.layout.dialog_update);
-        TextView tvInfo = (TextView) window.findViewById(R.id.tv_info);
-        Button btConfirm = (Button) window.findViewById(R.id.bt_confirm);
+        TextView tvInfo = window.findViewById(R.id.tv_info);
+        Button btConfirm = window.findViewById(R.id.bt_confirm);
         tvInfo.setText(Html.fromHtml(updateInfo.getInfo()));
         btConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -296,7 +319,6 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
         String device = Build.MODEL;
         if(!"BTVi3".equals(device) && !"BTV3".equals(device)){
             showWarningDialog();
-            return ;
         }
     }
 
@@ -335,7 +357,6 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
                     tv_Date.setText((String) msg.obj);
                     break;
                 case 3:
-                    tv_Date.setText((String) msg.obj);
                     boolean isRenter = (boolean) SPUtil.get(F.sp.is_renter, false);
                     if(isRenter){
                         tvLeftTime.setText((String) msg.obj);
@@ -353,15 +374,15 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
                     while (true) {
                         Thread.sleep(1000);
                         Date d = new Date(System.currentTimeMillis());
-                        String time = new SimpleDateFormat("h:mm a").format(d);
-                        String date = new SimpleDateFormat("MM-dd-yyyy").format(d);
+                        String time = new SimpleDateFormat("h:mm a", Locale.US).format(d);
+                        String date = new SimpleDateFormat("MM-dd-yyyy", Locale.US).format(d);
                         String leftTime = (String) SPUtil.get(F.sp.left_time, "");
                         handler.obtainMessage(1, time).sendToTarget();
                         handler.obtainMessage(2, date).sendToTarget();
                         handler.obtainMessage(3, leftTime).sendToTarget();
                     }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                } catch (Exception e) {
+                    Logger.e(e.getMessage());
                 }
             }
         });
@@ -399,19 +420,23 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         long startTime = SystemClock.elapsedRealtime();
         long repeatTime = 120 * 60 * 1000;
-        alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, startTime, repeatTime, alarmPendingIntent);
+        if(alarmManager != null) {
+            alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, startTime, repeatTime, alarmPendingIntent);
+        }
 
         //启动服务加载cloud照片信息列表,定时每3分钟读取一次
         Intent cloudIntent = new Intent(MainActivity.this, LoadCloudService.class);
         PendingIntent cloudPendingIntent = PendingIntent.getService(MainActivity.this, 0 ,cloudIntent , 0);
         AlarmManager alarmManager1 = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         long repeatTime1 = 5*60*1000;
-        alarmManager1.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP ,startTime , repeatTime1 ,cloudPendingIntent);
+        if(alarmManager1 != null) {
+            alarmManager1.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, startTime, repeatTime1, cloudPendingIntent);
+        }
     }
 
     private void showVersion() {
         String s = AppUtil.getVersionName(getPackageName());
         s = s.substring(1 , s.length());
-        tvVersion.setText(getString(R.string.ui)+" "+s);
+        tvVersion.setText(getString(R.string.ui) + " " + s);
     }
 }

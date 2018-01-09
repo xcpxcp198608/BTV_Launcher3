@@ -10,12 +10,12 @@ import android.widget.Toast;
 
 import com.px.common.utils.CommonApplication;
 import com.px.common.utils.SPUtil;
+import com.wiatec.btv_launcher.constant.EnumLevel;
 import com.wiatec.btv_launcher.constant.F;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.bean.AuthRentUserInfo;
 import com.wiatec.btv_launcher.bean.ResultInfo;
 import com.wiatec.btv_launcher.presenter.RenterPresenter;
-
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -89,12 +89,12 @@ public class RenterActivity extends Base2Activity<IRenterActivity, RenterPresent
         SPUtil.put(F.sp.token, authRentUserInfo.getClientKey());
         SPUtil.put(F.sp.last_name, authRentUserInfo.getLastName());
         String level = "";
-        if("B1".equals(authRentUserInfo.getCategory())){
-            level = "2";
-        }else if("P1".equals(authRentUserInfo.getCategory())){
-            level = "4";
-        }else if("P2".equals(authRentUserInfo.getCategory())){
-            level = "4";
+        if(AuthRentUserInfo.CATEGORY_B1.equals(authRentUserInfo.getCategory())){
+            level = EnumLevel.L2.getL();
+        }else if(AuthRentUserInfo.CATEGORY_P1.equals(authRentUserInfo.getCategory())){
+            level = EnumLevel.L4.getL();
+        }else if(AuthRentUserInfo.CATEGORY_P2.equals(authRentUserInfo.getCategory())){
+            level = EnumLevel.L4.getL();
         }
         SPUtil.put(F.sp.level, level);
         SPUtil.put(F.sp.is_renter, true);

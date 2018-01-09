@@ -8,10 +8,6 @@ import com.wiatec.btv_launcher.service_task.LoadWeather;
 
 import java.util.concurrent.ExecutorService;
 
-/**
- * Created by PX on 2016-11-14.
- */
-
 public class LoadWeatherService extends IntentService {
 
     private ExecutorService executorService;
@@ -27,6 +23,5 @@ public class LoadWeatherService extends IntentService {
             executorService.execute(new LoadWeather());
         }
     }
-
 
 }

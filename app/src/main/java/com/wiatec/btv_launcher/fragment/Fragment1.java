@@ -203,10 +203,10 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
             String eTime = new SimpleDateFormat("yy-MM-dd HH:mm:ss").format(new Date(exitTime));
             userDataInfo.setExitTime(eTime);
             userDataInfo.setStayTime(holdTime+"");
-            userDataInfo.setUserName((String) SPUtil.get("userName" ,""));
-            userDataInfo.setMac((String) SPUtil.get("mac" ,""));
-            userDataInfo.setCountry((String) SPUtil.get("country" ,""));
-            userDataInfo.setCity((String) SPUtil.get("city" ,""));
+            userDataInfo.setUserName((String) SPUtil.get(F.sp.username ,""));
+            userDataInfo.setMac((String) SPUtil.get(F.sp.mac ,""));
+            userDataInfo.setCountry((String) SPUtil.get(F.sp.country ,""));
+            userDataInfo.setCity((String) SPUtil.get(F.sp.city ,""));
             if(presenter != null && entryTime>0) {
                 presenter.uploadHoldTime(userDataInfo);
             }
@@ -292,7 +292,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                 intent.putExtra("userId", 26+"");
                 intent.putExtra("title", "LDE");
                 intent.putExtra("message", "");
-                intent.putExtra("playUrl", "http://ldlive.protv.company:8080/hls/OGUyMDIwMW.m3u8");
+                intent.putExtra("playUrl", "http://live.bvision.live:8080/hls/OGUyMDIwMW.m3u8");
                 startActivity(intent);
                 break;
         }
@@ -536,7 +536,6 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
 
     @Override
     public void onConnected(boolean isConnected) {
-//        Logger.d("connect");
         if (presenter != null && vv_Main != null && !vv_Main.isPlaying() && !isVideoPlaying) {
             presenter.loadVideo();
         }
@@ -578,7 +577,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
     }
 
     private int getLevel(){
-        String l = (String) SPUtil.get("userLevel" , "1");
+        String l = (String) SPUtil.get(F.sp.level , "1");
         return Integer.parseInt(l);
     }
 }

@@ -40,7 +40,7 @@ public class FragmentGame extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game ,container ,false);
-        gv_Game = (GridView) view.findViewById(R.id.gv_Game);
+        gv_Game = view.findViewById(R.id.gv_Game);
         activity = (MenuActivity) getContext();
         installedAppDao = InstalledAppDao.getInstance(activity);
         return view;
