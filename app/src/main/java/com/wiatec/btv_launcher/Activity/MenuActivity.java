@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 
 import com.wiatec.btv_launcher.R;
-import com.wiatec.btv_launcher.SQL.InstalledAppDao;
+import com.wiatec.btv_launcher.sql.InstalledAppDao;
 import com.wiatec.btv_launcher.adapter.FragmentAdapter;
 import com.wiatec.btv_launcher.custom_view.ViewPagerIndicator;
 import com.wiatec.btv_launcher.fragment.FragmentAll;

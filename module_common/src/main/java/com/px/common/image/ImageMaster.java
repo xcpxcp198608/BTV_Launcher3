@@ -18,7 +18,7 @@ public class ImageMaster {
 
     //普通加载
     public static void load(String url, ImageView imageView) {
-       load(CommonApplication.context, url, imageView);
+        load(CommonApplication.context, url, imageView);
     }
 
     //普通加载
@@ -26,7 +26,7 @@ public class ImageMaster {
         Glide.with(context)
                 .load(url)
                 .apply(new RequestOptions()
-                    .dontAnimate())
+                        .dontAnimate())
                 .into(imageView);
     }
 

@@ -4,7 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.px.common.http.Bean.DownloadInfo;
+import com.px.common.http.pojo.DownloadInfo;
 import com.px.common.utils.CommonApplication;
 
 /**

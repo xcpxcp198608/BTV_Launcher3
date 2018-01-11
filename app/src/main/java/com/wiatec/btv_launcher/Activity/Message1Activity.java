@@ -16,7 +16,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.wiatec.btv_launcher.R;
-import com.wiatec.btv_launcher.SQL.MessageDao;
+import com.wiatec.btv_launcher.sql.MessageDao;
 import com.px.common.utils.AppUtil;
 import com.wiatec.btv_launcher.adapter.MessageAdapter;
 import com.wiatec.btv_launcher.bean.MessageInfo;

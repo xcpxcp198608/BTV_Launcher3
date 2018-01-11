@@ -3,7 +3,7 @@ package com.wiatec.btv_launcher.presenter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.px.common.http.HttpMaster;
-import com.px.common.http.Listener.StringListener;
+import com.px.common.http.listener.StringListener;
 import com.px.common.utils.Logger;
 import com.wiatec.btv_launcher.Activity.IRegisterActivity;
 import com.wiatec.btv_launcher.constant.F;
@@ -12,9 +12,6 @@ import com.wiatec.btv_launcher.bean.ResultInfo;
 
 import java.io.IOException;
 
-/**
- * Created by patrick on 2017/3/10.
- */
 
 public class RegisterPresenter extends BasePresenter<IRegisterActivity> {
 
@@ -38,7 +35,7 @@ public class RegisterPresenter extends BasePresenter<IRegisterActivity> {
                     .param("language", language)
                     .enqueue(new StringListener() {
                         @Override
-                        public void onSuccess(String s) throws IOException {
+                        public void onSuccess(String s) throws Exception {
                             if(s == null){
                                 return;
                             }

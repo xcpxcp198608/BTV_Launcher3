@@ -1,4 +1,4 @@
-package com.px.common.http.Request;
+package com.px.common.http.request;
 
 import com.px.common.http.configuration.Header;
 import com.px.common.http.configuration.Parameters;

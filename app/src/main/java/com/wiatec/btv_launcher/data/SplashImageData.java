@@ -3,7 +3,7 @@ package com.wiatec.btv_launcher.data;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.px.common.http.HttpMaster;
-import com.px.common.http.Listener.StringListener;
+import com.px.common.http.listener.StringListener;
 import com.px.common.utils.Logger;
 import com.px.common.utils.SPUtil;
 import com.wiatec.btv_launcher.constant.F;
@@ -11,9 +11,6 @@ import com.wiatec.btv_launcher.bean.ImageInfo;
 
 import java.io.IOException;
 
-/**
- * Created by PX on 2016-11-15.
- */
 
 public class SplashImageData implements ISplashImageData {
     @Override

@@ -8,9 +8,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.px.common.http.Bean.DownloadInfo;
 import com.px.common.http.HttpMaster;
-import com.px.common.http.Listener.DownloadListener;
+import com.px.common.http.listener.DownloadListener;
+import com.px.common.http.pojo.DownloadInfo;
 import com.px.common.utils.AppUtil;
 import com.wiatec.btv_launcher.constant.F;
 import com.wiatec.btv_launcher.R;

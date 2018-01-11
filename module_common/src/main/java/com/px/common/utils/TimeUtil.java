@@ -2,7 +2,6 @@ package com.px.common.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -32,10 +31,20 @@ public class TimeUtil {
 
     /**
      * get current time string
-     * @return current time string (format: "yyyy-MM-dd HH:mm:ss"s)
+     * @return current time string (format: "yyyy-MM-dd HH:mm:ss")
      */
     public static String getStringTime(){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+                new Locale("en"));
+        return simpleDateFormat.format(new Date(System.currentTimeMillis()));
+    }
+
+    /**
+     * get current time string
+     * @return current time string (format: "yyyy-MM-dd)
+     */
+    public static String getStringDate(){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd",
                 new Locale("en"));
         return simpleDateFormat.format(new Date(System.currentTimeMillis()));
     }

@@ -8,7 +8,7 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 
 import com.wiatec.btv_launcher.R;
-import com.wiatec.btv_launcher.SQL.InstalledAppDao;
+import com.wiatec.btv_launcher.sql.InstalledAppDao;
 import com.wiatec.btv_launcher.adapter.AppSelectAdapter;
 import com.wiatec.btv_launcher.bean.InstalledApp;
 

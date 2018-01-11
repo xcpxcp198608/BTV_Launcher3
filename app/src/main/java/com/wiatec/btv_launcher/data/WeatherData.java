@@ -1,12 +1,8 @@
 package com.wiatec.btv_launcher.data;
 
 import com.px.common.utils.CommonApplication;
-import com.wiatec.btv_launcher.Application;
-import com.wiatec.btv_launcher.SQL.WeatherDao;
+import com.wiatec.btv_launcher.sql.WeatherDao;
 import com.wiatec.btv_launcher.bean.WeatherInfo;
-
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;

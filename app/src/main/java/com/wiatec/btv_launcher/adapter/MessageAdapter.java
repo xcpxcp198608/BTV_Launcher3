@@ -52,9 +52,9 @@ public class MessageAdapter extends BaseAdapter {
         MessageViewHolder viewHolder = new MessageViewHolder();
         if(convertView == null){
             convertView = layoutInflater.inflate(R.layout.item_message ,parent ,false);
-            viewHolder.iv_Message_Icon = (ImageView) convertView.findViewById(R.id.iv_message_icon);
-            viewHolder.tv_Message_Title = (TextView) convertView.findViewById(R.id.tv_message_title);
-            viewHolder.tv_Message_Content = (TextView) convertView.findViewById(R.id.tv_message_content);
+            viewHolder.iv_Message_Icon = convertView.findViewById(R.id.iv_message_icon);
+            viewHolder.tv_Message_Title = convertView.findViewById(R.id.tv_message_title);
+            viewHolder.tv_Message_Content = convertView.findViewById(R.id.tv_message_content);
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (MessageViewHolder) convertView.getTag();

@@ -1,7 +1,7 @@
-package com.px.common.http.Listener;
+package com.px.common.http.listener;
 
 
-import com.px.common.http.Bean.DownloadInfo;
+import com.px.common.http.pojo.DownloadInfo;
 
 public interface DownloadListener  {
      void onPending(DownloadInfo downloadInfo);

@@ -1,9 +1,9 @@
-package com.px.common.http.Request;
+package com.px.common.http.request;
 
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.px.common.http.Bean.DownloadInfo;
+import com.px.common.http.pojo.DownloadInfo;
 import com.px.common.http.configuration.Header;
 import com.px.common.http.configuration.Parameters;
 
@@ -38,7 +38,7 @@ public class DownloadRequest extends RequestMaster {
         return this;
     }
 
-    public DownloadInfo createDownloadInfo(){
+    public DownloadInfo createDownlaodInfo (){
         DownloadInfo downloadInfo = new DownloadInfo();
         if(TextUtils.isEmpty(mName)){
             mName = mUrl.split("/")[mUrl.split("/").length -1];
@@ -58,7 +58,7 @@ public class DownloadRequest extends RequestMaster {
 
     @Override
     protected Request createRequest(Header header, Parameters parameters, Object tag) {
-        mDownloadInfo = createDownloadInfo();
+        mDownloadInfo = createDownlaodInfo();
         Request.Builder builder = new Request.Builder();
         if(header !=null){
             Headers headers = Headers.of(header.stringMap);
@@ -68,7 +68,7 @@ public class DownloadRequest extends RequestMaster {
             StringBuilder stringBuilder = new StringBuilder(mUrl);
             stringBuilder.append("?");
             for(Map.Entry<String,String> entry : parameters.stringMap.entrySet()){
-                stringBuilder.append(entry.getKey()).append("=").append(entry.getValue()+"&");
+                stringBuilder.append(entry.getKey()+"=").append(entry.getValue()+"&");
             }
             mUrl = stringBuilder.toString().substring(0,stringBuilder.toString().length()-1);
         }

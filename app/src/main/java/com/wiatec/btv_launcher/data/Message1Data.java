@@ -3,7 +3,7 @@ package com.wiatec.btv_launcher.data;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.px.common.http.HttpMaster;
-import com.px.common.http.Listener.StringListener;
+import com.px.common.http.listener.StringListener;
 import com.px.common.utils.SPUtil;
 import com.wiatec.btv_launcher.constant.F;
 import com.wiatec.btv_launcher.bean.Message1Info;
@@ -25,7 +25,7 @@ public class Message1Data implements IMessage1Data{
                 .param("deviceInfo.timeZone", (String)SPUtil.get(F.sp.time_zone , ""))
                 .enqueue(new StringListener() {
                     @Override
-                    public void onSuccess(String s) throws IOException {
+                    public void onSuccess(String s) throws Exception {
                         if(s != null){
                             List<Message1Info> list = new Gson().fromJson(s , new TypeToken<List<Message1Info>>(){}.getType());
                             onLoadListener.onSuccess(list);

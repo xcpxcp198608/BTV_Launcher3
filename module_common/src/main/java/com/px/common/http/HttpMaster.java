@@ -2,10 +2,10 @@ package com.px.common.http;
 
 import android.content.Context;
 
-import com.px.common.http.Request.DownloadRequest;
-import com.px.common.http.Request.GetRequest;
-import com.px.common.http.Request.PostRequest;
-import com.px.common.http.Request.UploadRequest;
+import com.px.common.http.request.DownloadRequest;
+import com.px.common.http.request.GetRequest;
+import com.px.common.http.request.PostRequest;
+import com.px.common.http.request.UploadRequest;
 import com.px.common.http.interceptors.SessionInterceptor;
 
 import java.util.concurrent.TimeUnit;
@@ -63,5 +63,4 @@ public class HttpMaster {
     public static DownloadRequest download (Context context) {
         return new DownloadRequest(context);
     }
-
 }

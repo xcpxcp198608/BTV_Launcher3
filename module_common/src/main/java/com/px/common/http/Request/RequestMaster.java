@@ -1,18 +1,16 @@
-package com.px.common.http.Request;
+package com.px.common.http.request;
 
-import android.text.TextUtils;
 import android.util.Log;
 
-import com.px.common.http.Bean.DownloadInfo;
+import com.px.common.http.pojo.DownloadInfo;
 import com.px.common.http.HttpMaster;
-import com.px.common.http.Listener.DownloadCallback;
-import com.px.common.http.Listener.DownloadListener;
-import com.px.common.http.Listener.UploadListener;
+import com.px.common.http.listener.DownloadCallback;
+import com.px.common.http.listener.DownloadListener;
+import com.px.common.http.listener.UploadListener;
 import com.px.common.http.configuration.Header;
 import com.px.common.http.configuration.Parameters;
 import com.px.common.utils.EmojiToast;
 import com.px.common.utils.NetUtil;
-import com.px.common.utils.SPUtil;
 
 import java.io.File;
 import java.util.Map;
@@ -24,6 +22,7 @@ import io.reactivex.functions.Consumer;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Request;
+import okhttp3.Response;
 
 public abstract class RequestMaster {
     private Header header;
@@ -73,6 +72,32 @@ public abstract class RequestMaster {
     }
 
     protected abstract Request createRequest(Header header, Parameters parameters ,Object tag);
+
+    /**
+     * 同步执行请求
+     */
+    public String execute(){
+        try {
+            if(!NetUtil.isConnected()){
+                Observable.just("")
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<String>() {
+                            @Override
+                            public void accept(String s) throws Exception {
+                                EmojiToast.showLong("network connection error, please check your network", EmojiToast.EMOJI_SAD);
+                            }
+                        });
+                return null;
+            }
+            Request request = createRequest(header, parameters, mTag);
+            Call call = HttpMaster.okHttpClient.newCall(request);
+            Response response = call.execute();
+            return response.body().string();
+        }catch (Exception e){
+            Log.d("okhttp",e.getMessage());
+        }
+        return "";
+    }
 
     //异步执行请求
     public void enqueue (Callback callback){

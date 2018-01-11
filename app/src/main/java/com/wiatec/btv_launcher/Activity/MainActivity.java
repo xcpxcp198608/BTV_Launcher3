@@ -9,11 +9,11 @@ import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
-import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.text.Html;
@@ -53,6 +53,7 @@ import com.wiatec.btv_launcher.config.WeatherIconSetting;
 import com.wiatec.btv_launcher.service.LoadCloudService;
 import com.wiatec.btv_launcher.service.LoadWeatherService;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -122,6 +123,7 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
     @Override
     protected void onStart() {
         super.onStart();
+        sendHomePageBroadCast();
         if(presenter != null){
             presenter.loadWeatherInfo();
             if (NetUtil.isConnected()) {
@@ -149,11 +151,20 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
                 tvRental.setText("");
             }
             long leftMillsSeconds = (long) SPUtil.get(F.sp.left_mills_second, 0L);
-            Logger.d(leftMillsSeconds+"");
             if(leftMillsSeconds < 604800000 && leftMillsSeconds > 0){
                 showRentRenewNoticeDialog();
             }
+        }else{
+            tvRental.setText("");
         }
+    }
+
+    private void sendHomePageBroadCast(){
+        Logger.d("sendHomePageBroadCast");
+        Intent intent = new Intent("com.wiatec.ldservice.remote_apk.HomePageReceiver");
+        intent.addCategory("HomePageReceiver");
+        intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+        sendBroadcast(intent, "com.wiatec.ldservice.remote_apk.HomePageReceiver");
     }
 
     private void showLastName() {
@@ -360,6 +371,8 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
                     boolean isRenter = (boolean) SPUtil.get(F.sp.is_renter, false);
                     if(isRenter){
                         tvLeftTime.setText((String) msg.obj);
+                    }else{
+                        tvLeftTime.setText("");
                     }
                     break;
             }

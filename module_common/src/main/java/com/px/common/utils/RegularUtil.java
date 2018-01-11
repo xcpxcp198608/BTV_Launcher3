@@ -11,13 +11,8 @@ public class RegularUtil {
      * validate email input format
      */
     public static boolean validateEmail(String email){
-        String regular = "^([a-z0-9A-Z]+[-|_|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+([-|_][a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+        String regular = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
         Pattern pattern = Pattern.compile(regular);
         return pattern.matcher(email).matches();
-    }
-
-    public static void main (String [] args){
-        boolean b = validateEmail("patri_ck1xu@wi1a_tec.com.cn");
-        System.out.println(b);
     }
 }

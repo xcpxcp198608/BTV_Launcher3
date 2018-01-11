@@ -1,4 +1,4 @@
-package com.wiatec.btv_launcher.SQL;
+package com.wiatec.btv_launcher.sql;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

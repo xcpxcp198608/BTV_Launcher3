@@ -1,11 +1,10 @@
-package com.px.common.http.Request;
+package com.px.common.http.request;
 
 import com.px.common.http.configuration.Header;
 import com.px.common.http.configuration.Parameters;
 
 import java.util.Map;
 
-import okhttp3.FormBody;
 import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.Request;

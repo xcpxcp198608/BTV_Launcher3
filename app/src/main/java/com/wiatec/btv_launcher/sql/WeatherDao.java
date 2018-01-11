@@ -1,4 +1,4 @@
-package com.wiatec.btv_launcher.SQL;
+package com.wiatec.btv_launcher.sql;
 
 import android.content.ContentValues;
 import android.content.Context;

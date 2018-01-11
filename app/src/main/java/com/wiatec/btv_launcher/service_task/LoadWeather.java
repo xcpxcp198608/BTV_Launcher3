@@ -4,18 +4,17 @@ import android.content.Intent;
 import android.text.TextUtils;
 
 import com.px.common.http.HttpMaster;
-import com.px.common.http.Listener.StringListener;
+import com.px.common.http.listener.StringListener;
 import com.px.common.utils.CommonApplication;
 import com.px.common.utils.Logger;
 import com.px.common.utils.SPUtil;
 import com.wiatec.btv_launcher.constant.F;
-import com.wiatec.btv_launcher.SQL.WeatherDao;
+import com.wiatec.btv_launcher.sql.WeatherDao;
 import com.wiatec.btv_launcher.bean.WeatherInfo;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -45,7 +44,7 @@ public class LoadWeather implements Runnable {
         HttpMaster.get(url)
                 .enqueue(new StringListener() {
                     @Override
-                    public void onSuccess(String s) throws IOException {
+                    public void onSuccess(String s) throws Exception {
                         try {
                             WeatherInfo weatherInfo = new WeatherInfo();
                             JSONObject jsonObject = new JSONObject(s);

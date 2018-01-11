@@ -25,10 +25,10 @@ public class CommonApplication extends Application {
         //ARouter 初始化
         ARouter.init(this);
         //LeakCanary 初始化
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            return;
-        }
-        LeakCanary.install(this);
+//        if (LeakCanary.isInAnalyzerProcess(this)) {
+//            return;
+//        }
+//        LeakCanary.install(this);
         CrashHandler.getInstance().init();
     }
 

@@ -52,7 +52,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             mDefaultHandler.uncaughtException(thread, ex);
         } else {
             try {
-                Thread.sleep(3000);
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
                 Logger.d(e.getMessage());
             }
@@ -140,11 +140,11 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         printWriter.close();
         String result = writer.toString();
         String time = formatter.format(new Date());
-        stringBuilder.append(time).append(result);
+        stringBuilder.append(time + result);
         try {
-            String fileName = TimeUtil.getStringTime() + "_crash.log";
+            String fileName = TimeUtil.getStringDate() + "_crash.log";
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                String path = Environment.getExternalStorageDirectory().getAbsolutePath();
+                String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/logcat/";
                 File dir = new File(path);
                 if (!dir.exists()) {
                     dir.mkdirs();

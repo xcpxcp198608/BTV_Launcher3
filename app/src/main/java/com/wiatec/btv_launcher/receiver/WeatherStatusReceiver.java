@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.ImageView;
 
-import com.wiatec.btv_launcher.SQL.WeatherDao;
+import com.wiatec.btv_launcher.sql.WeatherDao;
 import com.wiatec.btv_launcher.config.WeatherIconSetting;
 import com.wiatec.btv_launcher.bean.WeatherInfo;
 

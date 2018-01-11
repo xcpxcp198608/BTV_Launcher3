@@ -1,4 +1,4 @@
-package com.px.common.http.Bean;
+package com.px.common.http.pojo;
 
 public class DownloadInfo {
     private String name;

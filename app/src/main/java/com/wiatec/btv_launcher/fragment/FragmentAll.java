@@ -14,7 +14,7 @@ import com.px.common.utils.SPUtil;
 import com.wiatec.btv_launcher.Activity.MenuActivity;
 import com.wiatec.btv_launcher.Activity.Splash1Activity;
 import com.wiatec.btv_launcher.R;
-import com.wiatec.btv_launcher.SQL.InstalledAppDao;
+import com.wiatec.btv_launcher.sql.InstalledAppDao;
 import com.px.common.utils.AppUtil;
 import com.wiatec.btv_launcher.adapter.MenuItemAdapter;
 import com.wiatec.btv_launcher.animator.Zoom;

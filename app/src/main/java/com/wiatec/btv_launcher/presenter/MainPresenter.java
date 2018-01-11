@@ -3,14 +3,15 @@ package com.wiatec.btv_launcher.presenter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.px.common.http.HttpMaster;
-import com.px.common.http.Listener.StringListener;
+import com.px.common.http.listener.*;
+import com.px.common.http.pojo.DownloadInfo;
 import com.px.common.utils.CommonApplication;
 import com.px.common.utils.Logger;
 import com.px.common.utils.NetUtil;
 import com.px.common.utils.SPUtil;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.constant.F;
-import com.wiatec.btv_launcher.SQL.MessageDao;
+import com.wiatec.btv_launcher.sql.MessageDao;
 import com.wiatec.btv_launcher.Activity.IMainActivity;
 import com.wiatec.btv_launcher.bean.Message1Info;
 import com.wiatec.btv_launcher.bean.MessageInfo;
@@ -236,39 +237,39 @@ public class MainPresenter extends BasePresenter<IMainActivity> {
                 .path(F.path.download)
                 .name(name)
                 .url(url)
-                .startDownload(new com.px.common.http.Listener.DownloadListener() {
+                .startDownload(new DownloadListener() {
                     @Override
-                    public void onPending(com.px.common.http.Bean.DownloadInfo downloadInfo) {
+                    public void onPending(DownloadInfo downloadInfo) {
 
                     }
 
                     @Override
-                    public void onStart(com.px.common.http.Bean.DownloadInfo downloadInfo) {
+                    public void onStart(DownloadInfo downloadInfo) {
 
                     }
 
                     @Override
-                    public void onPause(com.px.common.http.Bean.DownloadInfo downloadInfo) {
+                    public void onPause(DownloadInfo downloadInfo) {
 
                     }
 
                     @Override
-                    public void onProgress(com.px.common.http.Bean.DownloadInfo downloadInfo) {
+                    public void onProgress(DownloadInfo downloadInfo) {
 
                     }
 
                     @Override
-                    public void onFinished(com.px.common.http.Bean.DownloadInfo downloadInfo) {
+                    public void onFinished(DownloadInfo downloadInfo) {
 
                     }
 
                     @Override
-                    public void onCancel(com.px.common.http.Bean.DownloadInfo downloadInfo) {
+                    public void onCancel(DownloadInfo downloadInfo) {
 
                     }
 
                     @Override
-                    public void onError(com.px.common.http.Bean.DownloadInfo downloadInfo) {
+                    public void onError(DownloadInfo downloadInfo) {
 
                     }
                 });

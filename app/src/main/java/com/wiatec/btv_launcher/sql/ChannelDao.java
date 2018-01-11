@@ -1,11 +1,10 @@
-package com.wiatec.btv_launcher.SQL;
+package com.wiatec.btv_launcher.sql;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.px.common.utils.CommonApplication;
-import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.bean.ChannelInfo;
 
 import java.util.ArrayList;

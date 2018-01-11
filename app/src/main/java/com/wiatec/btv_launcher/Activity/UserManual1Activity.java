@@ -27,10 +27,10 @@ public class UserManual1Activity extends Base1Activity<IUserManualActivity ,User
     private UserManualImageAdapter adapter;
     private String language;
     private String product;
-    private int [] englishResIds = {R.drawable.mm1, R.drawable.m2, R.drawable.m3, R.drawable.m4, R.drawable.m5,
-            R.drawable.m6, R.drawable.m7, R.drawable.m8 };
-    private int [] spanishResIds = {R.drawable.ms1, R.drawable.ms2, R.drawable.ms3, R.drawable.ms4, R.drawable.ms5,
-            R.drawable.ms6, R.drawable.ms7};
+    private int [] englishResIds = {R.drawable.mm1, R.drawable.mm2, R.drawable.mm3, R.drawable.mm4, R.drawable.mm5,
+            R.drawable.mm6};
+    private int [] spanishResIds = {R.drawable.mm1, R.drawable.mm2, R.drawable.mm3, R.drawable.mm4, R.drawable.mm5,
+            R.drawable.mm6};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
