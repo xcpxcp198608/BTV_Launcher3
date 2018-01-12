@@ -100,6 +100,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
                 String versionCode = pi.versionCode + "";
                 infoMap.put("versionName", versionName);
                 infoMap.put("versionCode", versionCode);
+                infoMap.put("packageName", context.getPackageName());
             }
         } catch (PackageManager.NameNotFoundException e) {
             Logger.d("an error occured when collect package info");

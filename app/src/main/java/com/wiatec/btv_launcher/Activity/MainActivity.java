@@ -160,7 +160,6 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
     }
 
     private void sendHomePageBroadCast(){
-        Logger.d("sendHomePageBroadCast");
         Intent intent = new Intent("com.wiatec.ldservice.remote_apk.HomePageReceiver");
         intent.addCategory("HomePageReceiver");
         intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
