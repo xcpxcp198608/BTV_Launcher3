@@ -1,11 +1,11 @@
 package com.px.common.utils;
 
-import java.util.HashMap;
 
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
 
 /**
  * 基于rx java的事件传递处理
@@ -13,13 +13,10 @@ import io.reactivex.disposables.CompositeDisposable;
 
 public class RxBus {
 
-    private HashMap<String, CompositeDisposable> mSubscriptionMap;
-    private static volatile RxBus mRxBus;
-    private final io.reactivex.subjects.Subject<Object> mSubject;
+    private final Subject<Object> mSubject;
 
-    // RxBus单例 ，全局只有一个实例， 双重校验锁保证多线程调用
     private RxBus (){
-        mSubject = io.reactivex.subjects.PublishSubject.create().toSerialized();
+        mSubject = PublishSubject.create().toSerialized();
     }
     private static volatile RxBus instance;
     public static RxBus getDefault(){

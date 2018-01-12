@@ -41,7 +41,7 @@ public class SysUtil {
             dataOutputStream.flush();
             process.waitFor();
         } catch (Exception e) {
-            Log.d("----px----","system no root");
+            Logger.e(e.getMessage());
             return false;
         }finally {
             try {
@@ -51,8 +51,8 @@ public class SysUtil {
                 if(process != null) {
                     process.destroy();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                Logger.e(e.getMessage());
             }
         }
         //Log.d("----px----","system have root");
@@ -101,8 +101,8 @@ public class SysUtil {
             }
 
             input.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            Logger.e(e.getMessage());
         }
         return macSerial;
     }
@@ -115,8 +115,8 @@ public class SysUtil {
         try {
             return loadFileAsString("/sys/class/net/eth0/address")
                     .toUpperCase().substring(0, 17);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            Logger.e(e.getMessage());
             return "";
         }
     }

@@ -23,11 +23,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
-
-/**
- * Created by patrick on 2017/3/16.
- */
-
 public class BaseActivity extends AppCompatActivity {
 
     protected Disposable checkLoginDisposable;

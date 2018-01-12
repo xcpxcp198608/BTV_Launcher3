@@ -1,5 +1,6 @@
 package com.wiatec.btv_launcher.Activity;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -7,10 +8,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.px.common.utils.CommonApplication;
@@ -21,51 +18,17 @@ import com.wiatec.btv_launcher.constant.F;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.bean.AuthRegisterUserInfo;
 import com.wiatec.btv_launcher.bean.ResultInfo;
+import com.wiatec.btv_launcher.databinding.ActivityRegisterBinding;
 import com.wiatec.btv_launcher.presenter.RegisterPresenter;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
-/**
- * Created by patrick on 2017/3/10.
- */
 
 public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterPresenter>
-        implements IRegisterActivity, View.OnKeyListener {
+        implements IRegisterActivity, View.OnKeyListener, View.OnClickListener {
 
-
-    @BindView(R.id.et_username)
-    EditText etUsername;
-    @BindView(R.id.et_first_name)
-    EditText etFirstName;
-    @BindView(R.id.et_last_name)
-    EditText etLastName;
-    @BindView(R.id.et_password)
-    EditText etPassword;
-    @BindView(R.id.et_password1)
-    EditText etPassword1;
-    @BindView(R.id.et_email)
-    EditText etEmail;
-    @BindView(R.id.et_email1)
-    EditText etEmail1;
-    @BindView(R.id.et_phone)
-    EditText etPhone;
-    @BindView(R.id.bt_register)
-    Button btRegister;
-    @BindView(R.id.sp_language)
-    Spinner spLanguage;
-    @BindView(R.id.progress_bar)
-    ProgressBar progressBar;
-
+    private ActivityRegisterBinding binding;
     private String userName;
     private String firstName;
     private String lastName;
-    private String password;
-    private String password1;
-    private String email;
-    private String email1;
-    private String phone;
     private String language;
 
     @Override
@@ -76,8 +39,8 @@ public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterP
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
-        ButterKnife.bind(this);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_register);
+        binding.btRegister.setOnClickListener(this);
     }
 
     @Override
@@ -85,8 +48,8 @@ public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterP
         super.onStart();
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this ,
                 android.R.layout.simple_spinner_item , getResources().getStringArray(R.array.languages1));
-        spLanguage.setAdapter(arrayAdapter);
-        spLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        binding.spLanguage.setAdapter(arrayAdapter);
+        binding.spLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
@@ -123,16 +86,16 @@ public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterP
         return false;
     }
 
-    @OnClick(R.id.bt_register)
-    public void onClick() {
-        userName = etUsername.getText().toString().trim();
-        firstName = etFirstName.getText().toString().trim();
-        lastName = etLastName.getText().toString().trim();
-        password = etPassword.getText().toString();
-        password1 = etPassword1.getText().toString();
-        email = etEmail.getText().toString();
-        email1 = etEmail1.getText().toString();
-        phone = etPhone.getText().toString();
+    @Override
+    public void onClick(View v) {
+        userName = binding.etUsername.getText().toString().trim();
+        firstName = binding.etFirstName.getText().toString().trim();
+        lastName = binding.etLastName.getText().toString().trim();
+        String password = binding.etPassword.getText().toString();
+        String password1 = binding.etPassword1.getText().toString();
+        String email = binding.etEmail.getText().toString();
+        String email1 = binding.etEmail1.getText().toString();
+        String phone = binding.etPhone.getText().toString();
         if (TextUtils.isEmpty(userName)) {
             Toast.makeText(RegisterActivity.this, getString(R.string.username_input_error), Toast.LENGTH_SHORT).show();
             return;
@@ -190,12 +153,12 @@ public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterP
         authRegisterUserInfo.setPhone(phone);
         authRegisterUserInfo.setMac((String) SPUtil.get(F.sp.ethernet_mac,""));
         presenter.register(authRegisterUserInfo ,language);
-        progressBar.setVisibility(View.VISIBLE);
+        binding.progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void register(ResultInfo<AuthRegisterUserInfo> resultInfo) {
-        progressBar.setVisibility(View.GONE);
+        binding.progressBar.setVisibility(View.GONE);
         if(resultInfo == null) return;
         Logger.d(resultInfo.toString());
         if (resultInfo.getCode() == 200) {

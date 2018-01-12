@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="onEvent"
+            type="com.wiatec.btv_launcher.fragment.Fragment1.OnEventListener"/>
+    </data>
+<LinearLayout
     android:orientation="vertical"
     android:clipChildren="false"
     android:layout_width="match_parent"
@@ -18,6 +25,7 @@
 
         <FrameLayout
             android:id="@+id/fl_video"
+            android:onClick="@{view -> onEvent.onClick(view)}"
             android:layout_weight="3"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -80,6 +88,7 @@
                     <ImageButton
                         android:adjustViewBounds="true"
                         android:id="@+id/ibt_setting"
+                        android:onClick="@{view -> onEvent.onClick(view)}"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -91,6 +100,7 @@
                     <ImageButton
                         android:adjustViewBounds="true"
                         android:id="@+id/ibt_apps"
+                        android:onClick="@{view -> onEvent.onClick(view)}"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -102,6 +112,7 @@
                     <ImageButton
                         android:adjustViewBounds="true"
                         android:id="@+id/ibt_game"
+                        android:onClick="@{view -> onEvent.onClick(view)}"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -112,6 +123,7 @@
 
                     <ImageButton
                         android:id="@+id/ibt_eufonico"
+                        android:onClick="@{view -> onEvent.onClick(view)}"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -131,6 +143,7 @@
                 <ImageButton
                     android:adjustViewBounds="true"
                     android:id="@+id/ibt_user_manual"
+                    android:onClick="@{view -> onEvent.onClick(view)}"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
@@ -141,6 +154,7 @@
 
                 <ImageButton
                     android:id="@+id/ibt_market"
+                    android:onClick="@{view -> onEvent.onClick(view)}"
                     android:adjustViewBounds="true"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -153,6 +167,7 @@
                 <ImageButton
                     android:adjustViewBounds="true"
                     android:id="@+id/ibt_opportunity"
+                    android:onClick="@{view -> onEvent.onClick(view)}"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
@@ -164,6 +179,7 @@
                 <ImageButton
                     android:adjustViewBounds="true"
                     android:id="@+id/ibt_eufonic_bvision"
+                    android:onClick="@{view -> onEvent.onClick(view)}"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
@@ -329,3 +345,4 @@
         android:layout_height="70dp" />
 
 </LinearLayout>
+</layout>

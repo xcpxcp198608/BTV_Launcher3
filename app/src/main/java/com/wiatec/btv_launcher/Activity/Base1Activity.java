@@ -6,10 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.wiatec.btv_launcher.presenter.BasePresenter;
 
-/**
- * Created by PX on 2016-11-14.
- */
-
 public abstract class Base1Activity<V ,T extends BasePresenter> extends BaseActivity {
     protected T presenter;
     @Override

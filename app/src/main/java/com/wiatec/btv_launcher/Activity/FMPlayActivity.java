@@ -25,24 +25,21 @@ public class FMPlayActivity extends BaseActivity {
 
     private MediaPlayer mediaPlayer;
     private String url;
-    private ImageView ivLogo;
-    private ImageView ivEufonicoList;
     private VoiceSpectrumView vsvRadio;
     private ProgressBar progressBar;
     private Disposable disposable;
     private RollOverView rollOverView;
-    private RollOverView2Adapter rollOverView2Adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON , WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_fm_play);
-        ivLogo  = (ImageView) findViewById(R.id.iv_logo);
-        ivEufonicoList  = (ImageView) findViewById(R.id.iv_eufonico_list);
-        vsvRadio = (VoiceSpectrumView) findViewById(R.id.vsv_radio);
-        rollOverView = (RollOverView) findViewById(R.id.roll_over_view);
-        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        ImageView ivLogo = findViewById(R.id.iv_logo);
+        ImageView ivEufonicoList = findViewById(R.id.iv_eufonico_list);
+        vsvRadio = findViewById(R.id.vsv_radio);
+        rollOverView = findViewById(R.id.roll_over_view);
+        progressBar = findViewById(R.id.progress_bar);
         url = getIntent().getStringExtra("url");
         if("http://142.4.216.91:8280/".equals(url)){
             ivLogo.setImageResource(R.drawable.eufonic_big_logo);
@@ -55,7 +52,7 @@ public class FMPlayActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        rollOverView2Adapter = new RollOverView2Adapter();
+        RollOverView2Adapter rollOverView2Adapter = new RollOverView2Adapter();
         rollOverView.setRollViewAdapter(rollOverView2Adapter);
         if(mediaPlayer == null){
             mediaPlayer = new MediaPlayer();

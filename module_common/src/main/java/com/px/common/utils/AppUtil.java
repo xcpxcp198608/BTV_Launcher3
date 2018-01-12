@@ -34,7 +34,7 @@ public class AppUtil {
             CommonApplication.context.getPackageManager().getPackageInfo(packageName , PackageManager.GET_ACTIVITIES);
             return true;
         } catch (PackageManager.NameNotFoundException e) {
-            Log.d("----px----" , e.getMessage());
+            Logger.e(e.getMessage());
             return false;
         }
     }
@@ -50,7 +50,7 @@ public class AppUtil {
         try {
             applicationInfo = packageManager.getApplicationInfo(packageName ,PackageManager.GET_META_DATA);
         } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+            Logger.e(e.getMessage());
         }
         if(applicationInfo != null){
             return applicationInfo.loadIcon(packageManager);
@@ -70,7 +70,7 @@ public class AppUtil {
         try {
             applicationInfo = packageManager.getApplicationInfo(packageName ,PackageManager.GET_META_DATA);
         } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+            Logger.e(e.getMessage());
         }
         if(applicationInfo != null){
             return applicationInfo.loadLabel(packageManager).toString();
@@ -96,10 +96,8 @@ public class AppUtil {
                 apkVersionName = packageInfo.versionName;
             }
         } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-//            Log.d("----px----" , e.getMessage());
+            Logger.e(e.getMessage());
         }
-//        Log.d("----px----" , apkVersionName);
         return apkVersionName;
     }
 
@@ -120,10 +118,8 @@ public class AppUtil {
                 apkVersionCode = packageInfo.versionCode;
             }
         } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-            //Log.d("----px----" , e.getMessage());
+            Logger.e(e.getMessage());
         }
-        //Log.d("----px----" , apkVersionCode+"");
         return apkVersionCode;
     }
 
@@ -136,11 +132,7 @@ public class AppUtil {
     public static boolean isLastVersion (String packageName ,int versionCode) {
         if(isInstalled(packageName)) {
             int localVersionCode = getVersionCode(packageName);
-            if(versionCode > localVersionCode){
-                return true;
-            }else {
-                return false;
-            }
+            return versionCode > localVersionCode;
         }else {
             return true;
         }
@@ -153,10 +145,10 @@ public class AppUtil {
      * @return apk文件的包名
      */
     public static String getApkPackageName (String filePath ,String fileName){
-        ApplicationInfo applicationInfo = null;
-        PackageInfo packageInfo = null;
+        ApplicationInfo applicationInfo;
+        PackageInfo packageInfo;
         PackageManager packageManager = CommonApplication.context.getPackageManager();
-        String apkPackageName = null;
+        String apkPackageName;
         packageInfo = packageManager.getPackageArchiveInfo(filePath+fileName ,PackageManager.GET_ACTIVITIES);
         if(packageInfo != null){
             applicationInfo = packageInfo.applicationInfo;
@@ -164,7 +156,6 @@ public class AppUtil {
         }else{
             return null;
         }
-        //Log.d("----px----" ,apkPackageName);
         return apkPackageName;
     }
 
@@ -175,17 +166,15 @@ public class AppUtil {
      * @return 版本号
      */
     public static String getApkVersionName (String filePath ,String fileName){
-        ApplicationInfo applicationInfo = null;
-        PackageInfo packageInfo = null;
+        PackageInfo packageInfo ;
         PackageManager packageManager = CommonApplication.context.getPackageManager();
-        String apkVersionName = null;
+        String apkVersionName;
         packageInfo = packageManager.getPackageArchiveInfo(filePath+fileName ,PackageManager.GET_ACTIVITIES);
         if(packageInfo != null){
             apkVersionName = packageInfo.versionName;
         }else{
             return null;
         }
-        Log.d("----px----" ,apkVersionName);
         return apkVersionName;
     }
 
@@ -199,11 +188,7 @@ public class AppUtil {
         PackageInfo packageInfo = null;
         PackageManager packageManager = CommonApplication.context.getPackageManager();
         packageInfo = packageManager.getPackageArchiveInfo(filePath+"/"+fileName ,PackageManager.GET_ACTIVITIES);
-        if(packageInfo != null){
-            return true;
-        }else{
-            return false;
-        }
+        return packageInfo != null;
     }
 
        /**
@@ -227,17 +212,15 @@ public class AppUtil {
      * @return apk文件的版本代号
      */
     public static int getApkVersionCode (String filePath ,String fileName){
-        ApplicationInfo applicationInfo = null;
-        PackageInfo packageInfo = null;
+        PackageInfo packageInfo ;
         PackageManager packageManager = CommonApplication.context.getPackageManager();
-        int apkVersionCode = 0;
+        int apkVersionCode;
         packageInfo = packageManager.getPackageArchiveInfo(filePath+fileName ,PackageManager.GET_ACTIVITIES);
         if(packageInfo != null){
             apkVersionCode = packageInfo.versionCode;
         }else{
             return 0;
         }
-        Log.d("----px----" ,apkVersionCode+"");
         return apkVersionCode;
     }
 

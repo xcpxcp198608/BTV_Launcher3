@@ -6,10 +6,13 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.px.common.TestEvent;
 import com.px.common.utils.CommonApplication;
 import com.px.common.utils.Logger;
+import com.px.common.utils.SysUtil;
 import com.px.common.utils.TimeUtil;
 
 import java.io.File;
@@ -29,18 +32,28 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
 
     private Thread.UncaughtExceptionHandler mDefaultHandler;
     private Map<String, String> infoMap = new HashMap<>();
-    private DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss ", Locale.CHINA);
+    private DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
+    private String mac = "default";
 
     private CrashHandler() {
     }
-    private static CrashHandler INSTANCE = new CrashHandler();
+    private static CrashHandler INSTANCE;
     public static CrashHandler getInstance() {
+        if(INSTANCE == null){
+            INSTANCE = new CrashHandler();
+        }
         return INSTANCE;
     }
 
     public void init() {
         mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
         Thread.setDefaultUncaughtExceptionHandler(this);
+        String ethernetMac = SysUtil.getEthernetMac();
+        if(TextUtils.isEmpty(ethernetMac)){
+            mac = SysUtil.getWifiMac();
+        }else{
+            mac = ethernetMac;
+        }
     }
 
     /**
@@ -101,6 +114,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
                 infoMap.put("versionName", versionName);
                 infoMap.put("versionCode", versionCode);
                 infoMap.put("packageName", context.getPackageName());
+                infoMap.put("mac", mac);
             }
         } catch (PackageManager.NameNotFoundException e) {
             Logger.d("an error occured when collect package info");
@@ -143,7 +157,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         String time = formatter.format(new Date());
         stringBuilder.append(time + result);
         try {
-            String fileName = TimeUtil.getStringDate() + "_crash.log";
+            String fileName = TimeUtil.getStringDate() + "_" + mac + "_crash.log";
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
                 String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/logcat/";
                 File dir = new File(path);

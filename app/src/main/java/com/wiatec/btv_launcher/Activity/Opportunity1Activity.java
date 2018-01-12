@@ -12,14 +12,9 @@ import com.wiatec.btv_launcher.presenter.OpportunityPresenter;
 
 import java.util.List;
 
-/**
- * Created by PX on 2016-11-30.
- */
-
 public class Opportunity1Activity extends Base1Activity<IOpportunityActivity , OpportunityPresenter> implements IOpportunityActivity {
 
     private RollPagerView rpvOpportunity;
-    private OpportunityImageAdapter opportunityImageAdapter;
 
     @Override
     protected OpportunityPresenter createPresenter() {
@@ -30,7 +25,7 @@ public class Opportunity1Activity extends Base1Activity<IOpportunityActivity , O
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_opportunity);
-        rpvOpportunity = (RollPagerView) findViewById(R.id.rpv_opportunity);
+        rpvOpportunity = findViewById(R.id.rpv_opportunity);
     }
 
     @Override
@@ -44,7 +39,7 @@ public class Opportunity1Activity extends Base1Activity<IOpportunityActivity , O
     @Override
     public void loadImage(List<ImageInfo> list) {
         Logger.d(list.toString());
-        opportunityImageAdapter = new OpportunityImageAdapter(list);
+        OpportunityImageAdapter opportunityImageAdapter = new OpportunityImageAdapter(list);
         rpvOpportunity.setAdapter(opportunityImageAdapter);
         rpvOpportunity.setHintView(null);
     }

@@ -27,8 +27,6 @@ import io.reactivex.schedulers.Schedulers;
 
 public class BootAdActivity extends AppCompatActivity {
     private VideoView vvBoot;
-    private Disposable disposable;
-    private int time ;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,13 +34,10 @@ public class BootAdActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_boot_ad);
         vvBoot = findViewById(R.id.vv_boot);
-        LinearLayout llDelay = findViewById(R.id.ll_delay);
-        TextView tvTimeDelay = findViewById(R.id.tv_delay_time);
         AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         int index = (int) (audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)*0.2);
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC , index , 0);
         deleteOldFolder();
-//        time = (int) SPUtils.get(BootAdActivity.this , "bootAdVideoTime" , 0);
     }
 
     private void deleteOldFolder() {

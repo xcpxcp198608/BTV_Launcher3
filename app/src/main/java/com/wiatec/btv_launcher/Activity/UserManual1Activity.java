@@ -17,10 +17,6 @@ import com.wiatec.btv_launcher.presenter.UserManualPresenter;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by PX on 2016-12-06.
- */
-
 public class UserManual1Activity extends Base1Activity<IUserManualActivity ,UserManualPresenter> implements IUserManualActivity {
 
     private RollPagerView rpvManual;

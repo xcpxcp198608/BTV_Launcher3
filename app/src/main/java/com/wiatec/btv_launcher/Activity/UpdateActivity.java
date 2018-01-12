@@ -1,11 +1,10 @@
 package com.wiatec.btv_launcher.Activity;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.px.common.http.HttpMaster;
@@ -16,29 +15,19 @@ import com.wiatec.btv_launcher.constant.F;
 import com.wiatec.btv_launcher.R;
 import com.px.common.utils.FileUtil;
 import com.wiatec.btv_launcher.bean.UpdateInfo;
+import com.wiatec.btv_launcher.databinding.ActivityUpdateBinding;
 
 import java.io.File;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
-/**
- * Created by PX on 2016-11-14.
- */
-
 public class UpdateActivity extends AppCompatActivity {
-    @BindView(R.id.progress_update)
-    ProgressBar pb_Update;
-    @BindView(R.id.tv_progress)
-    TextView tv_Progress;
 
+    private ActivityUpdateBinding binding;
     private UpdateInfo updateInfo;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_update);
-        ButterKnife.bind(this);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_update);
         updateInfo = getIntent().getParcelableExtra("updateInfo");
     }
 
@@ -72,10 +61,7 @@ public class UpdateActivity extends AppCompatActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
+        return keyCode == KeyEvent.KEYCODE_BACK || super.onKeyDown(keyCode, event);
     }
 
     private void download(final UpdateInfo updateInfo){
@@ -91,8 +77,8 @@ public class UpdateActivity extends AppCompatActivity {
 
                     @Override
                     public void onStart(DownloadInfo downloadInfo) {
-                        pb_Update.setProgress(downloadInfo.getProgress());
-                        tv_Progress.setText(downloadInfo.getProgress()+"%");
+                        binding.progressUpdate.setProgress(downloadInfo.getProgress());
+                        binding.tvProgress.setText(downloadInfo.getProgress()+"%");
                     }
 
                     @Override
@@ -102,14 +88,14 @@ public class UpdateActivity extends AppCompatActivity {
 
                     @Override
                     public void onProgress(DownloadInfo downloadInfo) {
-                        pb_Update.setProgress(downloadInfo.getProgress());
-                        tv_Progress.setText(downloadInfo.getProgress()+"%");
+                        binding.progressUpdate.setProgress(downloadInfo.getProgress());
+                        binding.tvProgress.setText(downloadInfo.getProgress()+"%");
                     }
 
                     @Override
                     public void onFinished(DownloadInfo downloadInfo) {
-                        pb_Update.setProgress(downloadInfo.getProgress());
-                        tv_Progress.setText(downloadInfo.getProgress()+"%");
+                        binding.progressUpdate.setProgress(downloadInfo.getProgress());
+                        binding.tvProgress.setText(downloadInfo.getProgress()+"%");
                         if(AppUtil.isApkCanInstall(F.path.download , updateInfo.getFileName())) {
                             AppUtil.installApk(F.path.download, updateInfo.getFileName(), "");
                         }else{

@@ -1,11 +1,12 @@
 package com.wiatec.btv_launcher.Activity;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 
 import com.wiatec.btv_launcher.R;
+import com.wiatec.btv_launcher.databinding.ActivityMenuBinding;
 import com.wiatec.btv_launcher.sql.InstalledAppDao;
 import com.wiatec.btv_launcher.adapter.FragmentAdapter;
 import com.wiatec.btv_launcher.custom_view.ViewPagerIndicator;
@@ -17,19 +18,7 @@ import com.wiatec.btv_launcher.fragment.FragmentVideo;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
-/**
- * Created by PX on 2016-11-12.
- */
-
 public class MenuActivity extends BaseActivity {
-
-    @BindView(R.id.viewpager_indicator)
-    ViewPagerIndicator viewpagerIndicator;
-    @BindView(R.id.viewPager)
-    ViewPager viewPager;
 
     private FragmentFavorite fragmentFavorite;
     private FragmentAll fragmentAll;
@@ -37,15 +26,12 @@ public class MenuActivity extends BaseActivity {
     private FragmentGame fragmentGame;
     private FragmentMusic fragmentMusic;
     private ArrayList<Fragment> fragmentList;
-    private FragmentAdapter fragmentAdapter;
-
     public InstalledAppDao installedAppDao;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu);
-        ButterKnife.bind(this);
+        ActivityMenuBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_menu);
         installedAppDao = InstalledAppDao.getInstance(MenuActivity.this);
         if(fragmentFavorite == null){
             fragmentFavorite = new FragmentFavorite();
@@ -70,15 +56,15 @@ public class MenuActivity extends BaseActivity {
         fragmentList.add(fragmentVideo);
         fragmentList.add(fragmentGame);
         fragmentList.add(fragmentMusic);
-        fragmentAdapter = new FragmentAdapter(getSupportFragmentManager() ,fragmentList);
-        viewPager.setAdapter(fragmentAdapter);
+        FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), fragmentList);
+        binding.viewPager.setAdapter(fragmentAdapter);
         String [] titles = {getString(R.string.favorite) ,getString(R.string.all) ,getString(R.string.video)
                 ,getString(R.string.game) ,getString(R.string.music)};
-        viewpagerIndicator.setItem(7,0f ,0f);
-        viewpagerIndicator.setTextTitle(titles ,35 ,0xffa3a2a2 ,0xffffffff ,R.drawable.icon_bg_selected);
-        viewpagerIndicator.setPaint("#ffffff" ,2);
-        viewpagerIndicator.setShape(ViewPagerIndicator.SHAPE_TRIANGLE);
-        viewpagerIndicator.attachViewPager(viewPager ,1);
+        binding.viewpagerIndicator.setItem(7,0f ,0f);
+        binding.viewpagerIndicator.setTextTitle(titles ,35 ,0xffa3a2a2 ,0xffffffff ,R.drawable.icon_bg_selected);
+        binding.viewpagerIndicator.setPaint("#ffffff" ,2);
+        binding.viewpagerIndicator.setShape(ViewPagerIndicator.SHAPE_TRIANGLE);
+        binding.viewpagerIndicator.attachViewPager(binding.viewPager ,1);
     }
 
 }

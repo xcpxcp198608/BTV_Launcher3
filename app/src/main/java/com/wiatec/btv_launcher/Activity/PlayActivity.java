@@ -17,28 +17,22 @@ import com.wiatec.btv_launcher.custom_view.RollOverView;
 
 import java.io.IOException;
 
-/**
- * Created by PX on 2016-11-14.
- */
-
 public class PlayActivity extends AppCompatActivity implements SurfaceHolder.Callback {
-    private SurfaceView surfaceView;
     private SurfaceHolder surfaceHolder;
     private MediaPlayer mediaPlayer;
     private ProgressBar progressBar;
     private String url;
     private int resId;
     private RollOverView rollOverView;
-    private RollOverView2Adapter rollOverView2Adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON , WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_play);
-        progressBar = (ProgressBar) findViewById(R.id.progressbar);
-        surfaceView = (SurfaceView) findViewById(R.id.vv_play);
-        rollOverView = (RollOverView) findViewById(R.id.roll_over_view);
+        progressBar = findViewById(R.id.progressbar);
+        SurfaceView surfaceView = findViewById(R.id.vv_play);
+        rollOverView = findViewById(R.id.roll_over_view);
         surfaceHolder = surfaceView.getHolder();
         surfaceHolder.addCallback(this);
 
@@ -49,7 +43,7 @@ public class PlayActivity extends AppCompatActivity implements SurfaceHolder.Cal
     @Override
     protected void onStart() {
         super.onStart();
-        rollOverView2Adapter = new RollOverView2Adapter();
+        RollOverView2Adapter rollOverView2Adapter = new RollOverView2Adapter();
         rollOverView.setRollViewAdapter(rollOverView2Adapter);
 
     }
@@ -114,7 +108,6 @@ public class PlayActivity extends AppCompatActivity implements SurfaceHolder.Cal
         if (rollOverView != null){
             rollOverView.stop();
         }
-        rollOverView.stop();
     }
 
     @Override

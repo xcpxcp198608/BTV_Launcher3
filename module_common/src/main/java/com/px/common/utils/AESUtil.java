@@ -28,8 +28,8 @@ public class AESUtil {
             MessageDigest messageDigest = MessageDigest.getInstance("MD5");
             messageDigest.update(s.getBytes());
             return new BigInteger(1 ,messageDigest.digest()).toString(16);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            Logger.e(e.getMessage());
             return "md5_error";
         }
     }
@@ -43,7 +43,6 @@ public class AESUtil {
             }
             sb.append(s.toUpperCase());
         }
-
         return sb.toString();
     }
 
@@ -68,19 +67,8 @@ public class AESUtil {
             byte[] encryptedData = cipher.doFinal(content.getBytes(BM));
 //            return Base64.encode(encryptedData);
           return byte2HexStr(encryptedData);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (NoSuchPaddingException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (InvalidKeyException e) {
-            e.printStackTrace();
-        } catch (IllegalBlockSizeException e) {
-            e.printStackTrace();
-        } catch (BadPaddingException e) {
-            e.printStackTrace();
-        } catch (InvalidAlgorithmParameterException e) {
+        } catch (Exception e) {
+            Logger.e(e.getMessage());
         }
         return "encrypt_error";
     }
@@ -96,20 +84,8 @@ public class AESUtil {
             cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, zeroIv);
             byte[] decryptedData = cipher.doFinal(byteMi);
             return new String(decryptedData, "utf-8");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (NoSuchPaddingException e) {
-            e.printStackTrace();
-        } catch (InvalidKeyException e) {
-            e.printStackTrace();
-        } catch (IllegalBlockSizeException e) {
-            e.printStackTrace();
-        } catch (BadPaddingException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (InvalidAlgorithmParameterException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            Logger.e(e.getMessage());
         }
         return "decrypt_error";
     }

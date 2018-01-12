@@ -24,10 +24,10 @@ public class NetUtil {
     public static boolean isConnected () {
         ConnectivityManager connectivityManager = (ConnectivityManager) CommonApplication.context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if(networkInfo !=null ){
-            return networkInfo.isAvailable();
-        }else {
+        if(connectivityManager != null) {
+            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+            return networkInfo != null && networkInfo.isAvailable();
+        }else{
             return false;
         }
     }
@@ -39,6 +39,9 @@ public class NetUtil {
     public static int networkConnectType () {
         ConnectivityManager connectivityManager = (ConnectivityManager) CommonApplication.context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager == null){
+            return 0;
+        }
         NetworkInfo.State wifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState();
         //NetworkInfo.State mobile = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState();
         NetworkInfo.State ethernet = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_ETHERNET).getState();
@@ -63,6 +66,7 @@ public class NetUtil {
     public static int getWifiLevel(){
         WifiManager wifiManager = (WifiManager) CommonApplication.context
                 .getSystemService(Context.WIFI_SERVICE);
+        if(wifiManager == null) return 0;
         WifiInfo wifiInfo = wifiManager.getConnectionInfo();
         int level = wifiInfo.getRssi();
         if(level <= 0 && level >= -50){
@@ -112,6 +116,7 @@ public class NetUtil {
             }
             in.close();
         } catch (IOException e) {
+            Logger.e(e.getMessage());
             return -1;
         }
         return received;

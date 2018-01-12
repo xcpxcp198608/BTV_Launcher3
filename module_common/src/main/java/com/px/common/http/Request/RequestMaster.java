@@ -79,14 +79,6 @@ public abstract class RequestMaster {
     public String execute(){
         try {
             if(!NetUtil.isConnected()){
-                Observable.just("")
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Consumer<String>() {
-                            @Override
-                            public void accept(String s) throws Exception {
-                                EmojiToast.showLong("network connection error, please check your network", EmojiToast.EMOJI_SAD);
-                            }
-                        });
                 return null;
             }
             Request request = createRequest(header, parameters, mTag);
@@ -103,14 +95,6 @@ public abstract class RequestMaster {
     public void enqueue (Callback callback){
         try {
             if(!NetUtil.isConnected()){
-                Observable.just("")
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Consumer<String>() {
-                            @Override
-                            public void accept(String s) throws Exception {
-                                EmojiToast.showLong("network connection error, please check your network", EmojiToast.EMOJI_SAD);
-                            }
-                        });
                 return;
             }
             Request request = createRequest(header, parameters, mTag);
@@ -127,14 +111,6 @@ public abstract class RequestMaster {
     public void startDownload (DownloadListener downloadListener){
         try {
             if(!NetUtil.isConnected()){
-                Observable.just("")
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Consumer<String>() {
-                            @Override
-                            public void accept(String s) throws Exception {
-                                EmojiToast.showLong("network connection error, please check your network", EmojiToast.EMOJI_SAD);
-                            }
-                        });
                 return;
             }
             Request request = createRequest(header , parameters ,mTag);
@@ -150,14 +126,6 @@ public abstract class RequestMaster {
     public void upload(UploadListener uploadListener){
         try {
             if(!NetUtil.isConnected()){
-                Observable.just("")
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Consumer<String>() {
-                            @Override
-                            public void accept(String s) throws Exception {
-                                EmojiToast.showLong("network connection error, please check your network", EmojiToast.EMOJI_SAD);
-                            }
-                        });
                 return;
             }
             Request request = createRequest(header , parameters ,mTag);

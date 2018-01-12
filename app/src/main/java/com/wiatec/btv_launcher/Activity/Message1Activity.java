@@ -1,6 +1,7 @@
 package com.wiatec.btv_launcher.Activity;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,13 +10,12 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.wiatec.btv_launcher.R;
+import com.wiatec.btv_launcher.databinding.ActivityMessageBinding;
 import com.wiatec.btv_launcher.sql.MessageDao;
 import com.px.common.utils.AppUtil;
 import com.wiatec.btv_launcher.adapter.MessageAdapter;
@@ -24,27 +24,20 @@ import com.wiatec.btv_launcher.presenter.MessagePresenter;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
-public class Message1Activity extends Base1Activity<IMessageActivity, MessagePresenter> implements IMessageActivity {
+public class Message1Activity extends Base1Activity<IMessageActivity, MessagePresenter>
+        implements IMessageActivity, View.OnClickListener {
 
-    @BindView(R.id.lv_message)
-    ListView lv_Message;
-    @BindView(R.id.ibt_clean)
-    ImageButton ibt_Clean;
-
+    private ActivityMessageBinding binding;
     private MessageDao messageDao;
     private MessageAdapter messageAdapter;
     private View popView;
     private PopupWindow popupWindow;
-    private boolean isPopup;
 
     @Override
     protected MessagePresenter createPresenter() {
@@ -54,14 +47,14 @@ public class Message1Activity extends Base1Activity<IMessageActivity, MessagePre
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_message);
-        ButterKnife.bind(this);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_message);
         messageDao = MessageDao.getInstance(Message1Activity.this);
         popView = getLayoutInflater().inflate(R.layout.message_popupwindow, null, false);
         if (popupWindow == null) {
             popupWindow = new PopupWindow(popView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
             popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.item_btv_bg));
         }
+        binding.ibtClean.setOnClickListener(this);
     }
 
     @Override
@@ -80,8 +73,8 @@ public class Message1Activity extends Base1Activity<IMessageActivity, MessagePre
                     @Override
                     public void accept(final List<MessageInfo> messageInfos) {
                         messageAdapter = new MessageAdapter(Message1Activity.this, messageInfos);
-                        lv_Message.setAdapter(messageAdapter);
-                        lv_Message.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        binding.lvMessage.setAdapter(messageAdapter);
+                        binding.lvMessage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                 MessageInfo messageInfo = messageInfos.get(position);
@@ -94,16 +87,16 @@ public class Message1Activity extends Base1Activity<IMessageActivity, MessagePre
                 });
     }
 
-    @OnClick(R.id.ibt_clean)
-    public void onClick() {
+    @Override
+    public void onClick(View view) {
         messageDao.setAllRead();
         onStart();
     }
 
     private void showPopupwindow (View view , final MessageInfo messageInfo){
-        TextView tv_Title = (TextView) popView.findViewById(R.id.tv_Popup_Title);
-        TextView tv_Content = (TextView) popView.findViewById(R.id.tv_Popup_Content);
-        Button bt_Popup = (Button) popView.findViewById(R.id.bt_Popup);
+        TextView tv_Title = popView.findViewById(R.id.tv_Popup_Title);
+        TextView tv_Content = popView.findViewById(R.id.tv_Popup_Content);
+        Button bt_Popup = popView.findViewById(R.id.bt_Popup);
         tv_Title.setText(messageInfo.getTitle());
         tv_Content.setText(messageInfo.getContent());
         String type = messageInfo.getType();

@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.KeyEvent;
 import android.widget.VideoView;
 
 import com.wiatec.btv_launcher.R;
@@ -23,7 +22,7 @@ public class GuideRegisterActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guide_register);
-        videoView = (VideoView) findViewById(R.id.vv_play);
+        videoView = findViewById(R.id.vv_play);
     }
 
     @Override

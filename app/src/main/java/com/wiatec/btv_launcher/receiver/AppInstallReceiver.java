@@ -83,16 +83,16 @@ public class AppInstallReceiver extends BroadcastReceiver {
             String packageName = intent.getData().getSchemeSpecificPart();
             Observable.just(packageName)
                     .subscribeOn(Schedulers.io())
-                    .map(new Function<String, Object>() {
+                    .map(new Function<String, String>() {
                         @Override
-                        public Object apply(String s) {
+                        public String apply(String s) {
                             installedAppDao.deleteByPackageName(s);
-                            return null;
+                            return "";
                         }
                     })
-                    .subscribe(new Consumer<Object>() {
+                    .subscribe(new Consumer<String>() {
                         @Override
-                        public void accept(Object o) {
+                        public void accept(String s) {
 
                         }
                     });

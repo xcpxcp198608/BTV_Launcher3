@@ -9,10 +9,6 @@ import com.px.common.utils.SysUtil;
 import com.wiatec.btv_launcher.constant.F;
 import com.wiatec.btv_launcher.presenter.BasePresenter;
 
-/**
- * Created by PX on 2016-11-14.
- */
-
 public abstract class Base2Activity <V ,T extends BasePresenter> extends AppCompatActivity {
 
     protected T presenter;

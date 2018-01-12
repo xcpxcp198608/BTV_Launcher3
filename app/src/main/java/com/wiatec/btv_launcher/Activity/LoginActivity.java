@@ -1,16 +1,13 @@
 package com.wiatec.btv_launcher.Activity;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,49 +18,14 @@ import com.wiatec.btv_launcher.constant.F;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.bean.AuthRegisterUserInfo;
 import com.wiatec.btv_launcher.bean.ResultInfo;
+import com.wiatec.btv_launcher.databinding.ActivityLoginBinding;
 import com.wiatec.btv_launcher.presenter.LoginPresenter;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
-/**
- * Created by patrick on 2016/12/29.
- */
-
 public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
-        implements ILoginActivity, TextView.OnEditorActionListener {
+        implements ILoginActivity, TextView.OnEditorActionListener, View.OnClickListener {
 
-    @BindView(R.id.ll_login)
-    LinearLayout llLogin;
-    @BindView(R.id.et_username)
-    EditText etUserName;
-    @BindView(R.id.et_password)
-    EditText etPassword;
-    @BindView(R.id.bt_login)
-    Button btLogin;
-    @BindView(R.id.ll_reset_password)
-    LinearLayout llResetPassword;
-    @BindView(R.id.et_username1)
-    EditText etUserName1;
-    @BindView(R.id.et_email1)
-    EditText etEmail1;
-    @BindView(R.id.bt_reset)
-    Button btReset;
-    @BindView(R.id.bt_create_account)
-    Button btCreateAccount;
-    @BindView(R.id.bt_renter)
-    Button btRenter;
-    @BindView(R.id.progressBar)
-    ProgressBar progressBar;
-    @BindView(R.id.progressBar1)
-    ProgressBar progressBar1;
-
-
+    private ActivityLoginBinding binding;
     private String userName;
-    private String password;
-    private String userName1;
-    private String email1;
 
     @Override
     protected LoginPresenter createPresenter() {
@@ -73,10 +35,14 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        ButterKnife.bind(this);
-        etPassword.setOnEditorActionListener(this);
-        etEmail1.setOnEditorActionListener(this);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+        binding.etPassword.setOnEditorActionListener(this);
+        binding.etEmail1.setOnEditorActionListener(this);
+        binding.btCreateAccount.setOnClickListener(this);
+        binding.btForgetPassword.setOnClickListener(this);
+        binding.btLogin.setOnClickListener(this);
+        binding.btRenter.setOnClickListener(this);
+        binding.btReset.setOnClickListener(this);
     }
 
     @Override
@@ -85,35 +51,35 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
         boolean isRenter = (boolean) SPUtil.get(F.sp.is_renter ,true);
         if(!isRenter) {
             userName = (String) SPUtil.get(F.sp.username, "");
-            etUserName.setText(userName);
-            etUserName.setSelection(userName.length());
+            binding.etUsername.setText(userName);
+            binding.etUsername.setSelection(userName.length());
         }
     }
 
     private void doLogin(){
-        userName = etUserName.getText().toString().trim();
-        password = etPassword.getText().toString().trim();
+        userName = binding.etUsername.getText().toString().trim();
+        String password = binding.etPassword.getText().toString().trim();
         if(!TextUtils.isEmpty(userName) && ! TextUtils.isEmpty(password)){
             AuthRegisterUserInfo authRegisterUserInfo = new AuthRegisterUserInfo();
             authRegisterUserInfo.setUsername(userName);
             authRegisterUserInfo.setPassword(password);
             authRegisterUserInfo.setMac((String) SPUtil.get(F.sp.ethernet_mac,""));
             presenter.login(authRegisterUserInfo);
-            progressBar.setVisibility(View.VISIBLE);
+            binding.progressBar.setVisibility(View.VISIBLE);
         }else{
             Toast.makeText(LoginActivity.this , getString(R.string.error_input) , Toast.LENGTH_LONG).show();
         }
     }
 
     private void doReset(){
-        userName1 = etUserName1.getText().toString().trim();
-        email1 = etEmail1.getText().toString().trim();
+        String userName1 = binding.etUsername1.getText().toString().trim();
+        String email1 = binding.etEmail1.getText().toString().trim();
         if(!TextUtils.isEmpty(userName1) && ! TextUtils.isEmpty(email1)){
             AuthRegisterUserInfo authRegisterUserInfo = new AuthRegisterUserInfo();
             authRegisterUserInfo.setUsername(userName1);
             authRegisterUserInfo.setEmail(email1);
             presenter.resetPassword(authRegisterUserInfo);
-            progressBar1.setVisibility(View.VISIBLE);
+            binding.progressBar1.setVisibility(View.VISIBLE);
         }else{
             Toast.makeText(LoginActivity.this , getString(R.string.error_input) , Toast.LENGTH_LONG).show();
         }
@@ -132,7 +98,6 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
         return false;
     }
 
-    @OnClick({R.id.bt_login, R.id.bt_renter, R.id.bt_create_account ,R.id.bt_forget_password , R.id.bt_reset})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_login:
@@ -149,8 +114,8 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
                 String userName = (String) SPUtil.get(F.sp.username ,"");
                 String token = (String) SPUtil.get(F.sp.token ,"");
                 if(!TextUtils.isEmpty(userName) && !TextUtils.isEmpty(token)) {
-                    llLogin.setVisibility(View.GONE);
-                    llResetPassword.setVisibility(View.VISIBLE);
+                    binding.llLogin.setVisibility(View.GONE);
+                    binding.llResetPassword.setVisibility(View.VISIBLE);
                 }else{
                     Toast.makeText(LoginActivity.this , "please login first" , Toast.LENGTH_LONG).show();
                 }
@@ -166,7 +131,7 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
         if(resultInfo ==null) return;
         Logger.d(resultInfo.toString());
         if (resultInfo.getCode() == 200) {
-            progressBar.setVisibility(View.GONE);
+            binding.progressBar.setVisibility(View.GONE);
             Toast.makeText(CommonApplication.context, "login success", Toast.LENGTH_LONG).show();
             AuthRegisterUserInfo authRegisterUserInfo = resultInfo.getData();
             SPUtil.put(F.sp.username, authRegisterUserInfo.getUsername());
@@ -176,18 +141,18 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
             SPUtil.put(F.sp.is_renter, false);
             finish();
         } else {
-            progressBar.setVisibility(View.GONE);
+            binding.progressBar.setVisibility(View.GONE);
             Toast.makeText(CommonApplication.context, resultInfo.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
     @Override
     public void resetp(ResultInfo<AuthRegisterUserInfo> resultInfo) {
-        progressBar1.setVisibility(View.GONE);
+        binding.progressBar1.setVisibility(View.GONE);
         if(resultInfo ==null) return;
         if(resultInfo.getCode() == 200){
-            llResetPassword.setVisibility(View.GONE);
-            llLogin.setVisibility(View.VISIBLE);
+            binding.llResetPassword.setVisibility(View.GONE);
+            binding.llLogin.setVisibility(View.VISIBLE);
         }
         Logger.d(resultInfo.toString());
         Toast.makeText(CommonApplication.context, resultInfo.getMessage(), Toast.LENGTH_LONG).show();
@@ -196,9 +161,9 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(event.getKeyCode() == KeyEvent.KEYCODE_BACK){
-            if(llResetPassword.getVisibility() == View.VISIBLE){
-                llResetPassword.setVisibility(View.GONE);
-                llLogin.setVisibility(View.VISIBLE);
+            if(binding.llResetPassword.getVisibility() == View.VISIBLE){
+                binding.llResetPassword.setVisibility(View.GONE);
+                binding.llLogin.setVisibility(View.VISIBLE);
             }
             return true;
         }

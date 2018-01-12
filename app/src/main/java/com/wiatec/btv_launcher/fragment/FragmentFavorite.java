@@ -2,6 +2,7 @@ package com.wiatec.btv_launcher.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -21,9 +22,6 @@ import com.wiatec.btv_launcher.animator.Zoom;
 import com.wiatec.btv_launcher.bean.InstalledApp;
 
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -32,8 +30,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class FragmentFavorite extends Fragment {
 
-    @BindView(R.id.gv_Favorite)
-    GridView gv_Favorite;
+    private GridView gvFavorite;
 
     private static  final String TYPE = "favorite";
     private MenuCustomAdapter menuCustomAdapter;
@@ -42,11 +39,11 @@ public class FragmentFavorite extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_favorite, container, false);
-        ButterKnife.bind(this, view);
+        gvFavorite = view.findViewById(R.id.gv_Favorite);
         activity = (MenuActivity) getContext();
-        installedAppDao = activity.installedAppDao;
+        if(activity != null) installedAppDao = activity.installedAppDao;
         return view;
     }
 
@@ -66,8 +63,8 @@ public class FragmentFavorite extends Fragment {
                     @Override
                     public void accept(final List<InstalledApp> installedApps) {
                         menuCustomAdapter = new MenuCustomAdapter(activity , installedApps);
-                        gv_Favorite.setAdapter(menuCustomAdapter);
-                        gv_Favorite.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        gvFavorite.setAdapter(menuCustomAdapter);
+                        gvFavorite.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                 if(activity.getLevel() <= 0){
@@ -90,7 +87,7 @@ public class FragmentFavorite extends Fragment {
                                 }
                             }
                         });
-                        gv_Favorite.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        gvFavorite.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                 Zoom.zoomIn09_10(view);

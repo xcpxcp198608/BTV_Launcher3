@@ -6,10 +6,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.databinding.DataBindingUtil;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -23,8 +23,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.px.common.utils.AppUtil;
@@ -33,7 +31,7 @@ import com.px.common.utils.NetUtil;
 import com.px.common.utils.SPUtil;
 import com.wiatec.btv_launcher.Application;
 import com.wiatec.btv_launcher.constant.F;
-import com.wiatec.btv_launcher.custom_view.RollTextView;
+import com.wiatec.btv_launcher.databinding.ActivityMainBinding;
 import com.wiatec.btv_launcher.receiver.OnNetworkStatusListener;
 import com.wiatec.btv_launcher.receiver.OnWifiStatusListener;
 import com.wiatec.btv_launcher.R;
@@ -53,40 +51,18 @@ import com.wiatec.btv_launcher.config.WeatherIconSetting;
 import com.wiatec.btv_launcher.service.LoadCloudService;
 import com.wiatec.btv_launcher.service.LoadWeatherService;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> implements
+        IMainActivity, OnNetworkStatusListener, OnWifiStatusListener {
 
-public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> implements IMainActivity, OnNetworkStatusListener, OnWifiStatusListener {
+    private static final String RECEIVER_HOME_PAGE = "com.wiatec.ldservice.receiver.HomePageReceiver";
+    private static final String RECEIVER_HOME_PAGE_CATEGORY = "HomePageReceiver";
 
-    @BindView(R.id.tv_time)
-    TextView tv_Time;
-    @BindView(R.id.tv_temperature)
-    TextView tv_Temperature;
-    @BindView(R.id.iv_net)
-    ImageView iv_Net;
-    @BindView(R.id.tv_date)
-    TextView tv_Date;
-    @BindView(R.id.tv_message)
-    RollTextView tv_Message;
-    @BindView(R.id.frame_layout)
-    FrameLayout frameLayout;
-    @BindView(R.id.iv_weather)
-    ImageView iv_Weather;
-    @BindView(R.id.tv_version)
-    TextView tvVersion;
-    @BindView(R.id.tv_welcome)
-    TextView tvWelcome;
-    @BindView(R.id.tv_rental)
-    TextView tvRental;
-    @BindView(R.id.tv_left_time)
-    TextView tvLeftTime;
-
+    private ActivityMainBinding binding;
     private Fragment1 fragment1;
     private NetworkStatusReceiver networkStatusReceiver;
     private WifiStatusReceiver wifiStatusReceiver;
@@ -94,7 +70,6 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
     private ScreenWeekUpReceiver screenWeekUpReceiver;
     private boolean isStartLoadNetData = false;
     private boolean isStartAlarmService =false;
-
 
     @Override
     protected MainPresenter createPresenter() {
@@ -104,9 +79,8 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        ButterKnife.bind(this);
         showVersion();
         initFragment();
         checkDevice();
@@ -146,32 +120,32 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
         if(isRenter) {
             String rentalCategory = (String) SPUtil.get(F.sp.rental_category, "");
             if (!TextUtils.isEmpty(rentalCategory)) {
-                tvRental.setText(rentalCategory);
+                binding.tvRental.setText(rentalCategory);
             } else {
-                tvRental.setText("");
+                binding.tvRental.setText("");
             }
             long leftMillsSeconds = (long) SPUtil.get(F.sp.left_mills_second, 0L);
             if(leftMillsSeconds < 604800000 && leftMillsSeconds > 0){
                 showRentRenewNoticeDialog();
             }
         }else{
-            tvRental.setText("");
+            binding.tvRental.setText("");
         }
     }
 
     private void sendHomePageBroadCast(){
-        Intent intent = new Intent("com.wiatec.ldservice.remote_apk.HomePageReceiver");
-        intent.addCategory("HomePageReceiver");
+        Intent intent = new Intent(RECEIVER_HOME_PAGE);
+        intent.addCategory(RECEIVER_HOME_PAGE_CATEGORY);
         intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-        sendBroadcast(intent, "com.wiatec.ldservice.remote_apk.HomePageReceiver");
+        sendBroadcast(intent, RECEIVER_HOME_PAGE);
     }
 
     private void showLastName() {
         String lastName = (String) SPUtil.get(F.sp.last_name , "");
         if(!TextUtils.isEmpty(lastName) && !"null".equals(lastName)){
-            tvWelcome.setText(getString(R.string.welcome) + " " + lastName + " " + getString(R.string.family));
+            binding.tvWelcome.setText(getString(R.string.welcome) + " " + lastName + " " + getString(R.string.family));
         }else{
-            tvWelcome.setText("");
+            binding.tvWelcome.setText("");
         }
     }
 
@@ -198,8 +172,8 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
     @Override
     protected void onPause() {
         super.onPause();
-        if(tv_Message != null){
-            tv_Message.stop();
+        if(binding.tvMessage != null){
+            binding.tvMessage.stop();
         }
     }
 
@@ -234,7 +208,7 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
 
     @Override
     public void onWifiLevelChange(int level) {
-        WifiStatusIconSetting.setIcon(iv_Net , level);
+        WifiStatusIconSetting.setIcon(binding.ivNet , level);
     }
 
     @Override
@@ -267,8 +241,6 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
         } else if (!FileUtil.isIntact(F.path.download, "btvbootad.mp4", videoInfo.getMd5())) {
             //Logger.d("video is not intact");
             presenter.downloadAdVideo("btvbootad.mp4" ,videoInfo.getUrl());
-        } else {
-            Logger.d("boot video no need update");
         }
     }
 
@@ -284,8 +256,6 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
         } else if (!FileUtil.isIntact(F.path.download, "btvad.mp4", videoInfo.getMd5())) {
 //            Logger.d("video not intact start download");
             presenter.downloadAdVideo("btvad.mp4" ,videoInfo.getUrl());
-        } else {
-            Logger.d("video no need update");
         }
     }
 
@@ -298,8 +268,8 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
         if(weatherInfo ==null){
             return;
         }
-        WeatherIconSetting.setIcon(iv_Weather, weatherInfo.getIcon());
-        tv_Temperature.setText(weatherInfo.getTemperature());
+        WeatherIconSetting.setIcon(binding.ivWeather, weatherInfo.getIcon());
+        binding.tvTemperature.setText(weatherInfo.getTemperature());
     }
 
     private void showUpdateDialog(final UpdateInfo updateInfo) {
@@ -361,17 +331,17 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
             super.handleMessage(msg);
             switch (msg.what) {
                 case 1:
-                    tv_Time.setText((String) msg.obj);
+                    binding.tvTime.setText((String) msg.obj);
                     break;
                 case 2:
-                    tv_Date.setText((String) msg.obj);
+                    binding.tvDate.setText((String) msg.obj);
                     break;
                 case 3:
                     boolean isRenter = (boolean) SPUtil.get(F.sp.is_renter, false);
                     if(isRenter){
-                        tvLeftTime.setText((String) msg.obj);
+                        binding.tvLeftTime.setText((String) msg.obj);
                     }else{
-                        tvLeftTime.setText("");
+                        binding.tvLeftTime.setText("");
                     }
                     break;
             }
@@ -401,7 +371,7 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
     }
 
     private void registerBroadcastReceiver() {
-        networkStatusReceiver = new NetworkStatusReceiver(iv_Net);
+        networkStatusReceiver = new NetworkStatusReceiver(binding.ivNet);
         networkStatusReceiver.setOnNetworkStatusListener(this);
         registerReceiver(networkStatusReceiver, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
 
@@ -409,7 +379,7 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
         wifiStatusReceiver.setOnWifiStatusListener(this);
         registerReceiver(wifiStatusReceiver, new IntentFilter(WifiManager.RSSI_CHANGED_ACTION));
 
-        weatherStatusReceiver = new WeatherStatusReceiver(iv_Weather);
+        weatherStatusReceiver = new WeatherStatusReceiver(binding.ivWeather);
         registerReceiver(weatherStatusReceiver, new IntentFilter("action.Weather.Change"));
 
         screenWeekUpReceiver = new ScreenWeekUpReceiver();
@@ -449,6 +419,6 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
     private void showVersion() {
         String s = AppUtil.getVersionName(getPackageName());
         s = s.substring(1 , s.length());
-        tvVersion.setText(getString(R.string.ui) + " " + s);
+        binding.tvVersion.setText(getString(R.string.ui) + " " + s);
     }
 }

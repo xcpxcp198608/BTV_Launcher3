@@ -1,14 +1,11 @@
 package com.wiatec.btv_launcher.Activity;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.px.common.image.ImageMaster;
 import com.px.common.utils.Logger;
@@ -17,35 +14,19 @@ import com.wiatec.btv_launcher.constant.F;
 import com.wiatec.btv_launcher.R;
 import com.px.common.utils.AppUtil;
 import com.wiatec.btv_launcher.bean.ImageInfo;
+import com.wiatec.btv_launcher.databinding.ActivitySplashBinding;
 import com.wiatec.btv_launcher.presenter.SplashPresenter;
 
 import java.util.concurrent.TimeUnit;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
-/**
- * Created by PX on 2016-11-14.
- */
+public class Splash1Activity extends Base1Activity<ISplashActivity, SplashPresenter>
+        implements ISplashActivity, View.OnClickListener {
 
-public class Splash1Activity extends Base1Activity<ISplashActivity, SplashPresenter> implements ISplashActivity {
-    @BindView(R.id.iv_splash)
-    ImageView iv_Splash;
-    @BindView(R.id.ibt_know)
-    Button ibt_Know;
-    @BindView(R.id.ibt_pass)
-    Button ibt_Pass;
-    @BindView(R.id.tv_delay_time)
-    TextView tv_DelayTime;
-    @BindView(R.id.ll_delay)
-    LinearLayout ll_Delay;
-
-
+    private ActivitySplashBinding binding;
     private String packageName;
     private int delayTime = 11;
     private Disposable disposable;
@@ -58,9 +39,9 @@ public class Splash1Activity extends Base1Activity<ISplashActivity, SplashPresen
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
-        ButterKnife.bind(this);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
         packageName = getIntent().getStringExtra("packageName");
+        binding.ibtPass.setOnClickListener(this);
     }
 
     @Override
@@ -86,10 +67,10 @@ public class Splash1Activity extends Base1Activity<ISplashActivity, SplashPresen
                     public void onNext(Long aLong) {
                         int i = (int) (delayTime - 1 - aLong);
                         //Logger.d(i + "");
-                        ll_Delay.setVisibility(View.VISIBLE);
-                        tv_DelayTime.setText(String.valueOf(i) +" s");
+                        binding.llDelay.setVisibility(View.VISIBLE);
+                        binding.tvDelayTime.setText(String.valueOf(i) +" s");
                         if(i<=5){
-                            ibt_Pass.setVisibility(View.VISIBLE);
+                            binding.ibtPass.setVisibility(View.VISIBLE);
                         }
                     }
 
@@ -111,12 +92,12 @@ public class Splash1Activity extends Base1Activity<ISplashActivity, SplashPresen
     @Override
     public void loadImage(final ImageInfo imageInfo) {
         try {
-            ImageMaster.load(imageInfo.getUrl(),iv_Splash, R.drawable.btv1, R.drawable.btv1);
+            ImageMaster.load(imageInfo.getUrl(), binding.ivSplash, R.drawable.btv1, R.drawable.btv1);
         }catch (Exception e){
             e.printStackTrace();
             Logger.d(e.getMessage());
         }
-        ibt_Know.setOnClickListener(new View.OnClickListener() {
+        binding.ibtKnow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
@@ -133,8 +114,8 @@ public class Splash1Activity extends Base1Activity<ISplashActivity, SplashPresen
         AppUtil.launchApp(Splash1Activity.this, packageName);
     }
 
-    @OnClick(R.id.ibt_pass)
-    public void onClick() {
+    @Override
+    public void onClick(View view) {
         launchApp(packageName);
         disposable.dispose();
         finish();

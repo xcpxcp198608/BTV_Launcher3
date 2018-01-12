@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(String s) throws IOException {
                                 Logger.d(s);
-//                                RxBus.getDefault().post(new TestEvent(s));
+                                RxBus.getDefault().post(new TestEvent(s));
                             }
 
                             @Override

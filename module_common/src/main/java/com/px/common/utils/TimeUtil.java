@@ -2,6 +2,7 @@ package com.px.common.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -24,6 +25,7 @@ public class TimeUtil {
         try {
             date = simpleDateFormat.parse(time);
         } catch (ParseException e) {
+            Logger.e(e.getMessage());
             return 0;
         }
         return date.getTime();
@@ -38,10 +40,9 @@ public class TimeUtil {
                 new Locale("en"));
         return simpleDateFormat.format(new Date(System.currentTimeMillis()));
     }
-
     /**
      * get current time string
-     * @return current time string (format: "yyyy-MM-dd)
+     * @return current time string (format: "yyyy-MM-dd")
      */
     public static String getStringDate(){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd",

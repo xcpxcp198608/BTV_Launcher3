@@ -19,11 +19,6 @@ import com.px.common.utils.Logger;
 import com.wiatec.btv_launcher.constant.F;
 import com.wiatec.btv_launcher.R;
 
-
-/**
- * Created by patrick on 2017/4/6.
- */
-
 public class WebViewActivity extends AppCompatActivity {
 
     private LinearLayout llWebView;
@@ -35,8 +30,8 @@ public class WebViewActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view);
-        llWebView = (LinearLayout) findViewById(R.id.ll_web_view);
-        pbWebView = (ProgressBar) findViewById(R.id.pb_web_view);
+        llWebView = findViewById(R.id.ll_web_view);
+        pbWebView = findViewById(R.id.pb_web_view);
         initWebView();
         url = getIntent().getStringExtra("url");
         Logger.d(url);

@@ -41,11 +41,11 @@ public class PlayAdActivity extends BaseActivity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_play_ad);
-        vv_PlayAd = (VideoView) findViewById(R.id.vv_play_ad);
-        llDelay = (LinearLayout) findViewById(R.id.ll_delay);
-        tvDelayTime = (TextView) findViewById(R.id.tv_delay_time);
-        btSkip = (Button) findViewById(R.id.bt_skip);
-        tvTime = (TextView) findViewById(R.id.tv_time);
+        vv_PlayAd = findViewById(R.id.vv_play_ad);
+        llDelay = findViewById(R.id.ll_delay);
+        tvDelayTime = findViewById(R.id.tv_delay_time);
+        btSkip = findViewById(R.id.bt_skip);
+        tvTime = findViewById(R.id.tv_time);
         time = (int) SPUtil.get(F.sp.ad_video_time , 0);
         packageName = getIntent().getStringExtra("packageName");
         vv_PlayAd.setVideoPath(F.path.ad_video);
@@ -140,10 +140,7 @@ public class PlayAdActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(event.getKeyCode() == KeyEvent.KEYCODE_BACK){
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
+        return event.getKeyCode() == KeyEvent.KEYCODE_BACK || super.onKeyDown(keyCode, event);
     }
 
     @Override

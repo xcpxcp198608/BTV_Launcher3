@@ -2,6 +2,7 @@ package com.wiatec.btv_launcher.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -22,9 +23,6 @@ import com.wiatec.btv_launcher.bean.InstalledApp;
 import com.wiatec.btv_launcher.constant.F;
 
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -32,8 +30,7 @@ import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 public class FragmentAll extends Fragment {
-    @BindView(R.id.gv_All)
-    GridView gv_All;
+    GridView gvAll;
 
     private MenuActivity activity;
     private MenuItemAdapter adapter;
@@ -42,9 +39,9 @@ public class FragmentAll extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_all, container, false);
-        ButterKnife.bind(this, view);
+        gvAll = view.findViewById(R.id.gv_All);
         activity = (MenuActivity) getContext();
         return view;
     }
@@ -66,8 +63,8 @@ public class FragmentAll extends Fragment {
                     @Override
                     public void accept(final List<InstalledApp> installedApps) {
                         adapter = new MenuItemAdapter(activity , installedApps);
-                        gv_All.setAdapter(adapter);
-                        gv_All.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        gvAll.setAdapter(adapter);
+                        gvAll.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                 if(activity.getLevel() <= 0){
@@ -89,7 +86,7 @@ public class FragmentAll extends Fragment {
                                 }
                             }
                         });
-                        gv_All.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        gvAll.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                 Zoom.zoomIn09_10(view);

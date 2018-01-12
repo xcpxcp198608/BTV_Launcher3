@@ -16,7 +16,12 @@ public class FileUtil {
      * @return download path
      */
     public static String getDownloadPath(){
-        return CommonApplication.context.getExternalFilesDir("download").getAbsolutePath();
+        File externalFilesDir = CommonApplication.context.getExternalFilesDir("download");
+        if(externalFilesDir != null) {
+            return externalFilesDir.getAbsolutePath();
+        }else{
+            return "";
+        }
     }
 
     /**
@@ -24,7 +29,12 @@ public class FileUtil {
      * @return download path
      */
     public static String getPathWith(String dir){
-        return CommonApplication.context.getExternalFilesDir(dir).getAbsolutePath();
+        File externalFilesDir = CommonApplication.context.getExternalFilesDir(dir);
+        if(externalFilesDir != null) {
+            return externalFilesDir.getAbsolutePath();
+        }else{
+            return "";
+        }
     }
 
     /**
@@ -82,10 +92,9 @@ public class FileUtil {
             }
             in.close();
             BigInteger bigInt = new BigInteger(1, digest.digest());
-            // Log.d("----px----" ,"---->"+bigInt.toString(16));
             return bigInt.toString(16);
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger.e(e.getMessage());
             return "1";
         }
     }
@@ -100,6 +109,7 @@ public class FileUtil {
         try {
             return new File(filePath + "/" + fileName).delete();
         } catch (Exception e) {
+            Logger.e(e.getMessage());
             return false;
         }
     }

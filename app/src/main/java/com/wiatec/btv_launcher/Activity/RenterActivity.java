@@ -1,11 +1,9 @@
 package com.wiatec.btv_launcher.Activity;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.px.common.utils.CommonApplication;
@@ -15,19 +13,14 @@ import com.wiatec.btv_launcher.constant.F;
 import com.wiatec.btv_launcher.R;
 import com.wiatec.btv_launcher.bean.AuthRentUserInfo;
 import com.wiatec.btv_launcher.bean.ResultInfo;
+import com.wiatec.btv_launcher.databinding.ActivityRenterBinding;
 import com.wiatec.btv_launcher.presenter.RenterPresenter;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class RenterActivity extends Base2Activity<IRenterActivity, RenterPresenter> implements
         IRenterActivity, View.OnClickListener {
-    @BindView(R.id.et_key)
-    EditText etKey;
-    @BindView(R.id.bt_confirm)
-    Button btConfirm;
-    @BindView(R.id.progressBar)
-    ProgressBar progressBar;
+
+    private ActivityRenterBinding binding;
 
     @Override
     protected RenterPresenter createPresenter() {
@@ -37,9 +30,8 @@ public class RenterActivity extends Base2Activity<IRenterActivity, RenterPresent
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_renter);
-        ButterKnife.bind(this);
-        btConfirm.setOnClickListener(this);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_renter);
+        binding.btConfirm.setOnClickListener(this);
     }
 
     @Override
@@ -48,8 +40,8 @@ public class RenterActivity extends Base2Activity<IRenterActivity, RenterPresent
         boolean isRenter = (boolean) SPUtil.get(F.sp.is_renter ,true);
         if(isRenter){
             String key = (String) SPUtil.get(F.sp.username, "");
-            etKey.setText(key);
-            etKey.setSelection(key.length());
+            binding.etKey.setText(key);
+            binding.etKey.setSelection(key.length());
         }
     }
 
@@ -57,7 +49,7 @@ public class RenterActivity extends Base2Activity<IRenterActivity, RenterPresent
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.bt_confirm:
-                String key = etKey.getText().toString();
+                String key = binding.etKey.getText().toString();
                 if(TextUtils.isEmpty(key)){
                     Toast.makeText(CommonApplication.context, "input error", Toast.LENGTH_LONG).show();
                     return;
@@ -66,7 +58,7 @@ public class RenterActivity extends Base2Activity<IRenterActivity, RenterPresent
                 authRentUserInfo.setClientKey(key);
                 authRentUserInfo.setMac((String) SPUtil.get(F.sp.ethernet_mac,"1"));
                 presenter.login(authRentUserInfo);
-                progressBar.setVisibility(View.VISIBLE);
+                binding.progressBar.setVisibility(View.VISIBLE);
                 break;
             default:
                 break;
@@ -75,7 +67,7 @@ public class RenterActivity extends Base2Activity<IRenterActivity, RenterPresent
 
     @Override
     public void onLogin(ResultInfo<AuthRentUserInfo> resultInfo) {
-        progressBar.setVisibility(View.GONE);
+        binding.progressBar.setVisibility(View.GONE);
         if(resultInfo == null){
             Toast.makeText(CommonApplication.context, "communication error", Toast.LENGTH_LONG).show();
             return;

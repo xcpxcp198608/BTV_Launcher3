@@ -31,7 +31,7 @@ public class EmojiToast {
     private static void realShow(String message ,int emoji, boolean isLong){
         Context context = CommonApplication.context;
         View toastView = LayoutInflater.from(context).inflate(R.layout.c_toast , null);
-        TextView textView = (TextView) toastView.findViewById(R.id.tvToast);
+        TextView textView = toastView.findViewById(R.id.tvToast);
         textView.setText(message);
         Drawable drawable;
         if(emoji == EMOJI_SAD){

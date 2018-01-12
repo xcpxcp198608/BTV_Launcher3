@@ -38,6 +38,7 @@ public class SessionInterceptor implements Interceptor {
                 } else {
                     web = requestUrl;
                 }
+//                Logger.d(web);
                 String sessionId = (String) SPUtil.get(web + KEY, "");
                 if (!TextUtils.isEmpty(sessionId)) {
                     requestBuilder.addHeader("Cookie", sessionId);
