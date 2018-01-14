@@ -3,6 +3,8 @@ package com.wiatec.btv_launcher.Activity;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -41,6 +43,7 @@ public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterP
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_register);
         binding.btRegister.setOnClickListener(this);
+        binding.etUsername.setFilters(new InputFilter[]{inputFilter});
     }
 
     @Override
@@ -172,4 +175,15 @@ public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterP
             Toast.makeText(this, resultInfo.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
+
+    InputFilter inputFilter = new InputFilter() {
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            if(source.equals(" ")){
+                return "";
+            }else {
+                return null;
+            }
+        }
+    };
 }

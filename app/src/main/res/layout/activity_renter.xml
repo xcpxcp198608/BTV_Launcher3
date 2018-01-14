@@ -29,7 +29,7 @@
         android:text="@string/confirm"
         android:textColor="@drawable/bg_text_login"
         android:background="@drawable/bg_btn_login"
-        android:layout_width="350dp"
+        android:layout_width="450dp"
         android:layout_height="50dp" />
 
     <ProgressBar

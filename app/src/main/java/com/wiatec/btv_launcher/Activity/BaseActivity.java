@@ -74,8 +74,6 @@ public class BaseActivity extends AppCompatActivity {
                             showLoginAgainDialog();
                             checkLoginDisposable.dispose();
                             isLoginChecking = true;
-                        } else {
-                            //Logger.d("login NORMAL");
                         }
                     }
                 });

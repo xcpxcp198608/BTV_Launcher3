@@ -20,16 +20,14 @@ public class CommonApplication extends Application {
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
-        //logger 初始化
         Logger.init("----px----");
-        //ARouter 初始化
-        ARouter.init(this);
+        CrashHandler.getInstance().init();
+//        ARouter.init(this);
         //LeakCanary 初始化
 //        if (LeakCanary.isInAnalyzerProcess(this)) {
 //            return;
 //        }
 //        LeakCanary.install(this);
-        CrashHandler.getInstance().init();
     }
 
 }
