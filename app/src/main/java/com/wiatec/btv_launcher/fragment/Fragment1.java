@@ -13,6 +13,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -231,7 +233,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                     break;
                 case R.id.fl_video:
                     release();
-                    launchAppByLogin(getContext(), F.package_name.bplay);
+                    launchAppByLogin(getContext(), F.package_name.ldservice);
                     break;
                 case R.id.ibt_eufonic_bvision:
                     Intent intent = new Intent("com.wiatec.bplay.view.activity.PlayLiveActivity");
@@ -258,6 +260,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
 
     @Override
     public void showLivePlayDownloadDialog() {
+        FileUtil.delete(F.path.download, F.file_name.ld_service);
         final ProgressDialog progressDialog = new ProgressDialog(getContext());
         progressDialog.setTitle(getString(R.string.download_add));
         progressDialog.setMessage(getString(R.string.download_wait));
@@ -266,7 +269,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
         progressDialog.setCancelable(false);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progressDialog.show();
-        HttpMaster.download(getContext()).url(F.url.live_play).path(F.path.download).name(F.file_name.live_play)
+        HttpMaster.download(getContext()).url(F.url.ld_service).path(F.path.download).name(F.file_name.ld_service)
                 .startDownload(new DownloadListener() {
                     @Override
                     public void onPending(DownloadInfo downloadInfo) {
@@ -292,11 +295,11 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                     public void onFinished(DownloadInfo downloadInfo) {
                         progressDialog.setProgress(100);
                         progressDialog.dismiss();
-                        if(AppUtil.isApkCanInstall(F.path.download, F.file_name.live_play )){
-                            AppUtil.installApk(F.path.download, F.file_name.live_play, "");
+                        if(AppUtil.isApkCanInstall(F.path.download, F.file_name.ld_service )){
+                            AppUtil.installApk(F.path.download, F.file_name.ld_service, "");
                         }else{
-                            if(FileUtil.isExists(F.path.download, F.file_name.live_play)){
-                                FileUtil.delete(F.path.download, F.file_name.live_play);
+                            if(FileUtil.isExists(F.path.download, F.file_name.ld_service)){
+                                FileUtil.delete(F.path.download, F.file_name.ld_service);
                             }
                             Toast.makeText(CommonApplication.context, getString(R.string.update_error),Toast.LENGTH_LONG).show();
                         }

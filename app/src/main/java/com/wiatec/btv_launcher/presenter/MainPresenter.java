@@ -6,6 +6,7 @@ import com.px.common.http.HttpMaster;
 import com.px.common.http.listener.*;
 import com.px.common.http.pojo.DownloadInfo;
 import com.px.common.utils.CommonApplication;
+import com.px.common.utils.FileUtil;
 import com.px.common.utils.Logger;
 import com.px.common.utils.NetUtil;
 import com.px.common.utils.SPUtil;
@@ -233,6 +234,7 @@ public class MainPresenter extends BasePresenter<IMainActivity> {
         if(!NetUtil.isConnected()){
             return;
         }
+        FileUtil.delete(F.path.download, name);
         HttpMaster.download(CommonApplication.context)
                 .path(F.path.download)
                 .name(name)

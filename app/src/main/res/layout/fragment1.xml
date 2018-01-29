@@ -61,8 +61,8 @@
 
             <ImageView
                 android:id="@+id/iv_btv_logo"
-                android:src="@drawable/btv_icon_1"
-                android:background="@color/colorGray1"
+                android:src="@drawable/btv_icon_2"
+                android:background="@color/colorGray3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 

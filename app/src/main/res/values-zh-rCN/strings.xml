@@ -65,6 +65,7 @@
     <string name="login_repeat">Please contact customer service by email support@legacy.direct or by phone 949 988 9000 (Mon-Fri 9AM-5PM PST) to verify your account and payment information.  </string>
     <string name="account_error">Please contact support@legacy.direct or text to 9499889000 to inquire about this issue.</string>
     <string name="welcome">Hello</string>
+    <string name="welcome1">Welcome</string>
     <string name="family">family</string>
     <string name="select_language">Select Language</string>
     <string name="skip_ad">ACTIVE LD MEMBER, SKIP ADS </string>
@@ -72,11 +73,48 @@
     <string name="skip">SKIP</string>
     <string name="download_add">Downloading Additional Resources</string>
     <string name="download_wait">please wait download finish , do not exit</string>
-    <string name="clicktoenter">CLICK THE VIDEO TO ENTER LivePlay</string>
+    <string name="clicktoenter">CLICK THE VIDEO TO ENTER B·VISION</string>
 
     <string name="rent_customer">Preferred Customer Program Activation</string>
     <string name="key">Enter PCP Activation Code</string>
     <string name="space" />
     <string name="rent_out_expires">Your rent will be out expires soon, please contact your sales renew your btvi3</string>
 
+
+    <string name="agree">Agree</string>
+    <string name="reject">Reject</string>
+    <string name="agreement">BTVi | B•VISION LEGAL STATEMENT</string>
+    <string name="agreement_content">
+        B•Vision is hosted on our BTVi.  It is legal as long as you use it as intended.
+        Like your home computer, you have access to media content via the Internet.
+        Much of the content available do require it\'s own license agreements. BTVi is a
+        mini-super computer. BTVi operates as an Internet search engine like Google, Bing,
+        Yahoo, etc.  The videos are streamed directly from third-party video sharing services.
+        BTVi supports the protection of intellectual property.  BTVi and B•Vision are not
+        responsible for third party copyright infringement.  All other trademarks, logos,
+        and images are the property of their respective and rightful owners.
+    </string>
+    <string name="ok">OK</string>
+    <string name="consent_title">CONSENT TO COLLECTION OF DATA</string>
+    <string name="consent_content">
+        At Legacy Direct, Data privacy and security is a top priority.  We collect only the
+        minimum amount of information necessary to help improve our advertisement, products
+        and services.  The data that we collect may include information about your device,
+        location, email, application, and browsing habits. This applies to all Apps you have
+        installed or may install. We do not share sensitive information.  The data we collect
+        may be shared within our group and with select business partners, including those based
+        outside United States jurisdiction.   The data privacy regulation that apply in countries
+        outside United states jurisdiction may not offer the same level of protection.
+        See our Privacy Policy at http://legacy.direct/privacy_policy.html \n
+
+        By selecting “OK” below, you affirm that you are over 18 years of age and consent to
+        the collection of data to help improve our advertisement, products and services.
+    </string>
+
+    <string name="notice_manual">
+        Thank you for purchasing your BTVi3. At Legacy Direct, we strive to provide you with the
+        latest streaming technology. From time to time we release updates to improve our products
+        and services. To start your streaming adventure please go to the home screen and click on
+        Product Manual for guides on our products and customer service. Happy Streaming!
+    </string>
 </resources>

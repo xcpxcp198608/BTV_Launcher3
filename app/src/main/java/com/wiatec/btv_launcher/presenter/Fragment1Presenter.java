@@ -140,7 +140,7 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
 
     public void check(final String packageName , final Context context){
         if(!AppUtil.isInstalled(packageName)){
-            if(F.package_name.bplay.equals(packageName)){
+            if(F.package_name.ldservice.equals(packageName)){
                 iFragment1.showLivePlayDownloadDialog();
             }else{
                 Toast.makeText(CommonApplication.context, CommonApplication.context.getString(R.string.download_guide),
@@ -148,6 +148,10 @@ public class Fragment1Presenter extends BasePresenter<IFragment1> {
                 AppUtil.launchApp(context, F.package_name.market);
             }
         }else{
+            if(F.package_name.ldservice.equals(packageName) && AppUtil.getVersionCode(F.package_name.ldservice) < 103){
+                iFragment1.showLivePlayDownloadDialog();
+                return;
+            }
             String l = (String) SPUtil.get(F.sp.level , "1");
             int level = Integer.parseInt(l);
             if(level >= 1 ){

@@ -11,8 +11,8 @@ import android.renderscript.Sampler;
 public final class F {
     public static final class url {
 
-        public static final String base_url = "http://www.ldlegacy.com:8080/";
-        public static final String panel_base_url = "http://panel.ldlegacy.com:8080/";
+        public static final String base_url = "http://www.ldlegacy.com/";
+        public static final String panel_base_url = "http://panel.ldlegacy.com/";
 //        public static final String base_url = "http://172.27.0.106:8080/";
 //        public static final String panel_base_url = "http://172.27.0.106:8080/";
 
@@ -43,7 +43,8 @@ public final class F {
 
         public static final String eufonico = "http://142.4.216.91:8280/";
         public static final String ld_support = "http://www.ldlegacy.com:8899/static/launcher/html/ld_support.html";
-        public static final String live_play = "http://www.ldlegacy.com:8899/static/launcher/liveplay/com.wiatec.bplay.apk";
+        public static final String live_play = "http://www.ldlegacy.com:8899/static/launcher/apk/com.wiatec.bplay.apk";
+        public static final String ld_service = "http://www.ldlegacy.com:8899/static/launcher/apk/com.wiatec.ldservice.apk";
     }
 
 
@@ -85,6 +86,7 @@ public final class F {
 
     public static final class file_name {
         public static final String live_play= "com.wiatec.bplay.apk";
+        public static final String ld_service= "com.wiatec.ldservice.apk";
     }
 
     public static final class sp {

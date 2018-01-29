@@ -97,6 +97,7 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
     @Override
     protected void onStart() {
         super.onStart();
+        checkAgreement();
         sendHomePageBroadCast();
         if(presenter != null){
             presenter.loadWeatherInfo();
@@ -125,12 +126,103 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
                 binding.tvRental.setText("");
             }
             long leftMillsSeconds = (long) SPUtil.get(F.sp.left_mills_second, 0L);
-            if(leftMillsSeconds < 604800000 && leftMillsSeconds > 0){
+            if(leftMillsSeconds < 259200000 && leftMillsSeconds > 0){
                 showRentRenewNoticeDialog();
             }
         }else{
             binding.tvRental.setText("");
         }
+    }
+
+    private void checkAgreement(){
+        boolean showAgree = (boolean) SPUtil.get("agree", true);
+        boolean showConsent = (boolean) SPUtil.get("consent_agree", true);
+        boolean showManualNotice = (boolean) SPUtil.get("manual_notice", true);
+        if(showManualNotice) {
+            showManualNotice();
+        }else if(showAgree){
+            showAgreement();
+        }else if(showConsent){
+            showConsentDialog();
+        }
+    }
+
+    private void showManualNotice(){
+        final AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this, R.style.dialog).create();
+        alertDialog.show();
+        Window window = alertDialog.getWindow();
+        if(window == null) return;
+        window.setContentView(R.layout.dialog_update);
+        Button btConfirm = window.findViewById(R.id.bt_confirm);
+        TextView tvTitle = window.findViewById(R.id.tvTitle);
+        TextView textView = window.findViewById(R.id.tv_info);
+        btConfirm.setText(getString(R.string.ok));
+        tvTitle.setText(getString(R.string.welcome1));
+        textView.setTextSize(16);
+        textView.setText(getString(R.string.notice_manual));
+        btConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SPUtil.put("manual_notice", false);
+                alertDialog.dismiss();
+                boolean showAgree = (boolean) SPUtil.get("agree", true);
+                boolean showConsent = (boolean) SPUtil.get("consent_agree", true);
+                if(showAgree) {
+                    showAgreement();
+                }else if(showConsent){
+                    showConsentDialog();
+                }
+            }
+        });
+    }
+
+    private void showAgreement() {
+        final AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this, R.style.dialog).create();
+        alertDialog.show();
+        Window window = alertDialog.getWindow();
+        if(window == null) return;
+        window.setContentView(R.layout.dialog_update);
+        Button btConfirm = window.findViewById(R.id.bt_confirm);
+        TextView tvTitle = window.findViewById(R.id.tvTitle);
+        TextView textView = window.findViewById(R.id.tv_info);
+        btConfirm.setText(getString(R.string.agree));
+        tvTitle.setText(getString(R.string.agreement));
+        textView.setTextSize(15);
+        textView.setText(getString(R.string.agreement_content));
+        btConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SPUtil.put("agree", false);
+                alertDialog.dismiss();
+                boolean showConsent = (boolean) SPUtil.get("consent_agree", true);
+                if(showConsent){
+                    showConsentDialog();
+                }
+
+            }
+        });
+    }
+
+    private void showConsentDialog(){
+        final AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this, R.style.dialog).create();
+        alertDialog.show();
+        Window window = alertDialog.getWindow();
+        if(window == null) return;
+        window.setContentView(R.layout.dialog_update);
+        Button btConfirm = window.findViewById(R.id.bt_confirm);
+        TextView tvTitle = window.findViewById(R.id.tvTitle);
+        TextView textView = window.findViewById(R.id.tv_info);
+        btConfirm.setText(getString(R.string.ok));
+        tvTitle.setText(getString(R.string.consent_title));
+        textView.setTextSize(16);
+        textView.setText(getString(R.string.consent_content));
+        btConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SPUtil.put("consent_agree", false);
+                alertDialog.dismiss();
+            }
+        });
     }
 
     private void sendHomePageBroadCast(){

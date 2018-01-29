@@ -34,6 +34,8 @@ android {
         }
     }
 
+    resourcePrefix "module_common_"
+
     sourceSets{
         main{
             if (isModule.toBoolean()) {
@@ -99,4 +101,15 @@ dependencies {
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
     //apache
     compile group: 'commons-io', name: 'commons-io', version: '2.5'
+}
+
+apply plugin: 'maven'
+group = 'com.px.library'
+version = '1.0.0'
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: uri('/Users/xuchengpeng/.m2/repository'))
+        }
+    }
 }

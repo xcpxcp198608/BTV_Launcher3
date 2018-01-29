@@ -8,8 +8,8 @@ android {
         minSdkVersion 16
         targetSdkVersion 26
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        versionCode 404
-        versionName "v5.0.0 beta"
+        versionCode 500
+        versionName "v5.0.0"
     }
 
     signingConfigs {
@@ -73,4 +73,5 @@ dependencies {
     compile 'com.afollestad.material-dialogs:commons:0.9.5.0'
     compile 'org.java-websocket:Java-WebSocket:1.3.5'
     implementation project(':module_common')
+
 }

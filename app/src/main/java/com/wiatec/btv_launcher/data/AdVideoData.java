@@ -8,7 +8,6 @@ import com.px.common.utils.SPUtil;
 import com.wiatec.btv_launcher.constant.F;
 import com.wiatec.btv_launcher.bean.VideoInfo;
 
-import java.io.IOException;
 
 public class AdVideoData implements IAdVideoData {
     @Override

@@ -21,7 +21,7 @@ public class CommonApplication extends Application {
         super.onCreate();
         context = getApplicationContext();
         Logger.init("----px----");
-        CrashHandler.getInstance().init();
+//        CrashHandler.getInstance().init();
 //        ARouter.init(this);
         //LeakCanary 初始化
 //        if (LeakCanary.isInAnalyzerProcess(this)) {
