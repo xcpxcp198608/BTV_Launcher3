@@ -65,7 +65,7 @@ public class LoadInstalledApp implements Runnable {
                             !"com.koushikdutta.superuser".equals(noShowPackageName)&&
                             !"com.droidlogic.appinstall".equals(noShowPackageName)&&
                             !F.package_name.market.equals(noShowPackageName)&&
-                            !F.package_name.legacy_antivirus.equals(noShowPackageName)&&
+                            !F.package_name.dianshijia3.equals(noShowPackageName)&&
                             !F.package_name.legacy_privacy.equals(noShowPackageName)&&
                             !F.package_name.tvplus.equals(noShowPackageName)&&
                             !F.package_name.bplay.equals(noShowPackageName)&&

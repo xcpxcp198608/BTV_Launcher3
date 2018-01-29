@@ -82,6 +82,7 @@ public final class F {
         public static final String popcom = "pct.droid";
         public static final String ldservice = "com.wiatec.ldservice";
         public static final String lddream = "com.wiatec.lddream";
+        public static final String dianshijia3 = "com.dianshijia.newlive";
     }
 
     public static final class file_name {

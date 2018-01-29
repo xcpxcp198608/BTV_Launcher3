@@ -42,7 +42,7 @@ public class AppInstallReceiver extends BroadcastReceiver {
                                     !"com.koushikdutta.superuser".equals(s)&&
                                     !"com.droidlogic.appinstall".equals(s)&&
                                     !F.package_name.market.equals(s)&&
-                                    !F.package_name.legacy_antivirus.equals(s)&&
+                                    !F.package_name.dianshijia3.equals(s)&&
                                     !F.package_name.legacy_privacy.equals(s)&&
                                     !F.package_name.tvplus.equals(s)&&
                                     !F.package_name.bplay.equals(s)&&
