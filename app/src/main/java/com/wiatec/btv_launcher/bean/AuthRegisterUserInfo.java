@@ -23,7 +23,7 @@ public class AuthRegisterUserInfo {
     private String modifyTime;
     private String status;
 
-    private boolean isExperience;
+    private boolean experience;
     private boolean online;
 
     public int getId() {
@@ -195,11 +195,11 @@ public class AuthRegisterUserInfo {
     }
 
     public boolean isExperience() {
-        return isExperience;
+        return experience;
     }
 
     public void setExperience(boolean experience) {
-        isExperience = experience;
+        this.experience = experience;
     }
 
     public boolean isOnline() {
@@ -234,7 +234,7 @@ public class AuthRegisterUserInfo {
                 ", createTime='" + createTime + '\'' +
                 ", modifyTime='" + modifyTime + '\'' +
                 ", status='" + status + '\'' +
-                ", isExperience=" + isExperience +
+                ", experience=" + experience +
                 ", online=" + online +
                 '}';
     }

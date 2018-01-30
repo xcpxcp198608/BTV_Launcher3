@@ -93,6 +93,7 @@ public final class F {
     public static final class sp {
         public static final String username= "userName";
         public static final String level= "userLevel";
+        public static final String is_experience= "experience";
         public static final String token= "token";
         public static final String first_name= "firstName";
         public static final String last_name= "lastName";

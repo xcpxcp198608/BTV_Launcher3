@@ -144,6 +144,7 @@ public class CheckLogin implements Runnable {
                         if(authRegisterUserInfo == null) return;
                         String l = authRegisterUserInfo.getLevel() + "";
                         SPUtil.put(F.sp.level, l);
+                        SPUtil.put(F.sp.is_experience, authRegisterUserInfo.isExperience() + "");
                         if(EnumLevel.L0.getL().equals(l)){
                             RxBus.getDefault().post(new CheckLoginEvent(CheckLoginEvent.CODE_LOGIN_REPEAT));
                         }
