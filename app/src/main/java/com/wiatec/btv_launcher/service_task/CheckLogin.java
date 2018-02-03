@@ -1,11 +1,14 @@
 package com.wiatec.btv_launcher.service_task;
 
+import android.os.Build;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.px.common.http.HttpMaster;
 import com.px.common.http.listener.StringListener;
+import com.px.common.utils.AppUtil;
+import com.px.common.utils.CommonApplication;
 import com.px.common.utils.Logger;
 import com.px.common.utils.NetUtil;
 import com.px.common.utils.RxBus;
@@ -26,7 +29,7 @@ public class CheckLogin implements Runnable {
     public void run() {
         try {
             while(true) {
-                Thread.sleep(15000);
+                Thread.sleep(20000);
                 boolean isRenter = (boolean) SPUtil.get(F.sp.is_renter, false);
                 if(isRenter){
                     rentValidate();
@@ -53,6 +56,9 @@ public class CheckLogin implements Runnable {
                 .param("region", (String) SPUtil.get(F.sp.region_name,""))
                 .param("city", (String) SPUtil.get(F.sp.city,""))
                 .param("timeZone", (String) SPUtil.get(F.sp.time_zone,""))
+                .param("deviceModel", Build.MODEL)
+                .param("romVersion", Build.DISPLAY)
+                .param("uiVersion", AppUtil.getVersionName(CommonApplication.context.getPackageName()))
                 .enqueue(new StringListener() {
                     @Override
                     public void onSuccess(String s) throws IOException {
@@ -64,7 +70,7 @@ public class CheckLogin implements Runnable {
                         if(resultInfo == null){
                             return;
                         }
-                        if(resultInfo.getCode() != 200){
+                        if(resultInfo.getCode() != 200 && resultInfo.getCode() != 500){
                             RxBus.getDefault().post(new CheckLoginEvent(CheckLoginEvent.CODE_LOGIN_REPEAT));
                             SPUtil.put(F.sp.level, EnumLevel.L0.getL());
                             return;
@@ -119,6 +125,9 @@ public class CheckLogin implements Runnable {
                 .param("region", (String) SPUtil.get(F.sp.region_name,""))
                 .param("city", (String) SPUtil.get(F.sp.city,""))
                 .param("timeZone", (String) SPUtil.get(F.sp.time_zone,""))
+                .param("deviceModel", Build.MODEL)
+                .param("romVersion", Build.DISPLAY)
+                .param("uiVersion", AppUtil.getVersionName(CommonApplication.context.getPackageName()))
                 .enqueue(new StringListener() {
                     @Override
                     public void onSuccess(String s) throws IOException {
@@ -135,13 +144,15 @@ public class CheckLogin implements Runnable {
                         if(resultInfo == null){
                             return;
                         }
-                        if(resultInfo.getCode() != 200){
+                        if(resultInfo.getCode() != 200 && resultInfo.getCode() != 500){
                             RxBus.getDefault().post(new CheckLoginEvent(CheckLoginEvent.CODE_LOGIN_REPEAT));
                             SPUtil.put(F.sp.level, EnumLevel.L0.getL());
                             return;
                         }
                         AuthRegisterUserInfo authRegisterUserInfo = resultInfo.getData();
-                        if(authRegisterUserInfo == null) return;
+                        if(authRegisterUserInfo == null) {
+                            return;
+                        }
                         String l = authRegisterUserInfo.getLevel() + "";
                         SPUtil.put(F.sp.level, l);
                         SPUtil.put(F.sp.is_experience, authRegisterUserInfo.isExperience() + "");

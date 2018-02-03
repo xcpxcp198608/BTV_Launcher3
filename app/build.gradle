@@ -8,8 +8,8 @@ android {
         minSdkVersion 16
         targetSdkVersion 26
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        versionCode 500
-        versionName "v5.0.0"
+        versionCode 501
+        versionName "v5.0.1"
     }
 
     signingConfigs {
