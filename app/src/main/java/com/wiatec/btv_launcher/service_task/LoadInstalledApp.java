@@ -77,6 +77,7 @@ public class LoadInstalledApp implements Runnable {
                             !F.package_name.popcom.equals(noShowPackageName)&&
                             !F.package_name.lddream.equals(noShowPackageName)&&
                             !F.package_name.ldservice.equals(noShowPackageName)&&
+                            !F.package_name.live_net_new.equals(noShowPackageName)&&
                             !F.package_name.btv.equals(noShowPackageName)){
                 // Logger.d(installedAppInfo.toString());
                 if(!installedAppDao.isExists(installedApp)){

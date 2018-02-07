@@ -83,6 +83,7 @@ public final class F {
         public static final String ldservice = "com.wiatec.ldservice";
         public static final String lddream = "com.wiatec.lddream";
         public static final String dianshijia3 = "com.dianshijia.newlive";
+        public static final String live_net_new = "com.streams.androidnettv";
     }
 
     public static final class file_name {
