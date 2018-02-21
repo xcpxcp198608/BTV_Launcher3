@@ -389,7 +389,7 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
 
     private void checkDevice(){
         String device = Build.MODEL;
-        if(!"BTVi3".equals(device) && !"BTV3".equals(device)){
+        if(!"BTVi3".equals(device) && !"BTV3".equals(device) && !"BTVi4".equals(device)){
             showWarningDialog();
         }
     }

@@ -111,14 +111,8 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
                 startActivity(new Intent(this ,RegisterActivity.class));
                 break;
             case R.id.bt_forget_password:
-                String userName = (String) SPUtil.get(F.sp.username ,"");
-                String token = (String) SPUtil.get(F.sp.token ,"");
-                if(!TextUtils.isEmpty(userName) && !TextUtils.isEmpty(token)) {
-                    binding.llLogin.setVisibility(View.GONE);
-                    binding.llResetPassword.setVisibility(View.VISIBLE);
-                }else{
-                    Toast.makeText(LoginActivity.this , "please login first" , Toast.LENGTH_LONG).show();
-                }
+                binding.llLogin.setVisibility(View.GONE);
+                binding.llResetPassword.setVisibility(View.VISIBLE);
                 break;
             case R.id.bt_reset:
                 doReset();
