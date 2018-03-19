@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,8 +14,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -154,7 +153,7 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
             userDataInfo.setExitTime(eTime);
             userDataInfo.setStayTime(holdTime +"");
             userDataInfo.setUserName((String) SPUtil.get(F.sp.username ,""));
-            userDataInfo.setMac((String) SPUtil.get(F.sp.mac ,""));
+            userDataInfo.setMac((String) SPUtil.get(F.sp.ethernet_mac ,""));
             userDataInfo.setCountry((String) SPUtil.get(F.sp.country ,""));
             userDataInfo.setCity((String) SPUtil.get(F.sp.city ,""));
             if(presenter != null && entryTime>0) {
@@ -211,7 +210,15 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                     break;
                 case R.id.ibt_setting:
                     if (AppUtil.isInstalled(F.package_name.setting)) {
-                        AppUtil.launchApp(getContext(), F.package_name.setting);
+                        String device = Build.DEVICE;
+                        if("p201".equals(device)) {
+                            AppUtil.launchApp(getContext(), F.package_name.setting);
+                        }else if ("p281".equals(device)){
+                            Intent intent = new Intent();
+                            intent.setClassName("com.android.tv.settings", "com.android.tv.settings.MainSettings");
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                        }
                     }
                     break;
                 case R.id.ibt_apps:

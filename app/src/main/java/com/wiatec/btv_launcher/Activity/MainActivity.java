@@ -264,9 +264,6 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
     @Override
     protected void onPause() {
         super.onPause();
-        if(binding.tvMessage != null){
-            binding.tvMessage.stop();
-        }
     }
 
     @Override
@@ -389,7 +386,7 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
 
     private void checkDevice(){
         String device = Build.MODEL;
-        if(!"BTVi3".equals(device) && !"BTV3".equals(device) && !"BTVi4".equals(device)){
+        if(!device.contains("BTV")){
             showWarningDialog();
         }
     }
@@ -499,13 +496,13 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
         }
 
         //启动服务加载cloud照片信息列表,定时每3分钟读取一次
-        Intent cloudIntent = new Intent(MainActivity.this, LoadCloudService.class);
-        PendingIntent cloudPendingIntent = PendingIntent.getService(MainActivity.this, 0 ,cloudIntent , 0);
-        AlarmManager alarmManager1 = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        long repeatTime1 = 5*60*1000;
-        if(alarmManager1 != null) {
-            alarmManager1.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, startTime, repeatTime1, cloudPendingIntent);
-        }
+//        Intent cloudIntent = new Intent(MainActivity.this, LoadCloudService.class);
+//        PendingIntent cloudPendingIntent = PendingIntent.getService(MainActivity.this, 0 ,cloudIntent , 0);
+//        AlarmManager alarmManager1 = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+//        long repeatTime1 = 5*60*1000;
+//        if(alarmManager1 != null) {
+//            alarmManager1.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, startTime, repeatTime1, cloudPendingIntent);
+//        }
     }
 
     private void showVersion() {

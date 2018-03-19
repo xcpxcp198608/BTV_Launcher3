@@ -77,7 +77,11 @@
     <string name="rent_customer">Preferred Customer Program Activation</string>
     <string name="key">Enter PCP Activation Code</string>
     <string name="space" />
-    <string name="rent_out_expires">Your rent will be out expires soon, please contact your sales renew your btvi3</string>
+    <string name="rent_out_expires">
+        Your account balance is due in next three days. Your account will be charged on due date.
+        To prevent any lost of service or additional charges ($15 reactivation fee), please make
+        sure your payment are on time.
+    </string>
 
 
     <string name="agree">Agree</string>

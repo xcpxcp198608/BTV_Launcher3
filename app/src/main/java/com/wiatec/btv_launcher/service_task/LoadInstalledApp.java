@@ -78,6 +78,14 @@ public class LoadInstalledApp implements Runnable {
                             !F.package_name.lddream.equals(noShowPackageName)&&
                             !F.package_name.ldservice.equals(noShowPackageName)&&
                             !F.package_name.live_net_new.equals(noShowPackageName)&&
+                            !F.package_name.bluetooth_remote.equals(noShowPackageName)&&
+                            !F.package_name.factory_test.equals(noShowPackageName)&&
+                            !F.package_name.remote_control.equals(noShowPackageName)&&
+                            !F.package_name.read_log.equals(noShowPackageName)&&
+                            !F.package_name.input_method.equals(noShowPackageName)&&
+                            !F.package_name.web_view.equals(noShowPackageName)&&
+                            !F.package_name.clock.equals(noShowPackageName)&&
+                            !F.package_name.live_play.equals(noShowPackageName)&&
                             !F.package_name.btv.equals(noShowPackageName)){
                 // Logger.d(installedAppInfo.toString());
                 if(!installedAppDao.isExists(installedApp)){

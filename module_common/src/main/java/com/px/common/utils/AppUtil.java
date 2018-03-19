@@ -34,7 +34,6 @@ public class AppUtil {
             CommonApplication.context.getPackageManager().getPackageInfo(packageName , PackageManager.GET_ACTIVITIES);
             return true;
         } catch (PackageManager.NameNotFoundException e) {
-            Logger.e(e.getMessage());
             return false;
         }
     }

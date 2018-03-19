@@ -28,7 +28,7 @@ public class LoginSplashActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         packageName = getIntent().getStringExtra("packageName");
         if(TextUtils.isEmpty(packageName)){
-            packageName = F.package_name.bplay;
+            packageName = F.package_name.ldservice;
         }
     }
 

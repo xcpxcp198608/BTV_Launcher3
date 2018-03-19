@@ -55,6 +55,14 @@ public class AppInstallReceiver extends BroadcastReceiver {
                                     !F.package_name.lddream.equals(s)&&
                                     !F.package_name.ldservice.equals(s)&&
                                     !F.package_name.live_net_new.equals(s)&&
+                                    !F.package_name.bluetooth_remote.equals(s)&&
+                                    !F.package_name.factory_test.equals(s)&&
+                                    !F.package_name.remote_control.equals(s)&&
+                                    !F.package_name.read_log.equals(s)&&
+                                    !F.package_name.input_method.equals(s)&&
+                                    !F.package_name.web_view.equals(s)&&
+                                    !F.package_name.clock.equals(s)&&
+                                    !F.package_name.live_play.equals(s)&&
                                     !F.package_name.btv.equals(s)){
                                 InstalledApp installedApp = new InstalledApp();
                                 installedApp.setAppPackageName(s);

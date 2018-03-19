@@ -84,6 +84,14 @@ public final class F {
         public static final String lddream = "com.wiatec.lddream";
         public static final String dianshijia3 = "com.dianshijia.newlive";
         public static final String live_net_new = "com.streams.androidnettv";
+        public static final String bluetooth_remote = "com.droidlogic.BluetoothRemote";
+        public static final String factory_test = "com.amlogic.factorytest";
+        public static final String remote_control = "com.droidlogic.service.remotecontrol";
+        public static final String read_log = "com.droidlogic.readlog";
+        public static final String input_method = "com.android.inputmethod.latin";
+        public static final String web_view = "com.google.android.webview";
+        public static final String clock = "com.android.deskclock";
+        public static final String live_play = "com.live.play";
     }
 
     public static final class file_name {
