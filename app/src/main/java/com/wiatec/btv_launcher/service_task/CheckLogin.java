@@ -89,6 +89,7 @@ public class CheckLogin implements Runnable {
                         }else{
                             level = EnumLevel.L0.getL();
                         }
+                        SPUtil.put(F.sp.user_id, authRentUserInfo.getId()+"");
                         SPUtil.put(F.sp.level, level);
                         SPUtil.put(F.sp.rental_category, authRentUserInfo.getCategory());
                         if(EnumLevel.L0.getL().equals(level)){
@@ -154,6 +155,8 @@ public class CheckLogin implements Runnable {
                             return;
                         }
                         String l = authRegisterUserInfo.getLevel() + "";
+                        Logger.d(authRegisterUserInfo.toString());
+                        SPUtil.put(F.sp.user_id, authRegisterUserInfo.getId()+"");
                         SPUtil.put(F.sp.level, l);
                         SPUtil.put(F.sp.is_experience, authRegisterUserInfo.isExperience() + "");
                         if(EnumLevel.L0.getL().equals(l)){

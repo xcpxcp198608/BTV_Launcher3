@@ -86,6 +86,9 @@ public class LoadInstalledApp implements Runnable {
                             !F.package_name.web_view.equals(noShowPackageName)&&
                             !F.package_name.clock.equals(noShowPackageName)&&
                             !F.package_name.live_play.equals(noShowPackageName)&&
+                            !F.package_name.mobdro.equals(noShowPackageName)&&
+                            !F.package_name.morpheustv.equals(noShowPackageName)&&
+                            !F.package_name.nitrotv.equals(noShowPackageName)&&
                             !F.package_name.btv.equals(noShowPackageName)){
                 // Logger.d(installedAppInfo.toString());
                 if(!installedAppDao.isExists(installedApp)){

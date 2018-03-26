@@ -63,6 +63,9 @@ public class AppInstallReceiver extends BroadcastReceiver {
                                     !F.package_name.web_view.equals(s)&&
                                     !F.package_name.clock.equals(s)&&
                                     !F.package_name.live_play.equals(s)&&
+                                    !F.package_name.morpheustv.equals(s)&&
+                                    !F.package_name.mobdro.equals(s)&&
+                                    !F.package_name.nitrotv.equals(s)&&
                                     !F.package_name.btv.equals(s)){
                                 InstalledApp installedApp = new InstalledApp();
                                 installedApp.setAppPackageName(s);

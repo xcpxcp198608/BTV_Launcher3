@@ -92,6 +92,9 @@ public final class F {
         public static final String web_view = "com.google.android.webview";
         public static final String clock = "com.android.deskclock";
         public static final String live_play = "com.live.play";
+        public static final String mobdro = "com.mobdro.android";
+        public static final String morpheustv = "com.android.morpheustv";
+        public static final String nitrotv = "com.myspecial.launcher.nitrotv";
     }
 
     public static final class file_name {
@@ -100,6 +103,7 @@ public final class F {
     }
 
     public static final class sp {
+        public static final String user_id= "userId";
         public static final String username= "userName";
         public static final String level= "userLevel";
         public static final String is_experience= "experience";

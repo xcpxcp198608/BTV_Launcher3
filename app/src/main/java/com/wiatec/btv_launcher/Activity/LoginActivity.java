@@ -128,6 +128,7 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
             binding.progressBar.setVisibility(View.GONE);
             Toast.makeText(CommonApplication.context, "login success", Toast.LENGTH_LONG).show();
             AuthRegisterUserInfo authRegisterUserInfo = resultInfo.getData();
+            SPUtil.put(F.sp.user_id, authRegisterUserInfo.getId());
             SPUtil.put(F.sp.username, authRegisterUserInfo.getUsername());
             SPUtil.put(F.sp.token, authRegisterUserInfo.getToken());
             SPUtil.put(F.sp.last_name, authRegisterUserInfo.getLastName());
