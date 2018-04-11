@@ -89,6 +89,16 @@
         <service android:name=".ws.SocketService" />
 
         <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.wiatec.btv_launcher.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/path" />
+        </provider>
+
+        <provider
             android:name=".data.UserContentProvider"
             android:authorities="com.wiatec.btv_launcher.provide.UserContentProvider"
             android:permission="com.wiatec.btv_launcher.provide.Read" />

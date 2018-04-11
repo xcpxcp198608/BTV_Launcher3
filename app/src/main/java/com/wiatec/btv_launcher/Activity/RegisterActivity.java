@@ -8,8 +8,10 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.px.common.utils.CommonApplication;
@@ -25,7 +27,7 @@ import com.wiatec.btv_launcher.presenter.RegisterPresenter;
 
 
 public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterPresenter>
-        implements IRegisterActivity, View.OnKeyListener, View.OnClickListener {
+        implements IRegisterActivity, View.OnKeyListener, View.OnClickListener, TextView.OnEditorActionListener {
 
     private ActivityRegisterBinding binding;
     private String userName;
@@ -44,6 +46,7 @@ public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterP
         binding = DataBindingUtil.setContentView(this, R.layout.activity_register);
         binding.btRegister.setOnClickListener(this);
         binding.etUsername.setFilters(new InputFilter[]{inputFilter});
+        binding.etPassword1.setOnEditorActionListener(this);
     }
 
     @Override
@@ -90,7 +93,21 @@ public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterP
     }
 
     @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if (v.getId() == R.id.et_password1 && actionId == EditorInfo.IME_ACTION_GO) {
+            doRegister();
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
     public void onClick(View v) {
+        doRegister();
+    }
+
+    private void doRegister(){
         userName = binding.etUsername.getText().toString().trim();
         firstName = binding.etFirstName.getText().toString().trim();
         lastName = binding.etLastName.getText().toString().trim();

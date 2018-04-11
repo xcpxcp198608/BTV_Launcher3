@@ -47,7 +47,7 @@ public class UpdateActivity extends AppCompatActivity {
                     file.delete();
                     download(updateInfo);
                 }else {
-                    AppUtil.installApk(F.path.download, fileName, "");
+                    AppUtil.installApk(F.path.download, fileName, "com.wiatec.btv_launcher.fileprovider");
                 }
             }else{
                 File file = new File(F.path.download , fileName);

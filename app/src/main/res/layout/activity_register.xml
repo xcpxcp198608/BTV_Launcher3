@@ -120,8 +120,7 @@
             android:textColor="@color/colorWhite"
             android:hint="@string/input_password"
             android:background="@drawable/bg_text_view"
-            android:imeOptions="actionNext"
-            android:nextFocusDown="@+id/sp_language"
+            android:imeOptions="actionGo"
             android:layout_width="450dp"
             android:layout_height="40dp" />
 
