@@ -25,6 +25,8 @@ import com.wiatec.btv_launcher.bean.ResultInfo;
 import com.wiatec.btv_launcher.databinding.ActivityRegisterBinding;
 import com.wiatec.btv_launcher.presenter.RegisterPresenter;
 
+import java.util.regex.Pattern;
+
 
 public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterPresenter>
         implements IRegisterActivity, View.OnKeyListener, View.OnClickListener, TextView.OnEditorActionListener {
@@ -120,6 +122,11 @@ public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterP
             Toast.makeText(RegisterActivity.this, getString(R.string.username_input_error), Toast.LENGTH_SHORT).show();
             return;
         }
+        if(!validateUsername(userName)){
+            Toast.makeText(RegisterActivity.this, getString(R.string.username_format_error), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (TextUtils.isEmpty(firstName)) {
             Toast.makeText(RegisterActivity.this, getString(R.string.first_name_input_error), Toast.LENGTH_SHORT).show();
             return;
@@ -203,4 +210,11 @@ public class RegisterActivity extends Base2Activity<IRegisterActivity, RegisterP
             }
         }
     };
+
+    private static boolean validateUsername(String username){
+        String regular = "^[a-z0-9A-Z]{1,20}$";
+        Pattern pattern = Pattern.compile(regular);
+        return pattern.matcher(username).matches();
+    }
+
 }

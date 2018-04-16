@@ -55,6 +55,7 @@
     <string name="create_account">Create an account now</string>
     <string name="forgot_password">Forgot password ?</string>
     <string name="username_input_error">UserName input error</string>
+    <string name="username_format_error">User Name format error, only accept case letters and numbers</string>
     <string name="first_name_input_error">First Name input error</string>
     <string name="last_name_input_error">Last Name input error</string>
     <string name="password_input_error">Password input error</string>

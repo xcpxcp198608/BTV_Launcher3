@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -43,6 +45,7 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
         binding.btLogin.setOnClickListener(this);
         binding.btRenter.setOnClickListener(this);
         binding.btReset.setOnClickListener(this);
+        binding.etUsername.setFilters(new InputFilter[]{inputFilter});
     }
 
     @Override
@@ -164,4 +167,15 @@ public class LoginActivity extends Base2Activity<ILoginActivity, LoginPresenter>
         }
         return super.onKeyDown(keyCode, event);
     }
+
+    InputFilter inputFilter = new InputFilter() {
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            if(source.equals(" ")){
+                return "";
+            }else {
+                return null;
+            }
+        }
+    };
 }

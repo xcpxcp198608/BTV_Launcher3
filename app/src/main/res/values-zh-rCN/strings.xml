@@ -54,6 +54,7 @@
     <string name="create_account">创建账号</string>
     <string name="forgot_password">忘记密码?</string>
     <string name="username_input_error">UserName input error</string>
+    <string name="username_format_error">User Name format error, only accept case letters and numbers</string>
     <string name="first_name_input_error">First Name input error</string>
     <string name="last_name_input_error">Last Name input error</string>
     <string name="phone_input_error">Phone input error</string>
