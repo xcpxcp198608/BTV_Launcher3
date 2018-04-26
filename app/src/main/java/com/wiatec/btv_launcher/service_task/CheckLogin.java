@@ -29,7 +29,7 @@ public class CheckLogin implements Runnable {
     public void run() {
         try {
             while(true) {
-                Thread.sleep(20000);
+                Thread.sleep(60000);
                 boolean isRenter = (boolean) SPUtil.get(F.sp.is_renter, false);
                 if(isRenter){
                     rentValidate();

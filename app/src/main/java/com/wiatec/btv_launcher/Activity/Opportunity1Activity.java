@@ -42,5 +42,6 @@ public class Opportunity1Activity extends Base1Activity<IOpportunityActivity , O
         OpportunityImageAdapter opportunityImageAdapter = new OpportunityImageAdapter(list);
         rpvOpportunity.setAdapter(opportunityImageAdapter);
         rpvOpportunity.setHintView(null);
+        rpvOpportunity.pause();
     }
 }

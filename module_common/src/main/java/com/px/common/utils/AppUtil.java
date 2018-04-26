@@ -223,7 +223,7 @@ public class AppUtil {
         return apkVersionCode;
     }
 
-    public static void installApk(String filePath , String fileName, String permission){
+    public static void installApk(String filePath, String fileName, String permission){
         if(Build.VERSION.SDK_INT > 23){
             installApkAfter7(filePath, fileName, permission);
         }else{
