@@ -155,7 +155,7 @@ public class CheckLogin implements Runnable {
                             return;
                         }
                         String l = authRegisterUserInfo.getLevel() + "";
-                        Logger.d(authRegisterUserInfo.toString());
+//                        Logger.d(authRegisterUserInfo.toString());
                         SPUtil.put(F.sp.user_id, authRegisterUserInfo.getId()+"");
                         SPUtil.put(F.sp.level, l);
                         SPUtil.put(F.sp.is_experience, authRegisterUserInfo.isExperience() + "");
