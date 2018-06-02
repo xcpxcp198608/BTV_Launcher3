@@ -11,10 +11,8 @@ import android.renderscript.Sampler;
 public final class F {
     public static final class url {
 
-        public static final String base_url = "http://www.ldlegacy.com/";
-        public static final String panel_base_url = "http://panel.ldlegacy.com/";
-//        public static final String base_url = "http://172.27.0.106:8080/";
-//        public static final String panel_base_url = "http://172.27.0.106:8080/";
+        public static final String base_url = "http://launcher.v2.ldlegacy.com/";
+        public static final String panel_base_url = "http://panel.v2.ldlegacy.com/";
 
         public static final String updater = base_url+"control_panel/update/get";
 

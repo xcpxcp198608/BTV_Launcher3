@@ -50,6 +50,7 @@ import com.wiatec.btv_launcher.receiver.WifiStatusReceiver;
 import com.wiatec.btv_launcher.config.WeatherIconSetting;
 import com.wiatec.btv_launcher.service.LoadCloudService;
 import com.wiatec.btv_launcher.service.LoadWeatherService;
+import com.wiatec.btv_launcher.service_task.CheckLoginMaster;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -70,6 +71,7 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
     private ScreenWeekUpReceiver screenWeekUpReceiver;
     private boolean isStartLoadNetData = false;
     private boolean isStartAlarmService =false;
+    private CheckLoginMaster master = new CheckLoginMaster();
 
     @Override
     protected MainPresenter createPresenter() {
@@ -105,6 +107,13 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
                 isStartLoadNetData = true;
                 presenter.loadLocation();
                 presenter.loadUpdate();
+                //check user level
+                boolean isRenter = (boolean) SPUtil.get(F.sp.is_renter, false);
+                if(isRenter){
+                    master.rentValidate();
+                }else {
+                    master.check();
+                }
             }
         }
         try {
