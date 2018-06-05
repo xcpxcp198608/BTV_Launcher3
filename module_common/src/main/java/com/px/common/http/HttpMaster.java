@@ -25,7 +25,7 @@ public class HttpMaster {
         builder.connectTimeout(10, TimeUnit.SECONDS);
         builder.writeTimeout(30,TimeUnit.SECONDS);
         builder.readTimeout(30,TimeUnit.SECONDS);
-//        builder.addInterceptor(new SessionInterceptor());
+        builder.addInterceptor(new SessionInterceptor());
         okHttpClient = builder.build();
     }
 
