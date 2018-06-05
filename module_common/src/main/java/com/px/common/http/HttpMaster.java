@@ -21,10 +21,11 @@ public class HttpMaster {
      */
     static {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        builder.connectTimeout(30, TimeUnit.SECONDS);
+        builder.retryOnConnectionFailure(true);
+        builder.connectTimeout(10, TimeUnit.SECONDS);
         builder.writeTimeout(30,TimeUnit.SECONDS);
         builder.readTimeout(30,TimeUnit.SECONDS);
-        builder.addInterceptor(new SessionInterceptor());
+//        builder.addInterceptor(new SessionInterceptor());
         okHttpClient = builder.build();
     }
 
