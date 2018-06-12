@@ -2,10 +2,10 @@ package com.wiatec.btv_launcher.presenter;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.px.common.constant.CommonApplication;
 import com.px.common.http.HttpMaster;
 import com.px.common.http.listener.*;
 import com.px.common.http.pojo.DownloadInfo;
-import com.px.common.utils.CommonApplication;
 import com.px.common.utils.FileUtil;
 import com.px.common.utils.Logger;
 import com.px.common.utils.NetUtil;

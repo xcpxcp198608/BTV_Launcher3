@@ -2,7 +2,7 @@ package com.wiatec.btv_launcher;
 
 import android.content.Intent;
 
-import com.px.common.utils.CommonApplication;
+import com.px.common.constant.CommonApplication;
 import com.wiatec.btv_launcher.service.CheckLoginService;
 
 import java.util.concurrent.ExecutorService;

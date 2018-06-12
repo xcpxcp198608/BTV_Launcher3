@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+    buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "com.wiatec.btv_launcher"
         minSdkVersion 16
         targetSdkVersion 26
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        versionCode 508
-        versionName "v5.0.8"
+        versionCode 509
+        versionName "v5.0.9"
     }
 
     signingConfigs {
@@ -58,20 +58,26 @@ android {
             outputFileName = new File(fileName)
         }
     }
+
 }
 
 static def releaseTime() {
     return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
 }
 
+repositories {
+    maven {
+        url '/Users/xuchengpeng/.m2/repository'
+    }
+}
+
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.jude:rollviewpager:1.4.5'
-    compile 'com.afollestad.material-dialogs:commons:0.9.5.0'
-    compile 'org.java-websocket:Java-WebSocket:1.3.5'
-    implementation project(':module_common')
-
+    implementation 'com.jude:rollviewpager:1.4.5'
+    implementation 'com.afollestad.material-dialogs:commons:0.9.5.0'
+    implementation 'org.java-websocket:Java-WebSocket:1.3.5'
+    implementation 'com.px.library:module_common:1.0.6'
 }

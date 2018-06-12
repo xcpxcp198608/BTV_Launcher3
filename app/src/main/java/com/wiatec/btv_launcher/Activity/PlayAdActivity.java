@@ -12,7 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import com.px.common.utils.CommonApplication;
+import com.px.common.constant.CommonApplication;
 import com.px.common.utils.SPUtil;
 import com.wiatec.btv_launcher.constant.F;
 import com.wiatec.btv_launcher.R;

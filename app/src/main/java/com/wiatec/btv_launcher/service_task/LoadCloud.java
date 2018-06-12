@@ -5,9 +5,9 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.text.TextUtils;
 
+import com.px.common.constant.CommonApplication;
 import com.px.common.http.HttpMaster;
 import com.px.common.utils.AppUtil;
-import com.px.common.utils.CommonApplication;
 import com.px.common.utils.Logger;
 import com.wiatec.btv_launcher.constant.F;
 import com.wiatec.btv_launcher.bean.CloudImageInfo;

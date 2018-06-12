@@ -6,7 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
-import com.px.common.utils.CommonApplication;
+import com.px.common.constant.CommonApplication;
 import com.px.common.utils.SPUtil;
 import com.wiatec.btv_launcher.constant.EnumLevel;
 import com.wiatec.btv_launcher.constant.F;

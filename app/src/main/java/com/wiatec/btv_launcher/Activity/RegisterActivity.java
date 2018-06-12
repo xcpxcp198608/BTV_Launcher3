@@ -14,7 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.px.common.utils.CommonApplication;
+import com.px.common.constant.CommonApplication;
 import com.px.common.utils.Logger;
 import com.px.common.utils.RegularUtil;
 import com.px.common.utils.SPUtil;

@@ -97,7 +97,8 @@ public class UpdateActivity extends AppCompatActivity {
                         binding.progressUpdate.setProgress(downloadInfo.getProgress());
                         binding.tvProgress.setText(downloadInfo.getProgress()+"%");
                         if(AppUtil.isApkCanInstall(F.path.download , updateInfo.getFileName())) {
-                            AppUtil.installApk(F.path.download, updateInfo.getFileName(), "");
+                            AppUtil.installApk(F.path.download, updateInfo.getFileName(),
+                                    "com.wiatec.btv_launcher.fileprovider");
                         }else{
                             Toast.makeText(UpdateActivity.this ,getString(R.string.update_error) , Toast.LENGTH_LONG).show();
                         }

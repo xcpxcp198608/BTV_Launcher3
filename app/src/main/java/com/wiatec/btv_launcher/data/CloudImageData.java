@@ -1,6 +1,6 @@
 package com.wiatec.btv_launcher.data;
 
-import com.px.common.utils.CommonApplication;
+import com.px.common.constant.CommonApplication;
 import com.wiatec.btv_launcher.Application;
 import java.io.File;
 import java.util.ArrayList;

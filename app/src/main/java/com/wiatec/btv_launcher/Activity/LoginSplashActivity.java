@@ -8,10 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.px.common.constant.CommonApplication;
 import com.px.common.http.HttpMaster;
 import com.px.common.http.listener.DownloadListener;
 import com.px.common.http.pojo.DownloadInfo;
-import com.px.common.utils.CommonApplication;
 import com.px.common.utils.SPUtil;
 import com.wiatec.btv_launcher.constant.F;
 import com.wiatec.btv_launcher.R;

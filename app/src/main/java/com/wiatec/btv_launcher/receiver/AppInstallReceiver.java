@@ -4,8 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.px.common.constant.CommonApplication;
 import com.px.common.utils.AppUtil;
-import com.px.common.utils.CommonApplication;
 import com.wiatec.btv_launcher.bean.InstalledApp;
 import com.wiatec.btv_launcher.constant.F;
 import com.wiatec.btv_launcher.sql.InstalledAppDao;

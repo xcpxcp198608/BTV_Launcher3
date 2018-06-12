@@ -3,8 +3,8 @@ package com.wiatec.btv_launcher.service_task;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.px.common.constant.CommonApplication;
 import com.px.common.http.HttpMaster;
-import com.px.common.utils.CommonApplication;
 import com.px.common.utils.Logger;
 import com.px.common.utils.NetUtil;
 import com.wiatec.btv_launcher.constant.F;

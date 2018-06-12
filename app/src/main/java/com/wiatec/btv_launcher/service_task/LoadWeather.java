@@ -3,9 +3,9 @@ package com.wiatec.btv_launcher.service_task;
 import android.content.Intent;
 import android.text.TextUtils;
 
+import com.px.common.constant.CommonApplication;
 import com.px.common.http.HttpMaster;
 import com.px.common.http.listener.StringListener;
-import com.px.common.utils.CommonApplication;
 import com.px.common.utils.Logger;
 import com.px.common.utils.SPUtil;
 import com.wiatec.btv_launcher.constant.F;

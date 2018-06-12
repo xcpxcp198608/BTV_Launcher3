@@ -5,7 +5,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 
-import com.px.common.utils.CommonApplication;
+import com.px.common.constant.CommonApplication;
 import com.wiatec.btv_launcher.constant.F;
 import com.wiatec.btv_launcher.sql.InstalledAppDao;
 import com.wiatec.btv_launcher.bean.InstalledApp;

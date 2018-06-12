@@ -17,10 +17,10 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.px.common.constant.CommonApplication;
 import com.px.common.http.HttpMaster;
 import com.px.common.http.listener.DownloadListener;
 import com.px.common.http.pojo.DownloadInfo;
-import com.px.common.utils.CommonApplication;
 import com.px.common.utils.Logger;
 import com.px.common.utils.NetUtil;
 import com.px.common.utils.SPUtil;
