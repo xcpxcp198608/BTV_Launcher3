@@ -89,7 +89,8 @@ public class LoadInstalledApp implements Runnable {
                             !F.package_name.mobdro.equals(noShowPackageName)&&
                             !F.package_name.morpheustv.equals(noShowPackageName)&&
                             !F.package_name.nitrotv.equals(noShowPackageName)&&
-                            !F.package_name.btv.equals(noShowPackageName)){
+                            !F.package_name.btv.equals(noShowPackageName)&&
+                            !F.package_name.ldextension.equals(noShowPackageName)){
                 // Logger.d(installedAppInfo.toString());
                 if(!installedAppDao.isExists(installedApp)){
                     if(F.package_name.legacy_antivirus.equals(noShowPackageName)){

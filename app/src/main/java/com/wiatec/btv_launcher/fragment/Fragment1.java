@@ -243,12 +243,11 @@ public class Fragment1 extends BaseFragment<IFragment1, Fragment1Presenter> impl
                     launchAppByLogin(getContext(), F.package_name.ldservice);
                     break;
                 case R.id.ibt_eufonic_bvision:
-                    Intent intent = new Intent("com.wiatec.bplay.view.activity.PlayLiveActivity");
-                    intent.putExtra("id", 20 + "");
-                    intent.putExtra("userId", 26 + "");
-                    intent.putExtra("title", "LDE");
-                    intent.putExtra("message", "");
-                    intent.putExtra("playUrl", "http://live.bvision.live:8080/hls/OGUyMDIwMW.m3u8");
+                    if(!AppUtil.isInstalled(F.package_name.ldextension)){
+                        return;
+                    }
+                    Intent intent = new Intent("com.wiatec.ldextension.view.activity.MainActivity");
+                    intent.putExtra("router_type", 3);
                     startActivity(intent);
                     break;
             }

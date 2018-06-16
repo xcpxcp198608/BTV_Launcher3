@@ -93,6 +93,7 @@ public final class F {
         public static final String mobdro = "com.mobdro.android";
         public static final String morpheustv = "com.android.morpheustv";
         public static final String nitrotv = "com.myspecial.launcher.nitrotv";
+        public static final String ldextension = "com.wiatec.ldextension";
     }
 
     public static final class file_name {
