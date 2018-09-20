@@ -394,8 +394,8 @@ public class MainActivity extends Base1Activity<IMainActivity, MainPresenter> im
     }
 
     private void checkDevice(){
-        String device = Build.MODEL;
-        if(!device.contains("BTV")){
+        String model = Build.MODEL;
+        if(!model.contains("BTV")){
             showWarningDialog();
         }
     }

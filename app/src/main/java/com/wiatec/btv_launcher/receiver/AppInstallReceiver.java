@@ -67,6 +67,8 @@ public class AppInstallReceiver extends BroadcastReceiver {
                                     !F.package_name.mobdro.equals(s)&&
                                     !F.package_name.nitrotv.equals(s)&&
                                     !F.package_name.ldextension.equals(s)&&
+                                    !F.package_name.cast_player.equals(s)&&
+                                    !F.package_name.megabox.equals(s)&&
                                     !F.package_name.btv.equals(s)){
                                 InstalledApp installedApp = new InstalledApp();
                                 installedApp.setAppPackageName(s);

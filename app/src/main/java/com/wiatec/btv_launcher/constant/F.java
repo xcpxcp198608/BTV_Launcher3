@@ -40,9 +40,9 @@ public final class F {
         public static final String renter_validate = panel_base_url + "panel/rent/validate/";
 
         public static final String eufonico = "http://142.4.216.91:8280/";
-        public static final String ld_support = "http://www.ldlegacy.com:8899/static/launcher/html/ld_support.html";
-        public static final String live_play = "http://www.ldlegacy.com:8899/static/launcher/apk/com.wiatec.bplay.apk";
-        public static final String ld_service = "http://www.ldlegacy.com:8899/static/launcher/apk/com.wiatec.ldservice.apk";
+        public static final String ld_support = "http://resource.ldlegacy.com:8033/launcher/html/ld_support.html";
+        public static final String live_play = "http://resource.ldlegacy.com:8033/launcher/apk/com.wiatec.bplay.apk";
+        public static final String ld_service = "http://resource.ldlegacy.com:8033/launcher/apk/com.wiatec.ldservice.apk";
     }
 
 
@@ -94,6 +94,8 @@ public final class F {
         public static final String morpheustv = "com.android.morpheustv";
         public static final String nitrotv = "com.myspecial.launcher.nitrotv";
         public static final String ldextension = "com.wiatec.ldextension";
+        public static final String cast_player = "com.multimedia.mvcastplayer";
+        public static final String megabox = "com.leartmedia.tubio";
     }
 
     public static final class file_name {
